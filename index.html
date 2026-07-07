@@ -265,6 +265,23 @@ section{padding:clamp(90px,12vw,150px) 0;position:relative;z-index:1}
   line-height:1;color:var(--lime);display:block;
 }
 .stat .l{color:var(--ink-dim);font-size:.85rem}
+.about-grid + .about-grid{margin-top:clamp(70px,9vw,110px)}
+.about-grid.flip{grid-template-columns:1.15fr .85fr}
+@media(max-width:900px){.about-grid.flip{grid-template-columns:1fr}.about-grid.flip .portrait{order:-1}}
+.portrait.amber::before{border-color:var(--amber)}
+.portrait.amber .tag{color:var(--amber)}
+.portrait.amber .tag .dot{background:var(--amber);box-shadow:0 0 10px var(--amber)}
+.portrait.ph{
+  aspect-ratio:4/5;display:grid;place-items:center;
+  background:linear-gradient(160deg,#1a140e,#12181E 70%);
+  border:1px solid var(--line);overflow:hidden;
+}
+.portrait.ph .init{
+  font-family:'Karantina',sans-serif;font-weight:700;font-size:clamp(7rem,14vw,11rem);line-height:1;
+  color:transparent;-webkit-text-stroke:2px rgba(255,138,60,.55);direction:ltr;
+}
+.about .role.amber-role{color:var(--amber)}
+.chip.amber-chip{background:rgba(255,138,60,.12);color:var(--amber)}
 
 /* CTA */
 .cta{background:var(--lime);color:#0B0E11;text-align:center;overflow:hidden;position:relative}
@@ -497,12 +514,12 @@ footer{padding:56px 0;border-top:1px solid var(--line)}
     </div>
     <div class="about-grid">
       <div class="portrait reveal">
-        <img src="ariel.webp" alt="אריאל אוחיון — מייסד Corewise" loading="lazy">
-        <span class="tag"><span class="dot" aria-hidden="true"></span>מייסד Corewise</span>
+        <img src="ariel.webp" alt="אריאל אוחיון — מנכ״ל ומייסד משותף, Corewise" loading="lazy">
+        <span class="tag"><span class="dot" aria-hidden="true"></span>מנכ״ל ומייסד משותף</span>
       </div>
       <div class="reveal">
         <h2 style="font-size:clamp(2.6rem,5vw,4.2rem)">אריאל אוחיון</h2>
-        <span class="role">מייסד · מפתח · מרצה · מלווה עסקים</span>
+        <span class="role">מנכ״ל ומייסד משותף · מפתח · מרצה · מלווה עסקים</span>
         <p class="bio">
           בעל קהילת <b>"קלוד ישראל"</b> — קהילת ה-AI מהגדולות בישראל עם כ-24,000 חברים.
           מפתח ומלווה עסקים בהטמעת בינה מלאכותית, מרצה בכנסים ובארגונים,
@@ -519,6 +536,28 @@ footer{padding:56px 0;border-top:1px solid var(--line)}
           <div class="stat"><span class="n">24K+</span><span class="l">חברי קהילה</span></div>
           <div class="stat"><span class="n">1</span><span class="l">מטרה: עסק חכם יותר</span></div>
         </div>
+      </div>
+    </div>
+    <div class="about-grid flip">
+      <div class="reveal">
+        <h2 style="font-size:clamp(2.6rem,5vw,4.2rem)">לידור דהן</h2>
+        <span class="role amber-role">מנכ״ל ומייסד משותף · יזם · מהנדס AI</span>
+        <p class="bio">
+          מנכ״ל ומייסד משותף ב-Corewise. דוקטור להנדסת חשמל ומחשבים, עם כשש שנות ניסיון בפיתוח
+          אלגוריתמים ומערכות AI בתעשיית הרכב האוטונומי. הקים והוביל מיזמים בתחומי
+          ראייה ממוחשבת, ערים חכמות ותעשייה — ומחבר עומק טכני לראייה עסקית ומוצרית:
+          מזיהוי הבעיה, דרך אב־טיפוס מהיר, ועד מוצר שרץ בשטח.
+        </p>
+        <div class="chip-row">
+          <span class="chip amber-chip">Ph.D הנדסת חשמל ומחשבים</span>
+          <span class="chip amber-chip">רכב אוטונומי</span>
+          <span class="chip amber-chip">ראייה ממוחשבת</span>
+          <span class="chip amber-chip">ערים חכמות</span>
+        </div>
+      </div>
+      <div class="portrait amber ph reveal">
+        <span class="init" aria-hidden="true">LD</span>
+        <span class="tag"><span class="dot" aria-hidden="true"></span>מנכ״ל ומייסד משותף</span>
       </div>
     </div>
   </div>
