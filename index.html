@@ -293,6 +293,10 @@ section{padding:clamp(90px,12vw,150px) 0;position:relative;z-index:1}
 .cta p{max-width:520px;margin:24px auto 40px;color:rgba(11,14,17,.72);font-size:1.1rem}
 .btn-dark{background:#0B0E11;color:var(--lime)}
 .btn-dark:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(11,14,17,.35)}
+.cta-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.btn-wa{background:#1EBE5D;color:#062b16}
+.btn-wa:hover{background:#25D366;transform:translateY(-3px);box-shadow:0 16px 40px rgba(11,14,17,.3)}
+.btn-wa svg{margin-left:2px}
 .cta .mono{color:rgba(11,14,17,.6)}
 .cta::before,.cta::after{
   content:"";position:absolute;border-radius:50%;border:1.5px solid rgba(11,14,17,.14);
@@ -575,8 +579,15 @@ footer{padding:56px 0;border-top:1px solid var(--line)}
   <div class="wrap">
     <span class="mono">05 / Contact</span>
     <h2>בואו נבנה<br>משהו חכם</h2>
-    <p>יש לכם רעיון לאפליקציה, תהליך שמתחנן לאוטומציה, או בית ספר שרוצה תוכנית AI? נשמח לשמוע.</p>
-    <a class="btn btn-dark" href="mailto:hello@corewise.co.il">hello@corewise.co.il ←</a>
+    <p>יש לכם רעיון לאפליקציה, תהליך שמתחנן לאוטומציה, או בית ספר שרוצה תוכנית AI? דברו ישירות עם לידור דהן, מנכ״ל Corewise.</p>
+    <div class="cta-actions">
+      <a class="btn btn-wa" href="https://wa.me/972507594477" target="_blank" rel="noopener">
+        <svg viewBox="0 0 32 32" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.1.6 4.2 1.6 6L4 29l8.2-1.6c1.7.9 3.6 1.4 5.8 1.4 6.6 0 12-5.4 12-12S22.6 3 16 3zm0 21.8c-1.9 0-3.7-.5-5.3-1.5l-.4-.2-4.9.9.9-4.8-.3-.4C5 17.8 4.4 16 4.4 15 4.4 8.9 9.9 4.4 16 4.4S27.6 8.9 27.6 15 22.1 24.8 16 24.8zm6.5-8.3c-.4-.2-2.1-1-2.4-1.1-.3-.1-.6-.2-.8.2-.2.4-.9 1.1-1.1 1.3-.2.2-.4.2-.8.1-2.1-.9-3.5-2.7-3.7-3.1-.2-.4 0-.6.2-.8l.5-.6c.2-.2.2-.4.3-.6.1-.2 0-.5 0-.6-.1-.2-.8-2-1.1-2.7-.3-.7-.6-.6-.8-.6h-.7c-.2 0-.6.1-.9.5-.3.4-1.2 1.2-1.2 2.9s1.2 3.4 1.4 3.6c.2.2 2.4 3.7 5.9 5.1 3.5 1.4 3.5.9 4.1.9.6-.1 2.1-.8 2.4-1.7.3-.8.3-1.6.2-1.7-.1-.2-.3-.3-.7-.5z"/></svg>
+        וואטסאפ ללידור
+      </a>
+      <a class="btn btn-dark" href="mailto:lidor@corewise.co.il">lidor@corewise.co.il</a>
+      <a class="btn btn-dark" href="tel:+972507594477" dir="ltr">050-759-4477</a>
+    </div>
   </div>
 </section>
 
