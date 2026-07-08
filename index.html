@@ -282,6 +282,10 @@ section{padding:clamp(90px,12vw,150px) 0;position:relative;z-index:1}
 }
 .about .role.amber-role{color:var(--amber)}
 .chip.amber-chip{background:rgba(255,138,60,.12);color:var(--amber)}
+.contact-row{display:flex;gap:22px;flex-wrap:wrap;margin-top:20px}
+.contact-row a{display:inline-flex;align-items:center;gap:8px;color:var(--ink-dim);text-decoration:none;font-size:.92rem;transition:color .2s}
+.contact-row a:hover{color:var(--amber)}
+.contact-row a i{font-style:normal;color:var(--amber);font-size:1rem}
 
 /* CTA */
 .cta{background:var(--lime);color:#0B0E11;text-align:center;overflow:hidden;position:relative}
@@ -514,12 +518,12 @@ footer{padding:56px 0;border-top:1px solid var(--line)}
     </div>
     <div class="about-grid">
       <div class="portrait reveal">
-        <img src="ariel.webp" alt="אריאל אוחיון — מנכ״ל ומייסד משותף, Corewise" loading="lazy">
-        <span class="tag"><span class="dot" aria-hidden="true"></span>מנכ״ל ומייסד משותף</span>
+        <img src="ariel.webp" alt="אריאל אוחיון — מייסד ואחראי פיתוח ראשי, Corewise" loading="lazy">
+        <span class="tag"><span class="dot" aria-hidden="true"></span>מייסד · אחראי פיתוח ראשי</span>
       </div>
       <div class="reveal">
         <h2 style="font-size:clamp(2.6rem,5vw,4.2rem)">אריאל אוחיון</h2>
-        <span class="role">מנכ״ל ומייסד משותף · מפתח · מרצה · מלווה עסקים</span>
+        <span class="role">מייסד · אחראי פיתוח ראשי · מרצה · מלווה עסקים</span>
         <p class="bio">
           בעל קהילת <b>"קלוד ישראל"</b> — קהילת ה-AI מהגדולות בישראל עם כ-24,000 חברים.
           מפתח ומלווה עסקים בהטמעת בינה מלאכותית, מרצה בכנסים ובארגונים,
@@ -541,9 +545,9 @@ footer{padding:56px 0;border-top:1px solid var(--line)}
     <div class="about-grid flip">
       <div class="reveal">
         <h2 style="font-size:clamp(2.6rem,5vw,4.2rem)">לידור דהן</h2>
-        <span class="role amber-role">מנכ״ל ומייסד משותף · יזם · מהנדס AI</span>
+        <span class="role amber-role">מנכ״ל · מייסד · יזם · מהנדס AI</span>
         <p class="bio">
-          מנכ״ל ומייסד משותף ב-Corewise. דוקטור להנדסת חשמל ומחשבים, עם כשש שנות ניסיון בפיתוח
+          מנכ״ל ומייסד ב-Corewise. דוקטור להנדסת חשמל ומחשבים, עם כשש שנות ניסיון בפיתוח
           אלגוריתמים ומערכות AI בתעשיית הרכב האוטונומי. הקים והוביל מיזמים בתחומי
           ראייה ממוחשבת, ערים חכמות ותעשייה — ומחבר עומק טכני לראייה עסקית ומוצרית:
           מזיהוי הבעיה, דרך אב־טיפוס מהיר, ועד מוצר שרץ בשטח.
@@ -554,10 +558,14 @@ footer{padding:56px 0;border-top:1px solid var(--line)}
           <span class="chip amber-chip">ראייה ממוחשבת</span>
           <span class="chip amber-chip">ערים חכמות</span>
         </div>
+        <div class="contact-row">
+          <a href="mailto:lidor@corewise.co.il"><i>✉</i>lidor@corewise.co.il</a>
+          <a href="tel:+972507594477" dir="ltr"><i>✆</i>050-759-4477</a>
+        </div>
       </div>
       <div class="portrait amber reveal">
-        <img src="lidor.jpeg" alt="לידור דהן — מנכ״ל ומייסד משותף, Corewise" style="aspect-ratio:4/5;object-fit:cover;object-position:50% 12%">
-        <span class="tag"><span class="dot" aria-hidden="true"></span>מנכ״ל ומייסד משותף</span>
+        <img src="lidor.jpeg" alt="לידור דהן — מנכ״ל ומייסד, Corewise" style="aspect-ratio:4/5;object-fit:cover;object-position:50% 12%">
+        <span class="tag"><span class="dot" aria-hidden="true"></span>מנכ״ל</span>
       </div>
     </div>
   </div>
