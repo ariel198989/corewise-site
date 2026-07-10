@@ -77,7 +77,37 @@ nav{
 @media(max-width:760px){.nav-links a:not(.nav-cta){display:none}}
 
 /* ---------- hero ---------- */
-header{min-height:100svh;display:flex;flex-direction:column;justify-content:center;position:relative;padding-top:120px}
+header{position:relative;height:280svh}
+.hero-sticky{
+  position:sticky;top:0;height:100svh;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;padding-top:120px;
+}
+#seq-canvas{
+  position:absolute;inset:0;width:100%;height:100%;z-index:-1;
+  opacity:0;transition:opacity .8s ease;pointer-events:none;
+}
+#seq-canvas.on{opacity:1}
+.hero-scrim{
+  position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:0;transition:opacity .8s ease;
+  background:
+    linear-gradient(to left, rgba(11,14,17,.68) 0%, rgba(11,14,17,.25) 40%, transparent 65%),
+    linear-gradient(to top, rgba(11,14,17,.7) 0%, transparent 30%);
+}
+.hero-sticky.seq-on .hero-scrim{opacity:1}
+.hero-sticky .core{transition:opacity .8s ease}
+.hero-sticky.seq-on .core{opacity:0}
+.scroll-hint{
+  position:absolute;bottom:26px;right:50%;transform:translateX(50%);
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  color:var(--ink-dim);font-size:.75rem;letter-spacing:.14em;
+  opacity:0;animation:rise .9s 1.4s cubic-bezier(.2,.7,.2,1) forwards;
+}
+.scroll-hint::after{
+  content:"";width:1px;height:34px;
+  background:linear-gradient(var(--lime),transparent);
+  animation:hintDrop 1.8s ease-in-out infinite;
+}
+@keyframes hintDrop{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
 .hero-tag{display:inline-flex;align-items:center;gap:10px;color:var(--lime);margin-bottom:28px;opacity:0;animation:rise .8s .1s cubic-bezier(.2,.7,.2,1) forwards}
 .hero-tag::before{content:"";width:34px;height:1px;background:var(--lime)}
 h1{
@@ -347,28 +377,33 @@ footer{padding:56px 0;border-top:1px solid var(--line)}
 </nav>
 
 <header id="top">
-  <div class="wrap">
-    <span class="hero-tag mono">Apps · AI · Education</span>
-    <h1>
-      בונים את<br>
-      <span class="hollow">הליבה החכמה</span><br>
-      של <span class="lime">העסק שלך</span>
-    </h1>
-    <p class="hero-sub">
-      Corewise מפתחת אפליקציות לעסקים ומטמיעה בינה מלאכותית שמתחילה באיפיון מעמיק —
-      ומכשירה את הדור הבא בסדנאות, הרצאות והאקתונים.
-    </p>
-    <div class="hero-actions">
-      <a class="btn btn-primary" href="#contact">התחילו פרויקט ←</a>
-      <a class="btn btn-ghost" href="#services">מה אנחנו עושים</a>
+  <div class="hero-sticky">
+    <canvas id="seq-canvas" aria-hidden="true"></canvas>
+    <div class="hero-scrim" aria-hidden="true"></div>
+    <div class="wrap">
+      <span class="hero-tag mono">Apps · AI · Education</span>
+      <h1>
+        בונים את<br>
+        <span class="hollow">הליבה החכמה</span><br>
+        של <span class="lime">העסק שלך</span>
+      </h1>
+      <p class="hero-sub">
+        Corewise מפתחת אפליקציות לעסקים ומטמיעה בינה מלאכותית שמתחילה באיפיון מעמיק —
+        ומכשירה את הדור הבא בסדנאות, הרצאות והאקתונים.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#contact">התחילו פרויקט ←</a>
+        <a class="btn btn-ghost" href="#services">מה אנחנו עושים</a>
+      </div>
     </div>
-  </div>
-  <div class="core" aria-hidden="true">
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="core-glow"></div>
+    <div class="core" aria-hidden="true">
+      <div class="ring"></div>
+      <div class="ring"></div>
+      <div class="ring"></div>
+      <div class="ring"></div>
+      <div class="core-glow"></div>
+    </div>
+    <div class="scroll-hint" aria-hidden="true">SCROLL</div>
   </div>
 </header>
 
@@ -613,6 +648,79 @@ const io = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
 }, { threshold: 0.12 });
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+/* ---------- hero image sequence (scroll scrub) ---------- */
+(() => {
+  const TOTAL = 120;
+  const SRC = i => `seq/frame_${String(i + 1).padStart(4, '0')}.webp`;
+  const canvas = document.getElementById('seq-canvas');
+  const header = document.getElementById('top');
+  const sticky = header.querySelector('.hero-sticky');
+  if (!canvas || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const ctx = canvas.getContext('2d');
+  const frames = new Array(TOTAL);
+  let current = -1;
+  let ready = false;
+
+  const draw = idx => {
+    const img = frames[idx];
+    if (!img || !img.complete || !img.naturalWidth) return;
+    const cw = canvas.width, ch = canvas.height;
+    const s = Math.max(cw / img.naturalWidth, ch / img.naturalHeight);
+    const dw = img.naturalWidth * s, dh = img.naturalHeight * s;
+    const fx = 0.42; /* focal bias — core toward the left half */
+    const dx = (cw - dw) * fx, dy = (ch - dh) * 0.5;
+    ctx.clearRect(0, 0, cw, ch);
+    ctx.drawImage(img, dx, dy, dw, dh);
+    current = idx;
+  };
+
+  const resize = () => {
+    const dpr = Math.min(devicePixelRatio || 1, 2);
+    canvas.width = Math.round(canvas.clientWidth * dpr);
+    canvas.height = Math.round(canvas.clientHeight * dpr);
+    if (current >= 0) draw(current);
+  };
+
+  const progress = () => {
+    const max = header.offsetHeight - sticky.offsetHeight;
+    return Math.min(1, Math.max(0, -header.getBoundingClientRect().top / max));
+  };
+
+  let queued = false;
+  const onScroll = () => {
+    if (!ready || queued) return;
+    queued = true;
+    requestAnimationFrame(() => {
+      queued = false;
+      const idx = Math.min(TOTAL - 1, Math.round(progress() * (TOTAL - 1)));
+      if (idx !== current) draw(idx);
+    });
+  };
+
+  const load = i => new Promise(res => {
+    const img = new Image();
+    img.onload = () => res(img);
+    img.onerror = () => res(null);
+    img.src = SRC(i);
+    frames[i] = img;
+  });
+
+  load(0).then(first => {
+    if (!first || !first.naturalWidth) return; /* frames missing — rings stay */
+    resize();
+    Promise.all(Array.from({ length: TOTAL - 1 }, (_, k) => load(k + 1))).then(rest => {
+      if (rest.some(r => !r)) return;
+      ready = true;
+      canvas.classList.add('on');
+      sticky.classList.add('seq-on');
+      draw(Math.min(TOTAL - 1, Math.round(progress() * (TOTAL - 1))));
+      addEventListener('scroll', onScroll, { passive: true });
+      addEventListener('resize', resize);
+    });
+  });
+})();
 </script>
 </body>
 </html>
