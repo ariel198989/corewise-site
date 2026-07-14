@@ -274,7 +274,7 @@ function mountScrollWorld(container, config) {
       // cur keeps lerping, so we snap to the latest target the moment it's free.
       if (s.video.seeking) continue;
       if (!s.visible && Math.abs(s.cur - s.target) < 0.002) continue;
-      s.cur += (s.target - s.cur) * (reduce ? 1 : 0.18);
+      s.cur += (s.target - s.cur) * (reduce ? 1 : 0.32);
       const dur = s.video.duration || 1;
       const t = clamp(s.cur, 0, 0.999) * dur;
       if (Math.abs(s.video.currentTime - t) > eps) { try { s.video.currentTime = t; } catch (e) {} }
@@ -299,6 +299,18 @@ function mountScrollWorld(container, config) {
   }
   window.addEventListener('pointerdown', onFirstGesture, { once: true, passive: true });
   window.addEventListener('touchstart', onFirstGesture, { once: true, passive: true });
+
+  // Eager sequential prefetch: pull every clip into memory one-by-one right after
+  // mount, so fast scrolling (especially on phones) never lands on a bare still.
+  (function prefetchAll(i) {
+    if (i >= NSEG) return;
+    const s = SEGMENTS[i];
+    if (s.loading || s.hasClip) { prefetchAll(i + 1); return; }
+    loadClip(s);
+    const wait = setInterval(() => {
+      if (s.hasClip || !s.loading) { clearInterval(wait); prefetchAll(i + 1); }
+    }, 250);
+  })(0);
 
   // Particles are a per-frame cost we can't afford alongside video scrubbing on a phone.
   seedParticles(particles, reduce || coarse);
