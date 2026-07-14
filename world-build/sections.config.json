@@ -1,0 +1,94 @@
+{
+  "diveScroll": 1.3,
+  "connScroll": 0.9,
+  "sections": [
+    {
+      "id": "core",
+      "label": "הליבה",
+      "still": "still_0_core.png",
+      "clip": "vid/leg_0.mp4",
+      "clipMobile": "vid/leg_0-m.mp4",
+      "eyebrow": "Apps · AI · Education",
+      "title": "בונים את הליבה החכמה של העסק שלך",
+      "body": "Corewise מפתחת אפליקציות לעסקים ומטמיעה בינה מלאכותית שמתחילה באיפיון מעמיק.",
+      "tags": []
+    },
+    {
+      "id": "apps",
+      "label": "אפליקציות",
+      "still": "still_1_apps.png",
+      "clip": "vid/leg_1.mp4",
+      "clipMobile": "vid/leg_1-m.mp4",
+      "eyebrow": "01 · מה אנחנו עושים",
+      "title": "בניית אפליקציות לעסקים",
+      "body": "מערכות ואפליקציות בהתאמה אישית שפותרות בעיה עסקית אמיתית — ווב, מובייל ופנים־ארגוני.",
+      "tags": [
+        "Web",
+        "Mobile",
+        "מערכות פנים־ארגוניות"
+      ]
+    },
+    {
+      "id": "ai",
+      "label": "בינה מלאכותית",
+      "still": "still_2_ai.png",
+      "clip": "vid/leg_2.mp4",
+      "clipMobile": "vid/leg_2-m.mp4",
+      "eyebrow": "02 · בינה מלאכותית",
+      "title": "הטמעת AI שמתחילה באיפיון",
+      "body": "אוטומציה, צ׳אטבוטים, ניתוח נתונים וסוכני AI — משולבים בתהליכים הקיימים של העסק.",
+      "tags": [
+        "אוטומציה",
+        "סוכני AI",
+        "איפיון מעמיק"
+      ]
+    },
+    {
+      "id": "process",
+      "label": "התהליך",
+      "still": "still_3_process.png",
+      "clip": "vid/leg_3.mp4",
+      "clipMobile": "vid/leg_3-m.mp4",
+      "eyebrow": "03 · איך זה עובד",
+      "title": "מאיפיון ועד ליווי",
+      "body": "איפיון, פיתוח בספרינטים, הטמעה בשטח וליווי אחרי ההשקה — תהליך אחד שקוף.",
+      "tags": [
+        "איפיון",
+        "פיתוח",
+        "הטמעה",
+        "ליווי"
+      ]
+    },
+    {
+      "id": "edu",
+      "label": "הדור הבא",
+      "still": "still_4_edu.png",
+      "clip": "vid/leg_4.mp4",
+      "clipMobile": "vid/leg_4-m.mp4",
+      "eyebrow": "04 · מגדלים את הדור הבא",
+      "title": "AI ואלקטרוניקה לבתי ספר",
+      "body": "סדנאות, האקתונים והכשרות מורים — התלמידים בונים טכנולוגיה בידיים.",
+      "tags": [
+        "סדנאות",
+        "האקתונים",
+        "הכשרת מורים"
+      ]
+    },
+    {
+      "id": "contact",
+      "label": "בואו נדבר",
+      "still": "still_5_contact.png",
+      "clip": "vid/leg_5.mp4",
+      "clipMobile": "vid/leg_5-m.mp4",
+      "eyebrow": "05 · בואו נדבר",
+      "title": "בואו נבנה משהו חכם",
+      "body": "דברו ישירות עם לידור דהן, מנכ״ל Corewise.",
+      "tags": [],
+      "cta": {
+        "label": "וואטסאפ ללידור",
+        "href": "https://wa.me/972507594477"
+      }
+    }
+  ],
+  "connectors": []
+}

@@ -1,726 +1,123 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="he" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>Corewise — הליבה החכמה של העסק שלך</title>
-<meta name="description" content="Corewise בונה אפליקציות לעסקים, מטמיעה בינה מלאכותית עם איפיון מעמיק, ומובילה סדנאות, הרצאות והאקתונים — כולל תוכניות AI ואלקטרוניקה לבתי ספר.">
+<meta name="description" content="גללו כדי לטוס דרך העולם של Corewise: אפליקציות לעסקים, הטמעת בינה מלאכותית, ותוכניות AI ואלקטרוניקה לבתי ספר.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Karantina:wght@300;400;700&family=Miriam+Libre:wght@400;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root{
-  --bg:#0B0E11;
-  --bg2:#10151A;
-  --ink:#ECEEE6;
-  --ink-dim:rgba(236,238,230,.62);
-  --lime:#C6F24E;
-  --amber:#FF8A3C;
-  --line:rgba(236,238,230,.1);
-  --card:#12181E;
-  --radius:20px;
+:root, .sw-root {
+  --sw-bg: #0B0E11;
+  --sw-ink: #ECEEE6;
+  --sw-ink-soft: rgba(236,238,230,.62);
+  --sw-accent: #C6F24E;
+  --sw-font-display: 'Karantina', sans-serif;
+  --sw-font-body: 'Miriam Libre', sans-serif;
 }
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
-  background:var(--bg);
-  color:var(--ink);
-  font-family:'Miriam Libre',sans-serif;
-  line-height:1.7;
-  overflow-x:hidden;
+html, body { background: #0B0E11; margin: 0; }
+.classic-link {
+  position: fixed; top: 18px; left: 18px; z-index: 90;
+  font-family: 'Miriam Libre', sans-serif; font-size: .82rem;
+  color: rgba(236,238,230,.62); text-decoration: none;
+  border: 1px solid rgba(236,238,230,.18); border-radius: 100px;
+  padding: 7px 16px; backdrop-filter: blur(8px); background: rgba(11,14,17,.4);
+  transition: color .2s, border-color .2s;
 }
-::selection{background:var(--lime);color:#0B0E11}
-
-/* ---------- grain + grid atmosphere ---------- */
-body::before{
-  content:"";position:fixed;inset:0;pointer-events:none;z-index:2;opacity:.05;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-}
-.grid-bg{
-  position:fixed;inset:0;z-index:0;pointer-events:none;
-  background-image:
-    linear-gradient(rgba(236,238,230,.035) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(236,238,230,.035) 1px,transparent 1px);
-  background-size:72px 72px;
-  mask-image:radial-gradient(ellipse 90% 70% at 50% 0%,#000 0%,transparent 75%);
-  -webkit-mask-image:radial-gradient(ellipse 90% 70% at 50% 0%,#000 0%,transparent 75%);
-}
-
-h1,h2,h3,.display{font-family:'Karantina',sans-serif;font-weight:700;line-height:.92;letter-spacing:.01em}
-.mono{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;direction:ltr}
-
-.wrap{max-width:1240px;margin:0 auto;padding:0 clamp(20px,4vw,48px);position:relative;z-index:1}
-
-/* ---------- nav ---------- */
-nav{
-  position:fixed;top:0;right:0;left:0;z-index:50;
-  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
-  background:rgba(11,14,17,.72);
-  border-bottom:1px solid var(--line);
-}
-.nav-inner{max-width:1240px;margin:0 auto;padding:16px clamp(20px,4vw,48px);display:flex;align-items:center;justify-content:space-between;gap:24px}
-.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink)}
-.logo-core{width:22px;height:22px;border-radius:50%;border:2px solid var(--lime);position:relative;flex:none}
-.logo-core::after{content:"";position:absolute;inset:5px;border-radius:50%;background:var(--lime);animation:pulse 2.6s ease-in-out infinite}
-@keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(.6);opacity:.6}}
-.logo b{font-family:'IBM Plex Mono',monospace;font-size:1.05rem;letter-spacing:.06em;direction:ltr}
-.logo b span{color:var(--lime)}
-.nav-links{display:flex;gap:28px;align-items:center}
-.nav-links a{color:var(--ink-dim);text-decoration:none;font-size:.92rem;transition:color .2s}
-.nav-links a:hover{color:var(--lime)}
-.nav-cta{
-  font-family:'Miriam Libre',sans-serif;font-weight:700;font-size:.88rem;
-  color:#0B0E11!important;background:var(--lime);padding:9px 20px;border-radius:100px;
-  transition:transform .2s,box-shadow .2s;
-}
-.nav-cta:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(198,242,78,.35)}
-@media(max-width:760px){.nav-links a:not(.nav-cta){display:none}}
-
-/* ---------- hero ---------- */
-header{position:relative;height:280svh}
-.hero-sticky{
-  position:sticky;top:0;height:100svh;overflow:hidden;
-  display:flex;flex-direction:column;justify-content:center;padding-top:120px;
-}
-#seq-canvas{
-  position:absolute;inset:0;width:100%;height:100%;z-index:-1;
-  opacity:0;transition:opacity .8s ease;pointer-events:none;
-}
-#seq-canvas.on{opacity:1}
-.hero-scrim{
-  position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:0;transition:opacity .8s ease;
-  background:
-    linear-gradient(to left, rgba(11,14,17,.68) 0%, rgba(11,14,17,.25) 40%, transparent 65%),
-    linear-gradient(to top, rgba(11,14,17,.7) 0%, transparent 30%);
-}
-.hero-sticky.seq-on .hero-scrim{opacity:1}
-.hero-sticky .core{transition:opacity .8s ease}
-.hero-sticky.seq-on .core{opacity:0}
-.scroll-hint{
-  position:absolute;bottom:26px;right:50%;transform:translateX(50%);
-  display:flex;flex-direction:column;align-items:center;gap:8px;
-  color:var(--ink-dim);font-size:.75rem;letter-spacing:.14em;
-  opacity:0;animation:rise .9s 1.4s cubic-bezier(.2,.7,.2,1) forwards;
-}
-.scroll-hint::after{
-  content:"";width:1px;height:34px;
-  background:linear-gradient(var(--lime),transparent);
-  animation:hintDrop 1.8s ease-in-out infinite;
-}
-@keyframes hintDrop{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
-.hero-tag{display:inline-flex;align-items:center;gap:10px;color:var(--lime);margin-bottom:28px;opacity:0;animation:rise .8s .1s cubic-bezier(.2,.7,.2,1) forwards}
-.hero-tag::before{content:"";width:34px;height:1px;background:var(--lime)}
-h1{
-  font-size:clamp(4.2rem,13vw,11.5rem);
-  opacity:0;animation:rise .9s .25s cubic-bezier(.2,.7,.2,1) forwards;
-}
-h1 .hollow{
-  color:transparent;
-  -webkit-text-stroke:2.5px var(--ink);
-}
-h1 .lime{color:var(--lime)}
-.hero-sub{
-  max-width:560px;font-size:clamp(1.05rem,1.6vw,1.25rem);color:var(--ink-dim);margin-top:30px;
-  opacity:0;animation:rise .9s .45s cubic-bezier(.2,.7,.2,1) forwards;
-}
-.hero-actions{display:flex;gap:16px;margin-top:42px;flex-wrap:wrap;opacity:0;animation:rise .9s .6s cubic-bezier(.2,.7,.2,1) forwards}
-@keyframes rise{from{opacity:0;transform:translateY(34px)}to{opacity:1;transform:none}}
-.btn{
-  display:inline-flex;align-items:center;gap:10px;text-decoration:none;font-weight:700;font-size:1rem;
-  padding:15px 32px;border-radius:100px;transition:transform .2s,box-shadow .25s,background .2s;
-}
-.btn-primary{background:var(--lime);color:#0B0E11}
-.btn-primary:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(198,242,78,.35)}
-.btn-ghost{border:1px solid var(--line);color:var(--ink)}
-.btn-ghost:hover{border-color:var(--lime);color:var(--lime);transform:translateY(-3px)}
-
-/* core rings visual */
-.core{
-  position:absolute;left:clamp(-180px,-6vw,-40px);top:50%;transform:translateY(-50%);
-  width:min(46vw,640px);aspect-ratio:1;pointer-events:none;z-index:-1;
-}
-.ring{position:absolute;inset:0;border-radius:50%;border:1px solid rgba(198,242,78,.18)}
-.ring:nth-child(2){inset:12%;border-color:rgba(198,242,78,.24);animation:spin 40s linear infinite}
-.ring:nth-child(3){inset:24%;border-color:rgba(255,138,60,.22);animation:spin 28s linear infinite reverse}
-.ring:nth-child(4){inset:36%;border-color:rgba(198,242,78,.3)}
-.ring:nth-child(2)::after,.ring:nth-child(3)::after{
-  content:"";position:absolute;top:-4px;left:50%;width:8px;height:8px;border-radius:50%;
-  background:var(--lime);box-shadow:0 0 18px var(--lime);
-}
-.ring:nth-child(3)::after{background:var(--amber);box-shadow:0 0 18px var(--amber)}
-@keyframes spin{to{transform:rotate(360deg)}}
-.core-glow{
-  position:absolute;inset:42%;border-radius:50%;
-  background:radial-gradient(circle,rgba(198,242,78,.85),rgba(198,242,78,.08) 65%,transparent 70%);
-  filter:blur(6px);animation:pulse 3.4s ease-in-out infinite;
-}
-@media(max-width:900px){.core{opacity:.4;left:-30vw;width:90vw}}
-
-/* ---------- marquee ---------- */
-.marquee{
-  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
-  padding:20px 0;overflow:hidden;background:var(--bg2);position:relative;z-index:1;
-}
-.marquee-track{display:flex;gap:0;width:max-content;animation:scroll 30s linear infinite}
-.marquee:hover .marquee-track{animation-play-state:paused}
-.marquee-track span{
-  font-family:'Karantina',sans-serif;font-weight:400;font-size:1.7rem;color:var(--ink-dim);
-  padding:0 26px;white-space:nowrap;
-}
-.marquee-track span::after{content:"✦";color:var(--lime);margin-right:52px;font-size:1rem;vertical-align:middle}
-@keyframes scroll{to{transform:translateX(50%)}}
-
-/* ---------- sections ---------- */
-section{padding:clamp(90px,12vw,150px) 0;position:relative;z-index:1}
-.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:clamp(44px,6vw,70px);flex-wrap:wrap}
-.sec-head h2{font-size:clamp(3rem,7vw,5.6rem)}
-.sec-head .mono{color:var(--lime);margin-bottom:14px;display:block}
-.sec-head p{max-width:420px;color:var(--ink-dim)}
-
-/* services */
-.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-@media(max-width:980px){.services-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:640px){.services-grid{grid-template-columns:1fr}}
-.svc{
-  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
-  padding:34px 30px;position:relative;overflow:hidden;
-  transition:transform .3s cubic-bezier(.2,.7,.2,1),border-color .3s;
-}
-.svc:hover{transform:translateY(-8px);border-color:rgba(198,242,78,.45)}
-.svc::before{
-  content:"";position:absolute;top:0;right:0;left:0;height:3px;
-  background:linear-gradient(90deg,var(--lime),var(--amber));
-  transform:scaleX(0);transform-origin:right;transition:transform .4s cubic-bezier(.2,.7,.2,1);
-}
-.svc:hover::before{transform:scaleX(1)}
-.svc .num{font-family:'IBM Plex Mono',monospace;color:var(--lime);font-size:.78rem;letter-spacing:.2em;display:block;margin-bottom:22px;direction:ltr;text-align:right}
-.svc h3{font-size:2.1rem;margin-bottom:12px}
-.svc p{color:var(--ink-dim);font-size:.95rem}
-.svc.wide{grid-column:span 2;background:linear-gradient(135deg,#151d12,#12181E 60%)}
-@media(max-width:640px){.svc.wide{grid-column:span 1}}
-.svc.wide h3{color:var(--lime)}
-.chip-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}
-.chip{font-size:.78rem;padding:5px 14px;border-radius:100px;background:rgba(198,242,78,.1);color:var(--lime)}
-
-/* process */
-.process{background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;counter-reset:step}
-@media(max-width:900px){.steps{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:560px){.steps{grid-template-columns:1fr}}
-.step{
-  padding:38px 30px;border-right:1px solid var(--line);position:relative;
-  transition:background .3s;
-}
-.step:first-child{border-right:none}
-@media(max-width:900px){.step{border:none;border-top:1px solid var(--line)}}
-.step:hover{background:rgba(198,242,78,.04)}
-.step .big{
-  font-family:'Karantina',sans-serif;font-weight:300;font-size:5rem;line-height:1;
-  color:transparent;-webkit-text-stroke:1.5px rgba(198,242,78,.55);display:block;margin-bottom:14px;direction:ltr;text-align:right;
-}
-.step h3{font-size:1.9rem;margin-bottom:10px}
-.step p{color:var(--ink-dim);font-size:.92rem}
-
-/* education */
-.edu{position:relative}
-.edu-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(30px,5vw,70px);align-items:center}
-@media(max-width:900px){.edu-grid{grid-template-columns:1fr}}
-.edu h2{font-size:clamp(3rem,6.5vw,5.2rem);margin-bottom:24px}
-.edu h2 .amber{color:var(--amber)}
-.edu p.lead{color:var(--ink-dim);font-size:1.1rem;margin-bottom:34px;max-width:520px}
-.edu-list{display:flex;flex-direction:column;gap:14px}
-.edu-item{
-  display:flex;gap:18px;align-items:flex-start;padding:20px 22px;
-  border:1px solid var(--line);border-radius:16px;background:var(--card);
-  transition:transform .25s,border-color .25s;
-}
-.edu-item:hover{transform:translateX(-6px);border-color:rgba(255,138,60,.5)}
-.edu-item .ico{
-  flex:none;width:44px;height:44px;border-radius:12px;display:grid;place-items:center;
-  background:rgba(255,138,60,.12);color:var(--amber);font-size:1.3rem;
-}
-.edu-item b{display:block;font-size:1.05rem;margin-bottom:2px}
-.edu-item span{color:var(--ink-dim);font-size:.88rem}
-/* circuit board illustration */
-.board{
-  position:relative;border-radius:24px;border:1px solid var(--line);
-  background:linear-gradient(160deg,#131a12,#0d1117 70%);
-  aspect-ratio:1/1.05;overflow:hidden;
-}
-.board svg{position:absolute;inset:0;width:100%;height:100%}
-.board .badge{
-  position:absolute;bottom:22px;right:22px;left:22px;
-  background:rgba(11,14,17,.8);backdrop-filter:blur(8px);
-  border:1px solid var(--line);border-radius:14px;padding:16px 20px;
-  display:flex;align-items:center;gap:14px;
-}
-.board .badge .dot{width:10px;height:10px;border-radius:50%;background:var(--lime);box-shadow:0 0 12px var(--lime);animation:pulse 2s infinite}
-.board .badge b{font-size:.95rem}
-.board .badge span{color:var(--ink-dim);font-size:.8rem;display:block}
-@keyframes dash{to{stroke-dashoffset:-400}}
-.trace{stroke:rgba(198,242,78,.5);stroke-width:1.6;fill:none;stroke-dasharray:6 10;animation:dash 8s linear infinite}
-.trace.a2{stroke:rgba(255,138,60,.45);animation-duration:11s}
-.node{fill:#0B0E11;stroke:rgba(198,242,78,.7);stroke-width:1.5}
-
-/* about */
-.about{background:var(--bg2);border-top:1px solid var(--line)}
-.about-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:clamp(34px,5vw,80px);align-items:center}
-@media(max-width:900px){.about-grid{grid-template-columns:1fr;max-width:560px;margin:0 auto}}
-.portrait{position:relative;border-radius:24px;max-width:440px}
-.portrait::before{
-  content:"";position:absolute;inset:0;border-radius:24px;
-  border:1.5px solid var(--lime);transform:translate(-14px,14px);
-  transition:transform .35s cubic-bezier(.2,.7,.2,1);pointer-events:none;
-}
-.portrait:hover::before{transform:translate(-7px,7px)}
-.portrait img{
-  display:block;width:100%;border-radius:24px;position:relative;
-  filter:grayscale(18%);transition:filter .35s;
-}
-.portrait:hover img{filter:none}
-.portrait .tag{
-  position:absolute;bottom:18px;right:18px;z-index:2;
-  background:rgba(11,14,17,.82);backdrop-filter:blur(8px);
-  border:1px solid var(--line);border-radius:100px;padding:8px 18px;
-  font-size:.82rem;color:var(--lime);display:flex;align-items:center;gap:8px;
-}
-.portrait .tag .dot{width:8px;height:8px;border-radius:50%;background:var(--lime);box-shadow:0 0 10px var(--lime);animation:pulse 2s infinite}
-.about h2{font-size:clamp(3rem,6.5vw,5.2rem);margin-bottom:6px}
-.about .role{color:var(--lime);font-weight:700;font-size:1.05rem;display:block;margin-bottom:20px}
-.about p.bio{color:var(--ink-dim);font-size:1.05rem;max-width:540px;margin-bottom:26px}
-.about-stats{display:grid;grid-template-columns:repeat(3,auto);gap:clamp(18px,3vw,44px);justify-content:start;margin:30px 0 4px;padding-top:26px;border-top:1px solid var(--line)}
-@media(max-width:560px){.about-stats{grid-template-columns:1fr 1fr}}
-.stat .n{
-  font-family:'Karantina',sans-serif;font-weight:700;font-size:clamp(2.6rem,4.5vw,3.6rem);
-  line-height:1;color:var(--lime);display:block;
-}
-.stat .l{color:var(--ink-dim);font-size:.85rem}
-.about-grid + .about-grid{margin-top:clamp(70px,9vw,110px)}
-.about-grid.flip{grid-template-columns:1.15fr .85fr}
-@media(max-width:900px){.about-grid.flip{grid-template-columns:1fr}.about-grid.flip .portrait{order:-1}}
-.portrait.amber::before{border-color:var(--amber)}
-.portrait.amber .tag{color:var(--amber)}
-.portrait.amber .tag .dot{background:var(--amber);box-shadow:0 0 10px var(--amber)}
-.portrait.ph{
-  aspect-ratio:4/5;display:grid;place-items:center;
-  background:linear-gradient(160deg,#1a140e,#12181E 70%);
-  border:1px solid var(--line);overflow:hidden;
-}
-.portrait.ph .init{
-  font-family:'Karantina',sans-serif;font-weight:700;font-size:clamp(7rem,14vw,11rem);line-height:1;
-  color:transparent;-webkit-text-stroke:2px rgba(255,138,60,.55);direction:ltr;
-}
-.about .role.amber-role{color:var(--amber)}
-.chip.amber-chip{background:rgba(255,138,60,.12);color:var(--amber)}
-.contact-row{display:flex;gap:22px;flex-wrap:wrap;margin-top:20px}
-.contact-row a{display:inline-flex;align-items:center;gap:8px;color:var(--ink-dim);text-decoration:none;font-size:.92rem;transition:color .2s}
-.contact-row a:hover{color:var(--amber)}
-.contact-row a i{font-style:normal;color:var(--amber);font-size:1rem}
-
-/* CTA */
-.cta{background:var(--lime);color:#0B0E11;text-align:center;overflow:hidden;position:relative}
-.cta h2{font-size:clamp(3.4rem,9vw,8rem);line-height:.9}
-.cta p{max-width:520px;margin:24px auto 40px;color:rgba(11,14,17,.72);font-size:1.1rem}
-.btn-dark{background:#0B0E11;color:var(--lime)}
-.btn-dark:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(11,14,17,.35)}
-.cta-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
-.btn-wa{background:#1EBE5D;color:#062b16}
-.btn-wa:hover{background:#25D366;transform:translateY(-3px);box-shadow:0 16px 40px rgba(11,14,17,.3)}
-.btn-wa svg{margin-left:2px}
-.cta .mono{color:rgba(11,14,17,.6)}
-.cta::before,.cta::after{
-  content:"";position:absolute;border-radius:50%;border:1.5px solid rgba(11,14,17,.14);
-  width:520px;height:520px;pointer-events:none;
-}
-.cta::before{top:-260px;right:-160px}
-.cta::after{bottom:-300px;left:-180px;width:640px;height:640px}
-
-/* footer */
-footer{padding:56px 0;border-top:1px solid var(--line)}
-.foot{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
-.foot .mono{color:var(--ink-dim)}
-.foot a{color:var(--ink-dim);text-decoration:none;transition:color .2s}
-.foot a:hover{color:var(--lime)}
-.foot-links{display:flex;gap:24px}
-
-/* scroll reveal */
-.reveal{opacity:0;transform:translateY(40px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
-.reveal.in{opacity:1;transform:none}
-.reveal:nth-child(2){transition-delay:.08s}
-.reveal:nth-child(3){transition-delay:.16s}
-.reveal:nth-child(4){transition-delay:.24s}
-.reveal:nth-child(5){transition-delay:.32s}
-.reveal:nth-child(6){transition-delay:.4s}
-@media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation:none!important;transition:none!important}
-  .reveal{opacity:1;transform:none}
-}
+.classic-link:hover { color: #C6F24E; border-color: #C6F24E; }
 </style>
 </head>
 <body>
-<div class="grid-bg" aria-hidden="true"></div>
+<div id="top"></div>
+<div id="world"></div>
+<a class="classic-link" href="classic.html">לאתר המלא ←</a>
 
-<nav>
-  <div class="nav-inner">
-    <a class="logo" href="#top" aria-label="Corewise">
-      <span class="logo-core" aria-hidden="true"></span>
-      <b>core<span>wise</span></b>
-    </a>
-    <div class="nav-links">
-      <a href="#services">שירותים</a>
-      <a href="#process">תהליך</a>
-      <a href="#education">חינוך והכשרה</a>
-      <a href="#about">מי אנחנו</a>
-      <a class="nav-cta" href="#contact">בואו נדבר</a>
-    </div>
-  </div>
-</nav>
-
-<header id="top">
-  <div class="hero-sticky">
-    <canvas id="seq-canvas" aria-hidden="true"></canvas>
-    <div class="hero-scrim" aria-hidden="true"></div>
-    <div class="wrap">
-      <span class="hero-tag mono">Apps · AI · Education</span>
-      <h1>
-        בונים את<br>
-        <span class="hollow">הליבה החכמה</span><br>
-        של <span class="lime">העסק שלך</span>
-      </h1>
-      <p class="hero-sub">
-        Corewise מפתחת אפליקציות לעסקים ומטמיעה בינה מלאכותית שמתחילה באיפיון מעמיק —
-        ומכשירה את הדור הבא בסדנאות, הרצאות והאקתונים.
-      </p>
-      <div class="hero-actions">
-        <a class="btn btn-primary" href="#contact">התחילו פרויקט ←</a>
-        <a class="btn btn-ghost" href="#services">מה אנחנו עושים</a>
-      </div>
-    </div>
-    <div class="core" aria-hidden="true">
-      <div class="ring"></div>
-      <div class="ring"></div>
-      <div class="ring"></div>
-      <div class="ring"></div>
-      <div class="core-glow"></div>
-    </div>
-    <div class="scroll-hint" aria-hidden="true">SCROLL</div>
-  </div>
-</header>
-
-<div class="marquee" aria-hidden="true">
-  <div class="marquee-track">
-    <span>אפליקציות לעסקים</span><span>הטמעת בינה מלאכותית</span><span>איפיון מעמיק</span><span>סדנאות פיתוח</span><span>הרצאות</span><span>האקתונים</span><span>AI ואלקטרוניקה לבתי ספר</span>
-    <span>אפליקציות לעסקים</span><span>הטמעת בינה מלאכותית</span><span>איפיון מעמיק</span><span>סדנאות פיתוח</span><span>הרצאות</span><span>האקתונים</span><span>AI ואלקטרוניקה לבתי ספר</span>
-  </div>
-</div>
-
-<section id="services">
-  <div class="wrap">
-    <div class="sec-head">
-      <div>
-        <span class="mono">01 / What we do</span>
-        <h2>מה אנחנו עושים</h2>
-      </div>
-      <p>מהקוד ועד הכיתה — כל מה שעסק צריך כדי לעבוד חכם יותר, ואנשים צריכים כדי לבנות את זה בעצמם.</p>
-    </div>
-    <div class="services-grid">
-      <div class="svc wide reveal">
-        <span class="num">/01</span>
-        <h3>בניית אפליקציות לעסקים</h3>
-        <p>מערכות ואפליקציות בהתאמה אישית שפותרות בעיה עסקית אמיתית — ווב, מובייל ופנים־ארגוני. מעיצוב ועד השקה, בבעלות מלאה שלכם.</p>
-        <div class="chip-row"><span class="chip">Web</span><span class="chip">Mobile</span><span class="chip">מערכות פנים־ארגוניות</span></div>
-      </div>
-      <div class="svc reveal">
-        <span class="num">/02</span>
-        <h3>הטמעת בינה מלאכותית</h3>
-        <p>שילוב AI בתהליכים הקיימים של העסק: אוטומציה, צ׳אטבוטים, ניתוח נתונים וסוכני AI שעובדים בשבילכם.</p>
-      </div>
-      <div class="svc reveal">
-        <span class="num">/03</span>
-        <h3>איפיון כחלק מההטמעה</h3>
-        <p>לא מתחילים לכתוב שורת קוד לפני שמבינים את העסק. איפיון מעמיק של תהליכים, צרכים ומדדי הצלחה — מובנה בכל פרויקט.</p>
-      </div>
-      <div class="svc reveal">
-        <span class="num">/04</span>
-        <h3>סדנאות פיתוח</h3>
-        <p>סדנאות מעשיות לצוותים: פיתוח בעזרת AI, כלים מודרניים ושיטות עבודה שמכפילות תפוקה.</p>
-      </div>
-      <div class="svc reveal">
-        <span class="num">/05</span>
-        <h3>הרצאות</h3>
-        <p>הרצאות מרתקות על בינה מלאכותית וטכנולוגיה — לכנסים, ארגונים וצוותי הנהלה שרוצים להבין לאן העולם הולך.</p>
-      </div>
-      <div class="svc reveal">
-        <span class="num">/06</span>
-        <h3>האקתונים</h3>
-        <p>תכנון והנחיה של האקתונים מקצה לקצה: מהאתגר, דרך הליווי הטכני ועד הדמו הסופי. אנרגיה, למידה ותוצרים אמיתיים.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="process" id="process">
-  <div class="wrap">
-    <div class="sec-head">
-      <div>
-        <span class="mono">02 / Process</span>
-        <h2>איך זה עובד</h2>
-      </div>
-      <p>תהליך אחד, ברור ושקוף — מהשיחה הראשונה ועד מערכת חיה שעובדת.</p>
-    </div>
-    <div class="steps">
-      <div class="step reveal">
-        <span class="big">01</span>
-        <h3>איפיון</h3>
-        <p>מבינים את העסק לעומק: תהליכים, כאבים, הזדמנויות ומדדי הצלחה.</p>
-      </div>
-      <div class="step reveal">
-        <span class="big">02</span>
-        <h3>פיתוח</h3>
-        <p>בונים בספרינטים קצרים עם דמו בכל שלב — אתם רואים התקדמות, לא מצגות.</p>
-      </div>
-      <div class="step reveal">
-        <span class="big">03</span>
-        <h3>הטמעה</h3>
-        <p>מחברים את המערכת לשטח: הדרכת צוותים, חיבור לכלים קיימים ויציאה לאוויר.</p>
-      </div>
-      <div class="step reveal">
-        <span class="big">04</span>
-        <h3>ליווי</h3>
-        <p>נשארים איתכם אחרי ההשקה — שיפורים, תחזוקה והרחבות לפי מה שהשטח מלמד.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="edu" id="education">
-  <div class="wrap">
-    <div class="edu-grid">
-      <div>
-        <span class="mono" style="color:var(--amber);display:block;margin-bottom:14px">03 / Education</span>
-        <h2>מגדלים את<br><span class="amber">הדור הבא</span></h2>
-        <p class="lead">
-          תוכניות חינוכיות לבתי ספר שמחברות בינה מלאכותית ואלקטרוניקה —
-          התלמידים לא רק לומדים על טכנולוגיה, הם בונים אותה בידיים.
-        </p>
-        <div class="edu-list">
-          <div class="edu-item reveal">
-            <span class="ico" aria-hidden="true">⚡</span>
-            <div><b>סדנאות AI + אלקטרוניקה לבתי ספר</b><span>חיישנים, מעגלים ומודלים חכמים — פרויקטים אמיתיים שהתלמידים בונים בעצמם.</span></div>
-          </div>
-          <div class="edu-item reveal">
-            <span class="ico" aria-hidden="true">🛠️</span>
-            <div><b>למידה מבוססת עשייה</b><span>כל מפגש מסתיים בתוצר עובד — לא דפי עבודה, אלא דברים שמהבהבים, זזים ומגיבים.</span></div>
-          </div>
-          <div class="edu-item reveal">
-            <span class="ico" aria-hidden="true">🚀</span>
-            <div><b>האקתונים לתלמידים</b><span>ימי שיא שבהם צוותים של תלמידים פותרים אתגר אמיתי ומציגים דמו מול קהל.</span></div>
-          </div>
-          <div class="edu-item reveal">
-            <span class="ico" aria-hidden="true">🎓</span>
-            <div><b>הכשרת צוותי הוראה</b><span>מלווים מורים להטמיע כלי AI בכיתה — בביטחון ובאחריות.</span></div>
-          </div>
-        </div>
-      </div>
-      <div class="board reveal" aria-hidden="true">
-        <svg viewBox="0 0 400 420" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path class="trace" d="M40 60 H160 V140 H240 V90 H360"/>
-          <path class="trace a2" d="M40 200 H120 V300 H220 V240 H360"/>
-          <path class="trace" d="M60 380 H180 V320 H300 V360 H380" style="animation-duration:13s"/>
-          <path class="trace a2" d="M200 20 V80 H300 V160 H200 V200"/>
-          <circle class="node" cx="160" cy="140" r="7"/>
-          <circle class="node" cx="240" cy="90" r="7"/>
-          <circle class="node" cx="120" cy="300" r="7"/>
-          <circle class="node" cx="220" cy="240" r="7"/>
-          <circle class="node" cx="300" cy="160" r="7"/>
-          <circle class="node" cx="180" cy="320" r="7"/>
-          <rect x="168" y="188" width="64" height="64" rx="12" fill="#0B0E11" stroke="#C6F24E" stroke-width="1.5"/>
-          <text x="200" y="228" text-anchor="middle" fill="#C6F24E" font-family="IBM Plex Mono" font-size="15" font-weight="500">AI</text>
-        </svg>
-        <div class="badge">
-          <span class="dot"></span>
-          <div><b>מהרעיון למעגל חי</b><span>AI + אלקטרוניקה, בידיים של תלמידים</span></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="about" id="about">
-  <div class="wrap">
-    <div class="sec-head">
-      <div>
-        <span class="mono">04 / Who we are</span>
-        <h2>מי אנחנו</h2>
-      </div>
-      <p>מאחורי Corewise עומדים אנשים שחיים את התחום — בונים, מלמדים ומובילים את קהילת ה-AI בישראל.</p>
-    </div>
-    <div class="about-grid">
-      <div class="portrait reveal">
-        <img src="ariel.webp" alt="אריאל אוחיון — מייסד ואחראי פיתוח ראשי, Corewise" loading="lazy">
-        <span class="tag"><span class="dot" aria-hidden="true"></span>מייסד · אחראי פיתוח ראשי</span>
-      </div>
-      <div class="reveal">
-        <h2 style="font-size:clamp(2.6rem,5vw,4.2rem)">אריאל אוחיון</h2>
-        <span class="role">מייסד · אחראי פיתוח ראשי · מרצה · מלווה עסקים</span>
-        <p class="bio">
-          בעל קהילת <b>"קלוד ישראל"</b> — קהילת ה-AI מהגדולות בישראל עם כ-24,000 חברים.
-          מפתח ומלווה עסקים בהטמעת בינה מלאכותית, מרצה בכנסים ובארגונים,
-          ובעל תואר ראשון בכלכלה ומנהל עסקים. את כל מה שעובד בשטח — הוא מביא ישירות לפרויקטים של Corewise.
-        </p>
-        <div class="chip-row">
-          <span class="chip">קהילת קלוד ישראל</span>
-          <span class="chip">מרצה</span>
-          <span class="chip">מפתח</span>
-          <span class="chip">מלווה עסקים</span>
-          <span class="chip">B.A כלכלה ומנהל עסקים</span>
-        </div>
-        <div class="about-stats">
-          <div class="stat"><span class="n">24K+</span><span class="l">חברי קהילה</span></div>
-          <div class="stat"><span class="n">1</span><span class="l">מטרה: עסק חכם יותר</span></div>
-        </div>
-      </div>
-    </div>
-    <div class="about-grid flip">
-      <div class="reveal">
-        <h2 style="font-size:clamp(2.6rem,5vw,4.2rem)">לידור דהן</h2>
-        <span class="role amber-role">מנכ״ל · מייסד · יזם · מהנדס AI</span>
-        <p class="bio">
-          מנכ״ל ומייסד ב-Corewise. דוקטור להנדסת חשמל ומחשבים, עם כשש שנות ניסיון בפיתוח
-          אלגוריתמים ומערכות AI בתעשיית הרכב האוטונומי. הקים והוביל מיזמים בתחומי
-          ראייה ממוחשבת, ערים חכמות ותעשייה — ומחבר עומק טכני לראייה עסקית ומוצרית:
-          מזיהוי הבעיה, דרך אב־טיפוס מהיר, ועד מוצר שרץ בשטח.
-        </p>
-        <div class="chip-row">
-          <span class="chip amber-chip">Ph.D הנדסת חשמל ומחשבים</span>
-          <span class="chip amber-chip">רכב אוטונומי</span>
-          <span class="chip amber-chip">ראייה ממוחשבת</span>
-          <span class="chip amber-chip">ערים חכמות</span>
-        </div>
-        <div class="contact-row">
-          <a href="mailto:lidor@corewise.co.il"><i>✉</i>lidor@corewise.co.il</a>
-          <a href="tel:+972507594477" dir="ltr"><i>✆</i>050-759-4477</a>
-        </div>
-      </div>
-      <div class="portrait amber reveal">
-        <img src="lidor.jpeg" alt="לידור דהן — מנכ״ל ומייסד, Corewise" style="aspect-ratio:4/5;object-fit:cover;object-position:50% 12%">
-        <span class="tag"><span class="dot" aria-hidden="true"></span>מנכ״ל</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="cta" id="contact">
-  <div class="wrap">
-    <span class="mono">05 / Contact</span>
-    <h2>בואו נבנה<br>משהו חכם</h2>
-    <p>יש לכם רעיון לאפליקציה, תהליך שמתחנן לאוטומציה, או בית ספר שרוצה תוכנית AI? דברו ישירות עם לידור דהן, מנכ״ל Corewise.</p>
-    <div class="cta-actions">
-      <a class="btn btn-wa" href="https://wa.me/972507594477" target="_blank" rel="noopener">
-        <svg viewBox="0 0 32 32" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.1.6 4.2 1.6 6L4 29l8.2-1.6c1.7.9 3.6 1.4 5.8 1.4 6.6 0 12-5.4 12-12S22.6 3 16 3zm0 21.8c-1.9 0-3.7-.5-5.3-1.5l-.4-.2-4.9.9.9-4.8-.3-.4C5 17.8 4.4 16 4.4 15 4.4 8.9 9.9 4.4 16 4.4S27.6 8.9 27.6 15 22.1 24.8 16 24.8zm6.5-8.3c-.4-.2-2.1-1-2.4-1.1-.3-.1-.6-.2-.8.2-.2.4-.9 1.1-1.1 1.3-.2.2-.4.2-.8.1-2.1-.9-3.5-2.7-3.7-3.1-.2-.4 0-.6.2-.8l.5-.6c.2-.2.2-.4.3-.6.1-.2 0-.5 0-.6-.1-.2-.8-2-1.1-2.7-.3-.7-.6-.6-.8-.6h-.7c-.2 0-.6.1-.9.5-.3.4-1.2 1.2-1.2 2.9s1.2 3.4 1.4 3.6c.2.2 2.4 3.7 5.9 5.1 3.5 1.4 3.5.9 4.1.9.6-.1 2.1-.8 2.4-1.7.3-.8.3-1.6.2-1.7-.1-.2-.3-.3-.7-.5z"/></svg>
-        וואטסאפ ללידור
-      </a>
-      <a class="btn btn-dark" href="mailto:lidor@corewise.co.il">lidor@corewise.co.il</a>
-      <a class="btn btn-dark" href="tel:+972507594477" dir="ltr">050-759-4477</a>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="wrap foot">
-    <a class="logo" href="#top" aria-label="Corewise">
-      <span class="logo-core" aria-hidden="true"></span>
-      <b style="color:var(--ink)">core<span style="color:var(--lime)">wise</span></b>
-    </a>
-    <div class="foot-links">
-      <a href="#services">שירותים</a>
-      <a href="#process">תהליך</a>
-      <a href="#education">חינוך</a>
-      <a href="#about">מי אנחנו</a>
-      <a href="#contact">צור קשר</a>
-    </div>
-    <span class="mono">© 2026 Corewise</span>
-  </div>
-</footer>
-
+<script src="scrub-engine.js"></script>
 <script>
-const io = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
-}, { threshold: 0.12 });
-document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-
-/* ---------- hero image sequence (scroll scrub) ---------- */
-(() => {
-  const TOTAL = 120;
-  const SRC = i => `seq/frame_${String(i + 1).padStart(4, '0')}.webp`;
-  const canvas = document.getElementById('seq-canvas');
-  const header = document.getElementById('top');
-  const sticky = header.querySelector('.hero-sticky');
-  if (!canvas || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-  const ctx = canvas.getContext('2d');
-  const frames = new Array(TOTAL);
-  let current = -1;
-  let ready = false;
-
-  const draw = idx => {
-    const img = frames[idx];
-    if (!img || !img.complete || !img.naturalWidth) return;
-    const cw = canvas.width, ch = canvas.height;
-    const s = Math.max(cw / img.naturalWidth, ch / img.naturalHeight);
-    const dw = img.naturalWidth * s, dh = img.naturalHeight * s;
-    const fx = 0.42; /* focal bias — core toward the left half */
-    const dx = (cw - dw) * fx, dy = (ch - dh) * 0.5;
-    ctx.clearRect(0, 0, cw, ch);
-    ctx.drawImage(img, dx, dy, dw, dh);
-    current = idx;
-  };
-
-  const resize = () => {
-    const dpr = Math.min(devicePixelRatio || 1, 2);
-    canvas.width = Math.round(canvas.clientWidth * dpr);
-    canvas.height = Math.round(canvas.clientHeight * dpr);
-    if (current >= 0) draw(current);
-  };
-
-  const progress = () => {
-    const max = header.offsetHeight - sticky.offsetHeight;
-    return Math.min(1, Math.max(0, -header.getBoundingClientRect().top / max));
-  };
-
-  let queued = false;
-  const onScroll = () => {
-    if (!ready || queued) return;
-    queued = true;
-    requestAnimationFrame(() => {
-      queued = false;
-      const idx = Math.min(TOTAL - 1, Math.round(progress() * (TOTAL - 1)));
-      if (idx !== current) draw(idx);
-    });
-  };
-
-  const load = i => new Promise(res => {
-    const img = new Image();
-    img.onload = () => res(img);
-    img.onerror = () => res(null);
-    img.src = SRC(i);
-    frames[i] = img;
-  });
-
-  load(0).then(first => {
-    if (!first || !first.naturalWidth) return; /* frames missing — rings stay */
-    resize();
-    Promise.all(Array.from({ length: TOTAL - 1 }, (_, k) => load(k + 1))).then(rest => {
-      if (rest.some(r => !r)) return;
-      ready = true;
-      canvas.classList.add('on');
-      sticky.classList.add('seq-on');
-      draw(Math.min(TOTAL - 1, Math.round(progress() * (TOTAL - 1))));
-      addEventListener('scroll', onScroll, { passive: true });
-      addEventListener('resize', resize);
-    });
-  });
-})();
+mountScrollWorld(document.getElementById('world'), {
+  brand: { name: 'corewise', href: '#top' },
+  hint: 'גללו כדי לטוס פנימה',
+  nav: true,
+  atmosphere: true,
+  diveScroll: 1.3,
+  sections: [
+    {
+      id: 'core', label: 'הליבה',
+      still: 'world-build/still_0_core.webp',
+      clip: 'world-build/vid/leg_0.mp4',
+      clipMobile: 'world-build/vid/leg_0-m.mp4',
+      accent: '#C6F24E',
+      scroll: 1.6, linger: 0.4,
+      eyebrow: 'Apps · AI · Education',
+      title: 'בונים את הליבה החכמה של העסק שלך',
+      body: 'Corewise מפתחת אפליקציות לעסקים ומטמיעה בינה מלאכותית שמתחילה באיפיון מעמיק.',
+      tags: [],
+    },
+    {
+      id: 'apps', label: 'אפליקציות',
+      still: 'world-build/still_1_apps.webp',
+      clip: 'world-build/vid/leg_1.mp4',
+      clipMobile: 'world-build/vid/leg_1-m.mp4',
+      accent: '#C6F24E',
+      eyebrow: '01 · מה אנחנו עושים',
+      title: 'בניית אפליקציות לעסקים',
+      body: 'מערכות ואפליקציות בהתאמה אישית שפותרות בעיה עסקית אמיתית — ווב, מובייל ופנים־ארגוני.',
+      tags: ['Web', 'Mobile', 'מערכות פנים־ארגוניות'],
+    },
+    {
+      id: 'ai', label: 'בינה מלאכותית',
+      still: 'world-build/still_2_ai.webp',
+      clip: 'world-build/vid/leg_2.mp4',
+      clipMobile: 'world-build/vid/leg_2-m.mp4',
+      accent: '#FF8A3C',
+      eyebrow: '02 · בינה מלאכותית',
+      title: 'הטמעת AI שמתחילה באיפיון',
+      body: 'אוטומציה, צ׳אטבוטים, ניתוח נתונים וסוכני AI — משולבים בתהליכים הקיימים של העסק.',
+      tags: ['אוטומציה', 'סוכני AI', 'איפיון מעמיק'],
+    },
+    {
+      id: 'process', label: 'התהליך',
+      still: 'world-build/still_3_process.webp',
+      clip: 'world-build/vid/leg_3.mp4',
+      clipMobile: 'world-build/vid/leg_3-m.mp4',
+      accent: '#C6F24E',
+      eyebrow: '03 · איך זה עובד',
+      title: 'מאיפיון ועד ליווי',
+      body: 'איפיון, פיתוח בספרינטים, הטמעה בשטח וליווי אחרי ההשקה — תהליך אחד שקוף.',
+      tags: ['איפיון', 'פיתוח', 'הטמעה', 'ליווי'],
+    },
+    {
+      id: 'edu', label: 'הדור הבא',
+      still: 'world-build/still_4_edu.webp',
+      clip: 'world-build/vid/leg_4.mp4',
+      clipMobile: 'world-build/vid/leg_4-m.mp4',
+      accent: '#FF8A3C',
+      eyebrow: '04 · מגדלים את הדור הבא',
+      title: 'AI ואלקטרוניקה לבתי ספר',
+      body: 'סדנאות, האקתונים והכשרות מורים — התלמידים בונים טכנולוגיה בידיים.',
+      tags: ['סדנאות', 'האקתונים', 'הכשרת מורים'],
+    },
+    {
+      id: 'contact', label: 'בואו נדבר',
+      still: 'world-build/still_5_contact.webp',
+      clip: 'world-build/vid/leg_5.mp4',
+      clipMobile: 'world-build/vid/leg_5-m.mp4',
+      accent: '#C6F24E',
+      scroll: 1.7, linger: 0.5,
+      eyebrow: '05 · בואו נדבר',
+      title: 'בואו נבנה משהו חכם',
+      body: 'דברו ישירות עם לידור דהן, מנכ״ל Corewise — lidor@corewise.co.il · 050-759-4477',
+      tags: [],
+      cta: {
+        primary: { label: 'וואטסאפ ללידור', href: 'https://wa.me/972507594477' },
+        secondary: { label: 'לאתר המלא', href: 'classic.html' },
+      },
+    },
+  ],
+  connectors: [],
+});
 </script>
 </body>
 </html>
