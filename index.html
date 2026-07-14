@@ -27,6 +27,12 @@ html, body { background: #0B0E11; margin: 0; }
   transition: color .2s, border-color .2s;
 }
 .classic-link:hover { color: #C6F24E; border-color: #C6F24E; }
+/* RTL fix: in RTL the over-constrained scrim box snaps right; pin it back under the copy (left) */
+@media (min-width: 861px) {
+  .sw-copylayer::before {
+    left: 0 !important; right: auto !important;
+  }
+}
 </style>
 </head>
 <body>
