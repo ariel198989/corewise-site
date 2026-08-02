@@ -3,3 +3,6 @@ world2-build/vid/*.raw.mp4
 world2-build/*.png
 hero_seq_source.mp4
 works/*.png
+node_modules/
+package*.json
+mobile-qa.mjs

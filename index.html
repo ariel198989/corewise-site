@@ -131,9 +131,41 @@ html, body { background: #F2F2ED; margin: 0; }
 }
 .sw-holo.is-live .sw-holo__screen { pointer-events: auto; cursor: pointer; }
 @media (max-width: 860px) {
-  .sw-holo__screen { width: 76vw; right: 5vw; top: 9vh; }
-  .sw-holo__screen--1 { width: 62vw; right: 18vw; top: 34vh; }
+  .sw-holo__screen { width: 70vw; right: 4vw; top: 9vh; }
+  .sw-holo__screen--1 { width: 52vw; right: auto; left: 4vw; top: 29vh; }
   .sw-holo__anchor { display: none; }
+  .sw-holo__desc { display: none; }
+}
+
+/* ---- VR teleport bar: jump between departments ---- */
+.vr-bar {
+  position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+  z-index: 85; display: flex; align-items: center; gap: 4px;
+  background: rgba(255,255,255,.55);
+  -webkit-backdrop-filter: blur(16px) saturate(1.2);
+  backdrop-filter: blur(16px) saturate(1.2);
+  border: 1px solid rgba(255,255,255,.7);
+  border-radius: 100px; padding: 6px;
+  box-shadow: 0 16px 44px rgba(20,24,28,.18);
+  font-family: 'Miriam Libre', sans-serif;
+  transition: opacity .4s ease;
+}
+.past-world .vr-bar { opacity: 0; pointer-events: none; }
+.vr-bar button {
+  border: 0; cursor: pointer; font: inherit;
+  background: transparent; color: #14181C;
+  border-radius: 100px; padding: 9px 14px; font-weight: 700; font-size: .95rem;
+  transition: background .2s;
+}
+.vr-bar button:hover { background: rgba(20,24,28,.07); }
+.vr-bar .vr-label {
+  min-width: 128px; text-align: center; font-size: .88rem; font-weight: 700; color: #14181C;
+  display: flex; flex-direction: column; line-height: 1.2; gap: 1px;
+}
+.vr-bar .vr-label small { font-family: 'IBM Plex Mono', monospace; font-size: .62rem; color: rgba(20,24,28,.55); letter-spacing: .12em; direction: ltr; font-weight: 400; }
+@media (max-width: 860px) {
+  .vr-bar { bottom: max(14px, env(safe-area-inset-bottom)); width: calc(100vw - 24px); justify-content: space-between; }
+  .vr-bar .vr-label { min-width: 0; flex: 1; }
 }
 @media (prefers-reduced-motion: reduce) {
   .sw-holo__inner { animation: none; }
@@ -822,6 +854,41 @@ fetch('tour-content.json').then(r => r.json()).then(cfg => {
   const world = document.getElementById('world');
   const setPast = () => document.documentElement.classList.toggle('past-world', scrollY > world.offsetHeight - innerHeight * 0.6);
   addEventListener('scroll', setPast, { passive: true }); setPast();
+
+  /* ---- VR teleport bar ---- */
+  const widths = sections.map(s => s.scroll || 1.3);
+  const starts = []; let acc = 0;
+  widths.forEach(w => { starts.push(acc); acc += w; });
+  const names = sections.map(s => s.label);
+
+  const bar = document.createElement('div');
+  bar.className = 'vr-bar';
+  bar.innerHTML =
+    '<button class="vr-prev" aria-label="המחלקה הקודמת">→</button>' +
+    '<span class="vr-label"><span class="vr-name"></span><small class="vr-idx"></small></span>' +
+    '<button class="vr-next" aria-label="המחלקה הבאה">←</button>';
+  document.body.appendChild(bar);
+  const nameEl = bar.querySelector('.vr-name'), idxEl = bar.querySelector('.vr-idx');
+
+  const vh = () => window.innerHeight;
+  const current = () => {
+    const p = scrollY / vh();
+    let c = 0;
+    starts.forEach((st, i) => { if (p >= st) c = i; });
+    return c;
+  };
+  const go = i => {
+    i = Math.max(0, Math.min(sections.length - 1, i));
+    window.scrollTo({ top: (starts[i] + widths[i] * 0.5) * vh(), behavior: 'smooth' });
+  };
+  bar.querySelector('.vr-next').addEventListener('click', () => go(current() + 1));
+  bar.querySelector('.vr-prev').addEventListener('click', () => go(current() - 1));
+  const refresh = () => {
+    const c = current();
+    nameEl.textContent = names[c];
+    idxEl.textContent = (c + 1) + ' / ' + sections.length;
+  };
+  addEventListener('scroll', refresh, { passive: true }); refresh();
 });
 </script>
 </body>
