@@ -160,7 +160,13 @@ function mountScrollWorld(container, config) {
       (s.body ? `<p class="sw-copy__body">${esc(s.body)}</p>` : '') +
       (s.tags && s.tags.length ? `<ul class="sw-copy__tags">${s.tags.map(t => `<li>${esc(t)}</li>`).join('')}</ul>` : '') +
       (s.stats && s.stats.length ? `<div class="sw-stats">${s.stats.map(st => `<div class="sw-stat"><b>${esc(st.n)}</b><span>${esc(st.l)}</span></div>`).join('')}</div>` : '') +
+      (s.explore ? `<button class="sw-copy__explore" type="button">🥽 היכנסו לחדר</button>` : '') +
       (s.cta ? `<div class="sw-copy__cta">${ctaBtns(s.cta)}</div>` : '');
+    if (s.explore) {
+      c.querySelector('.sw-copy__explore').addEventListener('click', () => {
+        if (window.RoomExplorer) window.RoomExplorer.open(s.explore);
+      });
+    }
     copylayer.appendChild(c); copies.push(c);
 
     /* AR holo-screens: works float INSIDE the scene, anchored with an AR line */

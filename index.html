@@ -171,6 +171,81 @@ html, body { background: #F2F2ED; margin: 0; }
   .sw-holo__inner { animation: none; }
 }
 
+/* ---- RoomExplorer (360° VR) ---- */
+.rx { position: fixed; inset: 0; z-index: 300; display: none; background: #0c0f12; }
+.rx.rx-on { display: block; animation: rxIn .5s ease; }
+@keyframes rxIn { from { opacity: 0 } to { opacity: 1 } }
+.rx-lock, .rx-lock body { overflow: hidden !important; }
+.rx-canvas { position: absolute; inset: 0; width: 100%; height: 100%; touch-action: none; cursor: grab; }
+.rx-canvas:active { cursor: grabbing; }
+.rx-top {
+  position: absolute; top: 0; left: 0; right: 0; z-index: 5;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: max(14px, env(safe-area-inset-top)) 18px 12px;
+  background: linear-gradient(rgba(12,15,18,.55), transparent);
+  font-family: 'Miriam Libre', sans-serif;
+}
+.rx-title { color: #fff; font-weight: 700; font-size: 1.05rem; text-shadow: 0 2px 10px rgba(0,0,0,.5); }
+.rx-actions button {
+  border: 1px solid rgba(255,255,255,.35); background: rgba(255,255,255,.14);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  color: #fff; font-size: 1.05rem; border-radius: 100px; width: 42px; height: 42px;
+  cursor: pointer; margin-right: 8px;
+}
+.rx-actions .rx-gyro.on { background: #6E9B0E; border-color: #6E9B0E; }
+.rx-hint {
+  position: absolute; bottom: max(18px, env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%);
+  z-index: 5; color: rgba(255,255,255,.85); font-family: 'Miriam Libre', sans-serif; font-size: .85rem;
+  background: rgba(12,15,18,.45); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  padding: 8px 18px; border-radius: 100px; pointer-events: none;
+}
+.rx-load {
+  position: absolute; inset: 0; display: grid; place-items: center; z-index: 4;
+  color: #fff; font-family: 'Miriam Libre', sans-serif; background: #0c0f12;
+}
+.rx-spots { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
+.rx-spot {
+  position: absolute; transform: translate(-50%, -50%);
+  display: flex; align-items: center; gap: 8px; pointer-events: auto; cursor: pointer;
+  border: 0; background: transparent; font-family: 'Miriam Libre', sans-serif;
+}
+.rx-spot i {
+  width: 18px; height: 18px; border-radius: 50%; flex: none;
+  background: rgba(198,242,78,.95); border: 2px solid #fff;
+  box-shadow: 0 0 0 6px rgba(198,242,78,.25), 0 0 18px rgba(198,242,78,.8);
+  animation: rxPulse 2s ease-in-out infinite;
+}
+@keyframes rxPulse { 0%,100% { box-shadow: 0 0 0 6px rgba(198,242,78,.25), 0 0 18px rgba(198,242,78,.8) } 50% { box-shadow: 0 0 0 12px rgba(198,242,78,.1), 0 0 26px rgba(198,242,78,.9) } }
+.rx-spot span {
+  color: #fff; font-size: .85rem; font-weight: 700;
+  background: rgba(12,15,18,.6); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  padding: 6px 13px; border-radius: 100px; white-space: nowrap;
+  border: 1px solid rgba(255,255,255,.18);
+}
+.rx-card {
+  position: absolute; z-index: 6; right: 50%; bottom: 12vh; transform: translateX(50%);
+  width: min(440px, calc(100vw - 36px));
+  background: rgba(255,255,255,.92); -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px);
+  border-radius: 18px; padding: 22px 24px; font-family: 'Miriam Libre', sans-serif;
+  box-shadow: 0 30px 80px rgba(0,0,0,.45); direction: rtl;
+  animation: rxIn .35s ease;
+}
+.rx-card h3 { margin: 0 0 8px; font-size: 1.15rem; color: #14181C; }
+.rx-card p { margin: 0; font-size: .95rem; line-height: 1.65; color: rgba(20,24,28,.8); }
+.rx-card a { display: inline-block; margin-top: 12px; color: #6E9B0E; font-weight: 700; text-decoration: none; }
+.rx-card__close {
+  position: absolute; top: 10px; left: 10px; border: 0; background: rgba(20,24,28,.08);
+  width: 30px; height: 30px; border-radius: 50%; cursor: pointer; color: #14181C;
+}
+/* enter-room button on glass panels */
+.sw-copy__explore {
+  margin-top: 16px; display: inline-flex; align-items: center; gap: 8px;
+  border: 0; cursor: pointer; font-family: 'Miriam Libre', sans-serif; font-weight: 700; font-size: .95rem;
+  color: #fff; background: #14181C; border-radius: 100px; padding: 11px 22px;
+  transition: transform .2s, box-shadow .2s;
+}
+.sw-copy__explore:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(20,24,28,.3); }
+
 /* light topbar */
 .sw-topbar {
   background: rgba(255,255,255,.55) !important;
@@ -814,6 +889,7 @@ const io = new IntersectionObserver(entries => {
 }, { threshold: 0.12 });
 document.querySelectorAll(".reveal").forEach(el => io.observe(el));
 </script>
+<script src="explore.js"></script>
 <script src="scrub-engine.js"></script>
 <script>
 fetch('tour-content.json').then(r => r.json()).then(cfg => {
@@ -834,6 +910,11 @@ fetch('tour-content.json').then(r => r.json()).then(cfg => {
     s.id = d.id; s.label = labels[d.id] || d.id; s.accent = accents[d.id];
     s.eyebrow = d.eyebrow; s.title = d.title; s.sub = d.sub; s.body = d.body;
     s.stats = d.stats; s.works = d.works;
+    if (d.hotspots) s.explore = {
+      title: d.title,
+      pano: 'world2-build/pano_' + d.id + '.webp',
+      hotspots: d.hotspots,
+    };
     if (d.cta) s.cta = {
       primary: { label: 'וואטסאפ ללידור', href: d.cta.whatsapp },
       secondary: { label: 'לכל הפרטים', href: '#full' },

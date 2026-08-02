@@ -6,3 +6,4 @@ works/*.png
 node_modules/
 package*.json
 mobile-qa.mjs
+gen-panos.mjs
