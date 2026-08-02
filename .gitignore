@@ -1,9 +1,12 @@
 world-build/
-world2-build/vid/*.raw.mp4
+world2-build/vid/
 world2-build/*.png
 hero_seq_source.mp4
 works/*.png
+avatars/*.png
 node_modules/
 package*.json
-mobile-qa.mjs
-gen-panos.mjs
+*-qa.mjs
+gen-*.mjs
+kie-pipeline-local.mjs
+seq/
