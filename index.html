@@ -230,6 +230,10 @@ html, body { background: #F2F2ED; margin: 0; }
   box-shadow: 0 30px 80px rgba(0,0,0,.45); direction: rtl;
   animation: rxIn .35s ease;
 }
+.rx-card__img {
+  display: block; width: calc(100% + 48px); margin: -22px -24px 14px;
+  border-radius: 18px 18px 0 0; max-height: 200px; object-fit: cover; object-position: top;
+}
 .rx-card h3 { margin: 0 0 8px; font-size: 1.15rem; color: #14181C; }
 .rx-card p { margin: 0; font-size: .95rem; line-height: 1.65; color: rgba(20,24,28,.8); }
 .rx-card a { display: inline-block; margin-top: 12px; color: #6E9B0E; font-weight: 700; text-decoration: none; }
@@ -898,7 +902,7 @@ document.querySelectorAll(".reveal").forEach(el => io.observe(el));
 <script src="explore.js"></script>
 <script src="scrub-engine.js"></script>
 <script>
-fetch('tour-content.json').then(r => r.json()).then(cfg => {
+fetch('tour-content.json?v=' + Date.now()).then(r => r.json()).then(cfg => {
   const media = {
     lobby:  { still: 'world2-build/still_0_lobby.webp',  clip: 'world2-build/vid/leg_0.mp4', clipMobile: 'world2-build/vid/leg_0-m.mp4', scroll: 1.5, linger: 0.35 },
     video:  { still: 'world2-build/still_1_video.webp',  clip: 'world2-build/vid/leg_1.mp4', clipMobile: 'world2-build/vid/leg_1-m.mp4' },

@@ -28,7 +28,7 @@
       '</div>' +
       '<div class="rx-hint">גררו כדי להסתכל סביב · לחצו על הנקודות</div>' +
       '<div class="rx-spots"></div>' +
-      '<div class="rx-card" hidden><button class="rx-card__close">✕</button><h3></h3><p></p><a target="_blank" rel="noopener" hidden></a></div>' +
+      '<div class="rx-card" hidden><button class="rx-card__close">✕</button><img class="rx-card__img" alt="" hidden><h3></h3><p></p><a target="_blank" rel="noopener" hidden></a></div>' +
       '<div class="rx-load">טוען חדר…</div>';
     document.body.appendChild(ui);
 
@@ -59,6 +59,8 @@
     if (!show) { c.hidden = true; return; }
     c.querySelector('h3').textContent = h.title;
     c.querySelector('p').textContent = h.text || '';
+    const im = c.querySelector('.rx-card__img');
+    if (h.img) { im.src = h.img; im.hidden = false; } else { im.hidden = true; im.removeAttribute('src'); }
     const a = c.querySelector('a');
     if (h.link) { a.href = h.link; a.textContent = h.linkLabel || 'פתחו ←'; a.hidden = false; }
     else a.hidden = true;
