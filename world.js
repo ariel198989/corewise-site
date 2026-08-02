@@ -1,5 +1,5 @@
-/* Corewise World — free-roam 360 campus walk with an avatar companion.
-   No scroll. You stand in a room, look around, and walk through doors. */
+/* Corewise World — free-roam 360 campus.
+   No scroll: you stand in a room, look around, and walk through doors. */
 (() => {
   const THREE_SRC = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/0.152.2/three.min.js';
   const WA = 'https://wa.me/972507594477';
@@ -9,7 +9,7 @@
   let renderer, scene, camera, sphereA, sphereB, rafId;
   let lon = 0, lat = 0, fov = 78, drag = false, px = 0, py = 0;
   let gyro = false, gbase = null, spots = [], doors = [], busy = false;
-  let el = {}, avatar = 'male';
+  let el = {};
 
   const $ = (s, r = document) => r.querySelector(s);
   const deg = d => d * Math.PI / 180;
@@ -33,7 +33,6 @@
     root.className = 'cw';
     root.innerHTML = `
       <canvas class="cw-canvas"></canvas>
-      <div class="cw-avatar"><img alt=""></div>
       <div class="cw-spots"></div>
       <div class="cw-veil"></div>
       <header class="cw-top">
@@ -44,7 +43,13 @@
           <button class="cw-map" title="מפת הקמפוס">🗺️</button>
         </span>
       </header>
-      <div class="cw-hint">גררו כדי להסתכל סביב · לכו דרך הדלתות</div>
+      <div class="cw-hint">גררו או ← → כדי להסתכל · ↑ כדי ללכת קדימה</div>
+      <div class="cw-pad">
+        <button data-k="left" aria-label="שמאלה">←</button>
+        <button data-k="up" class="cw-pad__up" aria-label="קדימה">↑</button>
+        <button data-k="right" aria-label="ימינה">→</button>
+      </div>
+      <div class="cw-compass"><div class="cw-compass__ring"></div></div>
       <a class="cw-wa" href="${WA}" target="_blank" rel="noopener" title="השאירו פרטים בוואטסאפ">
         <svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.1.6 4.2 1.6 6L4 29l8.2-1.6c1.7.9 3.6 1.4 5.8 1.4 6.6 0 12-5.4 12-12S22.6 3 16 3zm0 21.8c-1.9 0-3.7-.5-5.3-1.5l-.4-.2-4.9.9.9-4.8-.3-.4C5 17.8 4.4 16 4.4 15 4.4 8.9 9.9 4.4 16 4.4S27.6 8.9 27.6 15 22.1 24.8 16 24.8zm6.5-8.3c-.4-.2-2.1-1-2.4-1.1-.3-.1-.6-.2-.8.2-.2.4-.9 1.1-1.1 1.3-.2.2-.4.2-.8.1-2.1-.9-3.5-2.7-3.7-3.1-.2-.4 0-.6.2-.8l.5-.6c.2-.2.2-.4.3-.6.1-.2 0-.5 0-.6-.1-.2-.8-2-1.1-2.7-.3-.7-.6-.6-.8-.6h-.7c-.2 0-.6.1-.9.5-.3.4-1.2 1.2-1.2 2.9s1.2 3.4 1.4 3.6c.2.2 2.4 3.7 5.9 5.1 3.5 1.4 3.5.9 4.1.9.6-.1 2.1-.8 2.4-1.7.3-.8.3-1.6.2-1.7-.1-.2-.3-.3-.7-.5z"/></svg>
         <span>השאירו פרטים</span>
@@ -55,12 +60,8 @@
         <div class="cw-intro__in">
           <span class="cw-intro__brand">corewise</span>
           <h1>ברוכים הבאים לקמפוס</h1>
-          <p>בחרו דמות והתחילו לטייל בין המחלקות שלנו — בלי גלילה, פשוט הולכים.</p>
-          <div class="cw-pick">
-            <button data-a="male"><img src="avatars/male.webp" alt=""><span>אורח</span></button>
-            <button data-a="female"><img src="avatars/female.webp" alt=""><span>אורחת</span></button>
-          </div>
-          <button class="cw-start">התחילו את הסיור ←</button>
+          <p>טיילו בין המחלקות שלנו — בלי גלילה. הסתכלו סביב, ולכו דרך הדלתות.</p>
+                    <button class="cw-start">כניסה לקמפוס ←</button>
         </div>
       </div>
       <div class="cw-load" hidden><span></span></div>`;
@@ -68,7 +69,6 @@
     el = {
       root, canvas: $('.cw-canvas', root), spots: $('.cw-spots', root), veil: $('.cw-veil', root),
       room: $('.cw-room', root), hint: $('.cw-hint', root), card: $('.cw-card', root),
-      avatar: $('.cw-avatar img', root), avatarBox: $('.cw-avatar', root),
       intro: $('.cw-intro', root), load: $('.cw-load', root), mapui: $('.cw-mapui', root),
     };
 
@@ -76,11 +76,6 @@
     $('.cw-gyro', root).onclick = toggleGyro;
     $('.cw-map', root).onclick = () => openMap(true);
     $('.cw-mapui__x', root).onclick = () => openMap(false);
-    root.querySelectorAll('.cw-pick button').forEach(b => b.onclick = () => {
-      avatar = b.dataset.a;
-      root.querySelectorAll('.cw-pick button').forEach(x => x.classList.toggle('on', x === b));
-    });
-    root.querySelector('.cw-pick button').classList.add('on');
     $('.cw-start', root).onclick = start;
 
     /* look controls */
@@ -94,16 +89,33 @@
     c.addEventListener('pointerup', () => drag = false);
     c.addEventListener('pointercancel', () => drag = false);
     addEventListener('wheel', e => { fov = Math.max(58, Math.min(92, fov + e.deltaY * 0.04)); }, { passive: true });
+    const K = { ArrowLeft: 'left', ArrowRight: 'right', ArrowUp: 'up', ArrowDown: 'down', a: 'left', d: 'right', w: 'up', s: 'down' };
     addEventListener('keydown', e => {
-      if (e.key === 'Escape') { el.card.hidden = true; openMap(false); }
-      if (e.key === 'ArrowLeft') lon += 6;
-      if (e.key === 'ArrowRight') lon -= 6;
+      if (e.key === 'Escape') { el.card.hidden = true; openMap(false); return; }
+      const k = K[e.key] || K[e.key.toLowerCase()];
+      if (k) { keys[k] = true; keys.shift = e.shiftKey; e.preventDefault(); }
     });
+    addEventListener('keyup', e => {
+      const k = K[e.key] || K[e.key.toLowerCase()];
+      if (k) { keys[k] = false; keys.shift = e.shiftKey; }
+    });
+    addEventListener('blur', () => { keys.left = keys.right = keys.up = keys.down = false; });
+    /* on-screen pad (mobile + mouse) */
+    const pad = $('.cw-pad', root);
+    pad.querySelectorAll('button').forEach(b => {
+      const k = b.dataset.k;
+      const on = e => { e.preventDefault(); keys[k] = true; };
+      const off = () => keys[k] = false;
+      b.addEventListener('pointerdown', on);
+      b.addEventListener('pointerup', off);
+      b.addEventListener('pointerleave', off);
+      b.addEventListener('pointercancel', off);
+    });
+    pump();
     addEventListener('resize', onResize);
   }
 
   function start() {
-    el.avatar.src = 'avatars/' + avatar + '.webp';
     el.intro.classList.add('gone');
     setTimeout(() => el.intro.remove(), 700);
     initGL();
@@ -137,6 +149,28 @@
     camera.lookAt(Math.sin(phi) * Math.sin(th), Math.cos(phi), -Math.sin(phi) * Math.cos(th));
     renderer.render(scene, camera);
     project();
+    if (compassDots.length) {
+      compassDots.forEach(c => {
+        const rel = ((c.yaw - lon) % 360 + 540) % 360 - 180;
+        c.el.style.transform = 'translate(-50%,-50%) rotate(' + rel + 'deg) translateY(-26px)';
+        c.el.classList.toggle('near', Math.abs(rel) < 26);
+      });
+    }
+  }
+  let compassDots = [];
+  function buildCompass(id) {
+    const ring = $('.cw-compass__ring', el.root);
+    ring.innerHTML = '';
+    compassDots = [];
+    if (id !== 'lobby') { el.root.querySelector('.cw-compass').style.display = 'none'; return; }
+    el.root.querySelector('.cw-compass').style.display = 'block';
+    WINGS.forEach(w => {
+      const d = document.createElement('i');
+      d.className = 'cw-compass__d';
+      d.title = ROOMS[w].title;
+      ring.appendChild(d);
+      compassDots.push({ el: d, yaw: BEARING[w] });
+    });
   }
   function project() {
     const hw = innerWidth / 2, hh = innerHeight / 2;
@@ -150,40 +184,86 @@
 
   /* ---------- rooms ---------- */
   const ORDER = ['lobby', 'video', 'apps', 'ai', 'stage', 'school', 'team'];
+  /* The lobby is a hub: the 6 departments ring it, each at its own compass bearing.
+     Turn in the lobby and you face a different department's door. */
+  const WINGS = ['video', 'apps', 'ai', 'stage', 'school', 'team'];
+  const BEARING = {};                       /* room -> yaw of its door, seen from the lobby */
+  WINGS.forEach((id, i) => BEARING[id] = -150 + i * 60);   /* -150,-90,-30,30,90,150 */
+
   function doorsFor(id) {
     if (id === 'lobby') {
-      const others = ORDER.filter(x => x !== 'lobby');
-      const span = 300 / (others.length - 1);
-      return others.map((to, i) => ({ to, yaw: -150 + i * span, pitch: -6 }));
+      return WINGS.map(to => ({ to, yaw: BEARING[to], pitch: -6 }));
     }
-    const i = ORDER.indexOf(id);
-    const out = [{ to: 'lobby', yaw: 180, pitch: -6, label: 'חזרה ללובי' }];
-    if (i > 1) out.push({ to: ORDER[i - 1], yaw: -110, pitch: -6 });
-    if (i < ORDER.length - 1) out.push({ to: ORDER[i + 1], yaw: 60, pitch: -6, next: true });
-    return out;
+    /* inside a wing: the way back to the lobby sits opposite its own bearing,
+       and the two neighbouring wings are reachable to either side. */
+    const i = WINGS.indexOf(id);
+    const prev = WINGS[(i - 1 + WINGS.length) % WINGS.length];
+    const next = WINGS[(i + 1) % WINGS.length];
+    return [
+      { to: 'lobby', yaw: 180, pitch: -6, label: '← חזרה ללובי', home: true },
+      { to: prev, yaw: -75, pitch: -6 },
+      { to: next, yaw: 75, pitch: -6, next: true },
+    ];
   }
 
-  /* Walk the avatar toward a door: turn to face it, stride away, shrink into the distance. */
+  /* Walk toward a door: first TURN to face it, then walk straight ahead into it. */
   function walkTo(doorYaw, done) {
     if (reduce) { done(); return; }
-    const box = el.avatarBox;
-    /* how far off-centre the door is → which way the avatar drifts */
-    let rel = ((doorYaw - lon) % 360 + 540) % 360 - 180;   /* -180..180 */
-    const dx = Math.max(-1, Math.min(1, rel / 60));         /* screen-x drift */
-    box.classList.remove('walk');
-    box.classList.add('walking');
-    box.style.setProperty('--dx', dx.toFixed(2));
-    /* camera eases toward the door while he walks */
-    const lon0 = lon, t0 = performance.now(), dur = 2000;
-    const ease = k => k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
-    const step = () => {
-      const k = Math.min(1, (performance.now() - t0) / dur);
-      lon = lon0 + rel * ease(k) * 0.75;
-      if (k < 1) requestAnimationFrame(step);
-      else { box.classList.remove('walking'); done(); }
+    const lon0 = lon;
+    const rel = ((doorYaw - lon0) % 360 + 540) % 360 - 180;   /* signed turn needed */
+    const TURN = Math.min(900, 260 + Math.abs(rel) * 4);      /* longer turn for wider angles */
+    const WALK = 2200;
+    const easeIO = k => k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+    const t0 = performance.now();
+
+    /* phase 1: pivot the view to face the door */
+
+    const turn = () => {
+      const k = Math.min(1, (performance.now() - t0) / TURN);
+      lon = lon0 + rel * easeIO(k);            /* face the door fully */
+      if (k < 1) return requestAnimationFrame(turn);
+      lon = lon0 + rel;
+      const t1 = performance.now();
+      const fov0 = fov;
+      const fwd = () => {
+        const k2 = Math.min(1, (performance.now() - t1) / WALK);
+        fov = fov0 - 12 * easeIO(k2);          /* world creeps closer as he advances */
+        if (k2 < 1) return requestAnimationFrame(fwd);
+        fov = fov0;
+        done();
+      };
+      requestAnimationFrame(fwd);
     };
-    requestAnimationFrame(step);
+    requestAnimationFrame(turn);
   }
+
+  /* ---------- keyboard / on-screen movement (game style) ---------- */
+  const keys = {};
+  function nearestDoor() {
+    let best = null, bestAbs = 999;
+    doors.forEach((d, i) => {
+      const yaw = doorYaws[i];
+      const rel = Math.abs(((yaw - lon) % 360 + 540) % 360 - 180);
+      if (rel < bestAbs) { bestAbs = rel; best = d; }
+    });
+    return bestAbs < 34 ? best : null;   /* only if you're actually facing it */
+  }
+  function pump() {
+    requestAnimationFrame(pump);
+    if (busy || !cur) return;
+    const sp = (keys.shift ? 2.4 : 1.35);
+    if (keys.left) lon += sp;
+    if (keys.right) lon -= sp;
+    if (keys.up) { fov = Math.max(58, fov - 0.55); }
+    else if (keys.down) { fov = Math.min(92, fov + 0.55); }
+    /* holding forward while facing a door walks you through it */
+    if (keys.up) {
+      const d = nearestDoor();
+      if (d) { fwdHold += 1; if (fwdHold > 34) { fwdHold = 0; d.el.click(); } }
+      else fwdHold = 0;
+    } else fwdHold = 0;
+  }
+  let fwdHold = 0, doorYaws = [];
 
   function go(id, first, doorYaw) {
     if (busy || !ROOMS[id]) return;
@@ -224,13 +304,17 @@
   }
 
   function finish(id, d) {
+    const from = cur;
     cur = id;
     el.load.hidden = true;
     el.room.textContent = d.title;
-    lat = 0; lon = 0;
+    lat = 0;
+    /* keep your bearings: entering a wing you face into it; returning to the
+       lobby you arrive looking back at the door you came out of. */
+    lon = (id === 'lobby' && from && BEARING[from] != null) ? BEARING[from] : 0;
     buildMarkers(d);
+    buildCompass(id);
     busy = false;
-    el.avatarBox.classList.remove('walk'); void el.avatarBox.offsetWidth; el.avatarBox.classList.add('walk');
     el.hint.classList.toggle('show', id === 'lobby');
   }
 
@@ -245,11 +329,13 @@
       el.spots.appendChild(b);
       spots.push({ el: b, v: vec(h.yaw, h.pitch) });
     });
+    doorYaws = [];
     doorsFor(d.id).forEach(dr => {
+      doorYaws.push(dr.yaw);
       const t = ROOMS[dr.to];
       const b = document.createElement('button');
-      b.className = 'cw-door' + (dr.next ? ' is-next' : '');
-      b.innerHTML = '<span class="cw-door__l">' + (dr.label || t.title) + '</span><i class="cw-door__a">↓</i>';
+      b.className = 'cw-door' + (dr.next ? ' is-next' : '') + (dr.home ? ' is-home' : '');
+      b.innerHTML = '<span class="cw-door__l">' + (dr.label || t.title) + '</span><i class="cw-door__a">' + (dr.home ? '⌂' : '↓') + '</i>';
       b.onclick = () => go(dr.to, false, dr.yaw);
       el.spots.appendChild(b);
       doors.push({ el: b, v: vec(dr.yaw, dr.pitch) });
