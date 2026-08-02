@@ -19,7 +19,7 @@
     CFG = cfg;
     cfg.departments.forEach(d => ROOMS[d.id] = d);
     buildDOM();
-    loadThree().then(() => { intro(); });
+    loadThree().then(start);
   });
 
   const loadThree = () => new Promise(res => {
@@ -56,27 +56,18 @@
       </a>
       <div class="cw-card" hidden><button class="cw-card__x">✕</button><img hidden alt=""><h3></h3><p></p><a target="_blank" rel="noopener" hidden></a></div>
       <div class="cw-mapui" style="display:none"><div class="cw-mapui__in"><h3>מפת הקמפוס</h3><div class="cw-mapui__grid"></div><button class="cw-mapui__x">סגירה</button></div></div>
-      <div class="cw-intro">
-        <div class="cw-intro__in">
-          <span class="cw-intro__brand">corewise</span>
-          <h1>ברוכים הבאים לקמפוס</h1>
-          <p>טיילו בין המחלקות שלנו — בלי גלילה. הסתכלו סביב, ולכו דרך הדלתות.</p>
-                    <button class="cw-start">כניסה לקמפוס ←</button>
-        </div>
-      </div>
-      <div class="cw-load" hidden><span></span></div>`;
+      <div class="cw-load"><span></span></div>`;
     document.body.appendChild(root);
     el = {
       root, canvas: $('.cw-canvas', root), spots: $('.cw-spots', root), veil: $('.cw-veil', root),
       room: $('.cw-room', root), hint: $('.cw-hint', root), card: $('.cw-card', root),
-      intro: $('.cw-intro', root), load: $('.cw-load', root), mapui: $('.cw-mapui', root),
+ load: $('.cw-load', root), mapui: $('.cw-mapui', root),
     };
 
     $('.cw-card__x', root).onclick = () => el.card.hidden = true;
     $('.cw-gyro', root).onclick = toggleGyro;
     $('.cw-map', root).onclick = () => openMap(true);
     $('.cw-mapui__x', root).onclick = () => openMap(false);
-    $('.cw-start', root).onclick = start;
 
     /* look controls */
     const c = el.canvas;
@@ -116,12 +107,9 @@
   }
 
   function start() {
-    el.intro.classList.add('gone');
-    setTimeout(() => el.intro.remove(), 700);
     initGL();
-    go('lobby', true);
+    go("lobby", true);
   }
-  function intro() { /* three ready; intro already visible */ }
 
   /* ---------- GL ---------- */
   function initGL() {

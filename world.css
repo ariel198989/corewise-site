@@ -121,23 +121,6 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
 .cw-mapui__grid button:hover { border-color: var(--cw-lime-d); }
 .cw-mapui__x { margin-top: 16px; width: 100%; border: 0; background: var(--cw-ink); color: #fff; border-radius: 100px; padding: 12px; font: inherit; font-weight: 700; cursor: pointer; }
 
-/* intro */
-.cw-intro {
-  position: absolute; inset: 0; z-index: 60; display: grid; place-items: center;
-  background: radial-gradient(circle at 50% 40%, #1a2026, #0c0f12 70%);
-  transition: opacity .6s ease;
-}
-.cw-intro.gone { opacity: 0; pointer-events: none; }
-.cw-intro__in { text-align: center; direction: rtl; padding: 24px; }
-.cw-intro__brand { font-family: 'IBM Plex Mono', monospace; color: var(--cw-lime); letter-spacing: .18em; font-size: .8rem; }
-.cw-intro h1 { color: #fff; font-size: clamp(1.8rem, 5vw, 3rem); margin: 12px 0 8px; }
-.cw-intro p { color: rgba(255,255,255,.7); margin: 0 0 26px; font-size: 1rem; }
-.cw-start {
-  border: 0; background: var(--cw-lime); color: #0c0f12; font-weight: 700; font-size: 1.05rem;
-  padding: 15px 34px; border-radius: 100px; cursor: pointer; font-family: inherit;
-  box-shadow: 0 14px 40px rgba(198,242,78,.3);
-}
-.cw-start:hover { transform: translateY(-2px); }
 
 .cw-load { position: absolute; inset: 0; z-index: 45; display: grid; place-items: center; pointer-events: none; }
 .cw-load span { width: 42px; height: 42px; border-radius: 50%; border: 3px solid rgba(255,255,255,.25); border-top-color: var(--cw-lime); animation: cwSpin .8s linear infinite; }
@@ -181,3 +164,9 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
 
 /* home door reads differently from wing doors */
 .cw-door.is-home .cw-door__l { background: rgba(20,24,28,.82); color: #fff; box-shadow: 0 10px 30px rgba(0,0,0,.4), 0 0 0 2px rgba(255,255,255,.25); }
+
+/* first paint: soft brand splash while the lobby texture streams in */
+.cw-load { position: fixed; inset: 0; z-index: 45; display: grid; place-items: center; pointer-events: none;
+  background: radial-gradient(circle at 50% 45%, #1a2026, #0c0f12 72%); transition: opacity .6s ease; }
+.cw-load[hidden] { display: none; }
+.cw-load span { width: 44px; height: 44px; border-radius: 50%; border: 3px solid rgba(255,255,255,.2); border-top-color: var(--cw-lime); animation: cwSpin .8s linear infinite; }
