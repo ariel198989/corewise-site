@@ -163,12 +163,39 @@
     return out;
   }
 
-  function go(id, first) {
+  /* Walk the avatar toward a door: turn to face it, stride away, shrink into the distance. */
+  function walkTo(doorYaw, done) {
+    if (reduce) { done(); return; }
+    const box = el.avatarBox;
+    /* how far off-centre the door is → which way the avatar drifts */
+    let rel = ((doorYaw - lon) % 360 + 540) % 360 - 180;   /* -180..180 */
+    const dx = Math.max(-1, Math.min(1, rel / 60));         /* screen-x drift */
+    box.classList.remove('walk');
+    box.classList.add('walking');
+    box.style.setProperty('--dx', dx.toFixed(2));
+    /* camera eases toward the door while he walks */
+    const lon0 = lon, t0 = performance.now(), dur = 2000;
+    const ease = k => k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+    const step = () => {
+      const k = Math.min(1, (performance.now() - t0) / dur);
+      lon = lon0 + rel * ease(k) * 0.75;
+      if (k < 1) requestAnimationFrame(step);
+      else { box.classList.remove('walking'); done(); }
+    };
+    requestAnimationFrame(step);
+  }
+
+  function go(id, first, doorYaw) {
     if (busy || !ROOMS[id]) return;
     busy = true;
     const d = ROOMS[id];
-    el.load.hidden = false;
     el.card.hidden = true;
+    if (!first && doorYaw != null) { walkTo(doorYaw, () => enter(id, d, first)); return; }
+    enter(id, d, first);
+  }
+
+  function enter(id, d, first) {
+    el.load.hidden = false;
     new THREE.TextureLoader().load('world2-build/pano_' + id + '.webp', tex => {
       tex.colorSpace = THREE.SRGBColorSpace;
       if (first) {
@@ -223,7 +250,7 @@
       const b = document.createElement('button');
       b.className = 'cw-door' + (dr.next ? ' is-next' : '');
       b.innerHTML = '<span class="cw-door__l">' + (dr.label || t.title) + '</span><i class="cw-door__a">↓</i>';
-      b.onclick = () => go(dr.to);
+      b.onclick = () => go(dr.to, false, dr.yaw);
       el.spots.appendChild(b);
       doors.push({ el: b, v: vec(dr.yaw, dr.pitch) });
     });

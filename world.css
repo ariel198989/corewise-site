@@ -19,11 +19,28 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
 }
 .cw-avatar img { height: 100%; width: auto; display: block; }
 @keyframes cwBreathe { 0%,100% { transform: translateX(-50%) translateY(0) } 50% { transform: translateX(-50%) translateY(-6px) } }
+/* arriving in a new room: step forward into place */
 .cw-avatar.walk { animation: cwWalk .75s cubic-bezier(.3,.7,.3,1) 1, cwBreathe 4.5s ease-in-out infinite .75s; }
 @keyframes cwWalk {
   0%   { transform: translateX(-50%) translateY(9vh) scale(.86); opacity: .75 }
   55%  { transform: translateX(-50%) translateY(-2vh) scale(1.03) }
   100% { transform: translateX(-50%) translateY(0) scale(1); opacity: 1 }
+}
+/* leaving: actually walk toward the chosen door, shrinking into the distance */
+.cw-avatar.walking {
+  animation: cwStride .46s ease-in-out infinite, cwDepart 2s cubic-bezier(.22,.55,.4,1) forwards;
+}
+@keyframes cwDepart {
+  0%   { transform: translateX(-50%) translate(0, 0) scale(1); opacity: 1 }
+  25%  { transform: translateX(-50%) translate(calc(var(--dx, 0) * 8vw), -5vh) scale(.78); opacity: 1 }
+  60%  { transform: translateX(-50%) translate(calc(var(--dx, 0) * 18vw), -10vh) scale(.5); opacity: 1 }
+  85%  { opacity: .85 }
+  100% { transform: translateX(-50%) translate(calc(var(--dx, 0) * 26vw), -14vh) scale(.2); opacity: 0 }
+}
+/* footsteps: body bob + weight shift side to side */
+@keyframes cwStride {
+  0%, 100% { margin-bottom: 0; rotate: -1.4deg; filter: drop-shadow(0 20px 24px rgba(0,0,0,.45)) }
+  50%      { margin-bottom: 9px; rotate: 1.4deg; filter: drop-shadow(0 12px 16px rgba(0,0,0,.28)) }
 }
 @media (max-width: 860px) { .cw-avatar { height: 30vh; } }
 
