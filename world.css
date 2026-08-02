@@ -333,3 +333,11 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
 }
 .cw-title.on span { animation: cwTitleIn 1.1s cubic-bezier(.2,.8,.2,1) forwards; }
 @keyframes cwTitleIn { from { transform: translateY(16px) scale(.96); letter-spacing: .12em } to { transform: none; letter-spacing: -.01em } }
+
+/* polish: keep product tags inside the frame, and the room title out of the way */
+.cw-spot__tag {
+  white-space: normal; line-height: 1.35; max-height: 2.7em; overflow: hidden;
+  padding: 20px 11px 9px; font-size: .8rem;
+}
+.cw-title { align-items: start; padding-top: 16vh; }
+.cw-title span { opacity: .92; }
