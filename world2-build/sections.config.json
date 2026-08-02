@@ -1,0 +1,84 @@
+{
+  "diveScroll": 1.3,
+  "connScroll": 0.9,
+  "sections": [
+    {
+      "id": "lobby",
+      "label": "הכניסה",
+      "still": "still_0_lobby.png",
+      "clip": "vid/leg_0.mp4",
+      "clipMobile": "vid/leg_0-m.mp4",
+      "eyebrow": "",
+      "title": "",
+      "body": "",
+      "tags": []
+    },
+    {
+      "id": "video",
+      "label": "וידאו ופרסום",
+      "still": "still_1_video.png",
+      "clip": "vid/leg_1.mp4",
+      "clipMobile": "vid/leg_1-m.mp4",
+      "eyebrow": "",
+      "title": "",
+      "body": "",
+      "tags": []
+    },
+    {
+      "id": "apps",
+      "label": "אפליקציות ומערכות",
+      "still": "still_2_apps.png",
+      "clip": "vid/leg_2.mp4",
+      "clipMobile": "vid/leg_2-m.mp4",
+      "eyebrow": "",
+      "title": "",
+      "body": "",
+      "tags": []
+    },
+    {
+      "id": "ai",
+      "label": "איפיון ו-AI",
+      "still": "still_3_ai.png",
+      "clip": "vid/leg_3.mp4",
+      "clipMobile": "vid/leg_3-m.mp4",
+      "eyebrow": "",
+      "title": "",
+      "body": "",
+      "tags": []
+    },
+    {
+      "id": "stage",
+      "label": "הרצאות וסדנאות",
+      "still": "still_4_stage.png",
+      "clip": "vid/leg_4.mp4",
+      "clipMobile": "vid/leg_4-m.mp4",
+      "eyebrow": "",
+      "title": "",
+      "body": "",
+      "tags": []
+    },
+    {
+      "id": "school",
+      "label": "בתי ספר",
+      "still": "still_5_school.png",
+      "clip": "vid/leg_5.mp4",
+      "clipMobile": "vid/leg_5-m.mp4",
+      "eyebrow": "",
+      "title": "",
+      "body": "",
+      "tags": []
+    },
+    {
+      "id": "team",
+      "label": "הצוות",
+      "still": "still_6_team.png",
+      "clip": "vid/leg_6.mp4",
+      "clipMobile": "vid/leg_6-m.mp4",
+      "eyebrow": "",
+      "title": "",
+      "body": "",
+      "tags": []
+    }
+  ],
+  "connectors": []
+}

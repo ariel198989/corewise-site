@@ -3,39 +3,165 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>Corewise — הליבה החכמה של העסק שלך</title>
-<meta name="description" content="גללו כדי לטוס דרך העולם של Corewise: אפליקציות לעסקים, הטמעת בינה מלאכותית, ותוכניות AI ואלקטרוניקה לבתי ספר.">
+<title>Corewise — סיור בקמפוס | אפליקציות, AI וחינוך</title>
+<meta name="description" content="סיור וירטואלי במחלקות Corewise: וידאו ופרסום, אפליקציות ומערכות, איפיון והטמעת AI, הרצאות וסדנאות, ותוכניות לבתי ספר.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Karantina:wght@300;400;700&family=Miriam+Libre:wght@400;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
+/* ---- bright professional theme for the campus tour ---- */
 :root, .sw-root {
-  --sw-bg: #0B0E11;
-  --sw-ink: #ECEEE6;
-  --sw-ink-soft: rgba(236,238,230,.62);
-  --sw-accent: #C6F24E;
-  --sw-font-display: 'Karantina', sans-serif;
+  --sw-bg: #F2F2ED;
+  --sw-ink: #14181C;
+  --sw-ink-soft: rgba(20,24,28,.6);
+  --sw-accent: #6E9B0E;
+  --sw-font-display: 'Miriam Libre', sans-serif;
   --sw-font-body: 'Miriam Libre', sans-serif;
 }
-html, body { background: #0B0E11; margin: 0; }
+html, body { background: #F2F2ED; margin: 0; }
+
+/* RTL fix: pin the copy scrim under the copy (left) */
+@media (min-width: 861px) {
+  .sw-copylayer::before { left: 0 !important; right: auto !important; opacity: .35; }
+}
+
+/* ---- AR glass panels ---- */
+.sw-copy {
+  background: rgba(255,255,255,.5);
+  -webkit-backdrop-filter: blur(18px) saturate(1.2);
+  backdrop-filter: blur(18px) saturate(1.2);
+  border: 1px solid rgba(255,255,255,.65);
+  box-shadow: 0 24px 60px rgba(20,24,28,.14), inset 0 1px 0 rgba(255,255,255,.8);
+  border-radius: 22px;
+  padding: 26px 28px !important;
+  max-width: 460px;
+}
+.sw-copy__title { letter-spacing: -.02em; }
+.sw-copy__sub { margin: 6px 0 0; font-size: .95rem; font-weight: 700; color: var(--sw-accent); }
+.sw-copy__num { font-family: 'IBM Plex Mono', monospace; }
+
+/* stats chips */
+.sw-stats { display: flex; gap: 18px; margin-top: 18px; flex-wrap: wrap; }
+.sw-stat b { display: block; font-size: 1.6rem; line-height: 1.1; color: var(--sw-ink); }
+.sw-stat span { font-size: .78rem; color: var(--sw-ink-soft); }
+
+/* work cards — mini glass tiles with real screenshots */
+.sw-works { display: flex; flex-direction: column; gap: 12px; margin-top: 18px; }
+.sw-work {
+  display: flex; gap: 12px; align-items: center; text-decoration: none;
+  background: rgba(255,255,255,.65);
+  border: 1px solid rgba(255,255,255,.8);
+  border-radius: 14px; padding: 10px;
+  transition: transform .25s, box-shadow .25s;
+}
+.sw-work:hover { transform: translateY(-3px); box-shadow: 0 14px 34px rgba(20,24,28,.16); }
+.sw-work img {
+  width: 128px; height: 80px; object-fit: cover; object-position: top;
+  border-radius: 9px; flex: none; border: 1px solid rgba(20,24,28,.08);
+}
+.sw-work__meta { min-width: 0; }
+.sw-work__meta b { display: block; color: var(--sw-ink); font-size: .95rem; }
+.sw-work__meta span { display: block; color: var(--sw-ink-soft); font-size: .78rem; line-height: 1.45; margin-top: 2px; }
+.sw-work__meta em { display: block; font-style: normal; color: var(--sw-accent); font-size: .78rem; font-weight: 700; margin-top: 4px; }
+
+/* ---- AR holo-screens: works floating inside the scene ---- */
+.sw-holo {
+  position: fixed; inset: 0; z-index: 18; pointer-events: none;
+  perspective: 1400px; opacity: 0;
+}
+.sw-holo__screen {
+  position: absolute; display: block; text-decoration: none;
+  width: min(40vw, 620px);
+  right: 6vw; top: 13vh;
+  transform:
+    translate3d(calc(var(--sw-mx, 0) * -22px), calc(var(--py, 0vh) + var(--sw-my, 0) * -14px), 0)
+    rotateY(9deg) rotateX(1.5deg);
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+.sw-holo__screen--1 {
+  width: min(30vw, 460px);
+  right: 40vw; top: 40vh;
+  transform:
+    translate3d(calc(var(--sw-mx, 0) * -34px), calc(var(--py, 0vh) * 1.5 + var(--sw-my, 0) * -20px), 0)
+    rotateY(-8deg) rotateX(1deg);
+}
+.sw-holo__inner {
+  display: block; position: relative;
+  border-radius: 16px;
+  animation: holoBob 7s ease-in-out infinite;
+  transition: transform .45s cubic-bezier(.2,.7,.2,1);
+}
+.sw-holo__screen--1 .sw-holo__inner { animation-delay: -3.2s; }
+.sw-holo__screen:hover .sw-holo__inner { transform: scale(1.035) rotateY(-4deg); }
+@keyframes holoBob { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-12px) } }
+.sw-holo__inner img {
+  display: block; width: 100%; border-radius: 16px;
+  border: 1px solid rgba(255,255,255,.85);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--sw-accent) 30%, transparent),
+    0 40px 90px rgba(20,24,28,.35),
+    0 0 44px color-mix(in srgb, var(--sw-accent) 18%, transparent);
+}
+.sw-holo__inner::after {
+  content: ""; position: absolute; inset: 0; border-radius: 16px; pointer-events: none;
+  background: linear-gradient(115deg, rgba(255,255,255,.34) 0%, transparent 28%, transparent 70%, rgba(255,255,255,.14) 100%);
+}
+.sw-holo__chip {
+  position: absolute; top: -15px; right: 16px; z-index: 2;
+  font-family: 'IBM Plex Mono', monospace; font-size: .72rem; letter-spacing: .08em; direction: ltr;
+  color: #fff; background: color-mix(in srgb, var(--sw-accent) 88%, #000);
+  padding: 5px 13px; border-radius: 100px;
+  box-shadow: 0 6px 18px rgba(20,24,28,.3);
+}
+.sw-holo__desc {
+  position: absolute; right: 0; left: 0; bottom: 0; z-index: 1;
+  font-family: 'Miriam Libre', sans-serif; font-size: .82rem; line-height: 1.5; color: #fff;
+  background: linear-gradient(0deg, rgba(14,17,20,.82), rgba(14,17,20,.55) 70%, transparent);
+  padding: 26px 16px 12px; border-radius: 0 0 16px 16px;
+}
+.sw-holo__anchor {
+  position: absolute; top: 100%; right: 22%; width: 1px; height: 16vh;
+  background: linear-gradient(color-mix(in srgb, var(--sw-accent) 65%, transparent), transparent 85%);
+}
+.sw-holo__anchor::after {
+  content: ""; position: absolute; bottom: -3px; right: -3.5px; width: 8px; height: 8px; border-radius: 50%;
+  background: var(--sw-accent);
+  box-shadow: 0 0 12px var(--sw-accent);
+}
+.sw-holo.is-live .sw-holo__screen { pointer-events: auto; cursor: pointer; }
+@media (max-width: 860px) {
+  .sw-holo__screen { width: 76vw; right: 5vw; top: 9vh; }
+  .sw-holo__screen--1 { width: 62vw; right: 18vw; top: 34vh; }
+  .sw-holo__anchor { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sw-holo__inner { animation: none; }
+}
+
+/* light topbar */
+.sw-topbar {
+  background: rgba(255,255,255,.55) !important;
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(20,24,28,.08);
+}
+.sw-topbar, .sw-topbar * { color: var(--sw-ink) !important; }
+.sw-nav__item.is-active { color: #fff !important; }
+
+/* skip-to-content pill */
 .classic-link {
   position: fixed; top: 18px; left: 18px; z-index: 90;
   font-family: 'Miriam Libre', sans-serif; font-size: .82rem;
-  color: rgba(236,238,230,.62); text-decoration: none;
-  border: 1px solid rgba(236,238,230,.18); border-radius: 100px;
-  padding: 7px 16px; backdrop-filter: blur(8px); background: rgba(11,14,17,.4);
+  color: rgba(20,24,28,.65); text-decoration: none;
+  border: 1px solid rgba(20,24,28,.18); border-radius: 100px;
+  padding: 7px 16px; backdrop-filter: blur(8px); background: rgba(255,255,255,.5);
   transition: color .2s, border-color .2s;
 }
-.classic-link:hover { color: #C6F24E; border-color: #C6F24E; }
-/* RTL fix: in RTL the over-constrained scrim box snaps right; pin it back under the copy (left) */
-@media (min-width: 861px) {
-  .sw-copylayer::before {
-    left: 0 !important; right: auto !important;
-  }
-}
-/* full-content block rides above the fixed world stage once you scroll past the flight */
+.classic-link:hover { color: #6E9B0E; border-color: #6E9B0E; }
+
+/* content block after the tour rides above the fixed stage */
 .site-after { position: relative; z-index: 150; background: #0B0E11; }
-/* fade the flight chrome away once we're in the content */
 .sw-topbar, .sw-route, .sw-hint, .sw-scrollbar, .classic-link { transition: opacity .4s ease; }
 .past-world .sw-topbar, .past-world .sw-route, .past-world .sw-hint,
 .past-world .sw-scrollbar, .past-world .classic-link { opacity: 0 !important; pointer-events: none !important; }
@@ -47,7 +173,7 @@ html, body { background: #0B0E11; margin: 0; }
 <a class="classic-link" href="#full">לתוכן המלא ↓</a>
 
 
-<!-- ================= full site content (after the fly-through) ================= -->
+<!-- ================= full site content (after the tour) ================= -->
 <div id="full" class="site-after">
 <style>
 :root{
@@ -656,96 +782,46 @@ const io = new IntersectionObserver(entries => {
 }, { threshold: 0.12 });
 document.querySelectorAll(".reveal").forEach(el => io.observe(el));
 </script>
-<script>
-(() => {
-  const world = document.getElementById("world");
-  const setPast = () => document.documentElement.classList.toggle("past-world", scrollY > world.offsetHeight - innerHeight * 0.6);
-  addEventListener("scroll", setPast, { passive: true }); setPast();
-})();
-</script>
 <script src="scrub-engine.js"></script>
 <script>
-mountScrollWorld(document.getElementById('world'), {
-  brand: { name: 'corewise', href: '#top' },
-  hint: 'גללו כדי לטוס פנימה',
-  nav: true,
-  atmosphere: true,
-  diveScroll: 1.3,
-  sections: [
-    {
-      id: 'core', label: 'הליבה',
-      still: 'world-build/still_0_core.webp',
-      clip: 'world-build/vid/leg_0.mp4',
-      clipMobile: 'world-build/vid/leg_0-m.mp4',
-      accent: '#C6F24E',
-      scroll: 1.6, linger: 0.4,
-      eyebrow: 'Apps · AI · Education',
-      title: 'בונים את הליבה החכמה של העסק שלך',
-      body: 'Corewise מפתחת אפליקציות לעסקים ומטמיעה בינה מלאכותית שמתחילה באיפיון מעמיק.',
-      tags: [],
-    },
-    {
-      id: 'apps', label: 'אפליקציות',
-      still: 'world-build/still_1_apps.webp',
-      clip: 'world-build/vid/leg_1.mp4',
-      clipMobile: 'world-build/vid/leg_1-m.mp4',
-      accent: '#C6F24E',
-      eyebrow: '01 · מה אנחנו עושים',
-      title: 'בניית אפליקציות לעסקים',
-      body: 'מערכות ואפליקציות בהתאמה אישית שפותרות בעיה עסקית אמיתית — ווב, מובייל ופנים־ארגוני.',
-      tags: ['Web', 'Mobile', 'מערכות פנים־ארגוניות'],
-    },
-    {
-      id: 'ai', label: 'בינה מלאכותית',
-      still: 'world-build/still_2_ai.webp',
-      clip: 'world-build/vid/leg_2.mp4',
-      clipMobile: 'world-build/vid/leg_2-m.mp4',
-      accent: '#FF8A3C',
-      eyebrow: '02 · בינה מלאכותית',
-      title: 'הטמעת AI שמתחילה באיפיון',
-      body: 'אוטומציה, צ׳אטבוטים, ניתוח נתונים וסוכני AI — משולבים בתהליכים הקיימים של העסק.',
-      tags: ['אוטומציה', 'סוכני AI', 'איפיון מעמיק'],
-    },
-    {
-      id: 'process', label: 'התהליך',
-      still: 'world-build/still_3_process.webp',
-      clip: 'world-build/vid/leg_3.mp4',
-      clipMobile: 'world-build/vid/leg_3-m.mp4',
-      accent: '#C6F24E',
-      eyebrow: '03 · איך זה עובד',
-      title: 'מאיפיון ועד ליווי',
-      body: 'איפיון, פיתוח בספרינטים, הטמעה בשטח וליווי אחרי ההשקה — תהליך אחד שקוף.',
-      tags: ['איפיון', 'פיתוח', 'הטמעה', 'ליווי'],
-    },
-    {
-      id: 'edu', label: 'הדור הבא',
-      still: 'world-build/still_4_edu.webp',
-      clip: 'world-build/vid/leg_4.mp4',
-      clipMobile: 'world-build/vid/leg_4-m.mp4',
-      accent: '#FF8A3C',
-      eyebrow: '04 · מגדלים את הדור הבא',
-      title: 'AI ואלקטרוניקה לבתי ספר',
-      body: 'סדנאות, האקתונים והכשרות מורים — התלמידים בונים טכנולוגיה בידיים.',
-      tags: ['סדנאות', 'האקתונים', 'הכשרת מורים'],
-    },
-    {
-      id: 'contact', label: 'בואו נדבר',
-      still: 'world-build/still_5_contact.webp',
-      clip: 'world-build/vid/leg_5.mp4',
-      clipMobile: 'world-build/vid/leg_5-m.mp4',
-      accent: '#C6F24E',
-      scroll: 1.7, linger: 0.5,
-      eyebrow: '05 · בואו נדבר',
-      title: 'בואו נבנה משהו חכם',
-      body: 'דברו ישירות עם לידור דהן, מנכ״ל Corewise — lidor@corewise.co.il · 050-759-4477',
-      tags: [],
-      cta: {
-        primary: { label: 'וואטסאפ ללידור', href: 'https://wa.me/972507594477' },
-        secondary: { label: 'לכל הפרטים', href: '#full' },
-      },
-    },
-  ],
-  connectors: [],
+fetch('tour-content.json').then(r => r.json()).then(cfg => {
+  const media = {
+    lobby:  { still: 'world2-build/still_0_lobby.webp',  clip: 'world2-build/vid/leg_0.mp4', clipMobile: 'world2-build/vid/leg_0-m.mp4', scroll: 1.5, linger: 0.35 },
+    video:  { still: 'world2-build/still_1_video.webp',  clip: 'world2-build/vid/leg_1.mp4', clipMobile: 'world2-build/vid/leg_1-m.mp4' },
+    apps:   { still: 'world2-build/still_2_apps.webp',   clip: 'world2-build/vid/leg_2.mp4', clipMobile: 'world2-build/vid/leg_2-m.mp4' },
+    ai:     { still: 'world2-build/still_3_ai.webp',     clip: 'world2-build/vid/leg_3.mp4', clipMobile: 'world2-build/vid/leg_3-m.mp4' },
+    stage:  { still: 'world2-build/still_4_stage.webp',  clip: 'world2-build/vid/leg_4.mp4', clipMobile: 'world2-build/vid/leg_4-m.mp4' },
+    school: { still: 'world2-build/still_5_school.webp', clip: 'world2-build/vid/leg_5.mp4', clipMobile: 'world2-build/vid/leg_5-m.mp4', scroll: 1.5 },
+    team:   { still: 'world2-build/still_6_team.webp',   clip: 'world2-build/vid/leg_6.mp4', clipMobile: 'world2-build/vid/leg_6-m.mp4', scroll: 1.7, linger: 0.5 },
+  };
+  const labels = { lobby: 'הכניסה', video: 'וידאו ופרסום', apps: 'אפליקציות', ai: 'איפיון ו-AI', stage: 'הרצאות', school: 'בתי ספר', team: 'בואו נדבר' };
+  const accents = { lobby: '#6E9B0E', video: '#B4530A', apps: '#6E9B0E', ai: '#B4530A', stage: '#6E9B0E', school: '#B4530A', team: '#6E9B0E' };
+
+  const sections = cfg.departments.map(d => {
+    const s = Object.assign({}, media[d.id]);
+    s.id = d.id; s.label = labels[d.id] || d.id; s.accent = accents[d.id];
+    s.eyebrow = d.eyebrow; s.title = d.title; s.sub = d.sub; s.body = d.body;
+    s.stats = d.stats; s.works = d.works;
+    if (d.cta) s.cta = {
+      primary: { label: 'וואטסאפ ללידור', href: d.cta.whatsapp },
+      secondary: { label: 'לכל הפרטים', href: '#full' },
+    };
+    return s;
+  });
+
+  mountScrollWorld(document.getElementById('world'), {
+    brand: { name: 'corewise', href: '#top' },
+    hint: 'גללו כדי להתחיל בסיור',
+    nav: true,
+    atmosphere: false,
+    diveScroll: 1.3,
+    sections,
+    connectors: [],
+  });
+
+  const world = document.getElementById('world');
+  const setPast = () => document.documentElement.classList.toggle('past-world', scrollY > world.offsetHeight - innerHeight * 0.6);
+  addEventListener('scroll', setPast, { passive: true }); setPast();
 });
 </script>
 </body>

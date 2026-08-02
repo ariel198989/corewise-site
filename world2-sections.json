@@ -1,0 +1,43 @@
+[
+  {
+    "id": "lobby",
+    "label": "הכניסה",
+    "prompt": "Photorealistic architectural interior render, ultra-clean modern tech campus, bright soft natural daylight, white and light-grey materials with warm oak wood and dark charcoal accents, floor-to-ceiling glass, ONE subtle lime-green LED light accent used sparingly, minimalist premium calm atmosphere, empty, unoccupied, no people, no figures, no text, no letters, no logos, cinematic 35mm wide composition, soft shadows. Subject: a grand double-height reception atrium of a technology company; a sculptural white reception desk; mounted on the feature wall behind it, a large minimalist brand emblem sculpture: a perfect thin metal ring with a small glowing lime-green orb floating at its center, softly backlit; a living green wall on the side, soft daylight pouring through skylights, a wide bright corridor opening straight ahead leading deeper into the building.",
+    "leg": "Glide forward through the bright reception atrium, past the sculptural desk, into the wide daylight corridor, and emerge inside a modern video production studio with a large cinema LED screen wall."
+  },
+  {
+    "id": "video",
+    "label": "וידאו ופרסום",
+    "prompt": "Photorealistic architectural interior render, ultra-clean modern tech campus, bright soft natural daylight, white and light-grey materials with warm oak wood and dark charcoal accents, floor-to-ceiling glass, ONE subtle lime-green LED light accent used sparingly, minimalist premium calm atmosphere, empty, unoccupied, no people, no figures, no text, no letters, no logos, cinematic 35mm wide composition, soft shadows. Subject: a high-end video production studio; a huge dark cinema LED wall glowing softly with abstract colorful footage, professional camera on a slider rig, color-grading desk with twin monitors, acoustic wood-slat walls, one soft spotlight; a bright doorway continues at the far side.",
+    "leg": "Glide forward across the video studio, past the camera rig, through the bright doorway, and emerge inside a spacious software studio with long white desks and large monitors."
+  },
+  {
+    "id": "apps",
+    "label": "אפליקציות ומערכות",
+    "prompt": "Photorealistic architectural interior render, ultra-clean modern tech campus, bright soft natural daylight, white and light-grey materials with warm oak wood and dark charcoal accents, floor-to-ceiling glass, ONE subtle lime-green LED light accent used sparingly, minimalist premium calm atmosphere, empty, unoccupied, no people, no figures, no text, no letters, no logos, cinematic 35mm wide composition, soft shadows. Subject: a spacious bright software development studio; long white standing desks with large monitors showing abstract blurred app wireframes, a glass wall covered in neat abstract diagram sketches, warm wood floor, tall windows with soft city light; a glass corridor continues ahead.",
+    "leg": "Glide forward between the white desks, into the glass corridor, and emerge inside an elegant glass strategy room with a large table and a subtle holographic flow diagram floating above it."
+  },
+  {
+    "id": "ai",
+    "label": "איפיון ו-AI",
+    "prompt": "Photorealistic architectural interior render, ultra-clean modern tech campus, bright soft natural daylight, white and light-grey materials with warm oak wood and dark charcoal accents, floor-to-ceiling glass, ONE subtle lime-green LED light accent used sparingly, minimalist premium calm atmosphere, empty, unoccupied, no people, no figures, no text, no letters, no logos, cinematic 35mm wide composition, soft shadows. Subject: an elegant glass-walled strategy room; a long oak conference table, above it floats a single refined translucent holographic flow diagram in soft lime light — thin nodes and connecting lines, architectural and precise; frosted glass walls, one designer pendant lamp; a bright opening continues beyond.",
+    "leg": "Glide forward over the conference table, through the bright opening, and emerge inside a modern wood-lined auditorium with a stage and a large presentation screen."
+  },
+  {
+    "id": "stage",
+    "label": "הרצאות וסדנאות",
+    "prompt": "Photorealistic architectural interior render, ultra-clean modern tech campus, bright soft natural daylight, white and light-grey materials with warm oak wood and dark charcoal accents, floor-to-ceiling glass, ONE subtle lime-green LED light accent used sparingly, minimalist premium calm atmosphere, empty, unoccupied, no people, no figures, no text, no letters, no logos, cinematic 35mm wide composition, soft shadows. Subject: a modern warm auditorium lined with wood-slat acoustic walls; tiered seating in charcoal fabric, an empty stage with a single elegant lectern, a large blank presentation screen glowing softly, warm ambient lighting; a side passage with daylight continues onward.",
+    "leg": "Glide forward down the auditorium aisle, past the stage, through the daylight side passage, and emerge inside a bright colorful school makerspace lab with workbenches and electronics kits."
+  },
+  {
+    "id": "school",
+    "label": "בתי ספר",
+    "prompt": "Photorealistic architectural interior render, ultra-clean modern tech campus, bright soft natural daylight, white and light-grey materials with warm oak wood and dark charcoal accents, floor-to-ceiling glass, ONE subtle lime-green LED light accent used sparingly, minimalist premium calm atmosphere, empty, unoccupied, no people, no figures, no text, no letters, no logos, cinematic 35mm wide composition, soft shadows. Subject: a bright cheerful school makerspace laboratory; light wooden workbenches with neat electronics kits, small circuit boards, tiny wheeled robots, colorful storage bins, a wall of pegboard tools, big windows with sunshine; a warm inviting doorway continues at the end.",
+    "leg": "Glide forward between the workbenches, past a small robot, through the warm doorway, and emerge inside a cozy modern lounge with two armchairs and a wall of glass overlooking a green campus."
+  },
+  {
+    "id": "team",
+    "label": "הצוות",
+    "prompt": "Photorealistic architectural interior render, ultra-clean modern tech campus, bright soft natural daylight, white and light-grey materials with warm oak wood and dark charcoal accents, floor-to-ceiling glass, ONE subtle lime-green LED light accent used sparingly, minimalist premium calm atmosphere, empty, unoccupied, no people, no figures, no text, no letters, no logos, cinematic 35mm wide composition, soft shadows. Subject: a cozy premium lounge at the end of the tour; two elegant armchairs facing each other beside a low oak table with two cups, warm afternoon light, a full glass wall overlooking a green landscaped campus, soft plants, a sense of welcome and conversation."
+  }
+]

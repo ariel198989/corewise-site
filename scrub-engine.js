@@ -142,16 +142,44 @@ function mountScrollWorld(container, config) {
 
   // per-section copy / route / nav
   const copies = [], dots = [];
+  /* mouse parallax for holo screens (desktop only) */
+  if (!reduce && !coarse) {
+    window.addEventListener('mousemove', e => {
+      container.style.setProperty('--sw-mx', ((e.clientX / window.innerWidth) - 0.5).toFixed(3));
+      container.style.setProperty('--sw-my', ((e.clientY / window.innerHeight) - 0.5).toFixed(3));
+    }, { passive: true });
+  }
+
   SECTIONS.forEach((s, i) => {
     const c = el('article', 'sw-copy'); c.style.setProperty('--sw-accent', s.accent || '');
     c.innerHTML =
       `<span class="sw-copy__num">${pad(i + 1)} / ${pad(N)}</span>` +
       (s.eyebrow ? `<span class="sw-copy__eyebrow">${esc(s.eyebrow)}</span>` : '') +
       (s.title ? `<h2 class="sw-copy__title">${esc(s.title)}</h2>` : '') +
+      (s.sub ? `<p class="sw-copy__sub">${esc(s.sub)}</p>` : '') +
       (s.body ? `<p class="sw-copy__body">${esc(s.body)}</p>` : '') +
       (s.tags && s.tags.length ? `<ul class="sw-copy__tags">${s.tags.map(t => `<li>${esc(t)}</li>`).join('')}</ul>` : '') +
+      (s.stats && s.stats.length ? `<div class="sw-stats">${s.stats.map(st => `<div class="sw-stat"><b>${esc(st.n)}</b><span>${esc(st.l)}</span></div>`).join('')}</div>` : '') +
       (s.cta ? `<div class="sw-copy__cta">${ctaBtns(s.cta)}</div>` : '');
     copylayer.appendChild(c); copies.push(c);
+
+    /* AR holo-screens: works float INSIDE the scene, anchored with an AR line */
+    if (s.works && s.works.length) {
+      const h = el('div', 'sw-holo');
+      h.style.setProperty('--sw-accent', s.accent || '');
+      h.innerHTML = s.works.map((w, k) => {
+        const tag = w.url ? `a href="${w.url}" target="_blank" rel="noopener"` : 'div';
+        const closeTag = w.url ? 'a' : 'div';
+        return `<${tag} class="sw-holo__screen sw-holo__screen--${k}">` +
+          `<span class="sw-holo__inner">` +
+          `<span class="sw-holo__chip">${esc(w.title)}${w.url ? ' · LIVE' : ''}</span>` +
+          `<img src="${w.img}" alt="${esc(w.title)}" loading="lazy">` +
+          (w.desc ? `<span class="sw-holo__desc">${esc(w.desc)}</span>` : '') +
+          `</span><i class="sw-holo__anchor" aria-hidden="true"></i></${closeTag}>`;
+      }).join('');
+      container.appendChild(h);
+      s._holo = h;
+    }
 
     const dot = el('button', 'sw-route__dot'); dot.style.setProperty('--sw-accent', s.accent || '');
     dot.innerHTML = `<span class="sw-route__label">${esc(s.label || '')}</span><i></i>`;
@@ -247,6 +275,14 @@ function mountScrollWorld(container, config) {
       c.style.opacity = cop;
       c.style.transform = reduce ? 'none' : `translateY(${(0.5 - pr) * 4}vh)`;
       c.style.pointerEvents = cop > 0.5 ? 'auto' : 'none';
+
+      const h = SECTIONS[i]._holo;
+      if (h) {
+        h.style.opacity = cop;
+        h.style.setProperty('--py', reduce ? '0vh' : ((0.5 - pr) * 7).toFixed(2) + 'vh');
+        h.style.pointerEvents = cop > 0.4 ? 'auto' : 'none';
+        h.classList.toggle('is-live', cop > 0.4);
+      }
     }
 
     const cur = SEGMENTS[ci];
