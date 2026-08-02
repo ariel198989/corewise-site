@@ -239,12 +239,18 @@ html, body { background: #F2F2ED; margin: 0; }
 }
 /* enter-room button on glass panels */
 .sw-copy__explore {
-  margin-top: 16px; display: inline-flex; align-items: center; gap: 8px;
+  margin-top: 14px; display: inline-flex; align-items: center; gap: 8px;
   border: 0; cursor: pointer; font-family: 'Miriam Libre', sans-serif; font-weight: 700; font-size: .95rem;
-  color: #fff; background: #14181C; border-radius: 100px; padding: 11px 22px;
+  color: #fff; background: linear-gradient(120deg, #14181C, #2a3138); border-radius: 100px; padding: 12px 24px;
+  box-shadow: 0 0 0 2px rgba(110,155,14,.55), 0 10px 26px rgba(20,24,28,.22);
   transition: transform .2s, box-shadow .2s;
+  animation: explorePulse 2.6s ease-in-out infinite;
 }
-.sw-copy__explore:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(20,24,28,.3); }
+.sw-copy__explore:hover { transform: translateY(-2px); box-shadow: 0 0 0 3px #6E9B0E, 0 14px 34px rgba(20,24,28,.3); }
+@keyframes explorePulse { 0%,100% { box-shadow: 0 0 0 2px rgba(110,155,14,.55), 0 10px 26px rgba(20,24,28,.22) } 50% { box-shadow: 0 0 0 5px rgba(110,155,14,.25), 0 10px 26px rgba(20,24,28,.22) } }
+/* panel must never hide its content below the fold */
+.sw-copy { max-height: 76vh; overflow-y: auto; scrollbar-width: none; }
+.sw-copy::-webkit-scrollbar { display: none; }
 
 /* light topbar */
 .sw-topbar {

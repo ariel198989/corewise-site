@@ -158,9 +158,9 @@ function mountScrollWorld(container, config) {
       (s.title ? `<h2 class="sw-copy__title">${esc(s.title)}</h2>` : '') +
       (s.sub ? `<p class="sw-copy__sub">${esc(s.sub)}</p>` : '') +
       (s.body ? `<p class="sw-copy__body">${esc(s.body)}</p>` : '') +
+      (s.explore ? `<button class="sw-copy__explore" type="button">🥽 היכנסו לחדר — סיור 360°</button>` : '') +
       (s.tags && s.tags.length ? `<ul class="sw-copy__tags">${s.tags.map(t => `<li>${esc(t)}</li>`).join('')}</ul>` : '') +
       (s.stats && s.stats.length ? `<div class="sw-stats">${s.stats.map(st => `<div class="sw-stat"><b>${esc(st.n)}</b><span>${esc(st.l)}</span></div>`).join('')}</div>` : '') +
-      (s.explore ? `<button class="sw-copy__explore" type="button">🥽 היכנסו לחדר</button>` : '') +
       (s.cta ? `<div class="sw-copy__cta">${ctaBtns(s.cta)}</div>` : '');
     if (s.explore) {
       c.querySelector('.sw-copy__explore').addEventListener('click', () => {
