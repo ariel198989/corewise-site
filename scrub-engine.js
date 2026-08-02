@@ -178,11 +178,21 @@ function mountScrollWorld(container, config) {
         const closeTag = w.url ? 'a' : 'div';
         return `<${tag} class="sw-holo__screen sw-holo__screen--${k}">` +
           `<span class="sw-holo__inner">` +
-          `<span class="sw-holo__chip">${esc(w.title)}${w.url ? ' · LIVE' : ''}</span>` +
-          `<img src="${w.img}" alt="${esc(w.title)}" loading="lazy">` +
-          (w.desc ? `<span class="sw-holo__desc">${esc(w.desc)}</span>` : '') +
+          `<span class="sw-holo__chip">${esc(w.title)}</span>` +
+          `<img src="${w.img}" alt="${esc(w.title)}" decoding="async">` +
+          ((w.desc || w.url) ? `<span class="sw-holo__desc">${esc(w.desc || '')}` +
+            (w.url ? `<em class="sw-holo__lead">💬 השאירו פרטים ונשלח לכם לינק למערכת ←</em>` : '') +
+            `</span>` : '') +
           `</span><i class="sw-holo__anchor" aria-hidden="true"></i></${closeTag}>`;
       }).join('');
+      /* portrait images get a narrower frame to keep proportions */
+      h.querySelectorAll('img').forEach(im => {
+        const mark = () => {
+          if (im.naturalHeight > im.naturalWidth * 1.15) im.closest('.sw-holo__screen').classList.add('is-portrait');
+        };
+        if (im.complete && im.naturalWidth) mark();
+        else im.addEventListener('load', mark, { once: true });
+      });
       container.appendChild(h);
       s._holo = h;
     }
