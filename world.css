@@ -357,3 +357,76 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
   .cw-top { gap: 8px; }
   .cw-room { max-width: 40vw; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 }
+
+/* click-outside scrim for panels */
+.cw-scrim { position: fixed; inset: 0; z-index: 28; background: rgba(8,11,14,.42); animation: cwFade .3s ease; }
+.cw-scrim[hidden] { display: none; }
+@keyframes cwFade { from { opacity: 0 } }
+
+/* ============ the ceiling: a reward for looking up ============ */
+.cw-sky {
+  position: absolute; inset: 0; z-index: 11; display: grid; place-items: center;
+  pointer-events: none; opacity: 0; padding-bottom: 22vh;
+  transition: opacity .18s linear;
+}
+.cw-sky__in {
+  position: relative; text-align: center; direction: rtl; padding: 30px 34px;
+  max-width: min(460px, 86vw);
+  background: radial-gradient(ellipse at 50% 35%, rgba(198,242,78,.14), transparent 72%);
+}
+.cw-sky__in::before {
+  content: ""; position: absolute; left: 50%; top: -8%; transform: translateX(-50%);
+  width: 120%; height: 120%; border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,.1), transparent 62%);
+  filter: blur(18px);
+}
+.cw-sky__icon {
+  display: block; font-size: 2.6rem; line-height: 1; color: var(--cw-lime);
+  text-shadow: 0 0 26px rgba(198,242,78,.8), 0 0 60px rgba(198,242,78,.35);
+  animation: cwSkySpin 22s linear infinite;
+}
+@keyframes cwSkySpin { to { transform: rotate(360deg) } }
+.cw-sky h4 {
+  margin: 14px 0 10px; color: #fff; font-size: clamp(1.15rem, 2.6vw, 1.6rem); font-weight: 700;
+  letter-spacing: -.01em; text-shadow: 0 3px 26px rgba(0,0,0,.8);
+}
+.cw-sky p {
+  margin: 0 0 5px; color: rgba(255,255,255,.82); font-size: .93rem; line-height: 1.6;
+  text-shadow: 0 2px 16px rgba(0,0,0,.85);
+}
+.cw-sky__stat {
+  display: inline-flex; align-items: baseline; gap: 8px; margin-top: 14px;
+  padding: 8px 18px; border-radius: 100px;
+  background: rgba(12,15,18,.5); border: 1px solid rgba(198,242,78,.4);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+}
+.cw-sky__stat b { color: var(--cw-lime); font-size: 1.2rem; }
+.cw-sky__stat span { color: rgba(255,255,255,.75); font-size: .78rem; }
+/* once discovered, the halo settles */
+.cw-sky.seen .cw-sky__icon { animation-duration: 40s; }
+
+/* the nudge that teaches the gesture */
+.cw-lookup {
+  position: absolute; top: 12vh; left: 50%; transform: translateX(-50%);
+  z-index: 10; display: flex; flex-direction: column; align-items: center; gap: 3px;
+  color: rgba(255,255,255,.75); font-size: .76rem; pointer-events: none;
+  opacity: 0; transition: opacity .6s ease;
+}
+.cw-lookup.show { opacity: 1; animation: cwLookup 2.4s ease-in-out infinite; }
+.cw-lookup i { font-style: normal; font-size: 1.4rem; line-height: .7; color: var(--cw-lime); }
+@keyframes cwLookup { 0%,100% { transform: translateX(-50%) translateY(0) } 50% { transform: translateX(-50%) translateY(-8px) } }
+@media (max-width: 860px) {
+  .cw-sky { padding-bottom: 26vh; }
+  .cw-sky__in { padding: 24px 22px; }
+  .cw-lookup { top: 15vh; }
+}
+
+/* sky polish: give the stat pill room, and let the halo breathe instead of spin */
+.cw-sky__stat { padding: 9px 20px; gap: 10px; }
+.cw-sky__stat b { font-size: 1.3rem; line-height: 1.2; }
+.cw-sky__icon { animation: cwSkyGlow 4.5s ease-in-out infinite; }
+@keyframes cwSkyGlow {
+  0%, 100% { text-shadow: 0 0 22px rgba(198,242,78,.7), 0 0 52px rgba(198,242,78,.28); transform: scale(1) }
+  50%      { text-shadow: 0 0 34px rgba(198,242,78,.95), 0 0 78px rgba(198,242,78,.45); transform: scale(1.06) }
+}
+.cw-sky.seen .cw-sky__icon { animation-duration: 7s; }

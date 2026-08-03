@@ -37,6 +37,8 @@
       <div class="cw-veil"></div>
       <div class="cw-motes"></div>
       <div class="cw-title"><span></span></div>
+      <div class="cw-sky" aria-hidden="true"><div class="cw-sky__in"></div></div>
+      <div class="cw-lookup"><i>⌃</i><span>הרימו מבט</span></div>
       <header class="cw-top">
         <span class="cw-brand">corewise</span>
         <span class="cw-room"></span>
@@ -57,17 +59,19 @@
         <svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.1.6 4.2 1.6 6L4 29l8.2-1.6c1.7.9 3.6 1.4 5.8 1.4 6.6 0 12-5.4 12-12S22.6 3 16 3zm0 21.8c-1.9 0-3.7-.5-5.3-1.5l-.4-.2-4.9.9.9-4.8-.3-.4C5 17.8 4.4 16 4.4 15 4.4 8.9 9.9 4.4 16 4.4S27.6 8.9 27.6 15 22.1 24.8 16 24.8zm6.5-8.3c-.4-.2-2.1-1-2.4-1.1-.3-.1-.6-.2-.8.2-.2.4-.9 1.1-1.1 1.3-.2.2-.4.2-.8.1-2.1-.9-3.5-2.7-3.7-3.1-.2-.4 0-.6.2-.8l.5-.6c.2-.2.2-.4.3-.6.1-.2 0-.5 0-.6-.1-.2-.8-2-1.1-2.7-.3-.7-.6-.6-.8-.6h-.7c-.2 0-.6.1-.9.5-.3.4-1.2 1.2-1.2 2.9s1.2 3.4 1.4 3.6c.2.2 2.4 3.7 5.9 5.1 3.5 1.4 3.5.9 4.1.9.6-.1 2.1-.8 2.4-1.7.3-.8.3-1.6.2-1.7-.1-.2-.3-.3-.7-.5z"/></svg>
         <span>השאירו פרטים</span>
       </a>
+      <div class="cw-scrim" hidden></div>
       <div class="cw-card" hidden></div>
       <div class="cw-finale" hidden></div>
       <div class="cw-mapui" style="display:none"><div class="cw-mapui__in"><h3>מפת הקמפוס</h3><div class="cw-mapui__grid"></div><button class="cw-mapui__x">סגירה</button></div></div>
       <div class="cw-load"><span></span></div>`;
     document.body.appendChild(root);
     el = {
-      root, canvas: $('.cw-canvas', root), spots: $('.cw-spots', root), veil: $('.cw-veil', root), title: $('.cw-title', root), motes: $('.cw-motes', root),
-      room: $('.cw-room', root), prog: $('.cw-prog', root), hint: $('.cw-hint', root), card: $('.cw-card', root), finale: $('.cw-finale', root),
+      root, canvas: $('.cw-canvas', root), spots: $('.cw-spots', root), veil: $('.cw-veil', root), title: $('.cw-title', root), motes: $('.cw-motes', root), sky: $('.cw-sky', root), skyIn: $('.cw-sky__in', root), lookup: $('.cw-lookup', root),
+      room: $('.cw-room', root), prog: $('.cw-prog', root), hint: $('.cw-hint', root), card: $('.cw-card', root), finale: $('.cw-finale', root), scrim: $('.cw-scrim', root),
  load: $('.cw-load', root), mapui: $('.cw-mapui', root),
     };
 
+    $('.cw-scrim', root).onclick = closePanels;
     $('.cw-gyro', root).onclick = toggleGyro;
     $('.cw-map', root).onclick = () => openMap(true);
     $('.cw-mapui__x', root).onclick = () => openMap(false);
@@ -85,7 +89,7 @@
     addEventListener('wheel', e => { fov = Math.max(58, Math.min(92, fov + e.deltaY * 0.04)); }, { passive: true });
     const K = { ArrowLeft: 'left', ArrowRight: 'right', ArrowUp: 'up', ArrowDown: 'down', a: 'left', d: 'right', w: 'up', s: 'down' };
     addEventListener('keydown', e => {
-      if (e.key === 'Escape') { el.card.hidden = true; el.finale.hidden = true; openMap(false); return; }
+      if (e.key === 'Escape') { closePanels(); openMap(false); return; }
       const k = K[e.key] || K[e.key.toLowerCase()];
       if (k) { keys[k] = true; keys.shift = e.shiftKey; e.preventDefault(); }
     });
@@ -141,6 +145,7 @@
     camera.lookAt(Math.sin(phi) * Math.sin(th), Math.cos(phi), -Math.sin(phi) * Math.cos(th));
     renderer.render(scene, camera);
     project();
+    paintSky();
     if (el.motes) el.motes.style.transform = 'translate3d(' + (-lon * 0.55 % 100).toFixed(1) + 'px,' + (lat * 0.5).toFixed(1) + 'px,0)';
     if (compassDots.length) {
       compassDots.forEach(c => {
@@ -262,7 +267,7 @@
     if (busy || !ROOMS[id]) return;
     busy = true;
     const d = ROOMS[id];
-    el.card.hidden = true;
+    closePanels();
     if (!first && doorYaw != null) { walkTo(doorYaw, () => enter(id, d, first)); return; }
     enter(id, d, first);
   }
@@ -307,6 +312,7 @@
     lon = (id === 'lobby' && from && BEARING[from] != null) ? BEARING[from] : 0;
     visited.add(id);
     buildMarkers(d);
+    buildSky(d);
     buildCompass(id);
     paintProgress();
     if (id === 'team') showFinale();
@@ -335,7 +341,8 @@
       '<div class="cw-fin__paths">' + paths.map(p =>
         '<a href="https://wa.me/972507594477?text=' + encodeURIComponent(p[2]) + '" target="_blank" rel="noopener">' +
         '<b>' + p[0] + '</b><span>' + p[1] + '</span></a>').join('') + '</div>';
-    box.querySelector('.cw-fin__x').onclick = () => box.hidden = true;
+    box.querySelector('.cw-fin__x').onclick = closePanels;
+    el.scrim.hidden = false;
     box.hidden = false;
   }
   function roomProgress(d) {
@@ -389,6 +396,10 @@
   };
 
   const esc = s => String(s).replace(/[&<>"]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[m]));
+  function closePanels() {
+    el.card.hidden = true; el.finale.hidden = true; el.scrim.hidden = true;
+  }
+
   function card(h) {
     const c = el.card, kind = h.kind || 'story';
     c.className = 'cw-card is-' + kind;
@@ -409,12 +420,34 @@
           '<svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.1.6 4.2 1.6 6L4 29l8.2-1.6c1.7.9 3.6 1.4 5.8 1.4 6.6 0 12-5.4 12-12S22.6 3 16 3zm0 21.8c-1.9 0-3.7-.5-5.3-1.5l-.4-.2-4.9.9.9-4.8-.3-.4C5 17.8 4.4 16 4.4 15 4.4 8.9 9.9 4.4 16 4.4S27.6 8.9 27.6 15 22.1 24.8 16 24.8z"/></svg>' +
           esc(h.linkLabel || 'השאירו פרטים ונשלח לכם לינק') + '</a>' : '') +
       '</div>';
-    c.querySelector('.cw-card__x').onclick = () => c.hidden = true;
+    c.querySelector('.cw-card__x').onclick = closePanels;
+    el.scrim.hidden = false;
     c.hidden = false;
     /* mobile: allow swipe-down dismiss like a native sheet */
     let sy = null;
     c.addEventListener('pointerdown', e => { if (e.target.closest('a,button')) return; sy = e.clientY; });
-    c.addEventListener('pointerup', e => { if (sy != null && e.clientY - sy > 70) c.hidden = true; sy = null; });
+    c.addEventListener('pointerup', e => { if (sy != null && e.clientY - sy > 70) closePanels(); sy = null; });
+  }
+
+  let skyPeak = 0;
+  function buildSky(d) {
+    const s = d.sky;
+    skyPeak = 0;
+    if (!s) { el.sky.innerHTML = ''; return; }
+    el.skyIn.innerHTML =
+      '<span class=cw-sky__icon>' + s.icon + '</span>' +
+      '<h4>' + esc(s.title) + '</h4>' +
+      (s.lines || []).map(l => '<p>' + esc(l) + '</p>').join('') +
+      (s.stat ? '<div class=cw-sky__stat><b>' + esc(s.stat[0]) + '</b><span>' + esc(s.stat[1]) + '</span></div>' : '');
+  }
+  /* the reward for looking up: fades in with how high you tilt */
+  function paintSky() {
+    const k = Math.max(0, Math.min(1, (lat - 22) / 34));      /* starts at 22deg, full by 56 */
+    el.sky.style.opacity = k.toFixed(2);
+    el.sky.style.transform = 'translateY(' + ((1 - k) * 26).toFixed(1) + 'px) scale(' + (0.94 + k * 0.06).toFixed(3) + ')';
+    if (k > 0.55 && !skyPeak) { skyPeak = 1; el.sky.classList.add('seen'); }
+    /* nudge: hint to look up once per room, only while they haven't */
+    el.lookup.classList.toggle('show', !skyPeak && lat < 12 && !busy);
   }
 
   function announce(name) {
