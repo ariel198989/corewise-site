@@ -183,7 +183,9 @@
     for (const s of spots.concat(doors)) {
       const p = s.v.clone().project(camera);
       const back = p.z > 1;
-      s.el.style.display = back ? 'none' : 'flex';
+      /* blank, not 'flex' — product windows are display:block and were being
+         forced into a flex box by the old inline value */
+      s.el.style.display = back ? 'none' : '';
       if (!back) { s.el.style.left = (p.x * hw + hw) + 'px'; s.el.style.top = (-p.y * hh + hh) + 'px'; }
     }
   }
@@ -193,6 +195,9 @@
   /* The lobby is a hub: the 6 departments ring it, each at its own compass bearing.
      Turn in the lobby and you face a different department's door. */
   const WINGS = ['video', 'apps', 'ai', 'stage', 'school', 'team'];
+  /* two accents alternating around the ring — terracotta and olive, so adjacent
+     wings never light their windows the same way */
+  const ACCENT = { lobby: '#6E9B0E', video: '#B4530A', apps: '#6E9B0E', ai: '#B4530A', stage: '#6E9B0E', school: '#B4530A', team: '#6E9B0E' };
   const BEARING = {};                       /* room -> yaw of its door, seen from the lobby */
   WINGS.forEach((id, i) => BEARING[id] = -150 + i * 60);   /* -150,-90,-30,30,90,150 */
 
@@ -318,6 +323,7 @@
     /* keep your bearings: entering a wing you face into it; returning to the
        lobby you arrive looking back at the door you came out of. */
     lon = (id === 'lobby' && from && BEARING[from] != null) ? BEARING[from] : 0;
+    el.root.style.setProperty('--cw-acc', ACCENT[id] || ACCENT.lobby);
     visited.add(id);
     buildMarkers(d);
     buildSky(d);
@@ -362,15 +368,29 @@
   function paintProgress() {
     const d = ROOMS[cur]; if (!d) return;
     const { got, total } = roomProgress(d);
-    el.prog.textContent = total ? 'גילית ' + got + ' מתוך ' + total : '';
+    /* narrow screens collapse this to "1/4" so the room name keeps its room */
+    el.prog.innerHTML = total
+      ? '<span class="cw-prog__l">גילית </span>' + got +
+        '<span class="cw-prog__l"> מתוך </span><span class="cw-prog__s">/</span>' + total
+      : '';
     el.prog.classList.toggle('done', total > 0 && got === total);
     /* completing a room lights the way onward */
     el.root.classList.toggle('room-done', total > 0 && got === total);
   }
 
+  /* the short latin handle for the chip: "TinkerLab — Workshop OS" → "TinkerLab" */
+  const shortName = h => h.short || String(h.title).split(/\s+[—–-]\s+/)[0].trim();
+  /* one line of teaser under the image — a full paragraph would drown the room */
+  const teaser = h => {
+    if (h.tagline) return h.tagline;
+    const t = String(h.text || '').split(/(?<=[.!?])\s/)[0].trim();
+    return t.length > 66 ? t.slice(0, 64).trim() + '…' : t;
+  };
+
   function buildMarkers(d) {
     el.spots.innerHTML = '';
     spots = []; doors = [];
+    let prod = 0;
     (d.hotspots || []).forEach(h => {
       const kind = h.kind || 'story';
       const b = document.createElement('button');
@@ -378,8 +398,22 @@
       b.className = 'cw-spot is-' + kind + (seen.has(key) ? ' is-seen' : '');
       b.style.setProperty('--ph', (Math.random() * 2).toFixed(2) + 's');   /* breathe out of sync */
       if (kind === 'product' && h.img) {
-        b.innerHTML = '<span class="cw-spot__frame"><img src="' + h.img + '" alt="" decoding="async">' +
-          '<span class="cw-spot__tag">' + h.title + '</span></span>';
+        /* windows lean away from each other so a wall of them never reads flat */
+        b.style.setProperty('--tilt', (prod++ % 2 ? -8 : 9) + 'deg');
+        const line = teaser(h);
+        b.innerHTML =
+          '<span class="cw-spot__frame">' +
+            '<span class="cw-spot__chip">' + esc(shortName(h)) + ' · LIVE</span>' +
+            '<span class="cw-spot__glass">' +
+              '<img src="' + h.img + '" alt="' + esc(h.title) + '" decoding="async">' +
+              (line ? '<span class="cw-spot__tag">' + esc(line) + '</span>' : '') +
+            '</span>' +
+            '<i class="cw-spot__anchor" aria-hidden="true"></i>' +
+          '</span>';
+        /* portrait shots get a narrower pane so they keep their proportions */
+        const im = b.querySelector('img');
+        const mark = () => { if (im.naturalHeight > im.naturalWidth * 1.15) b.classList.add('is-portrait'); };
+        if (im.complete && im.naturalWidth) mark(); else im.addEventListener('load', mark, { once: true });
       } else {
         b.innerHTML = '<i></i><span>' + h.title + '</span>';
       }

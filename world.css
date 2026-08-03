@@ -138,49 +138,84 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
   display: flex; align-items: center; gap: 8px; pointer-events: auto; cursor: pointer;
   border: 0; background: transparent; font-family: inherit; padding: 0;
 }
-/* story: a quiet glowing point */
-.cw-spot i {
+/* story: a quiet glowing point (never the product window's anchor thread) */
+.cw-spot:not(.is-product) i {
   width: 15px; height: 15px; border-radius: 50%; flex: none;
   background: rgba(255,255,255,.92); border: 2px solid rgba(255,255,255,.55);
   box-shadow: 0 0 0 5px rgba(255,255,255,.14), 0 0 16px rgba(255,255,255,.5);
   animation: cwPulse 2.6s ease-in-out infinite; animation-delay: var(--ph, 0s);
 }
 @keyframes cwPulse { 50% { box-shadow: 0 0 0 11px rgba(255,255,255,.06), 0 0 24px rgba(255,255,255,.62) } }
-.cw-spot span {
+/* the pill label belongs to point markers only — product windows build their own
+   spans (frame/glass/chip/tag) and must not inherit a 100px radius and a blur */
+.cw-spot:not(.is-product) span {
   color: #fff; font-size: .84rem; font-weight: 700; white-space: nowrap;
   background: rgba(12,15,18,.55); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
   padding: 6px 13px; border-radius: 100px; border: 1px solid rgba(255,255,255,.16);
   transition: background .2s, border-color .2s;
 }
-.cw-spot:hover span { background: rgba(12,15,18,.78); border-color: rgba(255,255,255,.4); }
+.cw-spot:not(.is-product):hover span { background: rgba(12,15,18,.78); border-color: rgba(255,255,255,.4); }
 /* action: whatsapp green */
-.cw-spot.is-action i {
+.cw-spot.is-action:not(.is-product) i {
   background: #25D366; border-color: #eafff2;
   box-shadow: 0 0 0 5px rgba(37,211,102,.22), 0 0 18px rgba(37,211,102,.8);
 }
 .cw-spot.is-action span { background: rgba(6,51,26,.72); border-color: rgba(37,211,102,.5); }
-/* product: a screen hanging in the room */
-.cw-spot.is-product { display: block; }
+/* product: a holo window pinned into the room */
+.cw-spot.is-product { display: block; --acc: var(--cw-acc, #6E9B0E); }
 .cw-spot__frame {
-  display: block; position: relative; width: clamp(150px, 15vw, 230px);
-  border-radius: 13px; overflow: hidden;
-  border: 1px solid rgba(255,255,255,.55);
-  box-shadow: 0 0 0 1px rgba(198,242,78,.35), 0 26px 60px rgba(0,0,0,.5), 0 0 34px rgba(198,242,78,.16);
-  transition: transform .3s cubic-bezier(.2,.7,.2,1), box-shadow .3s;
-  animation: cwFloat 6.5s ease-in-out infinite; animation-delay: var(--ph, 0s);
+  display: block; position: relative; width: clamp(160px, 17vw, 260px);
+  transform: perspective(1000px) rotateY(var(--tilt, 9deg)) rotateX(1.5deg);
+  transform-style: preserve-3d;
+  transition: transform .4s cubic-bezier(.2,.7,.2,1);
+  animation: cwFloat 7s ease-in-out infinite; animation-delay: var(--ph, 0s);
 }
-@keyframes cwFloat { 0%, 100% { translate: 0 0 } 50% { translate: 0 -9px } }
-.cw-spot.is-product:hover .cw-spot__frame { transform: scale(1.05); box-shadow: 0 0 0 2px var(--cw-lime), 0 30px 70px rgba(0,0,0,.55); }
-.cw-spot__frame img { display: block; width: 100%; height: auto; }
+@keyframes cwFloat { 0%, 100% { translate: 0 0 } 50% { translate: 0 -11px } }
+.cw-spot.is-product:hover .cw-spot__frame {
+  transform: perspective(1000px) rotateY(calc(var(--tilt, 9deg) * .3)) rotateX(0deg) scale(1.05);
+}
+/* the pane itself: white edge, deep drop, a breath of accent light */
+.cw-spot__glass {
+  display: block; position: relative; border-radius: 16px; overflow: hidden;
+  border: 1px solid rgba(255,255,255,.85);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--acc) 34%, transparent),
+    0 40px 90px rgba(12,15,18,.5),
+    0 0 44px color-mix(in srgb, var(--acc) 20%, transparent);
+  transition: box-shadow .3s;
+}
+.cw-spot__glass img { display: block; width: 100%; height: auto; }
+/* the diagonal sheen that makes it read as glass, not as a sticker */
+.cw-spot__glass::after {
+  content: ""; position: absolute; inset: 0; border-radius: 16px; pointer-events: none;
+  background: linear-gradient(115deg, rgba(255,255,255,.32) 0%, transparent 28%, transparent 70%, rgba(255,255,255,.14) 100%);
+}
+.cw-spot__chip {
+  position: absolute; top: -14px; right: 14px; z-index: 2; direction: ltr;
+  font-family: 'IBM Plex Mono', monospace; font-size: .7rem; letter-spacing: .07em; white-space: nowrap;
+  color: #fff; background: color-mix(in srgb, var(--acc) 88%, #000);
+  padding: 5px 12px; border-radius: 100px;
+  box-shadow: 0 6px 18px rgba(12,15,18,.4);
+}
 .cw-spot__tag {
-  position: absolute; right: 0; left: 0; bottom: 0; padding: 18px 12px 9px;
-  color: #fff; font-size: .82rem; font-weight: 700; text-align: right;
-  background: linear-gradient(0deg, rgba(10,13,16,.9), transparent);
+  position: absolute; right: 0; left: 0; bottom: 0; z-index: 1; padding: 26px 13px 10px;
+  color: #fff; font-size: .8rem; font-weight: 500; line-height: 1.45; text-align: right;
+  background: linear-gradient(0deg, rgba(12,15,18,.86), rgba(12,15,18,.5) 65%, transparent);
 }
+/* the AR pin — a thread down to the floor with a lit tip */
+.cw-spot__anchor {
+  position: absolute; top: 100%; right: 24%; width: 1px; height: 62px;
+  background: linear-gradient(color-mix(in srgb, var(--acc) 70%, transparent), transparent 85%);
+}
+.cw-spot__anchor::after {
+  content: ""; position: absolute; bottom: -3px; right: -3.5px; width: 8px; height: 8px; border-radius: 50%;
+  background: var(--acc); box-shadow: 0 0 12px var(--acc);
+}
+.cw-spot.is-portrait .cw-spot__frame { width: clamp(110px, 11vw, 170px); }
 /* discovered */
-.cw-spot.is-seen i { background: var(--cw-lime); border-color: rgba(255,255,255,.8); box-shadow: 0 0 0 4px rgba(198,242,78,.18); animation: none; }
-.cw-spot.is-seen span::after, .cw-spot.is-seen .cw-spot__tag::after { content: " ✓"; color: var(--cw-lime); }
-.cw-spot.is-seen .cw-spot__frame { box-shadow: 0 0 0 1px rgba(198,242,78,.6), 0 22px 50px rgba(0,0,0,.45); }
+.cw-spot.is-seen:not(.is-product) i { background: var(--cw-lime); border-color: rgba(255,255,255,.8); box-shadow: 0 0 0 4px rgba(198,242,78,.18); animation: none; }
+.cw-spot.is-seen span::after, .cw-spot.is-seen .cw-spot__chip::after { content: " ✓"; color: var(--cw-lime); }
+.cw-spot.is-seen .cw-spot__glass { box-shadow: 0 0 0 1px rgba(198,242,78,.7), 0 30px 66px rgba(12,15,18,.45); }
 
 /* doors */
 .cw-door { flex-direction: column; gap: 6px; }
@@ -279,8 +314,12 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
   }
   .cw-card__x { top: 14px; left: 14px; }
   .cw-card__body { padding: 22px 20px 24px; }
-  .cw-spot__frame { width: clamp(120px, 34vw, 190px); }
-  .cw-spot span, .cw-spot__tag { font-size: .78rem; }
+  .cw-spot__frame { width: clamp(130px, 38vw, 210px); }
+  .cw-spot.is-portrait .cw-spot__frame { width: clamp(96px, 25vw, 150px); }
+  .cw-spot:not(.is-product) span { font-size: .78rem; }
+  .cw-spot__tag { font-size: .72rem; padding: 20px 10px 8px; }
+  .cw-spot__chip { font-size: .62rem; padding: 4px 9px; top: -11px; right: 10px; }
+  .cw-spot__anchor { height: 34px; }
   .cw-prog { font-size: .7rem; padding: 4px 10px; }
   .cw-room { font-size: .92rem; }
 }
@@ -356,19 +395,27 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
 .cw-title span { opacity: .92; }
 
 /* Rubik tuning — Hebrew reads best slightly tighter with a touch more weight */
-.cw-room, .cw-card h3, .cw-finale h3, .cw-door__l, .cw-spot span, .cw-spot__tag,
+.cw-room, .cw-card h3, .cw-finale h3, .cw-door__l, .cw-spot:not(.is-product) span, .cw-spot__tag,
 .cw-fin__paths span, .cw-metrics b, .cw-prog { letter-spacing: -.01em; }
 .cw-card h3, .cw-finale h3 { font-weight: 700; }
 .cw-card p, .cw-finale p { font-weight: 400; }
 .cw-card__kind, .cw-prog { font-weight: 600; }
 
 /* product screens sit fully on-screen even near the frame edge */
-.cw-spot.is-product { max-width: min(26vw, 300px); }
+.cw-spot.is-product { max-width: none; }
 .cw-spot__tag { text-shadow: 0 1px 8px rgba(0,0,0,.7); }
 /* progress chip should not crowd the room title on narrow screens */
+.cw-prog__s { display: none; }
 @media (max-width: 600px) {
-  .cw-top { gap: 8px; }
-  .cw-room { max-width: 40vw; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  /* three tools now — keep the bar on one line instead of letting it wrap */
+  .cw-top { gap: 8px; flex-wrap: nowrap; }
+  .cw-tools { display: flex; align-items: center; flex: none; }
+  .cw-tools button { width: 34px; height: 34px; font-size: .88rem; margin-right: 5px; }
+  .cw-snd i { height: 11px; }
+  .cw-brand { font-size: .82rem; }
+  .cw-prog__l { display: none; }
+  .cw-prog__s { display: inline; }
+  .cw-room { max-width: 46vw; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 }
 
 /* click-outside scrim for panels */

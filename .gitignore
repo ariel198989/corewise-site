@@ -10,3 +10,4 @@ package*.json
 gen-*.mjs
 kie-pipeline-local.mjs
 seq/
+holo-*.png
