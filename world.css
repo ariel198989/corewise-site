@@ -348,3 +348,12 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
 .cw-card h3, .cw-finale h3 { font-weight: 700; }
 .cw-card p, .cw-finale p { font-weight: 400; }
 .cw-card__kind, .cw-prog { font-weight: 600; }
+
+/* product screens sit fully on-screen even near the frame edge */
+.cw-spot.is-product { max-width: min(26vw, 300px); }
+.cw-spot__tag { text-shadow: 0 1px 8px rgba(0,0,0,.7); }
+/* progress chip should not crowd the room title on narrow screens */
+@media (max-width: 600px) {
+  .cw-top { gap: 8px; }
+  .cw-room { max-width: 40vw; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+}
