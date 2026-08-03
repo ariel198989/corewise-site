@@ -44,6 +44,7 @@
         <span class="cw-room"></span>
         <span class="cw-prog"></span>
         <span class="cw-tools">
+          <button class="cw-snd" title="מוזיקת רקע" aria-label="מוזיקת רקע" aria-pressed="true"><i></i><i></i><i></i></button>
           <button class="cw-gyro" title="ג'ירוסקופ">🧭</button>
           <button class="cw-map" title="מפת הקמפוס">🗺️</button>
         </span>
@@ -68,8 +69,15 @@
     el = {
       root, canvas: $('.cw-canvas', root), spots: $('.cw-spots', root), veil: $('.cw-veil', root), title: $('.cw-title', root), motes: $('.cw-motes', root), sky: $('.cw-sky', root), skyIn: $('.cw-sky__in', root), lookup: $('.cw-lookup', root),
       room: $('.cw-room', root), prog: $('.cw-prog', root), hint: $('.cw-hint', root), card: $('.cw-card', root), finale: $('.cw-finale', root), scrim: $('.cw-scrim', root),
- load: $('.cw-load', root), mapui: $('.cw-mapui', root),
+ load: $('.cw-load', root), mapui: $('.cw-mapui', root), snd: $('.cw-snd', root),
     };
+
+    el.snd.classList.toggle('is-off', !sndOn);
+    el.snd.setAttribute('aria-pressed', sndOn ? 'true' : 'false');
+    el.snd.onclick = sndToggle;
+    /* browsers refuse audio before a gesture — so the first touch starts it */
+    addEventListener('pointerdown', sndBoot);
+    addEventListener('keydown', sndBoot);
 
     $('.cw-scrim', root).onclick = closePanels;
     $('.cw-gyro', root).onclick = toggleGyro;
@@ -344,6 +352,7 @@
     box.querySelector('.cw-fin__x').onclick = closePanels;
     el.scrim.hidden = false;
     box.hidden = false;
+    duck(true);
   }
   function roomProgress(d) {
     const list = d.hotspots || [];
@@ -398,7 +407,66 @@
   const esc = s => String(s).replace(/[&<>"]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[m]));
   function closePanels() {
     el.card.hidden = true; el.finale.hidden = true; el.scrim.hidden = true;
+    duck(false);
   }
+
+  /* ---------- ambience ----------
+     Decoded through WebAudio rather than <audio loop> so the loop is gapless:
+     an mp3 carries encoder padding that a plain loop plays as a click. */
+  const SND_KEY = 'cw-snd', VOL = .26, DUCK = .1;
+  let actx, snd, sndSrc, sndBusy = 0, ducked = 0;
+  let sndOn = localStorage.getItem(SND_KEY) !== 'off';
+
+  function sndRamp(sec) {
+    if (!snd) return;
+    const now = actx.currentTime, to = sndOn ? (ducked ? DUCK : VOL) : 0;
+    snd.gain.cancelScheduledValues(now);
+    snd.gain.setValueAtTime(snd.gain.value, now);
+    snd.gain.linearRampToValueAtTime(to, now + sec);
+  }
+
+  function sndBoot() {
+    removeEventListener('pointerdown', sndBoot); removeEventListener('keydown', sndBoot);
+    if (sndBusy || !sndOn) return;
+    sndBusy = 1;
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return;
+    actx = new AC();
+    snd = actx.createGain(); snd.gain.value = 0; snd.connect(actx.destination);
+    fetch('audio/lobby.mp3')
+      .then(r => r.arrayBuffer())
+      .then(b => new Promise((ok, no) => actx.decodeAudioData(b, ok, no)))
+      .then(buf => {
+        sndSrc = actx.createBufferSource();
+        sndSrc.buffer = buf; sndSrc.loop = true;
+        sndSrc.connect(snd); sndSrc.start(0);
+        sndRamp(4);                       /* fades up as you settle into the lobby */
+      })
+      .catch(() => { sndBusy = 0; });
+  }
+
+  function sndToggle() {
+    sndOn = !sndOn;
+    try { localStorage.setItem(SND_KEY, sndOn ? 'on' : 'off'); } catch (e) {}
+    el.snd.classList.toggle('is-off', !sndOn);
+    el.snd.setAttribute('aria-pressed', sndOn ? 'true' : 'false');
+    if (sndOn && !sndSrc) { sndBoot(); return; }
+    if (sndOn && actx && actx.state === 'suspended') actx.resume();
+    sndRamp(sndOn ? 1.2 : .5);
+  }
+
+  /* a panel is something to read — pull the music back under it */
+  function duck(on) {
+    const v = on ? 1 : 0;
+    if (v === ducked) return;
+    ducked = v; sndRamp(.4);
+  }
+
+  addEventListener('visibilitychange', () => {
+    if (!actx) return;
+    if (document.hidden) { sndRamp(.25); setTimeout(() => document.hidden && actx.suspend(), 300); }
+    else if (sndOn) { actx.resume(); sndRamp(1.2); }
+  });
 
   function card(h) {
     const c = el.card, kind = h.kind || 'story';
@@ -423,6 +491,7 @@
     c.querySelector('.cw-card__x').onclick = closePanels;
     el.scrim.hidden = false;
     c.hidden = false;
+    duck(true);
     /* mobile: allow swipe-down dismiss like a native sheet */
     let sy = null;
     c.addEventListener('pointerdown', e => { if (e.target.closest('a,button')) return; sy = e.clientY; });
