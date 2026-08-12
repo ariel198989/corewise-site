@@ -390,6 +390,32 @@
     });
   }
 
+  let tvMesh = null, tvVideo = null;
+  function buildTV(d) {
+    if (tvMesh) { scene.remove(tvMesh); tvMesh = null; }
+    if (tvVideo) { try { tvVideo.pause(); } catch (e) {} tvVideo = null; }
+    const h = (d.hotspots || []).find(x => x.kind === 'tv' && x.video);
+    if (!h) return;
+    tvVideo = document.createElement('video');
+    tvVideo.src = h.video; tvVideo.muted = true; tvVideo.loop = true;
+    tvVideo.playsInline = true; tvVideo.setAttribute('playsinline', '');
+    tvVideo.play().catch(() => {});
+    const tex = new THREE.VideoTexture(tvVideo);
+    tex.colorSpace = THREE.SRGBColorSpace;
+    const W = 20, H = W * 9 / 16;
+    const grp = new THREE.Group();
+    const frame = new THREE.Mesh(new THREE.PlaneGeometry(W * 1.07, H * 1.12),
+      new THREE.MeshBasicMaterial({ color: 0x0c0f12 }));
+    frame.position.z = 0.4;                      /* bezel sits just behind */
+    const screen = new THREE.Mesh(new THREE.PlaneGeometry(W, H),
+      new THREE.MeshBasicMaterial({ map: tex }));
+    grp.add(frame); grp.add(screen);
+    grp.position.copy(vec(h.yaw, h.pitch || 0)); /* on the wall */
+    grp.lookAt(0, 0, 0);                          /* facing the room centre */
+    scene.add(grp);
+    tvMesh = grp;
+  }
+
   function finish(id, d) {
     const from = cur;
     cur = id;
@@ -402,6 +428,7 @@
     el.root.style.setProperty('--cw-acc', ACCENT[id] || ACCENT.lobby);
     visited.add(id);
     buildMarkers(d);
+    buildTV(d);
     buildSky(d);
     buildCompass(id);
     paintProgress();
@@ -485,26 +512,19 @@
       b.className = 'cw-spot is-' + kind + (seen.has(key) ? ' is-seen' : '');
       b.style.setProperty('--ph', (Math.random() * 2).toFixed(2) + 's');   /* breathe out of sync */
       if (kind === 'tv' && h.video) {
-        /* the lobby's giant screen: a video pinned to the wall like any
-           holo window, only bigger. Muted autoplay (the only autoplay
-           browsers allow); a click toggles the sound. */
-        b.innerHTML =
-          '<span class="cw-spot__frame">' +
-            '<span class="cw-spot__chip">' + esc(h.title || 'COREWISE TV') + ' · LIVE</span>' +
-            '<span class="cw-spot__glass">' +
-              '<video src="' + h.video + '" autoplay muted loop playsinline></video>' +
-              '<span class="cw-spot__tag">🔇 הקישו להפעלת סאונד</span>' +
-            '</span>' +
-            '<i class="cw-spot__anchor" aria-hidden="true"></i>' +
-          '</span>';
+        /* the SCREEN itself lives in the 3D scene (buildTV) so it is
+           nailed to the wall in perspective; this DOM pill only carries
+           the sound toggle */
+        b.className = 'cw-spot is-action';
+        b.innerHTML = '<i></i><span>🔇 סאונד</span>';
         b.onclick = () => {
-          const v = b.querySelector('video'), tag = b.querySelector('.cw-spot__tag');
-          v.muted = !v.muted;
-          if (!v.muted) { v.play().catch(() => {}); duck(true); } else duck(false);
-          tag.textContent = v.muted ? '🔇 הקישו להפעלת סאונד' : '🔊 הקישו להשתקה';
+          if (!tvVideo) return;
+          tvVideo.muted = !tvVideo.muted;
+          if (!tvVideo.muted) { tvVideo.play().catch(() => {}); duck(true); } else duck(false);
+          b.querySelector('span').textContent = tvVideo.muted ? '🔇 סאונד' : '🔊 השתקה';
         };
         el.spots.appendChild(b);
-        spots.push({ el: b, v: vec(h.yaw, h.pitch) });
+        spots.push({ el: b, v: vec(h.yaw, (h.pitch || 0) - 9) });
         tvYaw = h.yaw;
         return;
       }
