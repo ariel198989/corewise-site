@@ -35,6 +35,7 @@
       <canvas class="cw-canvas"></canvas>
       <div class="cw-spots"></div>
       <div class="cw-veil"></div>
+      <div class="cw-grade" aria-hidden="true"></div>
       <div class="cw-motes"></div>
       <div class="cw-title"><span></span></div>
       <div class="cw-sky" aria-hidden="true"><div class="cw-sky__in"></div></div>
@@ -86,15 +87,22 @@
 
     /* look controls */
     const c = el.canvas;
-    c.addEventListener('pointerdown', e => { drag = true; px = e.clientX; py = e.clientY; c.setPointerCapture(e.pointerId); });
+    c.addEventListener('pointerdown', e => { drag = true; px = e.clientX; py = e.clientY; lonVel = latVel = 0; c.setPointerCapture(e.pointerId); });
     c.addEventListener('pointermove', e => {
       if (!drag) return;
-      lon += (px - e.clientX) * 0.17; lat = Math.max(-70, Math.min(70, lat + (e.clientY - py) * 0.17));
+      const dLon = (px - e.clientX) * 0.17, dLat = (e.clientY - py) * 0.17;
+      lon += dLon; lat = Math.max(-70, Math.min(70, lat + dLat));
+      /* remember how fast the hand was moving — release keeps that spin */
+      lonVel = lonVel * 0.5 + dLon * 0.5;
+      latVel = latVel * 0.5 + dLat * 0.5;
       px = e.clientX; py = e.clientY;
     });
     c.addEventListener('pointerup', () => drag = false);
-    c.addEventListener('pointercancel', () => drag = false);
-    addEventListener('wheel', e => { fov = Math.max(58, Math.min(92, fov + e.deltaY * 0.04)); }, { passive: true });
+    c.addEventListener('pointercancel', () => { drag = false; lonVel = latVel = 0; });
+    /* 64, not 58: the pano is 4096px around — at 58 degrees on a desktop
+       monitor the GPU upsamples it ~2.2x and the zoom goes soft. 64 keeps
+       the lean-in without ever showing the texture its own ceiling. */
+    addEventListener('wheel', e => { fov = Math.max(64, Math.min(92, fov + e.deltaY * 0.04)); }, { passive: true });
     const K = { ArrowLeft: 'left', ArrowRight: 'right', ArrowUp: 'up', ArrowDown: 'down', a: 'left', d: 'right', w: 'up', s: 'down' };
     addEventListener('keydown', e => {
       if (e.key === 'Escape') { closePanels(); openMap(false); return; }
@@ -145,8 +153,15 @@
     camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix();
     renderer.setSize(innerWidth, innerHeight);
   }
+  let lonVel = 0, latVel = 0;
   function tick() {
     rafId = requestAnimationFrame(tick);
+    /* flick inertia: the released spin decays instead of stopping dead —
+       higher-value on touch, where the flick is the native gesture */
+    if (!drag && (Math.abs(lonVel) > 0.02 || Math.abs(latVel) > 0.02)) {
+      lon += lonVel; lat = Math.max(-70, Math.min(70, lat + latVel));
+      lonVel *= 0.92; latVel *= 0.92;
+    }
     if (!drag && !gyro && !busy) lon += 0.012;
     camera.fov += (fov - camera.fov) * 0.1; camera.updateProjectionMatrix();
     const phi = deg(90 - lat), th = deg(lon);
@@ -239,12 +254,15 @@
       if (k < 1) return requestAnimationFrame(turn);
       lon = lon0 + rel;
       const t1 = performance.now();
-      const fov0 = fov;
+      const fov0 = fov, lat0 = lat;
       const fwd = () => {
         const k2 = Math.min(1, (performance.now() - t1) / WALK);
         fov = fov0 - 12 * easeIO(k2);          /* world creeps closer as he advances */
+        /* footsteps: a ±1.2 degree sway, two strides across the walk — the
+           one cue that turns a camera dolly into a person advancing */
+        lat = lat0 + Math.sin(k2 * Math.PI * 4) * 1.2 * Math.sin(k2 * Math.PI);
         if (k2 < 1) return requestAnimationFrame(fwd);
-        fov = fov0;
+        fov = fov0; lat = lat0;
         done();
       };
       requestAnimationFrame(fwd);
@@ -269,7 +287,7 @@
     const sp = (keys.shift ? 2.4 : 1.35);
     if (keys.left) lon += sp;
     if (keys.right) lon -= sp;
-    if (keys.up) { fov = Math.max(58, fov - 0.55); }
+    if (keys.up) { fov = Math.max(64, fov - 0.55); }   /* same texel floor as the wheel */
     else if (keys.down) { fov = Math.min(92, fov + 0.55); }
     /* holding forward while facing a door walks you through it */
     if (keys.up) {
@@ -297,7 +315,11 @@
         res(tex);
       }, undefined, rej));
     panoCache.set(id, p);
-    if (panoCache.size > 5) {
+    /* 3 decoded panos on a phone, 5 on desktop: a 4096 texture is ~33MB of
+       GPU memory, and five of them mid-ring-walk is real pressure on a
+       2GB Android — context-loss territory */
+    const CAP = matchMedia('(max-width: 860px)').matches ? 3 : 5;
+    if (panoCache.size > CAP) {
       for (const [k, v] of panoCache) {
         if (k === cur || k === id) continue;
         panoCache.delete(k);
@@ -308,8 +330,18 @@
     return p;
   }
   function prefetchNeighbours(id) {
+    /* Only the doors the visitor is actually FACING. Prefetching every
+       door pulled the entire 2.6MB campus within seconds of landing on
+       the lobby — most visitors see one or two rooms, and the cache cap
+       then evicted and re-fetched on a full walk (4.85MB for a 2.6MB
+       site). Two nearest bearings cover the likely next click; the click
+       itself already loads in parallel with the walk either way. */
     const idle = window.requestIdleCallback || (fn => setTimeout(fn, 900));
-    doorsFor(id).forEach(dr => idle(() => { if (!busy) loadPano(dr.to); }));
+    doorsFor(id)
+      .map(dr => ({ dr, off: Math.abs(((dr.yaw - lon) % 360 + 540) % 360 - 180) }))
+      .sort((a, b) => a.off - b.off)
+      .slice(0, 2)
+      .forEach(({ dr }) => idle(() => { if (!busy) loadPano(dr.to); }));
   }
 
   function go(id, first, doorYaw) {

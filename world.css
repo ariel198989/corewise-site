@@ -18,6 +18,17 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
 }
 .cw-veil.on { opacity: 1; }
 
+/* The permanent grade. Seven independently generated panos share no
+   lighting pass; a whisper of a vignette plus a warm centre unifies them
+   into one photographed campus — the same trick, always on, at a fraction
+   of the walk-veil's strength. DOM compositing, zero WebGL cost. */
+.cw-grade {
+  position: absolute; inset: 0; z-index: 4; pointer-events: none;
+  background:
+    radial-gradient(120% 95% at 50% 44%, rgba(255,208,150,.05) 0%, transparent 50%),
+    radial-gradient(120% 95% at 50% 44%, transparent 62%, rgba(10,13,17,.26) 100%);
+}
+
 /* top bar */
 .cw-top {
   position: absolute; top: 0; right: 0; left: 0; z-index: 20;
@@ -188,10 +199,12 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
   transition: box-shadow .3s;
 }
 .cw-spot__glass img { display: block; width: 100%; height: auto; }
-/* the diagonal sheen that makes it read as glass, not as a sticker */
+/* the diagonal sheen that makes it read as glass, not as a sticker —
+   measured against the busy panos the old .32/.14 stops barely registered
+   and the window read as a photocard with a shadow */
 .cw-spot__glass::after {
   content: ""; position: absolute; inset: 0; border-radius: 16px; pointer-events: none;
-  background: linear-gradient(115deg, rgba(255,255,255,.32) 0%, transparent 28%, transparent 70%, rgba(255,255,255,.14) 100%);
+  background: linear-gradient(115deg, rgba(255,255,255,.42) 0%, transparent 30%, transparent 68%, rgba(255,255,255,.22) 100%);
 }
 .cw-spot__chip {
   position: absolute; top: -14px; right: 14px; z-index: 2; direction: ltr;
@@ -205,10 +218,12 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
   color: #fff; font-size: .8rem; font-weight: 500; line-height: 1.45; text-align: right;
   background: linear-gradient(0deg, rgba(12,15,18,.86), rgba(12,15,18,.5) 65%, transparent);
 }
-/* the AR pin — a thread down to the floor with a lit tip */
+/* the AR pin — a thread down to the floor with a lit tip. 2px and near
+   full accent at the top: at 1px/70% it vanished into the pano and the
+   "pinned in the room" read was lost */
 .cw-spot__anchor {
-  position: absolute; top: 100%; right: 24%; width: 1px; height: 62px;
-  background: linear-gradient(color-mix(in srgb, var(--acc) 70%, transparent), transparent 85%);
+  position: absolute; top: 100%; right: 24%; width: 2px; height: 62px;
+  background: linear-gradient(color-mix(in srgb, var(--acc) 95%, transparent), transparent 88%);
 }
 .cw-spot__anchor::after {
   content: ""; position: absolute; bottom: -3px; right: -3.5px; width: 8px; height: 8px; border-radius: 50%;
