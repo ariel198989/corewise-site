@@ -55,9 +55,11 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
 }
 .cw-hint.show { opacity: 1; }
 
-/* floating whatsapp — always there */
+/* floating whatsapp — always there, but UNDER an open reading card (z 30):
+   on a phone the card is a near-full-height sheet, and a CTA floating on
+   top of the text you are reading is clutter, not conversion */
 .cw-wa {
-  position: fixed; z-index: 40; left: 18px; bottom: max(18px, env(safe-area-inset-bottom));
+  position: fixed; z-index: 28; left: 18px; bottom: max(18px, env(safe-area-inset-bottom));
   display: inline-flex; align-items: center; gap: 9px; text-decoration: none;
   background: #1EBE5D; color: #06331a; font-weight: 700; font-size: .92rem;
   padding: 12px 20px; border-radius: 100px;
@@ -79,6 +81,7 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
 .cw-mapui__grid { display: grid; gap: 8px; }
 .cw-mapui__grid button { border: 1px solid rgba(20,24,28,.12); background: #fff; border-radius: 12px; padding: 13px; font: inherit; font-weight: 700; color: var(--cw-ink); cursor: pointer; text-align: right; }
 .cw-mapui__grid button.on { background: var(--cw-lime); border-color: var(--cw-lime); }
+.cw-mapui__grid button.seen { background: rgba(110,155,14,.10); border-color: rgba(110,155,14,.35); }
 .cw-mapui__grid button:hover { border-color: var(--cw-lime-d); }
 .cw-mapui__x { margin-top: 16px; width: 100%; border: 0; background: var(--cw-ink); color: #fff; border-radius: 100px; padding: 12px; font: inherit; font-weight: 700; cursor: pointer; }
 
@@ -89,7 +92,7 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
 
 /* on-screen movement pad */
 .cw-pad {
-  position: fixed; z-index: 35; right: 20px; bottom: max(20px, env(safe-area-inset-bottom));
+  position: fixed; z-index: 27; right: 20px; bottom: max(20px, env(safe-area-inset-bottom));
   display: flex; align-items: center; gap: 8px;
 }
 .cw-pad button {

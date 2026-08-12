@@ -203,7 +203,11 @@
 
   function doorsFor(id) {
     if (id === 'lobby') {
-      return WINGS.map(to => ({ to, yaw: BEARING[to], pitch: -6 }));
+      /* the team door is PEOPLE, not a sixth department — it wears the
+         dark home style and says so, instead of masquerading as another
+         service wing and muddying the five-services count */
+      return WINGS.map(to => ({ to, yaw: BEARING[to], pitch: -6,
+        home: to === 'team', label: to === 'team' ? '☕ בואו נדבר' : undefined }));
     }
     /* inside a wing: the way back to the lobby sits opposite its own bearing,
        and the two neighbouring wings are reachable to either side. */
@@ -276,19 +280,51 @@
   }
   let fwdHold = 0, doorYaws = [];
 
+  /* Panos load ONCE and stay decoded. The old flow loaded reactively inside
+     enter() — so the 2.5s walk animation played out entirely in the room you
+     were leaving, then a hard stop and a spinner while the network finally
+     started. Now the fetch fires the instant a door is clicked (in parallel
+     with the walk), revisits hit the cache, and after each arrival the
+     adjacent rooms prefetch on idle. Capped at 5 decoded panos so a long
+     ring-walk doesn't hold ~200MB of textures on a phone. */
+  const panoCache = new Map();               /* id -> Promise<THREE.Texture> */
+  function loadPano(id) {
+    let p = panoCache.get(id);
+    if (p) return p;
+    p = new Promise((res, rej) =>
+      new THREE.TextureLoader().load('world2-build/pano_' + id + '.webp', tex => {
+        tex.colorSpace = THREE.SRGBColorSpace;
+        res(tex);
+      }, undefined, rej));
+    panoCache.set(id, p);
+    if (panoCache.size > 5) {
+      for (const [k, v] of panoCache) {
+        if (k === cur || k === id) continue;
+        panoCache.delete(k);
+        v.then(t => t.dispose()).catch(() => {});
+        break;
+      }
+    }
+    return p;
+  }
+  function prefetchNeighbours(id) {
+    const idle = window.requestIdleCallback || (fn => setTimeout(fn, 900));
+    doorsFor(id).forEach(dr => idle(() => { if (!busy) loadPano(dr.to); }));
+  }
+
   function go(id, first, doorYaw) {
     if (busy || !ROOMS[id]) return;
     busy = true;
     const d = ROOMS[id];
     closePanels();
+    loadPano(id);                    /* the walk and the fetch share the wait */
     if (!first && doorYaw != null) { walkTo(doorYaw, () => enter(id, d, first)); return; }
     enter(id, d, first);
   }
 
   function enter(id, d, first) {
     el.load.hidden = false;
-    new THREE.TextureLoader().load('world2-build/pano_' + id + '.webp', tex => {
-      tex.colorSpace = THREE.SRGBColorSpace;
+    loadPano(id).then(tex => {
       if (first) {
         sphereA.material.map = tex; sphereA.material.opacity = 1; sphereA.material.needsUpdate = true;
         finish(id, d);
@@ -311,7 +347,11 @@
         };
         requestAnimationFrame(step);
       }
-    }, undefined, () => { busy = false; el.load.hidden = true; });
+    }).catch(() => {
+      /* a failed fetch must not poison the cache for the next attempt */
+      panoCache.delete(id);
+      busy = false; el.load.hidden = true;
+    });
   }
 
   function finish(id, d) {
@@ -329,11 +369,22 @@
     buildSky(d);
     buildCompass(id);
     paintProgress();
-    if (id === 'team') showFinale();
+    /* The finale is EARNED, not tripped. team is one door off the lobby, so
+       a visitor could open it first and be told "סוף הסיור, ביקרת ב-1
+       מחלקות" before seeing anything — a climax firing at the opening
+       scene. Now it waits until most of the campus is genuinely seen, and
+       plays once per session; walking back through team later just shows
+       the room. */
+    if (id === 'team' && !finaleShown && visited.size >= WINGS.length) {
+      finaleShown = true;
+      showFinale();
+    }
     busy = false;
     el.hint.classList.toggle('show', id === 'lobby');
     announce(d.title);
+    prefetchNeighbours(id);          /* the likely next hops warm on idle */
   }
+  let finaleShown = false;
 
   const seen = new Set(), visited = new Set();   /* discovered hotspots + rooms walked */
 
@@ -579,7 +630,13 @@
     if (!show) { el.mapui.style.display = 'none'; return; }
     if (!cur) return;
     const g = $('.cw-mapui__grid', el.root);
-    g.innerHTML = ORDER.map(id => `<button data-r="${id}"${id === cur ? ' class="on"' : ''}>${ROOMS[id].title}</button>`).join('');
+    /* the map answers "what's left unseen", not just "where am I" — the
+       engine tracked visited all along and the map never read it */
+    g.innerHTML = ORDER.map(id => {
+      const cls = (id === cur ? 'on' : '') + (visited.has(id) && id !== cur ? ' seen' : '');
+      const tick = visited.has(id) && id !== cur ? ' ✓' : '';
+      return `<button data-r="${id}"${cls.trim() ? ` class="${cls.trim()}"` : ''}>${ROOMS[id].title}${tick}</button>`;
+    }).join('');
     g.querySelectorAll('button').forEach(b => b.onclick = () => { openMap(false); go(b.dataset.r); });
     el.mapui.style.display = 'grid';
   }
