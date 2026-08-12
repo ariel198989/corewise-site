@@ -210,21 +210,22 @@
   }
 
   /* ---------- rooms ---------- */
-  const ORDER = ['lobby', 'video', 'apps', 'ai', 'stage', 'school', 'team'];
-  /* The lobby is a hub: the 6 departments ring it, each at its own compass bearing.
+  const ORDER = ['lobby', 'video', 'apps', 'ai', 'vision', 'stage', 'school', 'team'];
+  /* The lobby is a hub: the 7 departments ring it, each at its own compass bearing.
      Turn in the lobby and you face a different department's door. */
-  const WINGS = ['video', 'apps', 'ai', 'stage', 'school', 'team'];
-  /* two accents alternating around the ring — terracotta and olive, so adjacent
-     wings never light their windows the same way */
-  const ACCENT = { lobby: '#6E9B0E', video: '#B4530A', apps: '#6E9B0E', ai: '#B4530A', stage: '#6E9B0E', school: '#B4530A', team: '#6E9B0E' };
+  const WINGS = ['video', 'apps', 'ai', 'vision', 'stage', 'school', 'team'];
+  /* accents alternating around the ring — terracotta and olive, so adjacent
+     wings never light their windows the same way; the vision lab wears its
+     own LiDAR teal, the one room whose light comes from the point-cloud */
+  const ACCENT = { lobby: '#6E9B0E', video: '#B4530A', apps: '#6E9B0E', ai: '#B4530A', vision: '#26d07c', stage: '#6E9B0E', school: '#B4530A', team: '#6E9B0E' };
   const BEARING = {};                       /* room -> yaw of its door, seen from the lobby */
-  WINGS.forEach((id, i) => BEARING[id] = -150 + i * 60);   /* -150,-90,-30,30,90,150 */
+  WINGS.forEach((id, i) => BEARING[id] = -150 + i * 50);   /* -150,-100,-50,0,50,100,150 */
 
   function doorsFor(id) {
     if (id === 'lobby') {
-      /* the team door is PEOPLE, not a sixth department — it wears the
+      /* the team door is PEOPLE, not a seventh department — it wears the
          dark home style and says so, instead of masquerading as another
-         service wing and muddying the five-services count */
+         service wing and muddying the six-services count */
       return WINGS.map(to => ({ to, yaw: BEARING[to], pitch: -6,
         home: to === 'team', label: to === 'team' ? '☕ בואו נדבר' : undefined }));
     }
