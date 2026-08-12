@@ -162,7 +162,10 @@
       lon += lonVel; lat = Math.max(-70, Math.min(70, lat + latVel));
       lonVel *= 0.92; latVel *= 0.92;
     }
-    if (!drag && !gyro && !busy) lon += 0.012;
+    /* a room with a TV keeps a STILL camera — the idle drift that makes
+       the other rooms feel alive is exactly what crawls a film out of
+       frame while you watch it */
+    if (!drag && !gyro && !busy && tvYaw == null) lon += 0.012;
     camera.fov += (fov - camera.fov) * 0.1; camera.updateProjectionMatrix();
     const phi = deg(90 - lat), th = deg(lon);
     camera.lookAt(Math.sin(phi) * Math.sin(th), Math.cos(phi), -Math.sin(phi) * Math.cos(th));
@@ -179,6 +182,7 @@
     }
   }
   let compassDots = [];
+  let tvYaw = null;
   function buildCompass(id) {
     const ring = $('.cw-compass__ring', el.root);
     ring.innerHTML = '';
@@ -472,7 +476,7 @@
 
   function buildMarkers(d) {
     el.spots.innerHTML = '';
-    spots = []; doors = [];
+    spots = []; doors = []; tvYaw = null;
     let prod = 0;
     (d.hotspots || []).forEach(h => {
       const kind = h.kind || 'story';
@@ -501,6 +505,7 @@
         };
         el.spots.appendChild(b);
         spots.push({ el: b, v: vec(h.yaw, h.pitch) });
+        tvYaw = h.yaw;
         return;
       }
       if (kind === 'product' && h.img) {
