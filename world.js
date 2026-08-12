@@ -480,6 +480,29 @@
       const key = d.id + '|' + h.title;
       b.className = 'cw-spot is-' + kind + (seen.has(key) ? ' is-seen' : '');
       b.style.setProperty('--ph', (Math.random() * 2).toFixed(2) + 's');   /* breathe out of sync */
+      if (kind === 'tv' && h.video) {
+        /* the lobby's giant screen: a video pinned to the wall like any
+           holo window, only bigger. Muted autoplay (the only autoplay
+           browsers allow); a click toggles the sound. */
+        b.innerHTML =
+          '<span class="cw-spot__frame">' +
+            '<span class="cw-spot__chip">' + esc(h.title || 'COREWISE TV') + ' · LIVE</span>' +
+            '<span class="cw-spot__glass">' +
+              '<video src="' + h.video + '" autoplay muted loop playsinline></video>' +
+              '<span class="cw-spot__tag">🔇 הקישו להפעלת סאונד</span>' +
+            '</span>' +
+            '<i class="cw-spot__anchor" aria-hidden="true"></i>' +
+          '</span>';
+        b.onclick = () => {
+          const v = b.querySelector('video'), tag = b.querySelector('.cw-spot__tag');
+          v.muted = !v.muted;
+          if (!v.muted) { v.play().catch(() => {}); duck(true); } else duck(false);
+          tag.textContent = v.muted ? '🔇 הקישו להפעלת סאונד' : '🔊 הקישו להשתקה';
+        };
+        el.spots.appendChild(b);
+        spots.push({ el: b, v: vec(h.yaw, h.pitch) });
+        return;
+      }
       if (kind === 'product' && h.img) {
         /* windows lean away from each other so a wall of them never reads flat */
         b.style.setProperty('--tilt', (prod++ % 2 ? -8 : 9) + 'deg');

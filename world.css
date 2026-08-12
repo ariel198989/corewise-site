@@ -177,6 +177,17 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
 .cw-spot.is-action span { background: rgba(6,51,26,.72); border-color: rgba(37,211,102,.5); }
 /* product: a holo window pinned into the room */
 .cw-spot.is-product { display: block; --acc: var(--cw-acc, #6E9B0E); }
+/* the lobby TV: same window, cinema size, a real bezel, no float-wobble */
+.cw-spot.is-tv { display: block; --acc: #26d07c; }
+.cw-spot.is-tv .cw-spot__frame {
+  width: clamp(300px, 38vw, 620px);
+  transform: perspective(1200px) rotateY(var(--tilt, 0deg));
+  animation: none;
+}
+.cw-spot.is-tv .cw-spot__glass {
+  border: 6px solid #14181c; border-radius: 12px; background: #000;
+}
+.cw-spot.is-tv video { display: block; width: 100%; height: auto; }
 .cw-spot__frame {
   display: block; position: relative; width: clamp(160px, 17vw, 260px);
   transform: perspective(1000px) rotateY(var(--tilt, 9deg)) rotateX(1.5deg);
