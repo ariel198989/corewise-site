@@ -82,8 +82,8 @@
           "kind": "story"
         },
         {
-          "yaw": 62,
-          "pitch": 10,
+          "yaw": 48,
+          "pitch": 5,
           "kind": "tv",
           "title": "COREWISE TV",
           "video": "hero_seq_source.mp4",
