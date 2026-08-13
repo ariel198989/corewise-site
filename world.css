@@ -496,7 +496,9 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
 
 /* the nudge that teaches the gesture */
 .cw-lookup {
-  position: absolute; top: 12vh; left: 50%; transform: translateX(-50%);
+  /* 4vh, not 12: at 12 the nudge landed square on the lobby's ring
+     emblem and read as a label for it */
+  position: absolute; top: 4vh; left: 50%; transform: translateX(-50%);
   z-index: 10; display: flex; flex-direction: column; align-items: center; gap: 3px;
   color: rgba(255,255,255,.75); font-size: .76rem; pointer-events: none;
   opacity: 0; transition: opacity .6s ease;
