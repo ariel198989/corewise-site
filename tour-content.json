@@ -270,6 +270,17 @@
           "title": "אתרים · אפליקציות · מערכות",
           "video": "apps-tv.mp4",
           "text": "מסך החדר — הסרט של המחלקה."
+        },
+        {
+          "yaw": -155,
+          "pitch": 4,
+          "kind": "product",
+          "img": "works/app-arstore.webp",
+          "title": "הסופרמרקט התלת-ממדי",
+          "short": "AR STORE",
+          "text": "חנות שלמה בתלת-ממד: סיור מודרך בין 13 מחלקות, חיפוש שמביא את המוצר אליך, ועגלת אירוע שנבנית ממשפט אחד בקול — כולל כמויות מדויקות ותקציב. מיועד לרשתות קמעונאות שרוצות חוויית קנייה של הדור הבא.",
+          "link": "https://ar-store-eta.vercel.app/",
+          "linkLabel": "פתחו את המערכת החיה ←"
         }
       ],
       "sky": {
@@ -551,6 +562,28 @@
           "title": "ראייה ממוחשבת · TV",
           "video": "vision-tv.mp4",
           "text": "מסך החדר — הסרט של המחלקה."
+        },
+        {
+          "yaw": 75,
+          "pitch": 14,
+          "kind": "product",
+          "img": "works/app-roadsense.webp",
+          "title": "CoreWise Sense — העיר החכמה",
+          "short": "ROAD SENSE",
+          "text": "קונסולת תפעול עירונית לניטור כבישים: זיהוי מפגעים בראייה ממוחשבת, ניהול צוותים והתרעות. מיועד לעיריות ורשויות מקומיות שרוצות עיר חכמה שמתחילה מהכביש.",
+          "link": "https://roadsense-ivory.vercel.app/",
+          "linkLabel": "פתחו את המערכת החיה ←"
+        },
+        {
+          "yaw": -150,
+          "pitch": 6,
+          "kind": "product",
+          "img": "works/app-coreinspect.webp",
+          "title": "CoreInspect — בדק בית הנדסי",
+          "short": "CORE INSPECT",
+          "text": "לא בדק בית רגיל: בקרת ליקויים עם נתונים הנדסיים וגיאומטריים על בסיס CV ו-LiDAR. מיועד לחברות בדק בית, יזמים וקבלנים שרוצים דוח שמגובה במדידה, לא בעין.",
+          "link": "https://coreinspect.vercel.app/",
+          "linkLabel": "פתחו את המערכת החיה ←"
         }
       ],
       "sky": {
