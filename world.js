@@ -697,7 +697,13 @@
         /* THEATRE MODE. project() rewrites left/top every frame, so the
            expanded panel pins itself with !important in the stylesheet and
            stops taking its position from the wall it hangs on. */
-        const scrim = w.appendChild(document.createElement('span'));
+        /* The scrim CANNOT live inside the panel. The expanded panel is pinned
+           with a transform, and a transform makes its element the containing
+           block for fixed-position descendants — so a scrim nested in there
+           sized itself to the panel and the room stayed brightly lit behind
+           the video. It hangs off the spots layer instead, which has no
+           transform, and buildMarkers clears that layer on every room change. */
+        const scrim = el.spots.appendChild(document.createElement('span'));
         scrim.className = 'cw-yt-scrim';
         /* On a phone the wall panel is barely wider than a thumb: a six-button
            strip, a sound toggle and a caption crammed in there are all too
@@ -706,6 +712,7 @@
            there is room for it. The desktop keeps everything in place. */
         const size = on => {
           w.classList.toggle('is-big', on);
+          scrim.classList.toggle('is-on', on);
           big.textContent = on ? (coarse ? '⤡ סגירה' : '⤡ הקטנה')
                                : (coarse ? '▶ צפייה בסדרה' : '⤢ הגדלה');
           big.setAttribute('aria-label', on ? 'סגירת המסך המוגדל' : 'הגדלת המסך');
