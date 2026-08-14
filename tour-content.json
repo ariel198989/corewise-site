@@ -154,6 +154,38 @@
           "title": "וידאו ופרסום · TV",
           "video": "video-tv.mp4",
           "text": "מסך החדר — הסרט של המחלקה."
+        },
+        {
+          "yaw": -162,
+          "pitch": 16,
+          "kind": "yt",
+          "title": "The Hollow",
+          "episodes": [
+            {
+              "n": 1,
+              "id": "lUjDrrWxpsg"
+            },
+            {
+              "n": 2,
+              "id": "iT-5Ifi4YOo"
+            },
+            {
+              "n": 3,
+              "id": "fszXYlD3Fpc"
+            },
+            {
+              "n": 4,
+              "id": "j-jNqoRPDzQ"
+            },
+            {
+              "n": 5,
+              "id": "P0GnR_Wp3Vw"
+            },
+            {
+              "n": 6,
+              "id": "troDiYIzXcU"
+            }
+          ]
         }
       ],
       "sky": {

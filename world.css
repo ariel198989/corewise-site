@@ -29,21 +29,34 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
     radial-gradient(120% 95% at 50% 44%, transparent 62%, rgba(10,13,17,.26) 100%);
 }
 
-/* top bar */
+/* top bar — identity + location read as ONE cluster; space-between used to
+   strand the counter alone in 600px of dead sky */
 .cw-top {
   position: absolute; top: 0; right: 0; left: 0; z-index: 20;
-  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  display: flex; align-items: center; gap: 12px;
   padding: max(14px, env(safe-area-inset-top)) 20px 14px;
-  background: linear-gradient(rgba(12,15,18,.6), transparent);
+  background: linear-gradient(rgba(12,15,18,.5), transparent);
 }
-.cw-brand { color: #fff; font-weight: 700; letter-spacing: .04em; font-family: 'IBM Plex Mono', monospace; }
+.cw-tools { margin-inline-start: auto; display: flex; align-items: center; }
+.cw-brand { color: rgba(255,255,255,.72); font-weight: 500; font-size: .82rem; letter-spacing: .1em; font-family: 'IBM Plex Mono', monospace; }
 .cw-room { color: #fff; font-weight: 700; font-size: 1.05rem; text-shadow: 0 2px 12px rgba(0,0,0,.6); }
 .cw-tools button {
-  border: 1px solid rgba(255,255,255,.35); background: rgba(255,255,255,.14);
+  position: relative; display: inline-flex; align-items: center; justify-content: center;
+  border: 1px solid rgba(255,255,255,.18); background: rgba(12,15,18,.34);
   -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
-  color: #fff; font-size: 1rem; border-radius: 100px; width: 40px; height: 40px; cursor: pointer; margin-right: 6px;
+  color: #fff; font-size: 1rem; border-radius: 100px; width: 38px; height: 38px; cursor: pointer; margin-right: 6px;
+  transition: background .2s, border-color .2s;
 }
+/* the visual circle stays 38 (34 on a phone); the THUMB gets 44 */
+.cw-tools button::before { content: ""; position: absolute; inset: -4px; border-radius: inherit; }
+.cw-tools button:hover { background: rgba(12,15,18,.6); border-color: rgba(255,255,255,.34); }
+.cw-tools button svg { width: 19px; height: 19px; display: block; }
 .cw-tools .on { background: var(--cw-lime-d); border-color: var(--cw-lime-d); }
+
+/* keyboard visitors could not see where they were — 0 focus rules in the file */
+.cw button:focus-visible, .cw a:focus-visible {
+  outline: 2px solid var(--cw-lime); outline-offset: 3px; border-radius: 6px;
+}
 
 /* sound toggle — an equalizer that flatlines when muted */
 .cw-tools button.cw-snd { display: inline-flex; align-items: center; justify-content: center; gap: 3px; padding: 0; }
@@ -58,12 +71,18 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
 @keyframes cwEq { 0%, 100% { transform: scaleY(.3); } 50% { transform: scaleY(1); } }
 @media (prefers-reduced-motion: reduce) { .cw-snd i { animation: none; } }
 
+/* Tier 3 — instruction. No pill, no blur: a caption floating under the room,
+   not another button competing with the doors. Clears the compass by 46px
+   instead of painting under it. */
 .cw-hint {
-  position: absolute; bottom: 13vh; left: 50%; transform: translateX(-50%);
-  z-index: 7; color: rgba(255,255,255,.9); font-size: .85rem; pointer-events: none;
-  background: rgba(12,15,18,.45); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
-  padding: 8px 18px; border-radius: 100px; opacity: 0; transition: opacity .5s;
+  position: absolute; bottom: calc(max(20px, env(safe-area-inset-bottom)) + 108px);
+  left: 50%; transform: translateX(-50%);
+  z-index: 7; color: rgba(255,255,255,.66); font-size: .74rem; font-weight: 500;
+  letter-spacing: .01em; white-space: nowrap; pointer-events: none;
+  text-shadow: 0 1px 8px rgba(0,0,0,.85), 0 0 22px rgba(0,0,0,.5);
+  opacity: 0; transition: opacity .6s ease;
 }
+.cw-hint b { display: inline-block; direction: ltr; font-weight: 600; color: rgba(255,255,255,.85); }
 .cw-hint.show { opacity: 1; }
 
 /* floating whatsapp — always there, but UNDER an open reading card (z 30):
@@ -72,18 +91,17 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
 .cw-wa {
   position: fixed; z-index: 28; left: 18px; bottom: max(18px, env(safe-area-inset-bottom));
   display: inline-flex; align-items: center; gap: 9px; text-decoration: none;
-  background: #1EBE5D; color: #06331a; font-weight: 700; font-size: .92rem;
-  padding: 12px 20px; border-radius: 100px;
-  box-shadow: 0 12px 32px rgba(30,190,93,.4);
-  animation: cwWa 3s ease-in-out infinite;
+  background: #1EBE5D; color: #06331a; font-weight: 700; font-size: .88rem;
+  padding: 11px 18px; border-radius: 100px;
+  /* a neutral drop, not a coloured halo — and it no longer pulses. An
+     infinite glow on a "leave your number" button reads as pressure before
+     a single sentence has said what the company does. */
+  box-shadow: 0 10px 26px rgba(6,26,15,.42);
+  transition: background .2s, transform .2s;
 }
-.cw-wa svg { width: 22px; height: 22px; }
-.cw-wa:hover { background: #25D366; }
-@keyframes cwWa { 0%,100% { box-shadow: 0 12px 32px rgba(30,190,93,.4) } 50% { box-shadow: 0 12px 42px rgba(30,190,93,.72) } }
-@media (max-width: 860px) { .cw-wa span { display: none; } .cw-wa { padding: 14px; } }
-
-/* markers — three tiers */
-
+.cw-wa svg { width: 20px; height: 20px; }
+.cw-wa:hover { background: #25D366; transform: translateY(-2px); }
+@media (max-width: 860px) { .cw-wa span { display: none; } .cw-wa { padding: 13px; } }
 
 /* map */
 .cw-mapui { position: absolute; inset: 0; z-index: 50; display: grid; place-items: center; background: rgba(12,15,18,.72); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
@@ -97,48 +115,46 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
 .cw-mapui__x { margin-top: 16px; width: 100%; border: 0; background: var(--cw-ink); color: #fff; border-radius: 100px; padding: 12px; font: inherit; font-weight: 700; cursor: pointer; }
 
 
-.cw-load { position: absolute; inset: 0; z-index: 45; display: grid; place-items: center; pointer-events: none; }
-.cw-load span { width: 42px; height: 42px; border-radius: 50%; border: 3px solid rgba(255,255,255,.25); border-top-color: var(--cw-lime); animation: cwSpin .8s linear infinite; }
 @keyframes cwSpin { to { transform: rotate(360deg) } }
 
-/* on-screen movement pad */
+/* on-screen movement pad — present, reachable, and no longer the loudest
+   control in the frame. The lime ring on the forward key was pulling the eye
+   away from the doors it exists to reach. */
 .cw-pad {
   position: fixed; z-index: 27; right: 20px; bottom: max(20px, env(safe-area-inset-bottom));
   display: flex; align-items: center; gap: 8px;
 }
 .cw-pad button {
-  width: 52px; height: 52px; border-radius: 50%; cursor: pointer; font-size: 1.25rem;
-  border: 1px solid rgba(255,255,255,.32); background: rgba(20,24,28,.42);
+  width: 46px; height: 46px; border-radius: 50%; cursor: pointer; font-size: 1.1rem;
+  border: 1px solid rgba(255,255,255,.16); background: rgba(20,24,28,.36);
   -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
-  color: #fff; transition: background .15s, transform .15s;
+  color: rgba(255,255,255,.8); transition: background .15s, transform .15s, color .15s;
   touch-action: none; user-select: none;
 }
 .cw-pad button:active { background: var(--cw-lime); color: #0c0f12; transform: scale(.93); }
-.cw-pad__up { width: 62px; height: 62px; font-size: 1.5rem; border-color: rgba(198,242,78,.6); }
+.cw-pad__up { width: 54px; height: 54px; font-size: 1.3rem; }
 
-/* lobby compass — six wings around you */
+/* lobby compass — the seven wings around you, as status. Small: it answers
+   "how much campus is behind me", it is not a control (pointer-events: none)
+   and it should never out-shout a door. */
 .cw-compass {
-  position: fixed; z-index: 34; left: 50%; transform: translateX(-50%);
-  bottom: max(18px, env(safe-area-inset-bottom)); width: 74px; height: 74px;
-  border-radius: 50%; background: rgba(12,15,18,.4);
+  position: fixed; z-index: 6; left: 50%; transform: translateX(-50%);
+  bottom: max(20px, env(safe-area-inset-bottom)); width: 58px; height: 58px;
+  border-radius: 50%; background: rgba(12,15,18,.3);
   -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
-  border: 1px solid rgba(255,255,255,.18); pointer-events: none;
+  border: 1px solid rgba(255,255,255,.13); pointer-events: none;
 }
 .cw-compass::after {
-  content: ""; position: absolute; left: 50%; top: 9px; transform: translateX(-50%);
-  border-left: 5px solid transparent; border-right: 5px solid transparent;
-  border-bottom: 8px solid rgba(255,255,255,.75);
+  content: ""; position: absolute; left: 50%; top: 7px; transform: translateX(-50%);
+  border-left: 4px solid transparent; border-right: 4px solid transparent;
+  border-bottom: 7px solid rgba(255,255,255,.6);
 }
 .cw-compass__ring { position: absolute; inset: 0; }
 .cw-compass__d {
-  position: absolute; left: 50%; top: 50%; width: 7px; height: 7px; border-radius: 50%;
-  background: rgba(255,255,255,.42); transition: background .25s, box-shadow .25s;
+  position: absolute; left: 50%; top: 50%; width: 5px; height: 5px; border-radius: 50%;
+  background: rgba(255,255,255,.34); transition: background .25s, box-shadow .25s;
 }
-.cw-compass__d.near { background: var(--cw-lime); box-shadow: 0 0 10px var(--cw-lime); }
-@media (max-width: 860px) { .cw-compass { width: 60px; height: 60px; bottom: 92px; } }
-
-/* home door reads differently from wing doors */
-.cw-door.is-home .cw-door__l { background: rgba(20,24,28,.82); color: #fff; box-shadow: 0 10px 30px rgba(0,0,0,.4), 0 0 0 2px rgba(255,255,255,.25); }
+.cw-compass__d.near { background: var(--cw-lime); box-shadow: 0 0 8px var(--cw-lime); }
 
 /* first paint: soft brand splash while the lobby texture streams in */
 .cw-load { position: fixed; inset: 0; z-index: 45; display: grid; place-items: center; pointer-events: none;
@@ -152,23 +168,24 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
   display: flex; align-items: center; gap: 8px; pointer-events: auto; cursor: pointer;
   border: 0; background: transparent; font-family: inherit; padding: 0;
 }
-/* story: a quiet glowing point (never the product window's anchor thread) */
+/* ---- Tier 2: story hotspots. Content, not navigation — so a step quieter
+   than a door in size, weight and material, and it stops competing with it. ---- */
 .cw-spot:not(.is-product) i {
-  width: 15px; height: 15px; border-radius: 50%; flex: none;
-  background: rgba(255,255,255,.92); border: 2px solid rgba(255,255,255,.55);
-  box-shadow: 0 0 0 5px rgba(255,255,255,.14), 0 0 16px rgba(255,255,255,.5);
+  width: 11px; height: 11px; border-radius: 50%; flex: none;
+  background: rgba(255,255,255,.9); border: 2px solid rgba(255,255,255,.4);
+  box-shadow: 0 0 0 4px rgba(255,255,255,.1), 0 0 12px rgba(255,255,255,.4);
   animation: cwPulse 2.6s ease-in-out infinite; animation-delay: var(--ph, 0s);
 }
-@keyframes cwPulse { 50% { box-shadow: 0 0 0 11px rgba(255,255,255,.06), 0 0 24px rgba(255,255,255,.62) } }
+@keyframes cwPulse { 50% { box-shadow: 0 0 0 9px rgba(255,255,255,.05), 0 0 20px rgba(255,255,255,.5) } }
 /* the pill label belongs to point markers only — product windows build their own
    spans (frame/glass/chip/tag) and must not inherit a 100px radius and a blur */
 .cw-spot:not(.is-product) span {
-  color: #fff; font-size: .84rem; font-weight: 700; white-space: nowrap;
-  background: rgba(12,15,18,.55); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
-  padding: 6px 13px; border-radius: 100px; border: 1px solid rgba(255,255,255,.16);
+  color: rgba(255,255,255,.94); font-size: .78rem; font-weight: 500; white-space: nowrap;
+  background: rgba(12,15,18,.5); padding: 5px 11px; border-radius: 8px;
+  border: 1px solid rgba(255,255,255,.1);
   transition: background .2s, border-color .2s;
 }
-.cw-spot:not(.is-product):hover span { background: rgba(12,15,18,.78); border-color: rgba(255,255,255,.4); }
+.cw-spot:not(.is-product):hover span { background: rgba(12,15,18,.8); border-color: rgba(255,255,255,.34); }
 /* action: whatsapp green */
 .cw-spot.is-action:not(.is-product) i {
   background: #25D366; border-color: #eafff2;
@@ -188,6 +205,46 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
   border: 6px solid #14181c; border-radius: 12px; background: #000;
 }
 .cw-spot.is-tv video { display: block; width: 100%; height: auto; }
+/* the side screen: same bezel kit, roughly half the wall, so the room reads
+   as a main screen plus a monitor beside it rather than two rival TVs.
+   The iframe takes no pointer events — YouTube's own surface would swallow
+   the click, and here the whole panel is one button that opens the source. */
+.cw-spot.is-yt { display: block; --acc: #26d07c; }
+.cw-spot.is-yt .cw-spot__frame {
+  /* the floor is set by the channel strip, not by taste: six numbers plus two
+     arrows need ~210px, and on a 390px phone 21vw does not reach it — below
+     that the strip spilled out past the bezel on both sides */
+  width: clamp(214px, 21vw, 340px);
+  transform: perspective(1200px) rotateY(var(--tilt, 0deg));
+  animation: none;
+}
+.cw-spot.is-yt .cw-spot__glass {
+  border: 5px solid #14181c; border-radius: 10px; background: #000;
+}
+.cw-spot.is-yt iframe {
+  display: block; width: 100%; aspect-ratio: 16 / 9; border: 0;
+}
+/* the channel strip. Six episodes need a way to move between them that reads
+   at a glance from across the room, so the numbers ARE the control — no menu,
+   no titles competing with the room. LTR because it is a numeric track, and
+   the arrows point the way the numbers run. */
+.cw-yt-zap {
+  display: flex; align-items: center; justify-content: center; gap: 5px;
+  direction: ltr; margin-top: 8px; max-width: 100%;
+}
+.cw-yt-dots { display: flex; gap: 4px; }
+.cw-yt-zap button {
+  font: 600 .72rem/1 Rubik, system-ui, sans-serif; color: rgba(255,255,255,.82);
+  min-width: 23px; height: 25px; padding: 0 4px; cursor: pointer; flex: none;
+  background: rgba(12,15,18,.62); border: 1px solid rgba(255,255,255,.16);
+  border-radius: 7px; transition: background .18s, border-color .18s, color .18s;
+}
+.cw-yt-zap button:hover { background: rgba(12,15,18,.9); border-color: rgba(255,255,255,.4); color: #fff; }
+.cw-yt-nav { font-size: .95rem !important; line-height: 0 !important; }
+.cw-yt-dot.is-on {
+  color: #05130b; background: var(--acc); border-color: var(--acc);
+  box-shadow: 0 0 14px color-mix(in srgb, var(--acc) 55%, transparent);
+}
 .cw-spot__frame {
   display: block; position: relative; width: clamp(160px, 17vw, 260px);
   transform: perspective(1000px) rotateY(var(--tilt, 9deg)) rotateX(1.5deg);
@@ -246,21 +303,40 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
 .cw-spot.is-seen span::after, .cw-spot.is-seen .cw-spot__chip::after { content: " ✓"; color: var(--cw-lime); }
 .cw-spot.is-seen .cw-spot__glass { box-shadow: 0 0 0 1px rgba(198,242,78,.7), 0 30px 66px rgba(12,15,18,.45); }
 
-/* doors */
-.cw-door { flex-direction: column; gap: 6px; }
+/* ---- Tier 1: doors. The only navigation in the room, so the only thing
+   allowed to be the biggest text on screen. Solid white, no backdrop blur —
+   the blur was over a photograph, where it buys nothing and costs a
+   full-screen compositing pass per pill on a phone. A 14px corner, so the
+   one remaining 100px capsule on screen is the WhatsApp button and it reads
+   as the only "button" in the frame. ---- */
+.cw-door { flex-direction: column; gap: 5px; opacity: .5; transition: opacity .45s ease; }
 .cw-door__l {
-  color: var(--cw-ink); background: rgba(255,255,255,.92);
-  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
-  font-weight: 700; font-size: .95rem; white-space: nowrap;
-  padding: 11px 22px; border-radius: 100px;
-  box-shadow: 0 10px 30px rgba(0,0,0,.35), 0 0 0 2px rgba(198,242,78,.45);
-  transition: transform .2s, box-shadow .2s;
+  color: var(--cw-ink); background: #fff;
+  font-weight: 700; font-size: 1.02rem; white-space: nowrap;
+  padding: 12px 24px; border-radius: 14px;
+  box-shadow: 0 12px 34px rgba(0,0,0,.4);
+  transition: transform .25s, box-shadow .25s, scale .45s ease;
+  scale: .88;
 }
-.cw-door:hover .cw-door__l { transform: translateY(-3px); box-shadow: 0 14px 38px rgba(0,0,0,.42), 0 0 0 3px var(--cw-lime); }
+/* weight follows the gaze: the door you face is lit and full-size, the ones
+   at the edge of vision recede instead of shouting alongside it */
+.cw-door.is-facing { opacity: 1; }
+.cw-door.is-facing .cw-door__l { scale: 1; box-shadow: 0 14px 40px rgba(0,0,0,.42), 0 0 0 2px rgba(198,242,78,.6); }
+.cw-door.is-far { opacity: .3; }
+.cw-door.is-far .cw-door__l { scale: .8; }
+.cw-door:hover { opacity: 1; }
+.cw-door:hover .cw-door__l { transform: translateY(-3px); scale: 1; box-shadow: 0 16px 44px rgba(0,0,0,.45), 0 0 0 3px var(--cw-lime); }
 .cw-door.is-next .cw-door__l { background: var(--cw-lime); }
-.cw-door.is-home .cw-door__l { background: rgba(20,24,28,.85); color: #fff; box-shadow: 0 10px 30px rgba(0,0,0,.4), 0 0 0 2px rgba(255,255,255,.22); }
-.cw-door__a { font-style: normal; color: #fff; font-size: 1.25rem; line-height: 1; text-shadow: 0 2px 10px rgba(0,0,0,.6); animation: cwStep 1.8s ease-in-out infinite; }
-@keyframes cwStep { 0%, 100% { transform: translateY(0); opacity: .55 } 50% { transform: translateY(7px); opacity: 1 } }
+.cw-door.is-home .cw-door__l { background: rgba(20,24,28,.88); color: #fff; box-shadow: 0 12px 34px rgba(0,0,0,.45); }
+/* one arrow, on the doorway you are actually walking toward — not seven of
+   them bouncing at once around the ring */
+.cw-door__a {
+  font-style: normal; color: #fff; font-size: 1.1rem; line-height: 1;
+  text-shadow: 0 2px 10px rgba(0,0,0,.6);
+  opacity: 0; transition: opacity .35s ease;
+}
+.cw-door.is-facing .cw-door__a { opacity: 1; animation: cwStep 1.8s ease-in-out infinite; }
+@keyframes cwStep { 0%, 100% { transform: translateY(0); opacity: .5 } 50% { transform: translateY(6px); opacity: 1 } }
 /* finished the room, the onward door beckons */
 .room-done .cw-door.is-next .cw-door__l { animation: cwBeckon 1.9s ease-in-out infinite; }
 @keyframes cwBeckon {
@@ -268,14 +344,15 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
   50% { box-shadow: 0 14px 40px rgba(0,0,0,.4), 0 0 0 7px rgba(198,242,78,.35) }
 }
 
-/* progress chip */
+/* Tier 3 — status. Empty until there is something to count, and then a
+   caption beside the room name rather than a fourth chip in the sky. */
 .cw-prog {
-  font-size: .78rem; font-weight: 700; color: rgba(255,255,255,.82);
-  background: rgba(12,15,18,.42); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
-  border: 1px solid rgba(255,255,255,.16); border-radius: 100px; padding: 5px 13px; white-space: nowrap;
-  transition: background .3s, color .3s, border-color .3s;
+  font-size: .72rem; font-weight: 500; color: rgba(255,255,255,.6);
+  white-space: nowrap; text-shadow: 0 1px 6px rgba(0,0,0,.7);
+  transition: color .3s;
 }
-.cw-prog.done { background: var(--cw-lime); color: #0c0f12; border-color: var(--cw-lime); }
+.cw-prog:empty { display: none; }
+.cw-prog.done { color: var(--cw-lime); font-weight: 600; }
 
 /* ============ rich card ============ */
 .cw-card {
@@ -440,8 +517,11 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
   .cw-top { gap: 8px; flex-wrap: nowrap; }
   .cw-tools { display: flex; align-items: center; flex: none; }
   .cw-tools button { width: 34px; height: 34px; font-size: .88rem; margin-right: 5px; }
+  /* 34px circle, 46px thumb target — WCAG 2.5.5 without changing the look */
+  .cw-tools button::before { inset: -6px; }
+  .cw-tools button svg { width: 17px; height: 17px; }
   .cw-snd i { height: 11px; }
-  .cw-brand { font-size: .82rem; }
+  .cw-brand { font-size: .74rem; letter-spacing: .08em; }
   .cw-prog__l { display: none; }
   .cw-prog__s { display: inline; }
   .cw-room { max-width: 46vw; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -509,7 +589,6 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
 @media (max-width: 860px) {
   .cw-sky { padding-bottom: 26vh; }
   .cw-sky__in { padding: 24px 22px; }
-  .cw-lookup { top: 15vh; }
 }
 
 /* sky polish: give the stat pill room, and let the halo breathe instead of spin */
@@ -521,3 +600,43 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
   50%      { text-shadow: 0 0 34px rgba(198,242,78,.95), 0 0 78px rgba(198,242,78,.45); transform: scale(1.06) }
 }
 .cw-sky.seen .cw-sky__icon { animation-duration: 7s; }
+
+/* ============================================================
+   The quiet pass — what the founder meant by "מרגיש לי קצת רעש"
+   ============================================================ */
+
+/* 1. The chrome recedes when you stop touching it. Stand still for 4.5s and
+   the signage dims to a third so the hall is the thing you are looking at.
+   Nothing is removed; any drag, tap or key brings it all straight back. */
+.cw-top, .cw-pad, .cw-compass, .cw-wa {
+  transition: opacity .7s cubic-bezier(.16,1,.3,1);
+}
+.cw.is-idle .cw-top,
+.cw.is-idle .cw-pad,
+.cw.is-idle .cw-compass { opacity: .26; }
+.cw.is-idle .cw-wa { opacity: .55; }
+/* the hint is exempt: it is teaching, and it leaves on its own the moment
+   it is obeyed */
+
+/* 2. The look-up nudge stops landing inside the logo ring on a phone. The
+   desktop rule moved it to 4vh for exactly this reason and the mobile
+   override at 15vh put it straight back on the emblem. */
+@media (max-width: 860px) {
+  .cw-lookup { top: 7vh; }
+  .cw-hint { font-size: .72rem; bottom: calc(max(20px, env(safe-area-inset-bottom)) + 100px); }
+  .cw-compass { width: 52px; height: 52px; }
+  .cw-door__l { font-size: .95rem; padding: 11px 20px; }
+  .cw-pad button { width: 44px; height: 44px; }
+  .cw-pad__up { width: 50px; height: 50px; }
+}
+
+/* 3. Reduced motion was honoured in two places out of a dozen. The camera's
+   own idle pan — the one animation with no off switch anywhere in the UI —
+   is gated in world.js; these are the rest. */
+@media (prefers-reduced-motion: reduce) {
+  .cw-door__a, .cw-door.is-facing .cw-door__a,
+  .cw-lookup, .cw-lookup.show,
+  .cw-spot__frame, .cw-spot:not(.is-product) i,
+  .cw-sky__icon, .cw-motes i,
+  .room-done .cw-door.is-next .cw-door__l { animation: none !important; }
+}

@@ -4,12 +4,46 @@
   const THREE_SRC = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/0.152.2/three.min.js';
   const WA = 'https://wa.me/972507594477';
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const coarse = matchMedia('(pointer: coarse)').matches;
+
+  /* Drawn, not typed. 🧭 and 🗺️ rendered as full-colour OS clipart next to a
+     hand-built equalizer and a hand-drawn WhatsApp glyph — three icon
+     languages in one 3-button bar. These match the WhatsApp stroke weight. */
+  const ICON = {
+    gyro: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="8.3"/><path d="M15.1 8.9 10.2 10.6 8.9 15.1 13.8 13.4z" fill="currentColor" stroke="none"/></svg>',
+    map: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true"><path d="M9 4.7 3.7 7v12.3L9 17l6 2.3 5.3-2.3V4.7L15 7z"/><path d="M9 4.7V17M15 7v12.3"/></svg>',
+  };
+  /* A phone has no arrow keys. The old single string taught a desktop
+     keyboard to a thumb, and at 390px it ran under the compass and clipped
+     mid-word — the visitor's first read of the build quality. */
+  const HINT = coarse
+    ? 'גררו כדי להסתכל · הקישו על דלת כדי להיכנס'
+    : 'גררו כדי להסתכל · <b>↑</b> כדי ללכת קדימה';
 
   let CFG = null, ROOMS = {}, cur = null;
   let renderer, scene, camera, sphereA, sphereB, rafId;
   let lon = 0, lat = 0, fov = 78, drag = false, px = 0, py = 0;
   let gyro = false, gbase = null, spots = [], doors = [], busy = false;
-  let el = {};
+  let el = {}, wake = () => {};
+
+  /* ---------- framing ----------
+     THREE's camera.fov is VERTICAL. Framing by it meant a 1440x900 desktop
+     saw 104 degrees of the hall while a 390px phone saw FORTY-ONE — the same
+     room, cropped to a keyhole. You arrive in a museum lobby; the first frame
+     has to read as the whole room. So the rest value is stated as the
+     HORIZONTAL angle and converted per aspect, with a vertical cap so a tall
+     screen widens toward architecture and never tips into fisheye. */
+  const H_REST = 116;          /* horizontal degrees at rest — a 15mm look */
+  const V_CAP = 103;           /* vertical ceiling: past this the pano smears */
+  const FOV_MIN = 64;          /* texel floor: the pano is 4096px around */
+  let FOV_REST = 78, FOV_MAX = 92;
+  const vFromH = (h, a) => 2 * Math.atan(Math.tan(deg(h) / 2) / a) * 180 / Math.PI;
+  function reframe() {
+    const a = innerWidth / innerHeight;
+    FOV_REST = Math.min(V_CAP, vFromH(H_REST, a));
+    FOV_MAX = Math.min(V_CAP + 7, vFromH(H_REST + 14, a));
+    fov = Math.max(FOV_MIN, Math.min(FOV_MAX, fov));
+  }
 
   const $ = (s, r = document) => r.querySelector(s);
   const deg = d => d * Math.PI / 180;
@@ -46,11 +80,11 @@
         <span class="cw-prog"></span>
         <span class="cw-tools">
           <button class="cw-snd" title="מוזיקת רקע" aria-label="מוזיקת רקע" aria-pressed="true"><i></i><i></i><i></i></button>
-          <button class="cw-gyro" title="ג'ירוסקופ">🧭</button>
-          <button class="cw-map" title="מפת הקמפוס">🗺️</button>
+          <button class="cw-gyro" title="ג'ירוסקופ" aria-label="ניווט בתנועת המכשיר">${ICON.gyro}</button>
+          <button class="cw-map" title="מפת הקמפוס" aria-label="מפת הקמפוס">${ICON.map}</button>
         </span>
       </header>
-      <div class="cw-hint">גררו או ← → כדי להסתכל · ↑ כדי ללכת קדימה</div>
+      <div class="cw-hint">${HINT}</div>
       <div class="cw-pad">
         <button data-k="left" aria-label="שמאלה">←</button>
         <button data-k="up" class="cw-pad__up" aria-label="קדימה">↑</button>
@@ -87,7 +121,7 @@
 
     /* look controls */
     const c = el.canvas;
-    c.addEventListener('pointerdown', e => { drag = true; px = e.clientX; py = e.clientY; lonVel = latVel = 0; c.setPointerCapture(e.pointerId); });
+    c.addEventListener('pointerdown', e => { drag = true; establishing = false; px = e.clientX; py = e.clientY; lonVel = latVel = 0; c.setPointerCapture(e.pointerId); });
     c.addEventListener('pointermove', e => {
       if (!drag) return;
       const dLon = (px - e.clientX) * 0.17, dLat = (e.clientY - py) * 0.17;
@@ -99,10 +133,13 @@
     });
     c.addEventListener('pointerup', () => drag = false);
     c.addEventListener('pointercancel', () => { drag = false; lonVel = latVel = 0; });
-    /* 64, not 58: the pano is 4096px around — at 58 degrees on a desktop
-       monitor the GPU upsamples it ~2.2x and the zoom goes soft. 64 keeps
-       the lean-in without ever showing the texture its own ceiling. */
-    addEventListener('wheel', e => { fov = Math.max(64, Math.min(92, fov + e.deltaY * 0.04)); }, { passive: true });
+    /* FOV_MIN is 64, not 58: the pano is 4096px around — at 58 degrees on a
+       desktop monitor the GPU upsamples it ~2.2x and the zoom goes soft. 64
+       keeps the lean-in without ever showing the texture its own ceiling. */
+    addEventListener('wheel', e => {
+      establishing = false;
+      fov = Math.max(FOV_MIN, Math.min(FOV_MAX, fov + e.deltaY * 0.04));
+    }, { passive: true });
     const K = { ArrowLeft: 'left', ArrowRight: 'right', ArrowUp: 'up', ArrowDown: 'down', a: 'left', d: 'right', w: 'up', s: 'down' };
     addEventListener('keydown', e => {
       if (e.key === 'Escape') { closePanels(); openMap(false); return; }
@@ -127,6 +164,33 @@
     });
     pump();
     addEventListener('resize', onResize);
+
+    /* The chrome recedes when you stop touching it. A museum hall does not
+       keep its signage lit in your face while you look at the room — and
+       everything here is one gesture from coming back. */
+    let wakeAt = 0;
+    wake = () => {
+      const t = performance.now();
+      if (t - wakeAt < 400 && !el.root.classList.contains('is-idle')) return;
+      wakeAt = t;
+      el.root.classList.remove('is-idle');
+      clearTimeout(wake._t);
+      wake._t = setTimeout(() => el.root.classList.add('is-idle'), 4500);
+    };
+    ['pointerdown', 'pointermove', 'keydown', 'wheel', 'touchstart'].forEach(e =>
+      addEventListener(e, wake, { passive: true }));
+    wake();
+
+    /* The hint has one job: teach the drag. The moment it is obeyed it is
+       clutter, so it leaves — and it never greets the same visitor twice. */
+    addEventListener('pointerdown', taught); addEventListener('keydown', taught);
+  }
+  let hintDone = false, hintT = 0;
+  function taught() {
+    hintDone = true;
+    clearTimeout(hintT);
+    if (el.hint) el.hint.classList.remove('show');
+    removeEventListener('pointerdown', taught); removeEventListener('keydown', taught);
   }
 
   function start() {
@@ -141,6 +205,8 @@
     renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
     renderer.setSize(innerWidth, innerHeight);
     scene = new THREE.Scene();
+    reframe();
+    fov = FOV_REST;
     camera = new THREE.PerspectiveCamera(fov, innerWidth / innerHeight, 0.1, 120);
     const geo = new THREE.SphereGeometry(60, 72, 52); geo.scale(-1, 1, 1);
     sphereA = new THREE.Mesh(geo, new THREE.MeshBasicMaterial({ transparent: true }));
@@ -151,6 +217,9 @@
   function onResize() {
     if (!renderer) return;
     camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix();
+    const wasRest = Math.abs(fov - FOV_REST) < 0.6;
+    reframe();
+    if (wasRest) fov = FOV_REST;      /* a rotated phone re-frames, not re-crops */
     renderer.setSize(innerWidth, innerHeight);
   }
   let lonVel = 0, latVel = 0;
@@ -165,7 +234,7 @@
     /* a room with a TV keeps a STILL camera — the idle drift that makes
        the other rooms feel alive is exactly what crawls a film out of
        frame while you watch it */
-    if (!drag && !gyro && !busy && tvYaw == null) lon += 0.012;
+    if (!drag && !gyro && !busy && !reduce && tvYaw == null) lon += 0.012;
     camera.fov += (fov - camera.fov) * 0.1; camera.updateProjectionMatrix();
     const phi = deg(90 - lat), th = deg(lon);
     camera.lookAt(Math.sin(phi) * Math.sin(th), Math.cos(phi), -Math.sin(phi) * Math.cos(th));
@@ -173,10 +242,19 @@
     project();
     paintSky();
     if (el.motes) el.motes.style.transform = 'translate3d(' + (-lon * 0.55 % 100).toFixed(1) + 'px,' + (lat * 0.5).toFixed(1) + 'px,0)';
+    /* Seven doors ringed the lobby at identical weight, each with its own
+       bouncing arrow — seven signs shouting the same volume. A hall does not
+       do that: the doorway you are walking toward is the one you read. Weight
+       follows the gaze, and only the faced door keeps its arrow. */
+    doors.forEach((d, i) => {
+      const rel = Math.abs(((doorYaws[i] - lon) % 360 + 540) % 360 - 180);
+      d.el.classList.toggle('is-facing', rel < 26);
+      d.el.classList.toggle('is-far', rel > 46);
+    });
     if (compassDots.length) {
       compassDots.forEach(c => {
         const rel = ((c.yaw - lon) % 360 + 540) % 360 - 180;
-        c.el.style.transform = 'translate(-50%,-50%) rotate(' + rel + 'deg) translateY(-26px)';
+        c.el.style.transform = 'translate(-50%,-50%) rotate(' + rel + 'deg) translateY(-20px)';
         c.el.classList.toggle('near', Math.abs(rel) < 26);
       });
     }
@@ -292,8 +370,8 @@
     const sp = (keys.shift ? 2.4 : 1.35);
     if (keys.left) lon += sp;
     if (keys.right) lon -= sp;
-    if (keys.up) { fov = Math.max(64, fov - 0.55); }   /* same texel floor as the wheel */
-    else if (keys.down) { fov = Math.min(92, fov + 0.55); }
+    if (keys.up) { establishing = false; fov = Math.max(FOV_MIN, fov - 0.55); }
+    else if (keys.down) { establishing = false; fov = Math.min(FOV_MAX, fov + 0.55); }
     /* holding forward while facing a door walks you through it */
     if (keys.up) {
       const d = nearestDoor();
@@ -364,7 +442,7 @@
     loadPano(id).then(tex => {
       if (first) {
         sphereA.material.map = tex; sphereA.material.opacity = 1; sphereA.material.needsUpdate = true;
-        finish(id, d);
+        finish(id, d, true);
       } else {
         sphereB.material.map = tex; sphereB.material.opacity = 0; sphereB.material.needsUpdate = true;
         el.veil.classList.add('on');           /* walk-forward feel */
@@ -372,14 +450,14 @@
         const step = () => {
           const k = Math.min(1, (performance.now() - t0) / dur);
           sphereB.material.opacity = k; sphereA.material.opacity = 1 - k;
-          fov = 78 - 14 * Math.sin(k * Math.PI);   /* push in, ease out */
+          fov = FOV_REST - 14 * Math.sin(k * Math.PI);   /* push in, ease out */
           if (k < 1) requestAnimationFrame(step);
           else {
             const tmp = sphereA; sphereA = sphereB; sphereB = tmp;
             sphereB.material.map = null;
             el.veil.classList.remove('on');
-            fov = 78;
-            finish(id, d);
+            fov = FOV_REST;
+            finish(id, d, false);
           }
         };
         requestAnimationFrame(step);
@@ -391,12 +469,15 @@
     });
   }
 
-  function finish(id, d) {
+  function finish(id, d, first) {
     const from = cur;
     cur = id;
     el.load.hidden = true;
     el.room.textContent = d.title;
-    lat = 0;
+    /* the hall's horizon sits low in its pano — level with it you land on a
+       floor. A few degrees up and the frame balances: marble at the bottom
+       edge, the lit ceiling at the top, the wordmark wall whole in between. */
+    lat = ENTRY_LAT[id] || 0;
     /* keep your bearings: entering a wing you face into it; returning to the
        lobby you arrive looking back at the door you came out of. */
     lon = (id === 'lobby' && from && BEARING[from] != null) ? BEARING[from] : 0;
@@ -417,11 +498,42 @@
       showFinale();
     }
     busy = false;
-    el.hint.classList.toggle('show', id === 'lobby');
+    el.hint.classList.toggle('show', id === 'lobby' && !hintDone);
+    if (id === 'lobby' && !hintDone) { clearTimeout(hintT); hintT = setTimeout(taught, 9000); }
+    /* the ceiling nudge waits its turn: at t=0 it was just one more thing
+       moving in a frame that already had eleven */
+    lookArm = false;
+    clearTimeout(finish._la);
+    finish._la = setTimeout(() => lookArm = true, 3200);
     announce(d.title);
+    wake();                          /* the idle clock starts on arrival */
+    if (first) establish();
     prefetchNeighbours(id);          /* the likely next hops warm on idle */
   }
   let finaleShown = false;
+  const ENTRY_LAT = { lobby: 7 };
+
+  /* The entrance breathes open. It arrives a touch wider than it rests and
+     settles into frame over two seconds — a camera finding its shot, not a
+     zoom that snatches the room back from you. It ENDS wide: the establishing
+     frame is the entrance, not a trailer for it. Any input takes the wheel. */
+  let establishing = false;
+  function establish() {
+    if (reduce) return;
+    const rest = fov, OVER = 11, DUR = 2200;
+    const t0 = performance.now();
+    const ease = k => 1 - Math.pow(1 - k, 3);
+    establishing = true;
+    camera.fov = Math.min(FOV_MAX + OVER, rest + OVER);
+    const step = () => {
+      if (!establishing) { fov = rest; return; }
+      const k = Math.min(1, (performance.now() - t0) / DUR);
+      fov = rest + OVER * (1 - ease(k));
+      if (k < 1) requestAnimationFrame(step);
+      else { fov = rest; establishing = false; }
+    };
+    requestAnimationFrame(step);
+  }
 
   const seen = new Set(), visited = new Set();   /* discovered hotspots + rooms walked */
 
@@ -456,8 +568,11 @@
   function paintProgress() {
     const d = ROOMS[cur]; if (!d) return;
     const { got, total } = roomProgress(d);
-    /* narrow screens collapse this to "1/4" so the room name keeps its room */
-    el.prog.innerHTML = total
+    /* "גילית 0 מתוך 3" greeted every arrival with a score of nothing — a quiz
+       the visitor never entered. The counter now earns its place: it appears
+       the moment there is something to count. Narrow screens collapse it
+       to "1/4" so the room name keeps its room. */
+    el.prog.innerHTML = total && got
       ? '<span class="cw-prog__l">גילית </span>' + got +
         '<span class="cw-prog__l"> מתוך </span><span class="cw-prog__s">/</span>' + total
       : '';
@@ -505,6 +620,62 @@
         spots.push({ el: b, v: vec(h.yaw, h.pitch) });
         tvYaw = h.yaw;
         return;
+      }
+      /* THE SIDE SCREEN — a 6-episode zapper.
+         The tv branch plays a local file through <video>; YouTube needs its
+         own player in an iframe. One episode on a wall is a clip, six with a
+         channel strip is a series — so the panel carries the chip, the glass,
+         and a row of numbered buttons that swap the embed in place. The
+         player keeps its own controls (sound, scrub, fullscreen) because a
+         6-part story is something you sit with, not something you glance at.
+         Muted on load: browsers refuse autoplay with sound. */
+      if (kind === 'yt' && (h.episodes || h.yt)) {
+        const eps = h.episodes && h.episodes.length
+          ? h.episodes
+          : [{ n: 1, id: String(h.yt).replace(/^.*[?&]v=|^.*youtu\.be\//, '').slice(0, 11) }];
+        /* a <button> cannot legally hold the episode buttons, so the panel
+           itself is a group and every control inside it is its own button */
+        const w = document.createElement('div');
+        w.className = b.className;
+        w.setAttribute('role', 'group');
+        w.setAttribute('aria-label', h.title || 'video');
+        w.style.setProperty('--ph', b.style.getPropertyValue('--ph'));
+        w.innerHTML =
+          '<span class="cw-spot__frame">' +
+            '<span class="cw-spot__chip"></span>' +
+            '<span class="cw-spot__glass"><iframe frameborder="0" ' +
+              'allow="autoplay; encrypted-media; picture-in-picture; fullscreen" ' +
+              'referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></span>' +
+            '<span class="cw-yt-zap">' +
+              '<button class="cw-yt-nav" data-d="-1" aria-label="פרק קודם">‹</button>' +
+              '<span class="cw-yt-dots">' +
+                eps.map((e, k) => '<button class="cw-yt-dot" data-i="' + k + '" ' +
+                  'aria-label="פרק ' + (e.n || k + 1) + '">' + (e.n || k + 1) + '</button>').join('') +
+              '</span>' +
+              '<button class="cw-yt-nav" data-d="1" aria-label="פרק הבא">›</button>' +
+            '</span>' +
+            '<i class="cw-spot__anchor" aria-hidden="true"></i>' +
+          '</span>';
+        const fr = w.querySelector('iframe'), chip = w.querySelector('.cw-spot__chip');
+        const dots = [...w.querySelectorAll('.cw-yt-dot')];
+        let at = 0;
+        const play = (i, auto) => {
+          at = (i + eps.length) % eps.length;
+          const e = eps[at];
+          fr.src = 'https://www.youtube-nocookie.com/embed/' + e.id +
+            '?autoplay=' + (auto ? 1 : 0) + '&mute=1&rel=0&modestbranding=1&playsinline=1';
+          /* the chip is a mono LTR plate — Hebrew inside it renders reversed,
+             so the counter stays latin and the strip below carries the meaning */
+          chip.textContent = (h.title || 'VIDEO') + ' · EP ' + (e.n || at + 1) + '/' + eps.length;
+          dots.forEach((d, k) => d.classList.toggle('is-on', k === at));
+        };
+        w.querySelectorAll('.cw-yt-nav').forEach(n =>
+          n.onclick = () => play(at + Number(n.dataset.d), true));
+        dots.forEach(d => d.onclick = () => play(Number(d.dataset.i), true));
+        play(0, true);
+        el.spots.appendChild(w);
+        spots.push({ el: w, v: vec(h.yaw, h.pitch) });
+        return;   /* the room's main TV owns tvYaw — a side screen must not steal the framing */
       }
       if (kind === 'product' && h.img) {
         /* windows lean away from each other so a wall of them never reads flat */
@@ -659,8 +830,9 @@
     el.sky.style.transform = 'translateY(' + ((1 - k) * 26).toFixed(1) + 'px) scale(' + (0.94 + k * 0.06).toFixed(3) + ')';
     if (k > 0.55 && !skyPeak) { skyPeak = 1; el.sky.classList.add('seen'); }
     /* nudge: hint to look up once per room, only while they haven't */
-    el.lookup.classList.toggle('show', !skyPeak && lat < 12 && !busy);
+    el.lookup.classList.toggle('show', lookArm && !skyPeak && lat < 12 && !busy);
   }
+  let lookArm = false;
 
   function announce(name) {
     const t = el.title, s = t.firstElementChild;
@@ -671,7 +843,9 @@
   }
   function seedMotes() {
     if (reduce) return;
-    const n = innerWidth < 861 ? 14 : 26;
+    /* 26 was snow, not dust — 26 independent drifts in a frame that already
+       had a dozen other things moving */
+    const n = innerWidth < 861 ? 6 : 10;
     el.motes.innerHTML = '';
     for (let i = 0; i < n; i++) {
       const m = document.createElement('i');
