@@ -324,8 +324,15 @@
     if (reduce) { done(); return; }
     const lon0 = lon;
     const rel = ((doorYaw - lon0) % 360 + 540) % 360 - 180;   /* signed turn needed */
-    const TURN = Math.min(900, 260 + Math.abs(rel) * 4);      /* longer turn for wider angles */
-    const WALK = 2200;
+    /* Measured: 3.86s from clicking a door to standing in the next room —
+       900ms turn, 2200ms walk, 700ms crossfade. The pano is already fetching
+       in parallel, so every one of those milliseconds is choreography, and
+       past about a second the walk stops reading as movement and starts
+       reading as waiting. Halved. The turn still scales with how far you have
+       to swing round, the stride sway still lands twice, the fov still creeps
+       — same beats, played at a pace someone would actually sit through. */
+    const TURN = Math.min(520, 170 + Math.abs(rel) * 2.2);   /* longer turn for wider angles */
+    const WALK = 950;
     const easeIO = k => k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
     const t0 = performance.now();
 
@@ -446,7 +453,7 @@
       } else {
         sphereB.material.map = tex; sphereB.material.opacity = 0; sphereB.material.needsUpdate = true;
         el.veil.classList.add('on');           /* walk-forward feel */
-        const t0 = performance.now(), dur = reduce ? 1 : 700;
+        const t0 = performance.now(), dur = reduce ? 1 : 380;
         const step = () => {
           const k = Math.min(1, (performance.now() - t0) / dur);
           sphereB.material.opacity = k; sphereA.material.opacity = 1 - k;
