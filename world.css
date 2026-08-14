@@ -179,13 +179,16 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
 @keyframes cwPulse { 50% { box-shadow: 0 0 0 9px rgba(255,255,255,.05), 0 0 20px rgba(255,255,255,.5) } }
 /* the pill label belongs to point markers only — product windows build their own
    spans (frame/glass/chip/tag) and must not inherit a 100px radius and a blur */
-.cw-spot:not(.is-product) span {
+/* the YouTube panel builds its own rows, chip and caption; inheriting the
+   point-marker pill (nowrap, blur, 100px radius) clipped its caption to one
+   line and wrapped every control row in a stray dark bar */
+.cw-spot:not(.is-product):not(.is-yt) span {
   color: rgba(255,255,255,.94); font-size: .78rem; font-weight: 500; white-space: nowrap;
   background: rgba(12,15,18,.5); padding: 5px 11px; border-radius: 8px;
   border: 1px solid rgba(255,255,255,.1);
   transition: background .2s, border-color .2s;
 }
-.cw-spot:not(.is-product):hover span { background: rgba(12,15,18,.8); border-color: rgba(255,255,255,.34); }
+.cw-spot:not(.is-product):not(.is-yt):hover span { background: rgba(12,15,18,.8); border-color: rgba(255,255,255,.34); }
 /* action: whatsapp green */
 .cw-spot.is-action:not(.is-product) i {
   background: #25D366; border-color: #eafff2;
@@ -222,7 +225,10 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
   border: 5px solid #14181c; border-radius: 10px; background: #000;
 }
 .cw-spot.is-yt iframe {
-  display: block; width: 100%; aspect-ratio: 16 / 9; border: 0;
+  /* the API stamps width/height attributes on the iframe, and a height
+     presentational hint pins the box so aspect-ratio never gets a say —
+     the player then letterboxes itself inside a too-short frame */
+  display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; border: 0;
 }
 /* the channel strip. Six episodes need a way to move between them that reads
    at a glance from across the room, so the numbers ARE the control — no menu,
@@ -244,6 +250,48 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
 .cw-yt-dot.is-on {
   color: #05130b; background: var(--acc); border-color: var(--acc);
   box-shadow: 0 0 14px color-mix(in srgb, var(--acc) 55%, transparent);
+}
+/* sound and size sit on their own row: they act on the screen as a whole,
+   the numbers act on what is playing in it */
+.cw-yt-bar { display: flex; gap: 6px; margin-top: 6px; }
+.cw-yt-bar button {
+  flex: 1; font: 500 .72rem/1 Rubik, system-ui, sans-serif; color: rgba(255,255,255,.8);
+  height: 26px; cursor: pointer; background: rgba(12,15,18,.62);
+  border: 1px solid rgba(255,255,255,.16); border-radius: 7px;
+  transition: background .18s, border-color .18s, color .18s;
+}
+.cw-yt-bar button:hover { background: rgba(12,15,18,.9); border-color: rgba(255,255,255,.4); color: #fff; }
+.cw-yt-snd.is-on { color: #05130b; background: var(--acc); border-color: var(--acc); }
+/* the caption. Two lines on the wall — the whole point of the screen is that
+   a visitor understands what they are looking at without opening anything */
+.cw-yt-note {
+  display: block; margin-top: 7px; direction: rtl; text-align: right;
+  font: 400 .71rem/1.5 Rubik, system-ui, sans-serif; color: rgba(255,255,255,.72);
+  /* point markers set white-space: nowrap on every span they own; a caption
+     that refuses to wrap just runs off the side of the screen */
+  white-space: normal;
+  background: rgba(12,15,18,.52); border: 1px solid rgba(255,255,255,.1);
+  border-radius: 8px; padding: 7px 9px;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+}
+/* ---- theatre mode ----
+   project() rewrites left/top on every frame, so pinning the expanded panel
+   needs !important — otherwise the screen keeps sliding with the wall behind
+   it while you are trying to watch it. */
+.cw-yt-scrim { display: none; }
+.cw-spot.is-yt.is-big {
+  position: fixed !important; display: block !important;
+  left: 50% !important; top: 50% !important;
+  transform: translate(-50%, -50%) !important; z-index: 60;
+}
+.cw-spot.is-yt.is-big .cw-spot__frame { width: min(92vw, 1000px); transform: none; }
+.cw-spot.is-yt.is-big .cw-spot__anchor { display: none; }
+.cw-spot.is-yt.is-big .cw-yt-note { -webkit-line-clamp: 6; font-size: .84rem; padding: 10px 13px; }
+.cw-spot.is-yt.is-big .cw-yt-zap button, .cw-spot.is-yt.is-big .cw-yt-bar button { height: 32px; font-size: .82rem; }
+.cw-spot.is-yt.is-big .cw-yt-dot { min-width: 30px; }
+.cw-spot.is-yt.is-big .cw-yt-scrim {
+  display: block; position: fixed; inset: 0; z-index: -1;
+  background: rgba(6,8,10,.78); backdrop-filter: blur(3px);
 }
 .cw-spot__frame {
   display: block; position: relative; width: clamp(160px, 17vw, 260px);
@@ -639,4 +687,40 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
   .cw-spot__frame, .cw-spot:not(.is-product) i,
   .cw-sky__icon, .cw-motes i,
   .room-done .cw-door.is-next .cw-door__l { animation: none !important; }
+}
+
+/* ---- the phone ----
+   A 214px panel on a wall cannot hold a control deck: 25px buttons are half a
+   touch target and a three-line caption at .71rem is decoration, not text. On
+   a narrow screen the wall panel keeps the picture and one full-width way in;
+   everything else moves into theatre mode, sized for a thumb. */
+@media (max-width: 560px) {
+  .cw-spot.is-yt:not(.is-big) .cw-yt-zap,
+  .cw-spot.is-yt:not(.is-big) .cw-yt-note,
+  .cw-spot.is-yt:not(.is-big) .cw-yt-snd { display: none; }
+  .cw-spot.is-yt:not(.is-big) .cw-yt-bar { margin-top: 7px; }
+  .cw-spot.is-yt:not(.is-big) .cw-yt-big {
+    height: 34px; font-size: .78rem; color: #05130b;
+    background: var(--acc); border-color: var(--acc);
+  }
+  .cw-spot.is-yt.is-big .cw-spot__frame { width: 94vw; }
+  .cw-spot.is-yt.is-big .cw-yt-zap { gap: 4px; margin-top: 10px; }
+  .cw-spot.is-yt.is-big .cw-yt-zap button,
+  .cw-spot.is-yt.is-big .cw-yt-bar button { height: 40px; font-size: .8rem; }
+  .cw-spot.is-yt.is-big .cw-yt-dot { min-width: 34px; }
+  .cw-spot.is-yt.is-big .cw-yt-bar { margin-top: 8px; }
+  .cw-spot.is-yt.is-big .cw-yt-note { font-size: .8rem; -webkit-line-clamp: 8; }
+}
+
+/* Theatre mode arrives, it does not appear. The panel itself is pinned with
+   !important (project() rewrites left/top every frame) and an animation cannot
+   outrank that — so the frame inside does the moving and the scrim fades under
+   it. Roughly a third of a second: long enough to read as a camera push,
+   short enough that a second tap never has to wait for it. */
+@keyframes cwYtIn { from { opacity: 0; transform: scale(.94) } to { opacity: 1; transform: none } }
+@keyframes cwYtScrim { from { opacity: 0 } to { opacity: 1 } }
+.cw-spot.is-yt.is-big .cw-spot__frame { animation: cwYtIn .3s cubic-bezier(.2,.7,.2,1) both; }
+.cw-spot.is-yt.is-big .cw-yt-scrim { animation: cwYtScrim .3s ease both; }
+@media (prefers-reduced-motion: reduce) {
+  .cw-spot.is-yt.is-big .cw-spot__frame, .cw-spot.is-yt.is-big .cw-yt-scrim { animation: none; }
 }

@@ -621,13 +621,11 @@
         tvYaw = h.yaw;
         return;
       }
-      /* THE SIDE SCREEN — a 6-episode zapper.
+      /* THE SIDE SCREEN — a 6-episode zapper with sound and a theatre mode.
          The tv branch plays a local file through <video>; YouTube needs its
-         own player in an iframe. One episode on a wall is a clip, six with a
-         channel strip is a series — so the panel carries the chip, the glass,
-         and a row of numbered buttons that swap the embed in place. The
-         player keeps its own controls (sound, scrub, fullscreen) because a
-         6-part story is something you sit with, not something you glance at.
+         own player. Driven through the iframe API rather than a raw embed so
+         the panel owns mute, volume and episode switching without reloading
+         the video and losing your place mid-scene.
          Muted on load: browsers refuse autoplay with sound. */
       if (kind === 'yt' && (h.episodes || h.yt)) {
         const eps = h.episodes && h.episodes.length
@@ -643,9 +641,7 @@
         w.innerHTML =
           '<span class="cw-spot__frame">' +
             '<span class="cw-spot__chip"></span>' +
-            '<span class="cw-spot__glass"><iframe frameborder="0" ' +
-              'allow="autoplay; encrypted-media; picture-in-picture; fullscreen" ' +
-              'referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></span>' +
+            '<span class="cw-spot__glass"><span class="cw-yt-slot"></span></span>' +
             '<span class="cw-yt-zap">' +
               '<button class="cw-yt-nav" data-d="-1" aria-label="פרק קודם">‹</button>' +
               '<span class="cw-yt-dots">' +
@@ -654,25 +650,70 @@
               '</span>' +
               '<button class="cw-yt-nav" data-d="1" aria-label="פרק הבא">›</button>' +
             '</span>' +
+            '<span class="cw-yt-bar">' +
+              '<button class="cw-yt-snd" aria-label="הפעלת סאונד">🔇 סאונד</button>' +
+              '<button class="cw-yt-big" aria-label="הגדלת המסך">⤢ הגדלה</button>' +
+            '</span>' +
+            (h.blurb ? '<span class="cw-yt-note">' + esc(h.blurb) + '</span>' : '') +
             '<i class="cw-spot__anchor" aria-hidden="true"></i>' +
           '</span>';
-        const fr = w.querySelector('iframe'), chip = w.querySelector('.cw-spot__chip');
+        const chip = w.querySelector('.cw-spot__chip');
         const dots = [...w.querySelectorAll('.cw-yt-dot')];
-        let at = 0;
-        const play = (i, auto) => {
-          at = (i + eps.length) % eps.length;
+        const snd = w.querySelector('.cw-yt-snd'), big = w.querySelector('.cw-yt-big');
+        let at = 0, player = null, loud = false;
+        const label = () => {
           const e = eps[at];
-          fr.src = 'https://www.youtube-nocookie.com/embed/' + e.id +
-            '?autoplay=' + (auto ? 1 : 0) + '&mute=1&rel=0&modestbranding=1&playsinline=1';
-          /* the chip is a mono LTR plate — Hebrew inside it renders reversed,
-             so the counter stays latin and the strip below carries the meaning */
           chip.textContent = (h.title || 'VIDEO') + ' · EP ' + (e.n || at + 1) + '/' + eps.length;
           dots.forEach((d, k) => d.classList.toggle('is-on', k === at));
         };
+        const play = i => {
+          at = (i + eps.length) % eps.length;
+          label();
+          if (player && player.loadVideoById) player.loadVideoById(eps[at].id);
+        };
+        label();
+        ytAPI().then(() => {
+          player = new YT.Player(w.querySelector('.cw-yt-slot'), {
+            videoId: eps[0].id,
+            playerVars: { autoplay: 1, mute: 1, rel: 0, modestbranding: 1, playsinline: 1 },
+            events: { onReady: e => { e.target.mute(); e.target.playVideo(); } },
+          });
+          w.__player = player;                       /* QA handle */
+        });
         w.querySelectorAll('.cw-yt-nav').forEach(n =>
-          n.onclick = () => play(at + Number(n.dataset.d), true));
-        dots.forEach(d => d.onclick = () => play(Number(d.dataset.i), true));
-        play(0, true);
+          n.onclick = () => play(at + Number(n.dataset.d)));
+        dots.forEach(d => d.onclick = () => play(Number(d.dataset.i)));
+        /* sound is opt-in and it takes the room with it: the ambience ducks
+           so the episode is the only thing talking */
+        snd.onclick = () => {
+          if (!player) return;
+          loud = !loud;
+          if (loud) { player.unMute(); player.setVolume(100); } else player.mute();
+          snd.textContent = loud ? '🔊 סאונד' : '🔇 סאונד';
+          snd.classList.toggle('is-on', loud);
+          snd.setAttribute('aria-label', loud ? 'השתקה' : 'הפעלת סאונד');
+          duck(loud);
+        };
+        /* THEATRE MODE. project() rewrites left/top every frame, so the
+           expanded panel pins itself with !important in the stylesheet and
+           stops taking its position from the wall it hangs on. */
+        const scrim = w.appendChild(document.createElement('span'));
+        scrim.className = 'cw-yt-scrim';
+        /* On a phone the wall panel is barely wider than a thumb: a six-button
+           strip, a sound toggle and a caption crammed in there are all too
+           small to hit and too small to read. So the phone gets ONE control on
+           the wall — open it — and the whole deck lives in theatre mode, where
+           there is room for it. The desktop keeps everything in place. */
+        const size = on => {
+          w.classList.toggle('is-big', on);
+          big.textContent = on ? (coarse ? '⤡ סגירה' : '⤡ הקטנה')
+                               : (coarse ? '▶ צפייה בסדרה' : '⤢ הגדלה');
+          big.setAttribute('aria-label', on ? 'סגירת המסך המוגדל' : 'הגדלת המסך');
+        };
+        size(false);
+        big.onclick = () => size(!w.classList.contains('is-big'));
+        scrim.onclick = () => size(false);
+        addEventListener('keydown', e => { if (e.key === 'Escape') size(false); });
         el.spots.appendChild(w);
         spots.push({ el: w, v: vec(h.yaw, h.pitch) });
         return;   /* the room's main TV owns tvYaw — a side screen must not steal the framing */
@@ -713,6 +754,18 @@
       doors.push({ el: b, v: vec(dr.yaw, dr.pitch) });
     });
   }
+  /* loaded lazily: most rooms never hang a YouTube screen, and the tour
+     should not pay for a player it does not show */
+  let _yt = null;
+  const ytAPI = () => _yt || (_yt = new Promise(res => {
+    if (window.YT && window.YT.Player) return res();
+    const prev = window.onYouTubeIframeAPIReady;
+    window.onYouTubeIframeAPIReady = () => { if (prev) prev(); res(); };
+    const s = document.createElement('script');
+    s.src = 'https://www.youtube.com/iframe_api';
+    document.head.appendChild(s);
+  }));
+
   const vec = (yaw, pitch) => {
     const y = deg(yaw || 0), p = deg(pitch || 0);
     return new THREE.Vector3(Math.cos(p) * Math.sin(y), Math.sin(p), -Math.cos(p) * Math.cos(y)).multiplyScalar(52);
