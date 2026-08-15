@@ -170,7 +170,7 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
 }
 /* ---- Tier 2: story hotspots. Content, not navigation — so a step quieter
    than a door in size, weight and material, and it stops competing with it. ---- */
-.cw-spot:not(.is-product) i {
+.cw-spot:not(.is-product):not(.is-plaque):not(.is-axis) i {
   width: 11px; height: 11px; border-radius: 50%; flex: none;
   background: rgba(255,255,255,.9); border: 2px solid rgba(255,255,255,.4);
   box-shadow: 0 0 0 4px rgba(255,255,255,.1), 0 0 12px rgba(255,255,255,.4);
@@ -182,15 +182,15 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
 /* the YouTube panel builds its own rows, chip and caption; inheriting the
    point-marker pill (nowrap, blur, 100px radius) clipped its caption to one
    line and wrapped every control row in a stray dark bar */
-.cw-spot:not(.is-product):not(.is-yt) span {
+.cw-spot:not(.is-product):not(.is-yt):not(.is-plaque):not(.is-axis) span {
   color: rgba(255,255,255,.94); font-size: .78rem; font-weight: 500; white-space: nowrap;
   background: rgba(12,15,18,.5); padding: 5px 11px; border-radius: 8px;
   border: 1px solid rgba(255,255,255,.1);
   transition: background .2s, border-color .2s;
 }
-.cw-spot:not(.is-product):not(.is-yt):hover span { background: rgba(12,15,18,.8); border-color: rgba(255,255,255,.34); }
+.cw-spot:not(.is-product):not(.is-yt):not(.is-plaque):not(.is-axis):hover span { background: rgba(12,15,18,.8); border-color: rgba(255,255,255,.34); }
 /* action: whatsapp green */
-.cw-spot.is-action:not(.is-product) i {
+.cw-spot.is-action:not(.is-product):not(.is-plaque) i {
   background: #25D366; border-color: #eafff2;
   box-shadow: 0 0 0 5px rgba(37,211,102,.22), 0 0 18px rgba(37,211,102,.8);
 }
@@ -200,7 +200,7 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
 /* the lobby TV: same window, cinema size, a real bezel, no float-wobble */
 .cw-spot.is-tv { display: block; --acc: #26d07c; }
 .cw-spot.is-tv .cw-spot__frame {
-  width: clamp(300px, 38vw, 620px);
+  width: clamp(300px, 34vw, 560px);
   transform: perspective(1200px) rotateY(var(--tilt, 0deg));
   animation: none;
 }
@@ -349,8 +349,8 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
 }
 .cw-spot.is-portrait .cw-spot__frame { width: clamp(110px, 11vw, 170px); }
 /* discovered */
-.cw-spot.is-seen:not(.is-product) i { background: var(--cw-lime); border-color: rgba(255,255,255,.8); box-shadow: 0 0 0 4px rgba(198,242,78,.18); animation: none; }
-.cw-spot.is-seen span::after, .cw-spot.is-seen .cw-spot__chip::after { content: " ✓"; color: var(--cw-lime); }
+.cw-spot.is-seen:not(.is-product):not(.is-plaque) i { background: var(--cw-lime); border-color: rgba(255,255,255,.8); box-shadow: 0 0 0 4px rgba(198,242,78,.18); animation: none; }
+.cw-spot.is-seen:not(.is-plaque):not(.is-axis) span::after, .cw-spot.is-seen:not(.is-axis) .cw-spot__chip::after { content: " ✓"; color: var(--cw-lime); }
 .cw-spot.is-seen .cw-spot__glass { box-shadow: 0 0 0 1px rgba(198,242,78,.7), 0 30px 66px rgba(12,15,18,.45); }
 
 /* ---- Tier 1: doors. The only navigation in the room, so the only thing
@@ -727,4 +727,129 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
 .cw-yt-scrim.is-on { animation: cwYtScrim .3s ease both; }
 @media (prefers-reduced-motion: reduce) {
   .cw-spot.is-yt.is-big .cw-spot__frame, .cw-yt-scrim.is-on { animation: none; }
+}
+
+/* =====================================================================
+   THE 15.8 HALL — five axis screens, wall plaques, the open wall
+   ===================================================================== */
+
+/* always-visible way home. Same glass as the tool buttons so it belongs to
+   the bar; a pill not a circle because it carries words. */
+.cw-home {
+  border: 1px solid rgba(255,255,255,.22); background: rgba(12,15,18,.42);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  color: #fff; font: 600 .82rem/1 Rubik, system-ui, sans-serif; border-radius: 100px;
+  padding: 10px 14px; cursor: pointer; white-space: nowrap;
+  transition: background .2s, border-color .2s;
+}
+.cw-home:hover { background: rgba(12,15,18,.7); border-color: rgba(255,255,255,.4); }
+
+/* ---- axis screens on the hall walls ---- */
+.cw-spot.is-axis { display: block; --acc: #26d07c; }
+.cw-spot.is-axis .cw-spot__frame {
+  width: clamp(240px, 24vw, 400px);
+  transform: perspective(1200px) rotateY(var(--tilt, 0deg));
+  animation: none; transition: transform .35s cubic-bezier(.2,.7,.2,1);
+}
+.cw-spot.is-axis .cw-spot__glass { border: 6px solid #14181c; border-radius: 12px; background: #000; }
+.cw-spot.is-axis video, .cw-spot.is-axis img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
+.cw-spot.is-axis .cw-spot__tag b { color: var(--cw-lime, #C6F24E); font-weight: 600; }
+/* the faced screen leans out a touch and brightens — the hall telling you
+   which film is running */
+.cw-spot.is-axis.is-facing .cw-spot__frame { transform: perspective(1200px) scale(1.04); }
+.cw-spot.is-axis.is-facing .cw-spot__glass { box-shadow: 0 0 0 1px color-mix(in srgb, var(--acc) 50%, transparent), 0 40px 90px rgba(12,15,18,.55), 0 0 60px color-mix(in srgb, var(--acc) 30%, transparent); }
+.cw-spot.is-axis:not(.is-facing) .cw-spot__glass::before {
+  content: ""; position: absolute; inset: 0; background: rgba(6,8,10,.28); pointer-events: none; z-index: 1;
+}
+/* a still that breathes: the two screens without a film yet get a slow push */
+@keyframes cwKB { from { transform: scale(1) } to { transform: scale(1.08) translateX(-1.5%) } }
+.cw-kb { animation: cwKB 18s ease-in-out infinite alternate; transform-origin: 60% 40%; }
+@media (prefers-reduced-motion: reduce) { .cw-kb { animation: none; } }
+
+/* ---- wall plaques ---- */
+.cw-spot.is-plaque { display: block; }
+.cw-plaque {
+  display: block; width: clamp(150px, 15vw, 230px); direction: rtl; text-align: right;
+  background: rgba(12,15,18,.58); color: #fff; border: 1px solid rgba(255,255,255,.14);
+  border-right: 3px solid var(--cw-acc, #6E9B0E); border-radius: 10px; padding: 10px 12px 11px;
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  box-shadow: 0 18px 40px rgba(12,15,18,.35);
+  transition: background .2s, border-color .2s, transform .25s cubic-bezier(.2,.7,.2,1);
+}
+.cw-plaque b { display: block; font: 600 .86rem/1.3 Rubik, system-ui, sans-serif; }
+.cw-plaque small { display: block; margin-top: 4px; font: 400 .72rem/1.45 Rubik, system-ui, sans-serif; color: rgba(255,255,255,.72); white-space: normal; }
+.cw-spot.is-plaque:hover .cw-plaque { background: rgba(12,15,18,.84); border-color: rgba(255,255,255,.3); transform: translateY(-2px); }
+.cw-spot.is-plaque.is-action .cw-plaque { border-right-color: #25D366; }
+.cw-spot.is-plaque.is-seen .cw-plaque b::after { content: " \2713"; color: var(--cw-lime, #C6F24E); }
+.cw-spot.is-plaque .cw-spot__anchor { display: block; }
+
+/* while a wall is open the hall's markers step back */
+.axis-open .cw-spots, .axis-open .cw-pad, .axis-open .cw-compass, .axis-open .cw-hint, .axis-open .cw-lookup { pointer-events: none; opacity: 0; transition: opacity .3s; }
+
+/* ---- the open wall ---- */
+/* display:grid would beat the hidden attribute — the wall must obey it */
+.cw-axis[hidden] { display: none; }
+.cw-axis {
+  position: fixed; inset: 0; z-index: 40; display: grid; place-items: center;
+  background: rgba(6,8,10,.72); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
+  padding: max(70px, env(safe-area-inset-top)) 16px 20px; overflow: auto;
+  animation: cwYtScrim .3s ease both;
+}
+.cw-axis__wall {
+  position: relative; width: min(1180px, 100%); direction: rtl;
+  display: grid; grid-template-columns: 1.25fr 1fr; grid-template-areas: "media bubble" "feats feats"; gap: 18px 24px;
+  background: rgba(20,24,28,.86); border: 1px solid rgba(255,255,255,.12); border-radius: 22px;
+  padding: 22px; box-shadow: 0 60px 140px rgba(0,0,0,.6);
+  animation: cwYtIn .32s cubic-bezier(.2,.7,.2,1) both;
+}
+.cw-axis__x {
+  position: absolute; top: -50px; right: 0; border: 1px solid rgba(255,255,255,.22); background: rgba(12,15,18,.55);
+  color: #fff; font: 600 .84rem/1 Rubik, system-ui, sans-serif; border-radius: 100px; padding: 11px 16px; cursor: pointer;
+}
+.cw-axis__x:hover { background: rgba(12,15,18,.9); border-color: rgba(255,255,255,.4); }
+.cw-axis__media { grid-area: media; position: relative; border: 6px solid #14181c; border-radius: 14px; overflow: hidden; background: #000; align-self: start; }
+.cw-axis__media video, .cw-axis__media img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
+.cw-axis__snd {
+  position: absolute; bottom: 12px; left: 12px; border: 1px solid rgba(255,255,255,.28); background: rgba(12,15,18,.62);
+  color: #fff; font: 500 .74rem/1 Rubik, system-ui, sans-serif; border-radius: 100px; padding: 8px 12px; cursor: pointer;
+}
+.cw-axis__bubble { grid-area: bubble; color: #fff; align-self: start; }
+.cw-axis__eyebrow { display: block; font: 500 .74rem/1 'IBM Plex Mono', monospace; color: var(--acc, #26d07c); letter-spacing: .06em; margin-bottom: 10px; }
+.cw-axis__bubble h2 { font: 800 clamp(1.5rem, 2.6vw, 2.2rem)/1.15 Rubik, system-ui, sans-serif; margin: 0 0 12px; }
+.cw-axis__bubble h2 em { font: 600 .55em/1 Rubik, system-ui, sans-serif; color: #14181c; background: var(--cw-lime, #C6F24E); border-radius: 100px; padding: 5px 10px; vertical-align: middle; margin-inline-start: 6px; font-style: normal; }
+.cw-axis__bubble p { font: 400 1rem/1.7 Rubik, system-ui, sans-serif; color: rgba(255,255,255,.86); margin: 0 0 16px; }
+.cw-axis__go { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+.cw-axis__go > * {
+  font: 600 .84rem/1 Rubik, system-ui, sans-serif; border-radius: 100px; padding: 11px 16px; cursor: pointer; text-decoration: none;
+  border: 1px solid rgba(255,255,255,.22); background: rgba(255,255,255,.06); color: #fff;
+}
+.cw-axis__room { background: var(--cw-lime, #C6F24E) !important; border-color: var(--cw-lime, #C6F24E) !important; color: #14181c !important; }
+.cw-axis__wa { border-color: rgba(37,211,102,.55) !important; color: #7CE8A6 !important; }
+.cw-axis__go > *:hover { filter: brightness(1.1); }
+.cw-axis__made { display: block; font: 400 .72rem/1.4 Rubik, system-ui, sans-serif; color: rgba(255,255,255,.5); }
+/* features: a row of smaller screens under the film */
+.cw-axis__feats { grid-area: feats; display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 10px; }
+.cw-axis__feat {
+  position: relative; text-align: right; direction: rtl; cursor: pointer;
+  border: 1px solid rgba(255,255,255,.12); background: rgba(12,15,18,.55); border-radius: 12px; padding: 12px; color: #fff;
+  display: grid; grid-template-columns: 44px 1fr; gap: 10px; align-items: start; transition: background .2s, border-color .2s;
+}
+.cw-axis__feat:hover { background: rgba(12,15,18,.85); border-color: rgba(255,255,255,.28); }
+.cw-axis__feat img { width: 44px; height: 44px; object-fit: cover; border-radius: 7px; border: 2px solid #14181c; }
+.cw-axis__feat-mark { width: 44px; height: 44px; border-radius: 7px; display: grid; place-items: center; font: 600 .95rem/1 'IBM Plex Mono', monospace; color: var(--acc, #26d07c); background: color-mix(in srgb, var(--acc, #26d07c) 12%, transparent); border: 1px solid color-mix(in srgb, var(--acc, #26d07c) 35%, transparent); }
+.cw-axis__feat-t b { display: block; font: 600 .86rem/1.3 Rubik, system-ui, sans-serif; }
+.cw-axis__feat-t i { display: inline-block; margin-top: 4px; font: 500 .66rem/1 Rubik, system-ui, sans-serif; font-style: normal; color: #14181c; background: var(--cw-lime, #C6F24E); border-radius: 100px; padding: 3px 7px; }
+.cw-axis__feat-x { grid-column: 1 / -1; font: 400 .78rem/1.5 Rubik, system-ui, sans-serif; color: rgba(255,255,255,.8); max-height: 0; overflow: hidden; transition: max-height .3s ease, margin .3s; }
+.cw-axis__feat.is-open .cw-axis__feat-x { max-height: 140px; margin-top: 4px; }
+.cw-axis__feat.is-open { border-color: var(--acc, #26d07c); }
+
+@media (max-width: 860px) {
+  .cw-home { padding: 8px 11px; font-size: .74rem; }
+  .cw-spot.is-axis .cw-spot__frame { width: clamp(220px, 60vw, 320px); }
+  .cw-plaque { width: clamp(140px, 42vw, 200px); }
+  .cw-axis { padding: max(64px, env(safe-area-inset-top)) 8px 12px; align-items: start; }
+  .cw-axis__wall { grid-template-columns: 1fr; grid-template-areas: "media" "bubble" "feats"; padding: 14px; gap: 14px; border-radius: 16px; }
+  .cw-axis__x { top: -46px; right: 4px; }
+  .cw-axis__feats { grid-template-columns: 1fr 1fr; }
+  .cw-axis__bubble p { font-size: .92rem; }
 }

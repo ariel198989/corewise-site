@@ -17,8 +17,8 @@
      keyboard to a thumb, and at 390px it ran under the compass and clipped
      mid-word — the visitor's first read of the build quality. */
   const HINT = coarse
-    ? 'גררו כדי להסתכל · הקישו על דלת כדי להיכנס'
-    : 'גררו כדי להסתכל · <b>↑</b> כדי ללכת קדימה';
+    ? 'גררו כדי להסתכל · הקישו על מסך כדי לפתוח'
+    : 'גררו כדי להסתכל · הקישו על מסך כדי לפתוח';
 
   let CFG = null, ROOMS = {}, cur = null;
   let renderer, scene, camera, sphereA, sphereB, rafId;
@@ -77,6 +77,7 @@
       <header class="cw-top">
         <span class="cw-brand">corewise</span>
         <span class="cw-room"></span>
+        <button class="cw-home" hidden aria-label="חזרה ללובי">← חזרה ללובי</button>
         <span class="cw-prog"></span>
         <span class="cw-tools">
           <button class="cw-snd" title="מוזיקת רקע" aria-label="מוזיקת רקע" aria-pressed="true"><i></i><i></i><i></i></button>
@@ -96,6 +97,14 @@
         <span>השאירו פרטים</span>
       </a>
       <div class="cw-scrim" hidden></div>
+      <div class="cw-axis" hidden aria-modal="true" role="dialog">
+        <div class="cw-axis__wall">
+          <button class="cw-axis__x">← חזרה ללובי</button>
+          <div class="cw-axis__media"></div>
+          <div class="cw-axis__bubble"></div>
+          <div class="cw-axis__feats"></div>
+        </div>
+      </div>
       <div class="cw-card" hidden></div>
       <div class="cw-finale" hidden></div>
       <div class="cw-mapui" style="display:none"><div class="cw-mapui__in"><h3>מפת הקמפוס</h3><div class="cw-mapui__grid"></div><button class="cw-mapui__x">סגירה</button></div></div>
@@ -105,7 +114,15 @@
       root, canvas: $('.cw-canvas', root), spots: $('.cw-spots', root), veil: $('.cw-veil', root), title: $('.cw-title', root), motes: $('.cw-motes', root), sky: $('.cw-sky', root), skyIn: $('.cw-sky__in', root), lookup: $('.cw-lookup', root),
       room: $('.cw-room', root), prog: $('.cw-prog', root), hint: $('.cw-hint', root), card: $('.cw-card', root), finale: $('.cw-finale', root), scrim: $('.cw-scrim', root), wa: $('.cw-wa', root),
  load: $('.cw-load', root), mapui: $('.cw-mapui', root), snd: $('.cw-snd', root),
+      home: $('.cw-home', root), axis: $('.cw-axis', root),
     };
+    /* "חזרה ללובי" is never something you look for: one button, top bar,
+       whenever you are anywhere but the hall. It closes an open wall first,
+       and only then walks you home. */
+    el.home.onclick = () => { if (!el.axis.hidden) closeAxis(); else if (cur !== 'lobby') go('lobby'); };
+    $('.cw-axis__x', root).onclick = closeAxis;
+    el.axis.addEventListener('click', e => { if (e.target === el.axis) closeAxis(); });
+    addEventListener('keydown', e => { if (e.key === 'Escape' && !el.axis.hidden) closeAxis(); });
 
     el.snd.classList.toggle('is-off', !sndOn);
     el.snd.setAttribute('aria-pressed', sndOn ? 'true' : 'false');
@@ -251,6 +268,7 @@
       d.el.classList.toggle('is-facing', rel < 26);
       d.el.classList.toggle('is-far', rel > 46);
     });
+    tendScreens();
     if (compassDots.length) {
       compassDots.forEach(c => {
         const rel = ((c.yaw - lon) % 360 + 540) % 360 - 180;
@@ -261,18 +279,35 @@
   }
   let compassDots = [];
   let tvYaw = null;
+  let axisScreens = [];
+  /* the screen nearest to where you look plays; the rest hold their poster.
+     Hysteresis so a screen at the edge does not stutter on/off. */
+  function tendScreens() {
+    if (!axisScreens.length) return;
+    let best = null, bestAbs = 999;
+    axisScreens.forEach(a => {
+      const rel = Math.abs(((a.yaw - lon) % 360 + 540) % 360 - 180);
+      if (rel < bestAbs) { bestAbs = rel; best = a; }
+    });
+    axisScreens.forEach(a => {
+      const on = a === best && bestAbs < 40 && el.axis.hidden;
+      a.el.classList.toggle('is-facing', on);
+      if (!a.v) return;
+      if (on && a.v.paused) a.v.play().catch(() => {});
+      else if (!on && !a.v.paused) a.v.pause();
+    });
+  }
   function buildCompass(id) {
     const ring = $('.cw-compass__ring', el.root);
     ring.innerHTML = '';
     compassDots = [];
     if (id !== 'lobby') { el.root.querySelector('.cw-compass').style.display = 'none'; return; }
     el.root.querySelector('.cw-compass').style.display = 'block';
-    WINGS.forEach(w => {
+    axisScreens.forEach(a => {
       const d = document.createElement('i');
       d.className = 'cw-compass__d';
-      d.title = ROOMS[w].title;
       ring.appendChild(d);
-      compassDots.push({ el: d, yaw: BEARING[w] });
+      compassDots.push({ el: d, yaw: a.yaw });
     });
   }
   function project() {
@@ -288,24 +323,28 @@
   }
 
   /* ---------- rooms ---------- */
-  const ORDER = ['lobby', 'video', 'apps', 'ai', 'vision', 'stage', 'school', 'team'];
-  /* The lobby is a hub: the 7 departments ring it, each at its own compass bearing.
-     Turn in the lobby and you face a different department's door. */
-  const WINGS = ['video', 'apps', 'ai', 'vision', 'stage', 'school', 'team'];
+  const ORDER = ['lobby', 'measure', 'vision', 'school', 'stage', 'ai', 'apps', 'video', 'ar', 'team'];
+  /* THE 15.8 MODEL. The lobby is not a hub of doors any more — it is one
+     hall with five big screens, one per business axis. A screen opens in
+     place (film + abstract + features); the rooms behind it are the deeper
+     dive, reached from inside the open wall. WINGS is the ring the in-room
+     side doors walk around; it no longer feeds the lobby. */
+  const WINGS = ['measure', 'vision', 'school', 'stage', 'ai', 'apps', 'video', 'ar', 'team'];
   /* accents alternating around the ring — terracotta and olive, so adjacent
      wings never light their windows the same way; the vision lab wears its
      own LiDAR teal, the one room whose light comes from the point-cloud */
-  const ACCENT = { lobby: '#6E9B0E', video: '#B4530A', apps: '#6E9B0E', ai: '#B4530A', vision: '#26d07c', stage: '#6E9B0E', school: '#B4530A', team: '#6E9B0E' };
-  const BEARING = {};                       /* room -> yaw of its door, seen from the lobby */
-  WINGS.forEach((id, i) => BEARING[id] = -150 + i * 50);   /* -150,-100,-50,0,50,100,150 */
+  const ACCENT = { lobby: '#6E9B0E', video: '#B4530A', apps: '#6E9B0E', ai: '#B4530A', vision: '#26d07c', measure: '#26d07c', ar: '#B4530A', stage: '#6E9B0E', school: '#B4530A', team: '#6E9B0E' };
+  /* room -> the lobby yaw of the SCREEN it belongs to, so coming back you
+     face the wall you left through */
+  const BEARING = { ai: -108, apps: -108, video: -108, measure: -36, vision: 36, school: 108, stage: 108, ar: 180, team: 180 };
+  /* which axis wall opens each room's screen (for the "deeper dive" door) */
+  const AXIS_OF = { ai: 'ai', apps: 'ai', video: 'ai', measure: 'measure', vision: 'vision', school: 'pedagogy', stage: 'pedagogy', ar: 'ar' };
 
   function doorsFor(id) {
     if (id === 'lobby') {
-      /* the team door is PEOPLE, not a seventh department — it wears the
-         dark home style and says so, instead of masquerading as another
-         service wing and muddying the six-services count */
-      return WINGS.map(to => ({ to, yaw: BEARING[to], pitch: -6,
-        home: to === 'team', label: to === 'team' ? '☕ בואו נדבר' : undefined }));
+      /* the hall has screens, not doors. The one door left is PEOPLE — the
+         lounge — under the Before/After screen on the back wall. */
+      return [{ to: 'team', yaw: 180, pitch: -12, home: true, label: '☕ בואו נדבר' }];
     }
     /* inside a wing: the way back to the lobby sits opposite its own bearing,
        and the two neighbouring wings are reachable to either side. */
@@ -495,6 +534,7 @@
        never bother to write — and it reaches Lidor with the context attached
        instead of a bare "היי". */
     el.wa.href = WA + (d.wa ? '?text=' + encodeURIComponent(d.wa) : '');
+    el.home.hidden = id === 'lobby';
     visited.add(id);
     buildMarkers(d);
     buildSky(d);
@@ -506,7 +546,7 @@
        scene. Now it waits until most of the campus is genuinely seen, and
        plays once per session; walking back through team later just shows
        the room. */
-    if (id === 'team' && !finaleShown && visited.size >= WINGS.length) {
+    if (id === 'team' && !finaleShown && visited.size >= 5) {
       finaleShown = true;
       showFinale();
     }
@@ -605,7 +645,7 @@
 
   function buildMarkers(d) {
     el.spots.innerHTML = '';
-    spots = []; doors = []; tvYaw = null;
+    spots = []; doors = []; tvYaw = null; axisScreens = [];
     let prod = 0;
     (d.hotspots || []).forEach(h => {
       const kind = h.kind || 'story';
@@ -613,6 +653,29 @@
       const key = d.id + '|' + h.title;
       b.className = 'cw-spot is-' + kind + (seen.has(key) ? ' is-seen' : '');
       b.style.setProperty('--ph', (Math.random() * 2).toFixed(2) + 's');   /* breathe out of sync */
+      /* AN AXIS SCREEN. Five of these ring the hall. Each is a real screen
+         on the wall — bezel, chip, glass — that shows its film only while it
+         is the one you are facing (the others rest on a poster), so five
+         screens cost the phone one video. Click: the wall opens. */
+      if (kind === 'axis') {
+        const media = h.video
+          ? '<video src="' + h.video + '" poster="' + (h.poster || '') + '" preload="none" muted loop playsinline></video>'
+          : '<img src="' + h.still + '" alt="" decoding="async" class="cw-kb">';
+        b.innerHTML =
+          '<span class="cw-spot__frame">' +
+            '<span class="cw-spot__chip">' + esc(h.title) + (h.status ? ' · ' + esc(h.status) : '') + '</span>' +
+            '<span class="cw-spot__glass">' + media +
+              '<span class="cw-spot__tag">' + esc(h.sub || '') + ' · <b>הקישו לפתיחה</b></span>' +
+            '</span>' +
+            '<i class="cw-spot__anchor" aria-hidden="true"></i>' +
+          '</span>';
+        b.onclick = () => openAxis(h);
+        el.spots.appendChild(b);
+        spots.push({ el: b, v: vec(h.yaw, h.pitch) });
+        axisScreens.push({ el: b, yaw: h.yaw, v: b.querySelector('video') });
+        tvYaw = h.yaw;                       /* screens want a still camera */
+        return;
+      }
       if (kind === 'tv' && h.video) {
         b.innerHTML =
           '<span class="cw-spot__frame">' +
@@ -756,7 +819,20 @@
         const mark = () => { if (im.naturalHeight > im.naturalWidth * 1.15) b.classList.add('is-portrait'); };
         if (im.complete && im.naturalWidth) mark(); else im.addEventListener('load', mark, { once: true });
       } else {
-        b.innerHTML = '<i></i><span>' + h.title + '</span>';
+        /* A WALL PLAQUE, not a floating tag. The spec's rule: nothing hangs
+           in the air with a label on it — content sits on the room's
+           surfaces. So the story marker is a mounted plate: title, one
+           line, and the same anchor stem the product windows use, which is
+           what makes it read as fixed to the wall rather than pinned to
+           the camera. */
+        b.classList.add('is-plaque');
+        const line = teaser(h);
+        b.innerHTML =
+          '<span class="cw-plaque">' +
+            '<b>' + esc(h.title) + '</b>' +
+            (line ? '<small>' + esc(line) + '</small>' : '') +
+          '</span>' +
+          '<i class="cw-spot__anchor" aria-hidden="true"></i>';
       }
       b.onclick = () => { seen.add(key); b.classList.add('is-seen'); paintProgress(); card(h); };
       el.spots.appendChild(b);
@@ -790,6 +866,73 @@
     const y = deg(yaw || 0), p = deg(pitch || 0);
     return new THREE.Vector3(Math.cos(p) * Math.sin(y), Math.sin(p), -Math.cos(p) * Math.cos(y)).multiplyScalar(52);
   };
+
+  /* THE OPEN WALL. A screen you click does not take you anywhere — it comes
+     to you. The film on one side, the abstract on the other, the features
+     as a row of smaller screens beneath, and the way onward (the room, the
+     dedicated site, Lidor) at the bottom. "חזרה ללובי" closes it. The film
+     is the same element the wall screen was playing, so there is no second
+     download and no restart — the tag line simply gets sound. */
+  let axisOpen = null;
+  function openAxis(h) {
+    axisOpen = h;
+    const m = $('.cw-axis__media', el.axis), bb = $('.cw-axis__bubble', el.axis), ff = $('.cw-axis__feats', el.axis);
+    el.axis.style.setProperty('--acc', ACCENT[h.room] || ACCENT.lobby);
+    m.innerHTML = h.video
+      ? '<video src="' + h.video + '" poster="' + (h.poster || '') + '" autoplay muted loop playsinline></video>' +
+        '<button class="cw-axis__snd">🔇 הפעלת סאונד</button>'
+      : '<img src="' + h.still + '" alt="" class="cw-kb">';
+    const v = m.querySelector('video'), snd = m.querySelector('.cw-axis__snd');
+    if (v) {
+      const wallV = (axisScreens.find(a => a.yaw === h.yaw) || {}).v;
+      if (wallV && wallV.currentTime) v.currentTime = wallV.currentTime;
+      snd.onclick = () => {
+        v.muted = !v.muted;
+        if (!v.muted) v.play().catch(() => {});
+        snd.textContent = v.muted ? '🔇 הפעלת סאונד' : '🔊 השתקה';
+        duck(!v.muted);
+      };
+    }
+    bb.innerHTML =
+      '<span class="cw-axis__eyebrow">' + esc(h.sub || '') + '</span>' +
+      '<h2>' + esc(h.title) + (h.status ? ' <em>' + esc(h.status) + '</em>' : '') + '</h2>' +
+      '<p>' + esc(h.abstract || '') + '</p>' +
+      '<div class="cw-axis__go">' +
+        (h.room && ROOMS[h.room] ? '<button class="cw-axis__room">להיכנס למחלקה המלאה ↓</button>' : '') +
+        (h.site ? '<a class="cw-axis__site" href="' + h.site + '" target="_blank" rel="noopener">האתר הייעודי ↗</a>' : '') +
+        '<a class="cw-axis__wa" href="' + WA + '?text=' + encodeURIComponent('היי לידור, ראיתי את ' + h.title + ' בסיור באתר. אשמח לדבר.') + '" target="_blank" rel="noopener">וואטסאפ ללידור</a>' +
+      '</div>' +
+      '<small class="cw-axis__made">' + esc((ROOMS.lobby && ROOMS.lobby.note) || '') + '</small>';
+    const rb = bb.querySelector('.cw-axis__room');
+    if (rb) rb.onclick = () => { closeAxis(); go(h.room, false, h.yaw); };
+    ff.innerHTML = (h.features || []).map((f, i) =>
+      '<button class="cw-axis__feat" data-i="' + i + '">' +
+        (f.img ? '<img src="' + f.img + '" alt="" loading="lazy" decoding="async">' : '<span class="cw-axis__feat-mark">' + (i + 1) + '</span>') +
+        '<span class="cw-axis__feat-t"><b>' + esc(f.title) + '</b>' + (f.tag ? '<i>' + esc(f.tag) + '</i>' : '') + '</span>' +
+        '<span class="cw-axis__feat-x">' + esc(f.text) + '</span>' +
+      '</button>').join('');
+    ff.querySelectorAll('.cw-axis__feat').forEach(b => b.onclick = () => {
+      const on = b.classList.contains('is-open');
+      ff.querySelectorAll('.cw-axis__feat').forEach(x => x.classList.remove('is-open'));
+      if (!on) b.classList.add('is-open');
+    });
+    el.axis.hidden = false;
+    el.home.hidden = false;
+    el.root.classList.add('axis-open');
+    duck(true);
+    tendScreens();
+  }
+  function closeAxis() {
+    if (el.axis.hidden) return;
+    const v = $('.cw-axis__media video', el.axis);
+    if (v) { v.pause(); v.removeAttribute('src'); v.load(); }
+    el.axis.hidden = true;
+    el.root.classList.remove('axis-open');
+    el.home.hidden = cur === 'lobby';
+    duck(false);
+    axisOpen = null;
+    tendScreens();
+  }
 
   const esc = s => String(s).replace(/[&<>"]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[m]));
   function closePanels() {
