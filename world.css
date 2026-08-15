@@ -853,3 +853,28 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
   .cw-axis__feats { grid-template-columns: 1fr 1fr; }
   .cw-axis__bubble p { font-size: .92rem; }
 }
+
+/* ---- the guided pass ---- */
+.cw-tour {
+  position: absolute; left: 50%; bottom: 96px; transform: translateX(-50%); z-index: 22;
+  display: flex; align-items: center; gap: 12px; direction: rtl;
+}
+.cw-tour[hidden] { display: none; }
+.cw-tour__go {
+  border: 0; background: var(--cw-lime, #C6F24E); color: #14181c; cursor: pointer;
+  font: 700 .92rem/1 Rubik, system-ui, sans-serif; border-radius: 100px; padding: 14px 20px;
+  box-shadow: 0 14px 40px rgba(198,242,78,.28), 0 2px 0 rgba(0,0,0,.2); transition: transform .2s, box-shadow .2s;
+}
+.cw-tour__go:hover { transform: translateY(-1px); box-shadow: 0 18px 46px rgba(198,242,78,.36); }
+.tour-on .cw-tour__go { background: rgba(12,15,18,.7); color: #fff; border: 1px solid rgba(255,255,255,.3); box-shadow: none; }
+.cw-tour__dots { display: flex; gap: 6px; }
+.cw-tour__dots i { width: 9px; height: 9px; border-radius: 50%; background: rgba(255,255,255,.35); border: 1px solid rgba(255,255,255,.4); transition: background .3s, transform .3s; }
+.cw-tour__dots i.on { background: var(--cw-lime, #C6F24E); border-color: var(--cw-lime, #C6F24E); }
+.cw-tour__dots i.now { transform: scale(1.5); }
+/* the wall stays put on the pass: no hover lifts, no idle drift */
+.tour-on .cw-hint, .tour-on .cw-pad, .tour-on .cw-lookup { opacity: 0; pointer-events: none; }
+.axis-open .cw-tour { z-index: 45; }
+@media (max-width: 860px) {
+  .cw-tour { bottom: 108px; }
+  .cw-tour__go { font-size: .84rem; padding: 12px 16px; }
+}

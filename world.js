@@ -86,6 +86,10 @@
         </span>
       </header>
       <div class="cw-hint">${HINT}</div>
+      <div class="cw-tour" hidden>
+        <button class="cw-tour__go">▶ הראו לי הכל</button>
+        <span class="cw-tour__dots" aria-hidden="true"></span>
+      </div>
       <div class="cw-pad">
         <button data-k="left" aria-label="שמאלה">←</button>
         <button data-k="up" class="cw-pad__up" aria-label="קדימה">↑</button>
@@ -114,12 +118,19 @@
       root, canvas: $('.cw-canvas', root), spots: $('.cw-spots', root), veil: $('.cw-veil', root), title: $('.cw-title', root), motes: $('.cw-motes', root), sky: $('.cw-sky', root), skyIn: $('.cw-sky__in', root), lookup: $('.cw-lookup', root),
       room: $('.cw-room', root), prog: $('.cw-prog', root), hint: $('.cw-hint', root), card: $('.cw-card', root), finale: $('.cw-finale', root), scrim: $('.cw-scrim', root), wa: $('.cw-wa', root),
  load: $('.cw-load', root), mapui: $('.cw-mapui', root), snd: $('.cw-snd', root),
-      home: $('.cw-home', root), axis: $('.cw-axis', root),
+      home: $('.cw-home', root), axis: $('.cw-axis', root), tour: $('.cw-tour', root),
     };
+    $('.cw-tour__go', root).onclick = () => tourOn ? stopTour() : startTour();
+    /* the visitor taking the wheel ends the guided pass — any real input */
+    ['pointerdown', 'keydown', 'wheel'].forEach(ev => addEventListener(ev, e => {
+      if (!tourOn) return;
+      if (e.target && e.target.closest && e.target.closest('.cw-tour, .cw-axis__snd')) return;
+      stopTour();
+    }, { passive: true }));
     /* "חזרה ללובי" is never something you look for: one button, top bar,
        whenever you are anywhere but the hall. It closes an open wall first,
        and only then walks you home. */
-    el.home.onclick = () => { if (!el.axis.hidden) closeAxis(); else if (cur !== 'lobby') go('lobby'); };
+    el.home.onclick = () => { if (tourOn) stopTour(); if (!el.axis.hidden) closeAxis(); else if (cur !== 'lobby') go('lobby'); };
     $('.cw-axis__x', root).onclick = closeAxis;
     el.axis.addEventListener('click', e => { if (e.target === el.axis) closeAxis(); });
     addEventListener('keydown', e => { if (e.key === 'Escape' && !el.axis.hidden) closeAxis(); });
@@ -535,6 +546,8 @@
        instead of a bare "היי". */
     el.wa.href = WA + (d.wa ? '?text=' + encodeURIComponent(d.wa) : '');
     el.home.hidden = id === 'lobby';
+    el.tour.hidden = id !== 'lobby';
+    paintTourDots();
     visited.add(id);
     buildMarkers(d);
     buildSky(d);
@@ -867,6 +880,77 @@
     return new THREE.Vector3(Math.cos(p) * Math.sin(y), Math.sin(p), -Math.cos(p) * Math.cos(y)).multiplyScalar(52);
   };
 
+  /* THE GUIDED PASS. "Show me everything": the camera glides screen to
+     screen around the hall, each wall opens for a few seconds with its film
+     and abstract, closes, and the pass moves on — finishing at the lounge.
+     Nobody has to know how to look around to see all five axes. Any real
+     input hands the wheel back. */
+  let tourOn = false, tourStep = 0, tourT = 0, tourRaf = 0;
+  const seenAxes = new Set();
+  function paintTourDots() {
+    const box = $('.cw-tour__dots', el.root); if (!box) return;
+    box.innerHTML = axisScreens.map((a, i) =>
+      '<i class="' + (seenAxes.has(a.yaw) ? 'on' : '') + (tourOn && i === tourStep ? ' now' : '') + '"></i>').join('');
+  }
+  function glideTo(yaw, ms, done) {
+    const lon0 = lon, rel = ((yaw - lon0) % 360 + 540) % 360 - 180, t0 = performance.now();
+    const ease = k => k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+    const step = () => {
+      if (!tourOn) return;
+      const k = Math.min(1, (performance.now() - t0) / ms);
+      lon = lon0 + rel * ease(k); lat += (14 - lat) * 0.08;
+      if (k < 1) tourRaf = requestAnimationFrame(step); else done();
+    };
+    tourRaf = requestAnimationFrame(step);
+  }
+  function startTour() {
+    if (cur !== 'lobby' || !axisScreens.length) return;
+    tourOn = true; tourStep = 0;
+    el.root.classList.add('tour-on');
+    $('.cw-tour__go', el.root).textContent = '⏸ עצרו';
+    closeAxis();
+    /* start from the screen nearest to where you already look, then go round */
+    let best = 0, bestAbs = 999;
+    axisScreens.forEach((a, i) => { const r = Math.abs(((a.yaw - lon) % 360 + 540) % 360 - 180); if (r < bestAbs) { bestAbs = r; best = i; } });
+    tourStep = best;
+    tourNext(0);
+  }
+  function tourNext(count) {
+    if (!tourOn) return;
+    if (count >= axisScreens.length) {
+      /* done: everything seen — glide to the lounge door and hand over */
+      stopTour();
+      const home = doors.find(d => d.el.classList.contains('is-home'));
+      const yaw = 180;
+      const lon0 = lon, rel = ((yaw - lon0) % 360 + 540) % 360 - 180, t0 = performance.now();
+      const fin = () => { const k = Math.min(1, (performance.now() - t0) / 900); lon = lon0 + rel * k; if (k < 1) requestAnimationFrame(fin); };
+      requestAnimationFrame(fin);
+      announce('ראיתם את כל חמשת הצירים');
+      if (home) home.el.classList.add('is-facing');
+      return;
+    }
+    const a = axisScreens[tourStep % axisScreens.length];
+    paintTourDots();
+    glideTo(a.yaw, 1100, () => {
+      if (!tourOn) return;
+      const h = (ROOMS.lobby.hotspots || []).find(x => x.kind === 'axis' && x.yaw === a.yaw);
+      if (h) openAxis(h);
+      seenAxes.add(a.yaw); paintTourDots();
+      tourT = setTimeout(() => {
+        if (!tourOn) return;
+        closeAxis();
+        tourStep = (tourStep + 1) % axisScreens.length;
+        tourT = setTimeout(() => tourNext(count + 1), 350);
+      }, 7000);
+    });
+  }
+  function stopTour() {
+    tourOn = false; clearTimeout(tourT); cancelAnimationFrame(tourRaf);
+    el.root.classList.remove('tour-on');
+    const b = $('.cw-tour__go', el.root); if (b) b.textContent = '▶ הראו לי הכל';
+    paintTourDots();
+  }
+
   /* THE OPEN WALL. A screen you click does not take you anywhere — it comes
      to you. The film on one side, the abstract on the other, the features
      as a row of smaller screens beneath, and the way onward (the room, the
@@ -919,6 +1003,7 @@
     el.axis.hidden = false;
     el.home.hidden = false;
     el.root.classList.add('axis-open');
+    seenAxes.add(h.yaw); paintTourDots();
     duck(true);
     tendScreens();
   }
