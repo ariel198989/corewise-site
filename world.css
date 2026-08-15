@@ -75,7 +75,7 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
    not another button competing with the doors. Clears the compass by 46px
    instead of painting under it. */
 .cw-hint {
-  position: absolute; bottom: calc(max(20px, env(safe-area-inset-bottom)) + 108px);
+  position: absolute; bottom: calc(max(20px, env(safe-area-inset-bottom)) + 128px);
   left: 50%; transform: translateX(-50%);
   z-index: 7; color: rgba(255,255,255,.66); font-size: .74rem; font-weight: 500;
   letter-spacing: .01em; white-space: nowrap; pointer-events: none;
@@ -471,7 +471,7 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
   .cw-card__x { top: 14px; left: 14px; }
   .cw-card__body { padding: 22px 20px 24px; }
   .cw-spot__frame { width: clamp(130px, 38vw, 210px); }
-  .cw-spot.is-tv .cw-spot__frame { width: clamp(230px, 62vw, 420px); }
+  .cw-spot.is-tv .cw-spot__frame { width: clamp(200px, 56vw, 420px); }
   .cw-spot.is-yt:not(.is-big) .cw-spot__frame { width: clamp(190px, 50vw, 300px); }
   .cw-spot.is-portrait .cw-spot__frame { width: clamp(96px, 25vw, 150px); }
   .cw-spot:not(.is-product) span { font-size: .78rem; }
@@ -675,7 +675,7 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
    override at 15vh put it straight back on the emblem. */
 @media (max-width: 860px) {
   .cw-lookup { top: 7vh; }
-  .cw-hint { font-size: .72rem; bottom: calc(max(20px, env(safe-area-inset-bottom)) + 100px); }
+  .cw-hint { font-size: .72rem; bottom: calc(max(20px, env(safe-area-inset-bottom)) + 112px); }
   .cw-compass { width: 52px; height: 52px; }
   .cw-door__l { font-size: .95rem; padding: 11px 20px; }
   .cw-pad button { width: 44px; height: 44px; }
@@ -845,7 +845,9 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
 
 @media (max-width: 860px) {
   .cw-home { padding: 8px 11px; font-size: .74rem; }
-  .cw-spot.is-axis .cw-spot__frame { width: clamp(220px, 60vw, 320px); }
+  /* must live in THIS block: the desktop width rule is declared above and
+     would otherwise win on source order */
+  .cw-spot.is-axis .cw-spot__frame { width: clamp(170px, 46vw, 300px); }
   .cw-plaque { width: clamp(140px, 42vw, 200px); }
   .cw-axis { padding: max(64px, env(safe-area-inset-top)) 8px 12px; align-items: start; }
   .cw-axis__wall { grid-template-columns: 1fr; grid-template-areas: "media" "bubble" "feats"; padding: 14px; gap: 14px; border-radius: 16px; }
@@ -856,7 +858,7 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
 
 /* ---- the guided pass ---- */
 .cw-tour {
-  position: absolute; left: 50%; bottom: 96px; transform: translateX(-50%); z-index: 22;
+  position: absolute; left: 50%; bottom: calc(max(20px, env(safe-area-inset-bottom)) + 76px); transform: translateX(-50%); z-index: 22;
   display: flex; align-items: center; gap: 12px; direction: rtl;
 }
 .cw-tour[hidden] { display: none; }
@@ -875,6 +877,6 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
 .tour-on .cw-hint, .tour-on .cw-pad, .tour-on .cw-lookup { opacity: 0; pointer-events: none; }
 .axis-open .cw-tour { z-index: 45; }
 @media (max-width: 860px) {
-  .cw-tour { bottom: 108px; }
+  .cw-tour { bottom: calc(max(20px, env(safe-area-inset-bottom)) + 66px); }
   .cw-tour__go { font-size: .84rem; padding: 12px 16px; }
 }
