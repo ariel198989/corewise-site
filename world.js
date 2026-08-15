@@ -983,7 +983,7 @@
       '<p>' + esc(h.abstract || '') + '</p>' +
       '<div class="cw-axis__go">' +
         (h.room && ROOMS[h.room] ? '<button class="cw-axis__room">להיכנס למחלקה המלאה ↓</button>' : '') +
-        (h.site ? '<a class="cw-axis__site" href="' + h.site + '" target="_blank" rel="noopener">האתר הייעודי ↗</a>' : '') +
+        (h.site ? '<a class="cw-axis__site" href="' + h.site + '">האתר הייעודי ↗</a>' : '') +
         '<a class="cw-axis__wa" href="' + WA + '?text=' + encodeURIComponent('היי לידור, ראיתי את ' + h.title + ' בסיור באתר. אשמח לדבר.') + '" target="_blank" rel="noopener">וואטסאפ ללידור</a>' +
       '</div>' +
       '<small class="cw-axis__made">' + esc((ROOMS.lobby && ROOMS.lobby.note) || '') + '</small>';

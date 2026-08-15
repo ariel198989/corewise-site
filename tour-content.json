@@ -56,7 +56,8 @@
               "title": "נמדד בשורה התחתונה",
               "text": "כל הטמעה מוגדרת במספר: זמן שנחסך, פניות שנענו, מכירות שנסגרו."
             }
-          ]
+          ],
+          "site": "ai/"
         },
         {
           "kind": "axis",
@@ -67,7 +68,7 @@
           "sub": "LiDAR · עומק · מדרגה · בור · שיפוע · Mesh",
           "still": "axis/measure.webp",
           "room": "measure",
-          "site": "https://measuresolve.vercel.app",
+          "site": "measure/",
           "abstract": "מדידה הנדסית מסריקת לידאר. לא סרט מידה, לא הערכה — מספר. עומק של משטח, גובה של מדרגה, נפח של בור, שיפוע של רמפה, ומודל תלת-ממדי שיוצא ישר למדפסת. פרויקטים אמיתיים בוצעו על בסיס הפיצ׳רים האלה.",
           "features": [
             {
@@ -108,7 +109,7 @@
           "video": "vision-tv.mp4",
           "poster": "axis/vision-poster.webp",
           "room": "vision",
-          "site": "https://cvsolve.vercel.app",
+          "site": "vision/",
           "abstract": "הופכים כל מצלמה טיפשה למצלמה חכמה — לפי הדרישה שלך. זה מוצר, לא סדנה: המצלמה שכבר תלויה אצלך מקבלת יכולת חדשה, וההתרעה מגיעה לנייד.",
           "features": [
             {
@@ -149,7 +150,7 @@
           "video": "school-tv.mp4",
           "poster": "axis/pedagogy-poster.webp",
           "room": "school",
-          "site": "https://pedagogy-corewise.vercel.app",
+          "site": "pedagogy/",
           "abstract": "טכנולוגיה כדרך לחשיבה מחקרית — לנוער, למורים ולארגונים. כל תוכנית בנויה על מערכת שלנו שתומכת בשיתופיות בין המשתתפים בזמן אמת: יכולת שאין במקום אחר.",
           "features": [
             {
@@ -205,7 +206,8 @@
               "text": "שכבות מידע על מרחבים אמיתיים, דרך הטלפון.",
               "tag": "בהקמה"
             }
-          ]
+          ],
+          "site": "ar/"
         },
         {
           "yaw": 0,
@@ -317,7 +319,7 @@
           "title": "האתר הייעודי של המדידה",
           "text": "כל הפיצ׳רים, בהרחבה, באתר משלהם.",
           "kind": "action",
-          "link": "https://measuresolve.vercel.app",
+          "link": "measure/",
           "linkLabel": "MeasureSolve ↗"
         }
       ],
@@ -416,7 +418,7 @@
           "title": "האתר הייעודי של הראייה",
           "text": "כל הפיצ׳רים, בהרחבה, באתר משלהם.",
           "kind": "action",
-          "link": "https://cvsolve.vercel.app",
+          "link": "vision/",
           "linkLabel": "CvSolve ↗"
         }
       ],
