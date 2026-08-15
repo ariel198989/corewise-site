@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>קורוויז · פתרונות מדידה — מדידה הנדסית מסריקת לידאר</title>
+<meta name="description" content="מדידה הנדסית מדויקת מסריקת לידאר: מפת עומק, מדידת מדרגות, נפח בור, שיפוע ומודל Mesh להדפסה תלת-ממדית. בלי סרט מדידה, בלי טעויות אנוש.">
+<meta name="theme-color" content="#14181c">
+<meta property="og:title" content="קורוויז · פתרונות מדידה">
+<meta property="og:description" content="מדידה הנדסית מדויקת מסריקת לידאר — עומק, מדרגות, בורות, שיפועים ו-Mesh.">
+<meta property="og:image" content="img/hero.webp">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="https://corewise.co.il"><span class="wordmark" dir="ltr">corewise</span><span class="brand-sep" aria-hidden="true">/</span><span class="brand-dept">פתרונות מדידה</span></a>
+  <nav class="topnav" aria-label="ניווט">
+    <a class="toplink" href="https://corewise.co.il"><span aria-hidden="true">←</span> לאתר הראשי</a>
+    <a class="btn btn-sm" href="https://wa.me/972507594477?text=%D7%94%D7%99%D7%99%20%D7%9C%D7%99%D7%93%D7%95%D7%A8%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%9E%D7%90%D7%AA%D7%A8%20%D7%A4%D7%AA%D7%A8%D7%95%D7%A0%D7%95%D7%AA%20%D7%94%D7%9E%D7%93%D7%99%D7%93%D7%94.%20%D7%99%D7%A9%20%D7%9C%D7%99%20%D7%9E%D7%91%D7%A0%D7%94%2F%D7%90%D7%AA%D7%A8%20%D7%A9%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%9E%D7%93%D7%95%D7%93." target="_blank" rel="noopener">וואטסאפ ללידור</a>
+  </nav>
+</header>
+
+<main>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div class="hero-copy stagger">
+      <p class="eyebrow" style="--i:0"><span dir="ltr">MEASURESOLVE · LiDAR</span></p>
+      <h1 style="--i:1">מדידה הנדסית מדויקת מסריקת לידאר.<br><span class="accent">בלי סרט מדידה. <span class="nowrap">בלי טעויות אנוש.</span></span></h1>
+      <p class="lede" style="--i:2">סורקים פעם אחת. מקבלים עומק, מדרגות, בורות, שיפועים ומודל תלת-ממדי — במספרים, לא בהערכות.</p>
+      <div class="cta-row" style="--i:3">
+        <a class="btn" href="https://wa.me/972507594477?text=%D7%94%D7%99%D7%99%20%D7%9C%D7%99%D7%93%D7%95%D7%A8%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%9E%D7%90%D7%AA%D7%A8%20%D7%A4%D7%AA%D7%A8%D7%95%D7%A0%D7%95%D7%AA%20%D7%94%D7%9E%D7%93%D7%99%D7%93%D7%94.%20%D7%99%D7%A9%20%D7%9C%D7%99%20%D7%9E%D7%91%D7%A0%D7%94%2F%D7%90%D7%AA%D7%A8%20%D7%A9%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%9E%D7%93%D7%95%D7%93." target="_blank" rel="noopener">יש לי מבנה למדוד</a>
+        <a class="link-arrow" href="#features">מה אנחנו מודדים <span aria-hidden="true">↓</span></a>
+      </div>
+      <dl class="hero-units" style="--i:4" aria-label="יחידות הפלט">
+        <div><dt>עומק</dt><dd>מ״מ</dd></div>
+        <div><dt>מדרגה</dt><dd>ס״מ</dd></div>
+        <div><dt>בור</dt><dd>מ³</dd></div>
+        <div><dt>שיפוע</dt><dd dir="ltr">% · °</dd></div>
+        <div><dt>Mesh</dt><dd dir="ltr">STL</dd></div>
+      </dl>
+    </div>
+
+    <figure class="hero-fig measured">
+      <span class="dim dim-top" aria-hidden="true"><b>שלח · ס״מ</b></span>
+      <span class="dim dim-side" aria-hidden="true"><b>רום · ס״מ</b></span>
+      <img src="img/hero.webp" width="1600" height="900" alt="סורק לידאר על חצובה מול גרם מדרגות בטון באתר בנייה; ענן נקודות טורקיז מסמן את הרום והשלח של כל מדרגה" fetchpriority="high">
+      <figcaption>סריקת לידאר של גרם מדרגות באתר בנייה. הקווים — מדידות אוטומטיות של רום ושלח לכל מדרגה.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============ FEATURES ============ -->
+<section class="features" id="features">
+  <div class="wrap">
+    <header class="sec-head reveal">
+      <p class="eyebrow"><span dir="ltr">01 — 05</span> · יכולות</p>
+      <h2>חמש מדידות. סריקה אחת.</h2>
+      <p class="sec-sub">כל יכולת היא פיצ׳ר עצמאי שאפשר להזמין לבד. כל אחת מוציאה מספר — לא תיאור.</p>
+    </header>
+
+    <!-- 01 depth -->
+    <article class="feat reveal" id="depth">
+      <div class="feat-copy">
+        <p class="feat-idx" dir="ltr">01</p>
+        <p class="unit">מ״מ</p>
+        <span class="dim" aria-hidden="true"><b>רזולוציית פלט</b></span>
+        <h3>עומק <span class="latin" dir="ltr">Depth</span></h3>
+        <p>מפת עומק של כל משטח — רצפה, קיר, תקרה — במילימטרים. כל נקודה בסריקה מקבלת מרחק.</p>
+        <p class="gives"><strong>מה זה נותן לך:</strong> רואים סטיות, שקעים ובליטות לפני שיוצקים, מרצפים או מחפים.</p>
+      </div>
+      <figure class="feat-fig">
+        <img src="img/depth.webp" width="1600" height="1067" loading="lazy" alt="חיישן לידאר ידני מעל רצפת בטון גולמית; רשת נקודות טורקיז נפרסת על המשטח ומסמנת את מפת העומק">
+        <figcaption>מפת עומק על רצפת בטון גולמית — כל נקודה מקבלת מרחק.</figcaption>
+      </figure>
+    </article>
+
+    <!-- 02 stairs -->
+    <article class="feat reveal" id="stairs">
+      <div class="feat-copy">
+        <p class="feat-idx" dir="ltr">02</p>
+        <p class="unit">ס״מ&thinsp;×&thinsp;ס״מ</p>
+        <span class="dim" aria-hidden="true"><b>רום × שלח, לכל מדרגה</b></span>
+        <h3>מדידת מדרגה</h3>
+        <p>גובה ורוחב של כל מדרגה בגרם — אוטומטית, מסריקה אחת. לא מדרגה אחת לדוגמה. כולן.</p>
+        <p class="gives"><strong>מה זה נותן לך:</strong> בדיקת אחידות ותקן של כל הגרם בדקות, עם טבלה שמצורפת לדוח.</p>
+      </div>
+      <figure class="feat-fig">
+        <img src="img/stairs.webp" width="1600" height="1067" loading="lazy" alt="גרם מדרגות בטון גולמי בבניין בבנייה; קווי מתאר טורקיז עוקבים אחרי הרום והשלח של כל מדרגה">
+        <figcaption>גרם מדרגות בבניין בבנייה. כל רום ושלח מסומנים בסריקה אחת.</figcaption>
+      </figure>
+    </article>
+
+    <!-- 03 pit -->
+    <article class="feat reveal" id="pit">
+      <div class="feat-copy">
+        <p class="feat-idx" dir="ltr">03</p>
+        <p class="unit">מ<sup>3</sup></p>
+        <span class="dim" aria-hidden="true"><b>נפח + עומק</b></span>
+        <h3>מדידת בור</h3>
+        <p>נפח ועומק של בור, חפירה או שקע — משריקה אחת, בלי לרדת פנימה ובלי למתוח חבל.</p>
+        <p class="gives"><strong>מה זה נותן לך:</strong> כמות מילוי או פינוי במספר, לפני שמזמינים משאית.</p>
+      </div>
+      <figure class="feat-fig">
+        <img src="img/pit.webp" width="1600" height="1067" loading="lazy" alt="בור חפירה באתר בנייה עם דפנות אדמה וחצץ; רשת נקודות טורקיז נפרסת בתוך הבור ומסמנת נפח ועומק">
+        <figcaption>בור חפירה באתר. הרשת הטורקיזית — הנפח שנמדד מסריקה אחת מלמעלה.</figcaption>
+      </figure>
+    </article>
+
+    <!-- 04 slope -->
+    <article class="feat reveal" id="slope">
+      <div class="feat-copy">
+        <p class="feat-idx" dir="ltr">04</p>
+        <p class="unit" dir="ltr">%&thinsp;·&thinsp;°</p>
+        <span class="dim" aria-hidden="true"><b>אחוזים ומעלות</b></span>
+        <h3>מדידת שיפוע</h3>
+        <p>שיפוע של רמפה, משטח או ניקוז — באחוזים ובמעלות, לאורך כל המקטע ולא בנקודה אחת.</p>
+        <p class="gives"><strong>מה זה נותן לך:</strong> התאמה לתקן נגישות וניקוז, עם הוכחה מדודה במקום ויכוח.</p>
+      </div>
+      <figure class="feat-fig">
+        <img src="img/slope.webp" width="1600" height="1067" loading="lazy" alt="רמפת בטון ארוכה עם מעקה מתכת ליד בניין ציבורי; נקודות טורקיז מכסות את משטח הרמפה וקו זוהר עוקב אחרי השיפוע">
+        <figcaption>רמפת גישה. קו אחד לאורך כל המקטע — השיפוע נמדד ברצף, לא בנקודה.</figcaption>
+      </figure>
+    </article>
+
+    <!-- 05 mesh -->
+    <article class="feat reveal" id="mesh">
+      <div class="feat-copy">
+        <p class="feat-idx" dir="ltr">05</p>
+        <p class="unit" dir="ltr">STL</p>
+        <span class="dim" aria-hidden="true"><b>קובץ להדפסה תלת-ממדית</b></span>
+        <h3>עולם ה-<span class="latin" dir="ltr">Mesh</span></h3>
+        <p>סריקה תלת-ממדית שהופכת למודל Mesh — וממנו לקובץ להדפסת תלת-ממד ברזולוציה שאתה מגדיר.</p>
+        <p class="gives"><strong>מה זה נותן לך:</strong> מודל פיזי או דיגיטלי של מה שיש בשטח — לא של מה שבתוכניות.</p>
+      </div>
+      <figure class="feat-fig">
+        <img src="img/mesh.webp" width="1600" height="1067" loading="lazy" alt="מודל Mesh טורקיז של חזית בניין ליד דגם אפור מודפס בתלת-ממד של אותו בניין על מיטת מדפסת">
+        <figcaption>מודל Mesh מהסריקה — ולידו הדגם המודפס. הרזולוציה נקבעת לפי הצורך.</figcaption>
+      </figure>
+    </article>
+  </div>
+</section>
+
+<!-- ============ PROOF ============ -->
+<section class="proof" id="proof">
+  <div class="wrap">
+    <header class="sec-head reveal">
+      <p class="eyebrow">פרויקטים אמיתיים</p>
+      <h2>בוצע על בסיס הפיצ׳רים למעלה</h2>
+    </header>
+    <ul class="proof-list reveal">
+      <li>
+        <a href="https://coreinspect.vercel.app" target="_blank" rel="noopener">
+          <span class="proof-name" dir="ltr">CoreInspect</span>
+          <span class="proof-desc">בדק בית הנדסי.</span>
+          <span class="proof-url" dir="ltr">coreinspect.vercel.app ↗</span>
+        </a>
+      </li>
+      <li>
+        <a href="https://roadsense-ivory.vercel.app" target="_blank" rel="noopener">
+          <span class="proof-name" dir="ltr">RoadSense</span>
+          <span class="proof-desc">סריקת לידאר עירונית.</span>
+          <span class="proof-url" dir="ltr">roadsense-ivory.vercel.app ↗</span>
+        </a>
+      </li>
+    </ul>
+    <p class="team reveal"><span class="dim dim-inline" aria-hidden="true"></span>לידור דהן — דוקטור להנדסת חשמל ומחשבים, כשש שנים באלגוריתמיקה לרכב אוטונומי.</p>
+  </div>
+</section>
+
+<!-- ============ HOW ============ -->
+<section class="how" id="how">
+  <div class="wrap">
+    <header class="sec-head reveal">
+      <p class="eyebrow">איך זה עובד</p>
+      <h2>שלושה שלבים. אחד מהם שלך.</h2>
+    </header>
+    <ol class="steps reveal">
+      <li>
+        <span class="step-tick" aria-hidden="true"></span>
+        <h3>מגיעים וסורקים</h3>
+        <p>סורק לידאר במקום. כמה דקות למרחב. בלי לפנות את האתר.</p>
+      </li>
+      <li>
+        <span class="step-tick" aria-hidden="true"></span>
+        <h3>האלגוריתמים מודדים</h3>
+        <p>מהסריקה יוצאים עומק, מדרגות, נפח, שיפוע <span class="nowrap">ו-Mesh</span> — לפי מה שהזמנת.</p>
+      </li>
+      <li>
+        <span class="step-tick" aria-hidden="true"></span>
+        <h3>מקבלים דוח</h3>
+        <p>מספרים, תמונות מסומנות וקבצים (<span dir="ltr">CSV / STL</span>) שנכנסים ישר לתיק.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section class="cta">
+  <div class="wrap cta-grid reveal">
+    <div>
+      <h2>יש לך מבנה, גרם מדרגות או אתר לחפור בו?</h2>
+      <p>כתבו ללידור. תוך שיחה קצרה נגיד מה אפשר למדוד ומה תקבלו.</p>
+    </div>
+    <a class="btn btn-lg" href="https://wa.me/972507594477?text=%D7%94%D7%99%D7%99%20%D7%9C%D7%99%D7%93%D7%95%D7%A8%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%9E%D7%90%D7%AA%D7%A8%20%D7%A4%D7%AA%D7%A8%D7%95%D7%A0%D7%95%D7%AA%20%D7%94%D7%9E%D7%93%D7%99%D7%93%D7%94.%20%D7%99%D7%A9%20%D7%9C%D7%99%20%D7%9E%D7%91%D7%A0%D7%94%2F%D7%90%D7%AA%D7%A8%20%D7%A9%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%9E%D7%93%D7%95%D7%93." target="_blank" rel="noopener">וואטסאפ ללידור</a>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-grid">
+    <div class="foot-brand">
+      <a class="brand" href="https://corewise.co.il"><span class="wordmark" dir="ltr">corewise</span><span class="brand-sep" aria-hidden="true">/</span><span>קורוויז</span></a>
+      <p class="foot-note">כל הוויזואלים באתר הופקו ביכולות הפנימיות של קורוויז.</p>
+    </div>
+    <nav class="foot-nav" aria-label="מחלקות">
+      <p class="foot-label">מחלקות</p>
+      <a href="../vision/">ראייה ממוחשבת</a>
+      <a href="../pedagogy/">פדגוגיה</a>
+      <a href="../ai/">הטמעות AI</a>
+      <a href="../ar/">AR <span class="tag">בשלבי הקמה</span></a>
+      <a href="https://corewise.co.il"><span aria-hidden="true">←</span> לאתר הראשי</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="app.js" defer></script>
+</body>
+</html>
