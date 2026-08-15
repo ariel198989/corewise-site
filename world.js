@@ -103,7 +103,7 @@
     document.body.appendChild(root);
     el = {
       root, canvas: $('.cw-canvas', root), spots: $('.cw-spots', root), veil: $('.cw-veil', root), title: $('.cw-title', root), motes: $('.cw-motes', root), sky: $('.cw-sky', root), skyIn: $('.cw-sky__in', root), lookup: $('.cw-lookup', root),
-      room: $('.cw-room', root), prog: $('.cw-prog', root), hint: $('.cw-hint', root), card: $('.cw-card', root), finale: $('.cw-finale', root), scrim: $('.cw-scrim', root),
+      room: $('.cw-room', root), prog: $('.cw-prog', root), hint: $('.cw-hint', root), card: $('.cw-card', root), finale: $('.cw-finale', root), scrim: $('.cw-scrim', root), wa: $('.cw-wa', root),
  load: $('.cw-load', root), mapui: $('.cw-mapui', root), snd: $('.cw-snd', root),
     };
 
@@ -489,6 +489,12 @@
        lobby you arrive looking back at the door you came out of. */
     lon = (id === 'lobby' && from && BEARING[from] != null) ? BEARING[from] : 0;
     el.root.style.setProperty('--cw-acc', ACCENT[id] || ACCENT.lobby);
+    /* The WhatsApp button follows you from room to room, so it should know
+       which room it was pressed in. A message that already says what the
+       visitor was looking at saves them writing the one sentence most people
+       never bother to write — and it reaches Lidor with the context attached
+       instead of a bare "היי". */
+    el.wa.href = WA + (d.wa ? '?text=' + encodeURIComponent(d.wa) : '');
     visited.add(id);
     buildMarkers(d);
     buildSky(d);
