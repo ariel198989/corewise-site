@@ -1008,11 +1008,20 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
 @media (max-width: 860px) {
   .cw-assist-open { padding: 12px; bottom: calc(max(18px, env(safe-area-inset-bottom)) + 56px); }
   .cw-assist-open span { display: none; }
+  /* On a phone the panel is a sheet at the very bottom, not a card floating
+     in the middle: at 56vh it swallowed the screen it had just opened. It
+     keeps the top of the frame clear so the answer and the thing being
+     answered about are visible at the same time. */
   .cw-assist {
-    left: 10px; right: 10px; width: auto;
-    bottom: calc(max(18px, env(safe-area-inset-bottom)) + 112px);
-    max-height: 56vh;
+    left: 8px; right: 8px; width: auto;
+    bottom: calc(max(10px, env(safe-area-inset-bottom)) + 6px);
+    max-height: 42vh; border-radius: 16px;
   }
+  .cw-assist__head { padding: 10px 14px; }
+  .cw-assist__log { padding: 11px 14px; gap: 7px; font-size: .85rem; }
+  .cw-assist__row { padding: 9px 10px; }
+  /* the launcher steps aside while the sheet is up, rather than sitting on it */
+  .cw-assist-open.is-on { opacity: 0; pointer-events: none; }
 }
 /* the idle dim leaves the assistant alone: it is a conversation, not chrome */
 .cw.is-idle .cw-assist-open { opacity: .55; }
