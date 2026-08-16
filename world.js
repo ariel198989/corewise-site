@@ -33,7 +33,7 @@
       map: 'מפת הקמפוס', mapClose: 'סגירה', close: 'סגירה',
       padL: 'שמאלה', padU: 'קדימה', padR: 'ימינה',
       tourGo: '▶ הראו לי הכל', tourStop: '⏸ עצרו', tourDone: 'ראיתם את כל חמשת הצירים',
-      waTitle: 'השאירו פרטים בוואטסאפ', waLabel: 'השאירו פרטים', waLidor: 'וואטסאפ ללידור',
+      waTitle: 'השאירו פרטים בוואטסאפ', waLabel: 'השאירו פרטים', waLidor: 'לפניה בוואטסאפ',
       lounge: '☕ בואו נדבר', greet: 'היי', langBtn: 'EN', langAria: 'Switch to English',
       progA: 'גילית ', progB: ' מתוך ',
       sndOn: '🔇 הפעלת סאונד', sndOff: '🔊 השתקה',
