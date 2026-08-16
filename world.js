@@ -134,7 +134,7 @@
     CFG = cfg;
     cfg.departments.forEach(d => ROOMS[d.id] = d);
     buildDOM();
-    loadThree().then(start);
+    loadThree().then(() => { start(); mountAgent(); });
   });
 
   const loadThree = () => new Promise(res => {
@@ -183,7 +183,7 @@
         <span>${T('waLabel')}</span>
       </a>
       <button class="cw-assist-open" hidden aria-label="${T('assistOpen')}" aria-expanded="false">
-        ${ICON.chat}<span>${T('assistOpen')}</span>
+        <span class="cw-agent">${ICON.chat}</span><span class="cw-assist-open__l">${T('assistOpen')}</span>
       </button>
       <div class="cw-assist" hidden role="dialog" aria-modal="false" aria-label="${T('assistTitle')}">
         <div class="cw-assist__head">
@@ -1272,7 +1272,13 @@
      so it can never claim a feature the hall itself does not show. It stands
      in the lobby only, next to the WhatsApp button it hands off to when a
      visitor wants a human instead of an answer. */
-  let assistHistory = [], assistBusy = false;
+  let assistHistory = [], assistBusy = false, agent3d = null;
+  const agentNod = () => { if (agent3d) agent3d.nod(); };
+  function mountAgent() {
+    const host = $('.cw-agent', el.root);
+    if (!host || !window.cwAgent3D || !window.THREE) return;
+    try { agent3d = window.cwAgent3D.mount(host, window.THREE); } catch (e) {}
+  }
   function paintAssistChips() {
     const log = el.assistLog;
     const old = $('.cw-assist__chips', el.root); if (old) old.remove();
@@ -1291,7 +1297,7 @@
     el.assist.hidden = !show;
     el.assistOpenBtn.setAttribute('aria-expanded', String(show));
     el.assistOpenBtn.classList.toggle('is-on', show);
-    if (show) { paintAssistChips(); duck(true); setTimeout(() => el.assistIn.focus(), 260); }
+    if (show) { paintAssistChips(); agentNod(); duck(true); setTimeout(() => el.assistIn.focus(), 260); }
     else duck(false);
   }
   function assistBubble(role, text) {
@@ -1340,6 +1346,7 @@
       wait.textContent = j.reply;
       assistHistory.push({ role: 'assistant', content: j.reply });
       assistHistory = assistHistory.slice(-16);
+      agentNod();
       if (j.go) assistGoTo(j.go);
     } catch (e) {
       wait.classList.remove('is-wait'); wait.classList.add('is-err');
@@ -1384,7 +1391,7 @@
     q('.cw-axis__x', e => e.textContent = T('home'));
     q('.cw-wa', e => e.title = T('waTitle'));
     q('.cw-wa span', e => e.textContent = T('waLabel'));
-    q('.cw-assist-open span', e => e.textContent = T('assistOpen'));
+    q('.cw-assist-open__l', e => e.textContent = T('assistOpen'));
     q('.cw-assist-open', e => e.setAttribute('aria-label', T('assistOpen')));
     q('.cw-assist__title', e => e.textContent = T('assistTitle'));
     q('.cw-assist__x', e => e.setAttribute('aria-label', T('assistClose')));

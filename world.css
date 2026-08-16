@@ -1006,8 +1006,8 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
 /* On a phone the panel is a sheet: full width at the bottom, above the
    launcher, so the keyboard does not shove it off screen. */
 @media (max-width: 860px) {
-  .cw-assist-open { padding: 12px; bottom: calc(max(18px, env(safe-area-inset-bottom)) + 56px); }
-  .cw-assist-open span { display: none; }
+  .cw-assist-open { padding: 6px 10px; bottom: calc(max(18px, env(safe-area-inset-bottom)) + 56px); }
+  .cw-assist-open__l { display: none; }
   /* On a phone the panel is a sheet at the very bottom, not a card floating
      in the middle: at 56vh it swallowed the screen it had just opened. It
      keeps the top of the frame clear so the answer and the thing being
@@ -1035,3 +1035,30 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
 }
 .cw-assist__chip:hover { background: rgba(198,242,78,.22); border-color: var(--cw-lime-d); color: var(--cw-ink); }
 .cw-assist__chip:focus-visible { outline: 2px solid var(--cw-lime-d); outline-offset: 2px; }
+
+/* ---------- the agent's corner stage ----------
+   He replaces the drawn speech bubble, which stays underneath as the fallback
+   for a failed model or a browser with no WebGL left to give. */
+/* He stands ON the button rather than inside it: at 34px he was a smudge,
+   and a companion the visitor is meant to recognise has to be big enough to
+   have a face. The overflow is deliberate, the pill is his plinth. */
+.cw-agent {
+  position: relative; display: block; width: 68px; height: 68px; flex: none;
+  margin-top: -30px; margin-bottom: -8px;
+}
+.cw-agent svg { width: 20px; height: 20px; position: absolute; inset: auto 0 10px; margin: auto; }
+.cw-agent.is-ready svg { display: none; }
+.cw-agent__c { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.cw-assist-open { padding: 8px 16px 8px 12px; gap: 8px; align-items: flex-end; }
+/* he is the reason to look, so the button leans on him rather than the label */
+.cw-assist-open:hover .cw-agent { transform: scale(1.06); }
+.cw-agent { transition: transform .2s cubic-bezier(.2,.8,.2,1); }
+@media (max-width: 860px) {
+  .cw-assist-open { padding: 6px 10px; }
+  .cw-agent { width: 58px; height: 58px; margin-top: -26px; margin-bottom: -6px; }
+}
+
+/* [hidden] is only display:none at UA-stylesheet strength, so the display
+   declarations above silently outrank it: the panel was open on arrival and
+   the launcher survived leaving the lobby. */
+.cw-assist[hidden], .cw-assist-open[hidden] { display: none !important; }
