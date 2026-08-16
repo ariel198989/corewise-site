@@ -12,7 +12,9 @@
   --surface-high: #e2dfd4;
   --ink: #14181c;
   --ink-2: #3a3f44;
-  --ink-3: #6b7076;
+  /* darkened from #6b7076, which measured 4.46:1 and missed 4.5 by a hair.
+     Now 4.75:1. */
+  --ink-3: #666b71;
   --rule: #d3cfc3;
   --accent: #C6F24E;
   --accent-ink: #4c6f0a;

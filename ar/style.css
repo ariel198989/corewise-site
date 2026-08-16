@@ -11,7 +11,11 @@
   --surface: #fbfaf6;
   --ink: #14181c;
   --ink-2: #3a4046;
-  --ink-3: #6b727a;
+  /* darkened from #6b727a, which measured 3.97:1 against --bg-deep and so
+     failed WCAG 1.4.3 / IS 5568 for body text. This is 4.97:1 there, and the
+     extra margin is deliberate: Hebrew faces render thinner than Latin at the
+     same size, so a ratio that only just clears 4.5 still reads badly. */
+  --ink-3: #5c636b;
   --line: rgba(20, 24, 28, .14);
   --grid: rgba(20, 24, 28, .07);
   --marker: #C6F24E;

@@ -284,7 +284,10 @@ figcaption { font-size: var(--step--1); color: var(--on-dark-muted); line-height
 .foot-grid { display: grid; gap: var(--space-8); }
 .foot .brand { color: var(--on-dark); }
 .foot-note { margin-block-start: var(--space-4); font-size: var(--step--1); max-width: 40ch; }
-.foot-label { font-family: var(--font-mono); font-size: .72rem; color: var(--ink-3); margin-block-end: var(--space-2); }
+/* --ink-3 is an ink token, meant for the paper surfaces; the footer sits on
+   --ink, so it needs the on-dark muted token that already exists. Was 3.61:1,
+   now 9.5:1. */
+.foot-label { font-family: var(--font-mono); font-size: .72rem; color: var(--on-dark-muted); margin-block-end: var(--space-2); }
 .foot-nav { display: grid; gap: var(--space-2); font-size: var(--step--1); }
 .foot-nav a:hover { color: var(--on-dark); }
 .tag { display: inline-block; margin-inline-start: var(--space-2); padding-inline: var(--space-2); font-family: var(--font-mono); font-size: .68rem; color: var(--accent); border: 1px solid currentColor; border-radius: var(--radius-pill); line-height: 1.5; }

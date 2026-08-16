@@ -10,10 +10,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="style.css">
-<script src="i18n.js" defer></script>
+<link rel="stylesheet" href="style.css?v=1786963100">
+<script src="i18n.js?v=1786962400" defer></script>
+<link rel="stylesheet" href="a11y.css?v=1786961200">
+<script src="a11y.js?v=1786961200"></script>
 </head>
 <body>
+<a class="cw-skip" href="#main" data-en="Skip to main content">דלג לתוכן הראשי</a>
 
 <header class="top">
   <div class="wrap">
@@ -29,7 +32,7 @@
   </div>
 </header>
 
-<main>
+<main id="main" tabindex="-1">
 
   <!-- ============ HERO ============ -->
   <section class="hero" aria-labelledby="h1">
@@ -243,7 +246,7 @@
         </div>
 
         <div class="player">
-          <div class="screen" data-screen>
+          <div class="screen" data-screen id="ep-screen" role="tabpanel" aria-label="נגן הסדרה" data-en-aria-label="Series player">
             <img class="poster" data-poster src="https://i.ytimg.com/vi/lUjDrrWxpsg/maxresdefault.jpg" width="1280" height="720" alt="פריים מתוך פרק 1 של הסדרה The Hollow" data-en-alt="A frame from episode 1 of the series The Hollow" loading="lazy">
             <button class="play" type="button" data-play aria-label="נגן את פרק 1 של The Hollow" data-en-aria-label="Play The Hollow, episode 1">
               <span class="tri" aria-hidden="true"></span>
@@ -251,12 +254,12 @@
             </button>
           </div>
           <ol class="eps" role="tablist" aria-label="פרקים" data-en-aria-label="Episodes">
-            <li><button type="button" class="ep is-on" role="tab" aria-selected="true" data-ep="lUjDrrWxpsg" data-n="1"><span class="mono" dir="ltr">1</span></button></li>
-            <li><button type="button" class="ep" role="tab" aria-selected="false" data-ep="iT-5Ifi4YOo" data-n="2"><span class="mono" dir="ltr">2</span></button></li>
-            <li><button type="button" class="ep" role="tab" aria-selected="false" data-ep="fszXYlD3Fpc" data-n="3"><span class="mono" dir="ltr">3</span></button></li>
-            <li><button type="button" class="ep" role="tab" aria-selected="false" data-ep="j-jNqoRPDzQ" data-n="4"><span class="mono" dir="ltr">4</span></button></li>
-            <li><button type="button" class="ep" role="tab" aria-selected="false" data-ep="P0GnR_Wp3Vw" data-n="5"><span class="mono" dir="ltr">5</span></button></li>
-            <li><button type="button" class="ep" role="tab" aria-selected="false" data-ep="troDiYIzXcU" data-n="6"><span class="mono" dir="ltr">6</span></button></li>
+            <li role="presentation"><button type="button" class="ep is-on" role="tab" aria-selected="true" data-ep="lUjDrrWxpsg" data-n="1" aria-controls="ep-screen" aria-label="פרק 1" data-en-aria-label="Episode 1"><span class="mono" dir="ltr">1</span></button></li>
+            <li role="presentation"><button type="button" class="ep" role="tab" aria-selected="false" data-ep="iT-5Ifi4YOo" data-n="2" aria-controls="ep-screen" aria-label="פרק 2" data-en-aria-label="Episode 2"><span class="mono" dir="ltr">2</span></button></li>
+            <li role="presentation"><button type="button" class="ep" role="tab" aria-selected="false" data-ep="fszXYlD3Fpc" data-n="3" aria-controls="ep-screen" aria-label="פרק 3" data-en-aria-label="Episode 3"><span class="mono" dir="ltr">3</span></button></li>
+            <li role="presentation"><button type="button" class="ep" role="tab" aria-selected="false" data-ep="j-jNqoRPDzQ" data-n="4" aria-controls="ep-screen" aria-label="פרק 4" data-en-aria-label="Episode 4"><span class="mono" dir="ltr">4</span></button></li>
+            <li role="presentation"><button type="button" class="ep" role="tab" aria-selected="false" data-ep="P0GnR_Wp3Vw" data-n="5" aria-controls="ep-screen" aria-label="פרק 5" data-en-aria-label="Episode 5"><span class="mono" dir="ltr">5</span></button></li>
+            <li role="presentation"><button type="button" class="ep" role="tab" aria-selected="false" data-ep="troDiYIzXcU" data-n="6" aria-controls="ep-screen" aria-label="פרק 6" data-en-aria-label="Episode 6"><span class="mono" dir="ltr">6</span></button></li>
           </ol>
           <p class="player-note" data-en="Nothing loads until you press play.">שום דבר לא נטען עד שלוחצים על נגן.</p>
         </div>
@@ -337,11 +340,12 @@
       <a href="../ai/" data-en="AI Integration">הטמעות AI</a>
       <a href="../ar/" data-en="AR">מציאות רבודה</a>
       <a href="https://corewise.co.il" data-en="Main site">האתר הראשי</a>
+      <a href="/negishut/" data-en="Accessibility statement">הצהרת נגישות</a>
     </nav>
     <p class="mono copy" dir="ltr" data-en-html='© corewise · 2026'>© corewise · <span dir="rtl">קורוויז</span> · 2026</p>
   </div>
 </footer>
 
-<script src="app.js" defer></script>
+<script src="app.js?v=1786962400" defer></script>
 </body>
 </html>

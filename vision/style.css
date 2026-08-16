@@ -10,7 +10,10 @@
   --border: #323a41;
   --text: #f4f2ec;
   --text-muted: #b3b6ad;
-  --text-subtle: #7d827a;
+  /* lightened from #7d827a, which measured 4.12:1 on the dark panel and so
+     failed WCAG 1.4.3 / IS 5568. This is 4.98:1, with margin on purpose:
+     Hebrew faces render thinner than Latin at the same size. */
+  --text-subtle: #8b9088;
   --accent: #C6F24E;
   --accent-on: #14181c;
   --accent-dim: rgba(198, 242, 78, .14);

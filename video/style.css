@@ -323,8 +323,13 @@ h1 .sm { font-size: .52em; font-weight: 500; color: var(--text-2); margin-block-
   display: flex; align-items: center; gap: var(--space-3);
 }
 .leg { white-space: nowrap; transition: color var(--dur-base) var(--ease-out), opacity var(--dur-base) var(--ease-out); }
-.leg-a { color: var(--text-3); opacity: calc(1 - var(--p, 0) * .65); }
-.leg-b { color: var(--accent-lit); opacity: calc(.35 + var(--p, 0) * .65); }
+/* Both tokens clear AA at full strength, but the scroll crossfade used to
+   drop the inactive label to .35 opacity, which took the orange down to
+   1.86:1 against the panel. The floor is now .9 (4.6:1 and 5.8:1 measured).
+   Little is lost: the crossfade was always carried by the colour change from
+   grey to orange, not by the fade. */
+.leg-a { color: var(--text-3); opacity: calc(1 - var(--p, 0) * .1); }
+.leg-b { color: var(--accent-lit); opacity: calc(.9 + var(--p, 0) * .1); }
 .strip-legend .leg-line { flex: 1 1 12px; min-width: 12px; height: 1px; background: var(--line); }
 /* the English pair of labels is ~30% wider than the Hebrew one and would run off a 390px screen */
 @media (max-width: 620px) { .strip-legend { gap: var(--space-2); } .leg { font-size: .72rem; } }
