@@ -1,0 +1,453 @@
+/* DIRECTION: warm craft, projection dark. The page is the room after the lights go down: charcoal ground,
+   bone type, warm terracotta as the only hue, lime kept exclusively for the CTA (brand rule).
+   Reference: the sibling Corewise department sheets (paper + figure numbers + hanging captions), inverted;
+   plus repertory cinema programme sheets (mono frame numbers, hairline rules, hanging credits).
+   LAYOUT PRIMITIVE, repeated everywhere: the film plate. An image in a frame, a mono frame number burned into
+   its corner, a caption hanging under a terracotta hairline.
+   ONE MEMORABLE THING: the "becoming" strip. Five separated prints slide, straighten, lose their white mats and
+   regain their colour until they are one continuous frame of the hall. Scroll drives it.
+   MOTION PERSONALITY: mathematical (expo-out, no bounce, out faster than in).
+   Type: Rubik (Hebrew body + display by weight) / IBM Plex Mono (latin chips, frame numbers). */
+
+:root {
+  color-scheme: dark;
+
+  /* neutral ladder, lifted blacks, never #000 */
+  --bg: #14181c;
+  --bg-deep: #0f1216;
+  --surface: #1c2126;
+  --surface-high: #252b31;
+  --line: rgba(244, 242, 236, .14);
+  --line-soft: rgba(244, 242, 236, .08);
+
+  --text: #f4f2ec;          /* 15.2:1 on --bg */
+  --text-2: #c3c0b7;        /* 9.4:1  */
+  --text-3: #8d8a83;        /* 4.9:1  */
+
+  /* one hue: terracotta. Deep for fills and rules, lit for type on dark. */
+  --accent: #B4530A;        /* 3.5:1 on --bg, used as a surface / rule / fill only */
+  --accent-lit: #E8834A;    /* 6.6:1 on --bg, safe for small type */
+  --accent-dim: rgba(180, 83, 10, .18);
+
+  /* lime is reserved for the CTA and nothing else */
+  --cta: #C6F24E;
+  --cta-on: #14181c;
+
+  --font-he: 'Rubik', 'Heebo', 'Noto Sans Hebrew', sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+
+  --step--1: clamp(.85rem, .82rem + .15vw, .95rem);
+  --step-0: clamp(1.0625rem, 1rem + .25vw, 1.1875rem);
+  --step-1: clamp(1.25rem, 1.15rem + .45vw, 1.45rem);
+  --step-2: clamp(1.6rem, 1.4rem + .9vw, 2.1rem);
+  --step-3: clamp(2rem, 1.6rem + 1.7vw, 3rem);
+  --step-4: clamp(2.6rem, 1.7rem + 4.1vw, 5.1rem);
+
+  --space-1: .25rem; --space-2: .5rem; --space-3: .75rem; --space-4: 1rem;
+  --space-6: 1.5rem; --space-8: 2rem; --space-12: 3rem; --space-16: 4rem; --space-24: 6rem;
+  --gutter: clamp(1.1rem, 4vw, 3rem);
+  --section: clamp(3.5rem, 8vw, 7rem);
+  --radius-sm: 3px; --radius-md: 6px; --radius-pill: 999px;
+
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+  --dur-press: 140ms; --dur-fast: 180ms; --dur-base: 240ms; --dur-slow: 380ms; --dur-settle: 700ms;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; scroll-padding-block-start: 80px; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-he);
+  font-size: var(--step-0);
+  line-height: 1.75;
+  letter-spacing: 0;
+  word-spacing: .05em;
+  text-align: start;
+  overflow-x: hidden;
+}
+/* projector haze: one warm pool of light at the top of the page, lighting and not decoration */
+body::before {
+  content: ""; position: fixed; inset-block-start: -30vh; inset-inline: -10vw;
+  height: 90vh; pointer-events: none; z-index: 0;
+  background: radial-gradient(60% 55% at 50% 40%, rgba(180, 83, 10, .20), transparent 70%);
+}
+body > * { position: relative; z-index: 1; }
+
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; }
+h1, h2, h3, p, ul, ol, figure { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+h1, h2, h3 { font-weight: 600; line-height: 1.25; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--cta); outline-offset: 3px; }
+.mono { font-family: var(--font-mono); font-size: var(--step--1); letter-spacing: 0; }
+[dir="ltr"] { unicode-bidi: isolate; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+.wrap { width: min(1240px, 100% - 2 * var(--gutter)); margin-inline: auto; }
+
+/* ---------- top bar ---------- */
+.top {
+  position: sticky; top: 0; z-index: 20;
+  background: rgba(20, 24, 28, .82);
+  backdrop-filter: blur(10px);
+  border-block-end: 1px solid var(--line-soft);
+}
+.top .wrap { display: flex; align-items: center; gap: var(--space-4); min-height: 60px; }
+.brand { display: flex; align-items: baseline; gap: var(--space-2); text-decoration: none; white-space: nowrap; flex-shrink: 0; }
+.brand .word { font-family: var(--font-mono); font-size: 1.05rem; font-weight: 500; }
+.brand .sub { font-family: var(--font-mono); font-size: .8rem; color: var(--accent-lit); }
+.top-nav { margin-inline-start: auto; display: flex; align-items: center; gap: var(--space-6); }
+.top .back { color: var(--text-2); text-decoration: none; font-size: var(--step--1); padding: var(--space-2) 0; white-space: nowrap; }
+.top .back:hover { color: var(--text); }
+
+/* language switch, a quiet mono text button in the site's own accent */
+.lang {
+  position: relative;
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 40px; min-width: 44px; padding-inline: var(--space-3);
+  margin: 0; border: 1px solid var(--line); border-radius: var(--radius-pill);
+  background: var(--surface); color: var(--text-2);
+  font-family: var(--font-mono); font-size: var(--step--1); font-weight: 500; line-height: 1;
+  white-space: nowrap; cursor: pointer;
+  transition: color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), background-color var(--dur-fast) var(--ease-out);
+}
+.lang::after { content: ""; position: absolute; inset-inline: 0; top: 50%; translate: 0 -50%; height: 44px; }
+.lang:hover { color: var(--text); border-color: var(--accent-lit); background: var(--accent-dim); }
+
+/* ---------- WhatsApp CTA, the only lime on the page ---------- */
+.wa {
+  display: inline-flex; align-items: center; gap: var(--space-2);
+  background: var(--cta); color: var(--cta-on);
+  text-decoration: none; font-weight: 600;
+  border-radius: var(--radius-pill);
+  transition: transform var(--dur-press) var(--ease-out), filter var(--dur-fast) var(--ease-out);
+}
+.wa:hover { filter: brightness(1.08); }
+.wa:active { transform: translateY(1px); }
+.wa-small { padding: var(--space-2) var(--space-4); font-size: var(--step--1); min-height: 40px; white-space: nowrap; }
+.wa-big { padding: var(--space-3) var(--space-6); font-size: var(--step-0); min-height: 52px; }
+.wa .arrow { display: inline-block; font-family: var(--font-mono); transition: transform var(--dur-fast) var(--ease-out); }
+.wa-big:hover .arrow { transform: translateX(-4px); }
+:root[dir="ltr"] .wa-big:hover .arrow { transform: translateX(4px); }
+
+/* the bar is tight on a phone: the back link lives in the footer too */
+@media (max-width: 620px) {
+  .top .wrap, .top-nav { gap: var(--space-2); }
+  .top .back { display: none; }
+  .wa-small { padding-inline: var(--space-3); font-size: .84rem; }
+  .lang { min-width: 40px; padding-inline: var(--space-2); font-size: .8rem; }
+}
+@media (max-width: 359px) { .brand .sub { display: none; } }
+
+/* ---------- shared: the film plate ---------- */
+.plate { min-width: 0; }
+.frame {
+  position: relative;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--bg-deep);
+  box-shadow: 0 30px 60px -30px rgba(0, 0, 0, .7), 0 2px 6px rgba(0, 0, 0, .4);
+}
+.frame img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
+.hero-plate .frame img { aspect-ratio: 16 / 9; }
+/* once the hero is two columns the plate has to answer a four line headline, so it stands taller */
+@media (min-width: 980px) { .hero-plate .frame img { aspect-ratio: 3 / 2; } }
+.fnum {
+  position: absolute; inset-block-end: var(--space-3); inset-inline-end: var(--space-3);
+  color: var(--text); background: rgba(20, 24, 28, .72);
+  padding: 2px var(--space-2); border-radius: var(--radius-sm);
+  border-inline-start: 2px solid var(--accent-lit);
+}
+figcaption {
+  margin-block-start: var(--space-3);
+  color: var(--text-3); font-size: var(--step--1); line-height: 1.6;
+  padding-inline-start: var(--space-3);
+  border-inline-start: 2px solid var(--accent);
+}
+figcaption .mono { color: var(--text-2); }
+
+/* ---------- shared: band heading, kicker ---------- */
+.band-head { max-width: 62ch; margin-block-end: var(--space-12); }
+.band-head h2 { font-size: var(--step-3); font-weight: 700; }
+.band-head p { margin-block-start: var(--space-3); color: var(--text-2); }
+.kicker {
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-3);
+  color: var(--accent-lit); font-weight: 500;
+  margin-block-end: var(--space-3);
+}
+.kicker .mono { color: var(--text-3); }
+.tag {
+  font-family: var(--font-mono); font-size: .74rem; line-height: 1.7;
+  padding: 1px var(--space-2); border-radius: var(--radius-sm);
+  background: var(--accent-dim); color: var(--accent-lit);
+}
+
+/* ---------- hero ---------- */
+.hero { padding-block: clamp(2.5rem, 7vw, 5.5rem) var(--section); }
+.hero-grid { display: grid; gap: var(--space-12); align-items: center; }
+@media (min-width: 980px) {
+  .hero-grid { grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); gap: clamp(2rem, 5vw, 4.5rem); }
+}
+.eyebrow {
+  display: inline-flex; align-items: center; gap: var(--space-3);
+  font-size: var(--step--1); color: var(--text-2);
+  padding-block: var(--space-1); padding-inline-end: var(--space-3);
+  margin-block-end: var(--space-6);
+  border-inline-start: 2px solid var(--accent);
+  padding-inline-start: var(--space-3);
+}
+.eyebrow .mono { color: var(--accent-lit); }
+
+h1 { font-size: var(--step-4); font-weight: 700; line-height: 1.1; max-width: 15ch; }
+/* English runs longer per idea but narrower per character, so it needs more measure, not less */
+:root[dir="ltr"] h1 { max-width: 19ch; }
+h1 .line { display: block; }
+h1 .sm { font-size: .52em; font-weight: 500; color: var(--text-2); margin-block-start: var(--space-3); }
+.hl {
+  background: none; color: var(--text);
+  background-image: linear-gradient(var(--accent), var(--accent));
+  background-repeat: no-repeat;
+  background-size: 100% .2em;
+  background-position: 0 95%;
+  padding-inline: .06em;
+  box-decoration-break: clone; -webkit-box-decoration-break: clone;
+}
+.lede { margin-block-start: var(--space-6); font-size: var(--step-1); line-height: 1.6; color: var(--text-2); max-width: 34ch; }
+.cta-row { margin-block-start: var(--space-8); display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4) var(--space-6); }
+.cta-note { color: var(--text-3); font-size: var(--step--1); }
+
+.jump {
+  margin-block-start: var(--space-8); padding-block-start: var(--space-4);
+  border-block-start: 1px solid var(--line-soft);
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-4);
+}
+.jump-label { color: var(--text-3); }
+/* on a phone the three chips want one clean row of their own, under the question */
+@media (max-width: 560px) { .jump-label { flex-basis: 100%; } }
+.jump a {
+  text-decoration: none; font-size: var(--step--1); font-weight: 500;
+  padding: var(--space-2) var(--space-3); border-radius: var(--radius-pill);
+  background: var(--surface); color: var(--text);
+  transition: background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+.jump a:hover { background: var(--accent); color: var(--text); }
+
+/* ---------- offers ---------- */
+.offers { padding-block: var(--section); background: var(--bg-deep); border-block: 1px solid var(--line-soft); }
+.offer { padding-block: clamp(2rem, 5vw, 3.5rem); }
+.offer + .offer { border-block-start: 1px solid var(--line-soft); }
+.offer-grid { display: grid; gap: var(--space-8); align-items: center; }
+@media (min-width: 900px) {
+  .offer-grid { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(2rem, 5vw, 4rem); }
+  /* the plate leads on odd blocks and follows on even ones, which reads as a reel of alternating frames.
+     Order, not float, so it survives the RTL / LTR flip untouched. */
+  .offer-flip .plate { order: 2; }
+}
+.offer-copy h3 { font-size: var(--step-2); font-weight: 700; max-width: 22ch; }
+.offer-copy > p { margin-block-start: var(--space-4); color: var(--text-2); max-width: 46ch; }
+.gives {
+  margin-block-start: var(--space-6) !important;
+  padding: var(--space-3) var(--space-4);
+  background: var(--surface);
+  border-inline-start: 3px solid var(--accent);
+  border-radius: var(--radius-sm);
+  color: var(--text) !important;
+  font-weight: 500;
+}
+.gives-label { display: block; color: var(--accent-lit); margin-block-end: 2px; }
+.specs { margin-block-start: var(--space-6); display: grid; gap: var(--space-2); }
+.specs li {
+  position: relative; color: var(--text-2); font-size: var(--step--1);
+  padding-inline-start: var(--space-6);
+}
+.specs li::before {
+  content: ""; position: absolute; inset-inline-start: 0; inset-block-start: .72em;
+  width: 14px; height: 2px; background: var(--accent-lit);
+}
+
+/* ---------- commercial band ---------- */
+.commercial { padding-block: var(--section); }
+.com-grid { display: grid; gap: var(--space-8); align-items: center; }
+@media (min-width: 900px) { .com-grid { grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: clamp(2rem, 5vw, 4rem); } }
+.com-copy h2 { font-size: var(--step-2); font-weight: 700; }
+.com-copy > p { margin-block-start: var(--space-4); color: var(--text-2); max-width: 46ch; }
+.com-list { margin-block-start: var(--space-6); display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-3); }
+.com-list li {
+  font-size: var(--step--1); color: var(--text-2);
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--line); border-radius: var(--radius-pill);
+}
+
+/* ---------- signature strip: photos becoming one scene ---------- */
+.becoming { padding-block: var(--section); background: var(--bg-deep); border-block: 1px solid var(--line-soft); }
+.strip-wrap { margin-block-start: var(--space-8); }
+.strip { --gap: calc((1 - var(--p)) * clamp(6px, 2.2vw, 26px)); }
+.frames {
+  display: grid; grid-template-columns: repeat(5, 1fr);
+  gap: var(--gap);
+  padding-inline: calc((1 - var(--p)) * var(--gutter));
+  /* PINNED: these five cells are crops of one photograph, left to right. A picture does not
+     mirror when the page turns around, so the grid keeps its own direction in both languages. */
+  direction: ltr;
+}
+.fr {
+  /* the print itself: white mat and a tilt while separate, both gone once merged */
+  --tilt: calc((var(--i) - 2) * (1 - var(--p)) * .9deg);
+  --lift: calc((var(--i) - 2) * (var(--i) - 2) * (1 - var(--p)) * -6px);
+  aspect-ratio: 5 / 9;
+  padding: calc((1 - var(--p)) * 6px);
+  background: rgba(244, 242, 236, calc((1 - var(--p)) * .92));
+  border-radius: calc((1 - var(--p)) * 3px);
+  box-shadow: 0 calc((1 - var(--p)) * 14px) calc((1 - var(--p)) * 26px) rgba(0, 0, 0, calc((1 - var(--p)) * .55));
+  transform: translateY(var(--lift)) rotate(var(--tilt));
+  transition: transform var(--dur-base) var(--ease-out);
+}
+@media (min-width: 700px) { .fr { aspect-ratio: 3 / 4; } }
+.fr .im {
+  display: block; width: 100%; height: 100%;
+  background-image: url("img/strip.webp");
+  background-size: 500% auto;
+  background-position-x: calc(var(--i) * 25%);
+  background-position-y: center;
+  /* separate prints read as old paper, the merged frame is a graded picture */
+  filter: sepia(calc((1 - var(--p)) * .55)) saturate(calc(.45 + var(--p) * .55)) brightness(calc(.86 + var(--p) * .14));
+}
+/* the assembled panorama earns the plate treatment once it is one picture */
+.strip .frames { border-radius: calc(var(--p) * 6px); overflow: hidden; }
+
+.strip-legend {
+  margin-block-start: var(--space-6);
+  display: flex; align-items: center; gap: var(--space-3);
+}
+.leg { white-space: nowrap; transition: color var(--dur-base) var(--ease-out), opacity var(--dur-base) var(--ease-out); }
+.leg-a { color: var(--text-3); opacity: calc(1 - var(--p, 0) * .65); }
+.leg-b { color: var(--accent-lit); opacity: calc(.35 + var(--p, 0) * .65); }
+.strip-legend .leg-line { flex: 1 1 12px; min-width: 12px; height: 1px; background: var(--line); }
+/* the English pair of labels is ~30% wider than the Hebrew one and would run off a 390px screen */
+@media (max-width: 620px) { .strip-legend { gap: var(--space-2); } .leg { font-size: .72rem; } }
+.strip-cap {
+  margin-block-start: var(--space-4);
+  color: var(--text-3); font-size: var(--step--1); line-height: 1.6;
+  max-width: 62ch;
+  padding-inline-start: var(--space-3);
+  border-inline-start: 2px solid var(--accent);
+}
+.strip-cap .mono { color: var(--text-2); }
+
+/* ---------- proof ---------- */
+.proof { padding-block: var(--section); }
+.hollow { display: grid; gap: var(--space-8); align-items: center; }
+@media (min-width: 900px) { .hollow { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(2rem, 5vw, 4rem); } }
+.hollow-copy h3 { font-size: var(--step-2); font-weight: 700; max-width: 20ch; }
+.hollow-copy > p { margin-block-start: var(--space-4); color: var(--text-2); max-width: 44ch; }
+.ext {
+  display: inline-block; margin-block-start: var(--space-4);
+  color: var(--accent-lit); font-weight: 500; text-decoration: none;
+  border-block-end: 1px solid var(--accent);
+  padding-block-end: 2px;
+}
+.ext:hover { color: var(--text); }
+
+/* the player: a facade until the visitor presses play, so nothing loads from YouTube on arrival */
+.player { min-width: 0; }
+.screen {
+  position: relative; aspect-ratio: 16 / 9;
+  background: radial-gradient(120% 100% at 50% 0%, var(--surface-high), var(--bg-deep));
+  border-radius: var(--radius-md); overflow: hidden;
+  box-shadow: 0 30px 60px -30px rgba(0, 0, 0, .8), 0 2px 6px rgba(0, 0, 0, .5);
+}
+.screen iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+/* a real frame from the episode, dimmed so the play control stays the brightest thing on it */
+.poster { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(.62) saturate(.85); }
+.play::before {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(15, 18, 22, .85), rgba(15, 18, 22, .1) 55%);
+}
+.play .tri, .play .play-txt { position: relative; }
+.play {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--space-4);
+  background: none; border: 0; cursor: pointer;
+}
+.play .tri {
+  width: 64px; height: 64px; border-radius: 50%;
+  background: var(--accent); position: relative;
+  transition: transform var(--dur-base) var(--ease-out), background-color var(--dur-fast) var(--ease-out);
+}
+/* PINNED: a transport control is not text. Play points right in every language, so this glyph
+   uses physical sides on purpose and must not be converted to logical ones. */
+.play .tri::after {
+  content: ""; position: absolute; top: 50%; left: 50%; translate: -42% -50%;
+  border-block: 12px solid transparent;
+  border-left: 19px solid var(--text);
+  border-right: 0;
+}
+.play:hover .tri { transform: scale(1.06); background: var(--accent-lit); }
+.play-txt { font-size: var(--step--1); color: var(--text-2); display: flex; align-items: center; gap: var(--space-2); }
+.play-txt .mono { color: var(--accent-lit); }
+
+.eps { margin-block-start: var(--space-4); display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.ep {
+  min-width: 44px; min-height: 44px; padding-inline: var(--space-3);
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background-color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+}
+.ep:hover { border-color: var(--accent-lit); }
+.ep.is-on { background: var(--accent); border-color: var(--accent); }
+.ep.is-on .mono { color: var(--text); }
+.player-note { margin-block-start: var(--space-3); color: var(--text-3); font-size: var(--step--1); }
+
+.cards { margin-block-start: var(--space-16); display: grid; gap: var(--space-8); }
+@media (min-width: 800px) { .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-12); } }
+.card h3 { margin-block-start: var(--space-4); font-size: var(--step-1); font-weight: 700; }
+.card p { margin-block-start: var(--space-2); color: var(--text-2); max-width: 46ch; }
+.card .frame img { aspect-ratio: 16 / 10; }
+
+/* ---------- how we work ---------- */
+.how { padding-block: var(--section); background: var(--bg-deep); border-block: 1px solid var(--line-soft); }
+.how h2 { font-size: var(--step-3); font-weight: 700; }
+.steps { margin-block-start: var(--space-12); display: grid; gap: var(--space-8); }
+@media (min-width: 820px) { .steps { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-12); } }
+.step { padding-block-start: var(--space-4); border-block-start: 2px solid var(--accent); }
+.step .snum { display: block; color: var(--text-3); margin-block-end: var(--space-2); }
+.step h3 { font-size: var(--step-1); font-weight: 700; }
+.step p { margin-block-start: var(--space-2); color: var(--text-2); }
+
+/* ---------- close ---------- */
+.close { padding-block: var(--section); }
+.close-grid { display: grid; gap: var(--space-6); justify-items: start; max-width: 60ch; }
+.close h2 { font-size: var(--step-3); font-weight: 700; }
+.close p { color: var(--text-2); }
+
+/* ---------- footer ---------- */
+.foot { border-block-start: 1px solid var(--line-soft); padding-block: var(--space-8) var(--space-12); font-size: var(--step--1); color: var(--text-2); }
+.foot .wrap { display: grid; gap: var(--space-4); }
+.made { font-weight: 500; color: var(--text); }
+.sibs { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-4); align-items: center; }
+.sibs .mono { color: var(--text-3); }
+.sibs a { text-decoration: none; padding-block: var(--space-1); }
+.sibs a:hover { text-decoration: underline; text-underline-offset: .2em; color: var(--accent-lit); }
+.copy { color: var(--text-3); }
+
+/* ---------- orchestrated page load ---------- */
+.stagger > * {
+  opacity: 0; transform: translateY(8px);
+  animation: rise var(--dur-slow) var(--ease-out) forwards;
+  animation-delay: calc(var(--i) * 70ms);
+}
+@keyframes rise { to { opacity: 1; transform: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

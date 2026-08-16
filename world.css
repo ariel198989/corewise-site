@@ -1211,3 +1211,48 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
   .cw-card3__site { top: 9px; font-size: .6rem; padding: 4px 7px; }
   .cw-card3__tag { font-size: .8rem; padding: 18px 11px 10px; }
 }
+
+/* a short desktop frame: the carousel bar and the pass button share one row
+   so the rail above them can keep a usable height */
+.cw.is-short .cw-tour { flex-direction: row; gap: 10px; bottom: calc(max(20px, env(safe-area-inset-bottom)) + 16px); }
+.cw.is-short .cw-hint { display: none; }
+
+/* ---------- who we are ----------
+   The card: two portraits side by side where a film would be. The wall: the
+   same two portraits large, and each founder's full profile as a tile with
+   room to actually read it. */
+.cw-card3__pair { position: absolute; inset: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 3px; background: #14181c; }
+.cw-card3__pair img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 18%; display: block; }
+.cw-card3.is-team .cw-card3__chip { color: #fff; background: rgba(12,15,18,.72); border: 1px solid rgba(255,255,255,.22); }
+
+.cw-team__pair {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 10px; border-radius: 14px; overflow: hidden;
+  aspect-ratio: 16 / 10; background: #0c0f12;
+}
+.cw-team__pair img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 15%; display: block; }
+.cw-axis.is-team .cw-axis__feats { grid-template-columns: 1fr 1fr; gap: 14px; }
+.cw-person {
+  display: grid; grid-template-columns: 112px 1fr; gap: 16px; align-items: start;
+  border: 1px solid rgba(255,255,255,.12); background: rgba(12,15,18,.55); border-radius: 16px; padding: 16px; color: #fff;
+}
+.cw-person img { width: 112px; height: 112px; object-fit: cover; object-position: 50% 15%; border-radius: 12px; display: block; }
+.cw-person h3 { margin: 0 0 3px; font: 800 1.15rem/1.2 Rubik, system-ui, sans-serif; }
+.cw-person__role { display: block; font: 500 .74rem/1 'IBM Plex Mono', monospace; color: var(--acc, #C6F24E); letter-spacing: .04em; margin-bottom: 10px; }
+.cw-person p { margin: 0 0 10px; font: 400 .92rem/1.65 Rubik, system-ui, sans-serif; color: rgba(255,255,255,.86); }
+.cw-person .cw-tech { margin: 0 0 10px; }
+.cw-person__wa {
+  display: inline-block; font: 600 .8rem/1 Rubik, system-ui, sans-serif; text-decoration: none;
+  color: #7CE8A6; border: 1px solid rgba(37,211,102,.55); border-radius: 100px; padding: 9px 14px;
+}
+.cw-person__wa:hover { background: rgba(37,211,102,.12); }
+@media (max-width: 860px) {
+  .cw-axis.is-team .cw-axis__feats { grid-template-columns: 1fr; }
+  .cw-person { grid-template-columns: 84px 1fr; gap: 12px; padding: 12px; }
+  .cw-person img { width: 84px; height: 84px; }
+  .cw-person p { font-size: .88rem; }
+}
+
+/* inside the wall the carousel and the pass button are somebody else's
+   controls: they stay behind the scrim, not on top of the profiles */
+.axis-open:not(.tour-on) .cw-tour { opacity: 0; pointer-events: none; }   /* the pass keeps its stop button */
+.cw-person .cw-tech span { border-color: rgba(255,255,255,.2); color: rgba(255,255,255,.85); background: rgba(255,255,255,.06); }

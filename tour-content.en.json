@@ -260,6 +260,41 @@
           "text": "The store before, a tired owner, dumb cameras; after Corewise, smart cameras, alerts on the phone, profit going up. Produced with a technique of our own."
         },
         {
+          "kind": "team",
+          "id": "team",
+          "yaw": 180,
+          "pitch": 20,
+          "title": "Who we are",
+          "sub": "Two founders who do the work themselves",
+          "abstract": "Ariel and Lidor. One builds, one leads, both are inside every project. No outsourcing, no layers. Everything you see on this site, including the site itself, was built by their hands.",
+          "room": "team",
+          "people": [
+            {
+              "name": "Ariel Ohayon",
+              "role": "Founder and lead developer",
+              "img": "works/ariel.webp",
+              "text": "Runs the Claude Israel community, 18K members. Speaks on the AI shift at conferences and inside organisations, and builds AI products. BA in economics and business administration. Everything that works in the field, he brings to your project.",
+              "tags": [
+                "Claude Israel",
+                "Engineering",
+                "Speaking"
+              ]
+            },
+            {
+              "name": "Lidor Dahan",
+              "role": "CEO and founder",
+              "img": "works/lidor.webp",
+              "text": "PhD in electrical and computer engineering. About six years developing AI for autonomous vehicles, and founded ventures in computer vision and smart cities. From the problem, to a prototype, to a product that runs.",
+              "tags": [
+                "PhD",
+                "Computer vision",
+                "LiDAR"
+              ],
+              "wa": "Hi Lidor, I saw you on the site. I would like to talk."
+            }
+          ]
+        },
+        {
           "yaw": -72,
           "pitch": 26,
           "title": "The embedding promise",

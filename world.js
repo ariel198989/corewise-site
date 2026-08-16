@@ -45,6 +45,7 @@
       axisWa: t => 'היי לידור, ראיתי את ' + t + ' בסיור באתר. אשמח לדבר.',
       cardCta: 'השאירו פרטים ונשלח לכם לינק',
       carPrev: 'המסך הקודם', carNext: 'המסך הבא', axisSiteShort: 'אתר ייעודי', axisTapSite: 'הקישו · יש אתר ייעודי',
+      teamRoom: 'לחדר הצוות ↓', teamWa: 'היי לידור, ראיתי אתכם באתר. אשמח לדבר.',
       assistOpen: 'שאלו את קורוויז', assistTitle: 'עוזר קורוויז',
       assistGreet: 'שאלו אותי כל דבר על קורוויז, על חמשת התחומים או על מה שאנחנו עושים.',
       assistPlaceholder: 'כתבו הודעה', assistSend: 'שליחה', assistClose: 'סגירה',
@@ -78,6 +79,7 @@
       axisWa: t => 'Hi Lidor, I saw ' + t + ' on the site tour. I would like to talk.',
       cardCta: 'Leave your details and we will send the link',
       carPrev: 'Previous screen', carNext: 'Next screen', axisSiteShort: 'own site', axisTapSite: 'tap · has its own site',
+      teamRoom: 'Into the team room ↓', teamWa: 'Hi Lidor, I saw you on the site. I would like to talk.',
       assistOpen: 'Ask Corewise', assistTitle: 'Corewise assistant',
       assistGreet: 'Ask me anything about Corewise, the five business lines, or what we do.',
       assistPlaceholder: 'Type a message', assistSend: 'Send', assistClose: 'Close',
@@ -793,7 +795,7 @@
          on the wall — bezel, chip, glass — that shows its film only while it
          is the one you are facing (the others rest on a poster), so five
          screens cost the phone one video. Click: the wall opens. */
-      if (kind === 'axis' || (kind === 'tv' && d.id === 'lobby' && h.video)) {
+      if (kind === 'axis' || kind === 'team' || (kind === 'tv' && d.id === 'lobby' && h.video)) {
         railAdd(h, kind === 'tv');
         tvYaw = 0;                           /* screens want a still camera */
         return;
@@ -1022,7 +1024,12 @@
     const b = document.createElement('button');
     b.className = 'cw-card3' + (isFilm ? ' is-film' : '');
     b.type = 'button';
-    const media = h.video
+    const isTeam = h.kind === 'team';
+    if (isTeam) b.classList.add('is-team');
+    const media = isTeam
+      ? '<span class="cw-card3__pair">' + (h.people || []).map(pp =>
+          '<img src="' + pp.img + '" alt="' + esc(pp.name) + '" decoding="async">').join('') + '</span>'
+      : h.video
       ? '<video src="' + h.video + '" poster="' + (h.poster || '') + '" preload="' + (isFilm ? 'metadata' : 'none') + '" muted loop playsinline></video>'
       : '<img src="' + h.still + '" alt="" decoding="async" class="cw-kb">';
     b.innerHTML =
@@ -1034,6 +1041,7 @@
     const i = axisScreens.length;
     b.onclick = () => {
       if (i !== railAt) { railTo(i, 560); return; }
+      if (isTeam) return openTeam(h);
       openAxis(isFilm ? Object.assign({}, h, { abstract: h.text, features: [] }) : h);
     };
     el.rail.appendChild(b);
@@ -1042,11 +1050,20 @@
     paintRail();
   }
   function railLayout() {
-    const mob = innerWidth <= 860;
-    railW = mob ? Math.round(innerWidth * 0.76) : Math.round(Math.max(300, Math.min(innerWidth * 0.34, 520)));
+    const W = innerWidth, H = innerHeight, mob = W <= 860, short = !mob && H < 760;
+    /* The wordmark owns the upper half of the frame. The rail may take what
+       is left below it and above the controls, and never more: on a wide
+       short monitor a width-only rule climbed straight over the name. */
+    const reserve = mob ? 232 : (short ? 104 : 178);
+    const maxH = H - reserve - 30 - H * 0.5;
+    let w = mob ? W * 0.76 : Math.max(300, Math.min(W * 0.34, 520));
+    w = Math.min(w, Math.max(220, maxH * 16 / 9));
+    railW = Math.round(w);
     railGap = Math.round(railW * (mob ? 0.86 : 0.74));
     el.rail.style.setProperty('--cw', railW + 'px');
     el.rail.style.height = Math.round(railW * 9 / 16 + 30) + 'px';
+    el.rail.style.bottom = 'calc(max(20px, env(safe-area-inset-bottom)) + ' + reserve + 'px)';
+    el.root.classList.toggle('is-short', short);
   }
   addEventListener('resize', () => { if (axisScreens.length) { railLayout(); paintRail(); } });
   function paintRail() {
@@ -1202,8 +1219,45 @@
      dedicated site, Lidor) at the bottom. "חזרה ללובי" closes it. The film
      is the same element the wall screen was playing, so there is no second
      download and no restart — the tag line simply gets sound. */
+  /* The people wall. Same wall as the screens, but no film: two portraits
+     where the media goes, and the founders' full profiles as the tiles. */
+  function openTeam(h) {
+    axisOpen = h;
+    const m = $('.cw-axis__media', el.axis), bb = $('.cw-axis__bubble', el.axis), ff = $('.cw-axis__feats', el.axis);
+    el.axis.style.setProperty('--acc', ACCENT.lobby);
+    el.axis.classList.add('is-team');
+    m.innerHTML = '<span class="cw-team__pair">' + (h.people || []).map(pp =>
+      '<img src="' + pp.img + '" alt="' + esc(pp.name) + '" decoding="async">').join('') + '</span>';
+    bb.innerHTML =
+      '<span class="cw-axis__eyebrow">' + esc(h.sub || '') + '</span>' +
+      '<h2>' + esc(h.title) + '</h2>' +
+      '<p>' + esc(h.abstract || '') + '</p>' +
+      '<div class="cw-axis__go">' +
+        (h.room && ROOMS[h.room] ? '<button class="cw-axis__room">' + T('teamRoom') + '</button>' : '') +
+        '<a class="cw-axis__wa" href="' + WA + '?text=' + encodeURIComponent(T('teamWa')) + '" target="_blank" rel="noopener">' + T('waLidor') + '</a>' +
+      '</div>';
+    const rb = bb.querySelector('.cw-axis__room');
+    if (rb) rb.onclick = () => { closeAxis(); go(h.room, false, 180); };
+    ff.innerHTML = (h.people || []).map(pp =>
+      '<article class="cw-person">' +
+        '<img src="' + pp.img + '" alt="" decoding="async">' +
+        '<div class="cw-person__b">' +
+          '<h3>' + esc(pp.name) + '</h3>' +
+          '<span class="cw-person__role">' + esc(pp.role || '') + '</span>' +
+          '<p>' + esc(pp.text || '') + '</p>' +
+          ((pp.tags || []).length ? '<div class="cw-tech">' + pp.tags.map(t => '<span>' + esc(t) + '</span>').join('') + '</div>' : '') +
+          (pp.wa ? '<a class="cw-person__wa" href="' + WA + '?text=' + encodeURIComponent(pp.wa) + '" target="_blank" rel="noopener">' + T('waLidor') + '</a>' : '') +
+        '</div>' +
+      '</article>').join('');
+    el.axis.hidden = false;
+    el.root.classList.add('axis-open');
+    el.home.hidden = false;
+    duck(true);
+  }
+
   let axisOpen = null;
   function openAxis(h) {
+    el.axis.classList.remove('is-team');
     axisOpen = h;
     const m = $('.cw-axis__media', el.axis), bb = $('.cw-axis__bubble', el.axis), ff = $('.cw-axis__feats', el.axis);
     el.axis.style.setProperty('--acc', ACCENT[h.room] || ACCENT.lobby);
