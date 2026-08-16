@@ -1304,20 +1304,18 @@
     const rb = bb.querySelector('.cw-axis__room');
     if (rb) rb.onclick = () => { closeAxis(); go(h.room, false, h.yaw); };
     ff.innerHTML = (h.features || []).map((f, i) =>
-      '<button class="cw-axis__feat" data-i="' + i + '">' +
-        (f.img ? '<img src="' + f.img + '" alt="" loading="lazy" decoding="async">' : '<span class="cw-axis__feat-mark">' + (i + 1) + '</span>') +
+      '<div class="cw-axis__feat">' +
+        /* every tile is numbered, image or not, so the row counts 1..n from
+           the left instead of starting with a blank where a thumbnail is */
+        '<span class="cw-axis__feat-mark' + (f.img ? ' has-img' : '') + '">' +
+          (f.img ? '<img src="' + f.img + '" alt="" loading="lazy" decoding="async">' : '') +
+          '<i>' + (i + 1) + '</i>' +
+        '</span>' +
         '<span class="cw-axis__feat-t"><b>' + esc(f.title) + '</b>' + (f.tag ? '<i>' + esc(f.tag) + '</i>' : '') + '</span>' +
         '<span class="cw-axis__feat-x">' + esc(f.text) +
           (f.link ? ' <a class="cw-axis__feat-go" href="' + f.link + '" target="_blank" rel="noopener">' + T('featOpen') + '</a>' : '') +
         '</span>' +
-      '</button>').join('');
-    /* a link inside the tile must open the link, not toggle the tile */
-    ff.querySelectorAll('.cw-axis__feat-go').forEach(a => a.addEventListener('click', e => e.stopPropagation()));
-    ff.querySelectorAll('.cw-axis__feat').forEach(b => b.onclick = () => {
-      const on = b.classList.contains('is-open');
-      ff.querySelectorAll('.cw-axis__feat').forEach(x => x.classList.remove('is-open'));
-      if (!on) b.classList.add('is-open');
-    });
+      '</div>').join('');
     el.axis.hidden = false;
     el.home.hidden = false;
     el.root.classList.add('axis-open');

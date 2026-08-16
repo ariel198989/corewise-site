@@ -191,10 +191,10 @@
           "yaw": 160,
           "pitch": 28,
           "title": "AR",
-          "sub": "Virtual supermarket · 360 worlds · information layers",
+          "sub": "Virtual supermarket · planogram · 360 worlds",
           "still": "axis/ar.webp",
           "room": "ar",
-          "abstract": "AR here is not a promise, it is a shop you can already walk through. A complete virtual supermarket: 13 departments, a real catalogue, a cart that travels with you, search that brings the product to you, and an assistant that builds a whole basket for an event from one sentence. The site you are standing in is the next step, and information layers over real spaces are on the way.",
+          "abstract": "AR here is not a promise, it is a shop you can already walk through. A complete virtual supermarket with 13 departments and a real catalogue, and on top of it a living planogram: shelf layout as data you can move and see immediately from the customer’s eyes. The same can be done for your store, so you see it in a completely different way before anyone touches the branch.",
           "features": [
             {
               "title": "The virtual supermarket",
@@ -202,6 +202,16 @@
               "img": "works/app-arstore.webp",
               "tag": "live",
               "link": "https://ar-store-eta.vercel.app/"
+            },
+            {
+              "title": "A living planogram",
+              "text": "Shelf layout as data, not a drawing. Move a product, change facings, test shelf height, and see it immediately from the customer’s eyes.",
+              "tag": "for chains"
+            },
+            {
+              "title": "See your own store differently",
+              "text": "We build your store in space: walk it before a refit, check signage and a campaign before anything is printed, and run scenarios without touching the branch.",
+              "tag": "for business"
             },
             {
               "title": "360 worlds",

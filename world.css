@@ -834,20 +834,39 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
 .cw-axis__go > *:hover { filter: brightness(1.1); }
 .cw-axis__made { display: block; font: 400 .72rem/1.4 Rubik, system-ui, sans-serif; color: rgba(255,255,255,.5); }
 /* features: a row of smaller screens under the film */
-.cw-axis__feats { grid-area: feats; display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 10px; }
+/* The row of features reads left to right so the numbers count the way
+   numbers count, while each tile keeps its own RTL text. And the tiles size
+   to their content: they used to be accordions on an equal-height grid, so
+   every unopened one was a tall empty box. */
+.cw-axis__feats {
+  grid-area: feats; display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 10px; direction: ltr; align-items: start;
+}
 .cw-axis__feat {
-  position: relative; text-align: start; cursor: pointer;
+  position: relative; text-align: start; cursor: default; direction: rtl;
   border: 1px solid rgba(255,255,255,.12); background: rgba(12,15,18,.55); border-radius: 12px; padding: 12px; color: #fff;
   display: grid; grid-template-columns: 44px 1fr; gap: 10px; align-items: start; transition: background .2s, border-color .2s;
 }
 .cw-axis__feat:hover { background: rgba(12,15,18,.85); border-color: rgba(255,255,255,.28); }
-.cw-axis__feat img { width: 44px; height: 44px; object-fit: cover; border-radius: 7px; border: 2px solid #14181c; }
-.cw-axis__feat-mark { width: 44px; height: 44px; border-radius: 7px; display: grid; place-items: center; font: 600 .95rem/1 'IBM Plex Mono', monospace; color: var(--acc, #26d07c); background: color-mix(in srgb, var(--acc, #26d07c) 12%, transparent); border: 1px solid color-mix(in srgb, var(--acc, #26d07c) 35%, transparent); }
+.cw-axis__feat-mark {
+  position: relative; width: 44px; height: 44px; border-radius: 7px; overflow: hidden;
+  display: grid; place-items: center;
+  background: color-mix(in srgb, var(--acc, #26d07c) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--acc, #26d07c) 35%, transparent);
+}
+.cw-axis__feat-mark img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.cw-axis__feat-mark i {
+  position: relative; z-index: 1; font: 600 .95rem/1 'IBM Plex Mono', monospace; font-style: normal;
+  color: var(--acc, #26d07c);
+}
+/* over a photograph the number needs its own ground to stay legible */
+.cw-axis__feat-mark.has-img i {
+  color: #fff; background: rgba(12,15,18,.72); border-radius: 5px; padding: 3px 5px;
+  box-shadow: 0 1px 6px rgba(0,0,0,.5);
+}
 .cw-axis__feat-t b { display: block; font: 600 .86rem/1.3 Rubik, system-ui, sans-serif; }
 .cw-axis__feat-t i { display: inline-block; margin-top: 4px; font: 500 .66rem/1 Rubik, system-ui, sans-serif; font-style: normal; color: #14181c; background: var(--cw-lime, #C6F24E); border-radius: 100px; padding: 3px 7px; }
-.cw-axis__feat-x { grid-column: 1 / -1; font: 400 .78rem/1.5 Rubik, system-ui, sans-serif; color: rgba(255,255,255,.8); max-height: 0; overflow: hidden; transition: max-height .3s ease, margin .3s; }
-.cw-axis__feat.is-open .cw-axis__feat-x { max-height: 140px; margin-top: 4px; }
-.cw-axis__feat.is-open { border-color: var(--acc, #26d07c); }
+.cw-axis__feat-x { grid-column: 1 / -1; margin-top: 6px; font: 400 .78rem/1.55 Rubik, system-ui, sans-serif; color: rgba(255,255,255,.8); }
 
 @media (max-width: 860px) {
   .cw-home { padding: 8px 11px; font-size: .74rem; }
@@ -1175,7 +1194,10 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
 /* the glass sheen and the bottom scrim that makes the caption legible over any frame */
 .cw-card3__glass::before {
   content: ""; position: absolute; inset: 0; pointer-events: none;
-  background: linear-gradient(180deg, rgba(0,0,0,.28) 0%, transparent 32%, transparent 52%, rgba(0,0,0,.78) 100%);
+  /* the scrim has to survive a bright frame: the supermarket's floor is
+     almost white, and a gradient that only went dark at the very bottom left
+     the caption as white text on white */
+  background: linear-gradient(180deg, rgba(0,0,0,.42) 0%, rgba(0,0,0,.06) 26%, rgba(0,0,0,.06) 44%, rgba(0,0,0,.62) 76%, rgba(0,0,0,.9) 100%);
 }
 .cw-card3__chip {
   position: absolute; top: 12px; right: 12px; z-index: 2; direction: ltr;
@@ -1187,11 +1209,12 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
 .cw-card3__site {
   position: absolute; top: 12px; left: 12px; z-index: 2;
   font: 500 .66rem/1 'IBM Plex Mono', monospace; letter-spacing: .04em; white-space: nowrap;
-  color: #fff; background: rgba(12,15,18,.62); border: 1px solid rgba(255,255,255,.22);
+  color: #fff; background: rgba(12,15,18,.82); border: 1px solid rgba(255,255,255,.28);
   border-radius: 100px; padding: 5px 9px;
 }
 .cw-card3__tag {
   position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; padding: 22px 14px 12px;
+  text-shadow: 0 1px 8px rgba(0,0,0,.75);
   font: 500 .86rem/1.4 Rubik, system-ui, sans-serif; color: #fff; text-align: start;
   white-space: normal; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
 }
@@ -1258,3 +1281,6 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
 .cw-person .cw-tech span { border-color: rgba(255,255,255,.2); color: rgba(255,255,255,.85); background: rgba(255,255,255,.06); }
 .cw-axis__feat-go { display: inline-block; margin-inline-start: 6px; color: var(--cw-lime); font-weight: 600; text-decoration: none; white-space: nowrap; }
 .cw-axis__feat-go:hover { text-decoration: underline; }
+
+/* English keeps its own reading order inside the tiles */
+:root[dir="ltr"] .cw-axis__feat { direction: ltr; }
