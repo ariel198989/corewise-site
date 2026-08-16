@@ -87,6 +87,19 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .top .back { margin-inline-start: auto; color: var(--ink-2); text-decoration: none; font-size: var(--step--1); padding: var(--space-2) 0; white-space: nowrap; }
 .top .back:hover { color: var(--ink); }
 
+/* language switch — the same quiet weight as the "back" link, never a flag */
+.lang {
+  flex: none; display: inline-flex; align-items: center; justify-content: center;
+  min-height: 44px; min-width: 44px; padding-inline: var(--space-3);
+  font-family: var(--font-mono); font-size: var(--step--1); font-weight: 500; line-height: 1;
+  color: var(--ink-2); background: none; cursor: pointer;
+  border: 1px solid var(--rule); border-radius: var(--radius-pill);
+  transition: color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+}
+.lang:hover { color: var(--accent-ink); border-color: var(--accent-ink); }
+.lang:focus-visible { outline: 2px solid var(--accent-ink); outline-offset: 3px; }
+@media (max-width: 440px) { .top .wrap { gap: var(--space-2); } .brand .sub { display: none; } }
+
 /* ---------- buttons ---------- */
 .wa {
   display: inline-flex; align-items: center; gap: var(--space-2);
@@ -201,7 +214,7 @@ figcaption { color: var(--ink-3); margin-block-start: var(--space-3); }
   .day__grid { grid-template-columns: 1fr 6rem 1fr; }
   .day__col-head { display: block; color: var(--dark-muted); padding-block-end: var(--space-3); }
   .day__col-head--before { grid-column: 1; }
-  .day__col-head--after { grid-column: 3; color: var(--accent); }
+  .day__col-head--after { grid-column: 3; color: var(--accent); padding-inline-start: var(--space-8); } /* sits over its column, which is inset from the spine */
   .day__row { grid-column: 1 / -1; grid-template-columns: subgrid; column-gap: 0; padding-block: var(--space-8); }
   .day__time { grid-column: 2; text-align: center; position: relative; }
   .day__time::before { content: ""; position: absolute; inset-inline-start: 50%; top: 2.2rem; bottom: calc(-1 * var(--space-8) - 1px); width: 1px; background: var(--dark-rule); }
@@ -217,7 +230,10 @@ figcaption { color: var(--ink-3); margin-block-start: var(--space-3); }
 .proof__list a { display: grid; gap: var(--space-1); text-decoration: none; padding: var(--space-6); background: var(--surface); border-radius: var(--radius-md); min-height: 100%; transition: background-color var(--dur-fast) var(--ease-out); }
 .proof__list a:hover { background: var(--surface-high); }
 .proof__k { color: var(--accent-ink); }
-.proof__name { font-family: var(--font-mono); font-size: var(--step-1); font-weight: 500; direction: ltr; text-align: start; unicode-bidi: isolate; }
+/* Latin product names: isolated so bidi never reorders them, but aligned to the
+   page's start edge like the rest of the card (a forced direction:ltr pinned
+   them to the left inside a right-aligned card) */
+.proof__name { font-family: var(--font-mono); font-size: var(--step-1); font-weight: 500; unicode-bidi: isolate; }
 .proof__desc { color: var(--ink-2); font-size: var(--step--1); }
 @media (min-width: 640px) { .proof__list { grid-template-columns: repeat(2, 1fr); } }
 @media (min-width: 1000px) { .proof__list { grid-template-columns: repeat(4, 1fr); } }
@@ -251,7 +267,14 @@ figcaption { color: var(--ink-3); margin-block-start: var(--space-3); }
 .foot__nav a { color: var(--dark-muted); text-decoration: none; }
 .foot__nav a:hover { color: var(--dark-text); }
 .foot__tag { color: var(--accent); margin-inline-start: var(--space-1); }
-@media (min-width: 900px) { .foot__grid { grid-template-columns: auto 1fr auto; align-items: baseline; gap: var(--space-12); } }
+/* the middle column keeps a floor so the longer English line never turns into
+   a one-word-per-row stack; the nav wraps instead */
+@media (min-width: 900px) { .foot__grid { grid-template-columns: auto minmax(16rem, 1fr) auto; align-items: baseline; gap: var(--space-12); } .foot__nav { max-width: 26rem; justify-content: flex-end; } }
+
+/* ---------- English pass (dir flips to ltr) ----------
+   Everything else is logical-property based; the marker sweep is the one
+   painted effect with a physical origin, so it is restated for ltr. */
+.is-en .mark::before { transform-origin: left center; }
 
 /* ---------- reveal (progressive) ---------- */
 .reveal { opacity: 0; transform: translateY(10px); transition: opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out); }

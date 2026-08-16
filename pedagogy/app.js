@@ -38,5 +38,11 @@
     window.addEventListener('scroll', request, { passive: true });
     window.addEventListener('resize', request);
     update();
+    // English copy is longer, so the page gets taller: re-measure after a switch
+    window.addEventListener('cw:langchange', request);
   }
+
+  // this page generates no user-facing strings in JS; the only language-dependent
+  // work is re-measuring the layout once the copy has been swapped
+  window.addEventListener('cw:langchange', onScroll);
 })();

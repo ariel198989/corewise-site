@@ -22,8 +22,17 @@
     reveals.forEach(function (el) { el.classList.add('is-in'); });
   }
 
-  // day strip: narrow-screen toggle "לפני / אחרי"
+  // day strip: narrow-screen toggle. The two labels live in the markup with
+  // their data-en beside them, so the i18n engine swaps them; this table is the
+  // one string the script owns itself (the tablist's accessible name).
+  var STRINGS = {
+    he: { tablist: 'בחירת עמודה להצגה במסך צר' },
+    en: { tablist: 'Choose which column to show on a narrow screen' }
+  };
+  var t = function (key) { return (STRINGS[document.documentElement.lang] || STRINGS.he)[key]; };
+
   var grid = document.querySelector('.day__grid');
+  var toggle = document.querySelector('.day__toggle');
   var tabs = document.querySelectorAll('.day__toggle [role="tab"]');
   tabs.forEach(function (btn) {
     btn.addEventListener('click', function () {
@@ -31,4 +40,11 @@
       grid.setAttribute('data-show', btn.getAttribute('data-col'));
     });
   });
+
+  var render = function () {
+    if (toggle) toggle.setAttribute('aria-label', t('tablist'));
+    onScroll();
+  };
+  window.addEventListener('cw:langchange', render);
+  render();
 })();

@@ -102,6 +102,19 @@ svg use { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: r
 .top .back { margin-inline-start: auto; color: var(--ink-2); text-decoration: none; font-size: var(--step--1); padding: var(--space-2) 0; white-space: nowrap; }
 .top .back:hover { color: var(--ink); }
 
+/* language switch — same quiet weight as the "back" link, never a flag */
+.lang {
+  flex: none; display: inline-flex; align-items: center; justify-content: center;
+  min-height: 44px; min-width: 44px; padding-inline: var(--space-3);
+  font-family: var(--font-mono); font-size: var(--step--1); font-weight: 500; line-height: 1;
+  color: var(--ink-2); background: none; cursor: pointer;
+  border: 1px solid var(--rule); border-radius: var(--radius-pill);
+  transition: color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+}
+.lang:hover { color: var(--accent-ink); border-color: var(--accent-ink); }
+.lang:focus-visible { outline: 2px solid var(--accent-ink); outline-offset: 3px; }
+@media (max-width: 440px) { .top .wrap { gap: var(--space-2); } .brand .sub { display: none; } }
+
 /* ---------- buttons ---------- */
 .wa {
   display: inline-flex; align-items: center; gap: var(--space-2);
@@ -295,7 +308,9 @@ a.proof__item:hover { background: var(--surface-high); }
 .foot__nav a { color: var(--dark-muted); text-decoration: none; font-size: var(--step--1); }
 .foot__nav a:hover { color: var(--dark-text); }
 .foot__tag { color: var(--accent); font-size: .75em; margin-inline-start: var(--space-1); }
-@media (min-width: 900px) { .foot__grid { grid-template-columns: auto 1fr auto; align-items: baseline; column-gap: var(--space-12); } .foot__skills { text-align: center; } }
+/* the middle column keeps a floor so the longer English line never turns into
+   a one-word-per-row stack; the nav wraps instead */
+@media (min-width: 900px) { .foot__grid { grid-template-columns: auto minmax(16rem, 1fr) auto; align-items: baseline; column-gap: var(--space-12); } .foot__skills { text-align: center; } .foot__nav { max-width: 26rem; justify-content: flex-end; } }
 
 /* ---------- desktop scroll rail ---------- */
 .rail { display: none; }
@@ -318,6 +333,18 @@ a.proof__item:hover { background: var(--surface-high); }
 .reveal { opacity: 1; }
 html:not(.no-js) .reveal { opacity: 0; transform: translateY(14px); transition: opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out); }
 html:not(.no-js) .reveal.is-in { opacity: 1; transform: none; }
+
+/* ---------- English pass (dir flips to ltr; only the sizes that need it) ----------
+   The Hebrew signature line is two short words; the English one is 28 characters.
+   Everything else is logical-property based and needs nothing. */
+.is-en .meta { font-size: clamp(1.9rem, .4rem + 3.6vw, 3.75rem); }
+.is-en .meta__word { white-space: normal; }
+.is-en .hero__title { max-width: 15ch; }
+@media (min-width: 900px) { .is-en .hero__title { max-width: none; } }
+/* the registered Hebrew code name kept beside the English one — an annotation,
+   not a second headline */
+.codename-he { font-weight: 500; color: var(--ink-3); }
+.screen__title .codename-he { font-size: .58em; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; animation-delay: 0ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }

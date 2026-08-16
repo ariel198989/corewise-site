@@ -1,12 +1,12 @@
 <!doctype html>
-<html lang="he" dir="rtl">
+<html lang="he" dir="rtl" class="no-js">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>קורוויז · הטמעות AI בבתי עסק — לא מתקינים ועוזבים, מטמיעים</title>
-<meta name="description" content="הטמעות AI בבתי עסק: איפיון עסקי לפני קוד, סוכני AI ואוטומציות, אתרים ומערכות, וידאו ופרסום — וכל הטמעה נמדדת במספר. לא מתקינים ועוזבים — מטמיעים. אצל העסק ואצל הלקוח שלו.">
-<meta property="og:title" content="קורוויז · הטמעות AI בבתי עסק">
-<meta property="og:description" content="לא מתקינים ועוזבים — מטמיעים. אצל העסק ואצל הלקוח שלו.">
+<title data-en="Corewise · AI for businesses — we don't install and leave, we embed">קורוויז · הטמעות AI בבתי עסק — לא מתקינים ועוזבים, מטמיעים</title>
+<meta name="description" content="הטמעות AI בבתי עסק: איפיון עסקי לפני קוד, סוכני AI ואוטומציות, אתרים ומערכות, וידאו ופרסום — וכל הטמעה נמדדת במספר. לא מתקינים ועוזבים — מטמיעים. אצל העסק ואצל הלקוח שלו." data-en-content="AI embedded in businesses: a business spec before code, AI agents and automations, sites and systems, video and advertising — and every rollout measured by a number. We don't install and leave — we embed. In the business, and with its customers.">
+<meta property="og:title" content="קורוויז · הטמעות AI בבתי עסק" data-en-content="Corewise · AI for businesses">
+<meta property="og:description" content="לא מתקינים ועוזבים — מטמיעים. אצל העסק ואצל הלקוח שלו." data-en-content="We don't install and leave — we embed. In the business, and with its customers.">
 <meta property="og:image" content="img/hero.webp">
 <meta name="theme-color" content="#f4f2ec">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -15,21 +15,23 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="preload" as="image" href="img/hero.webp">
 <link rel="stylesheet" href="style.css">
+<script src="i18n.js" defer></script>
 </head>
 <body>
 
-<a class="skip" href="#features">דלג לתוכן</a>
+<a class="skip" href="#features" data-en="Skip to content">דלג לתוכן</a>
 
 <header class="top">
   <div class="wrap">
-    <a class="brand" href="./" aria-label="קורוויז — הטמעות AI">
+    <a class="brand" href="./" aria-label="קורוויז — הטמעות AI" data-en-aria-label="Corewise — AI integrations">
       <span class="word" dir="ltr">corewise</span>
       <span class="sub">/ AI</span>
     </a>
-    <a class="back" href="https://corewise.co.il">← לאתר הראשי</a>
-    <a class="wa wa--sm" href="https://wa.me/972507594477?text=%D7%94%D7%99%D7%99%20%D7%9C%D7%99%D7%93%D7%95%D7%A8%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%9E%D7%90%D7%AA%D7%A8%20%D7%94%D7%98%D7%9E%D7%A2%D7%95%D7%AA%20%D7%94-AI.%20%D7%99%D7%A9%20%D7%9C%D7%99%20%D7%A2%D7%A1%D7%A7%20%D7%A9%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A8%D7%90%D7%95%D7%AA%20%D7%90%D7%99%D7%A4%D7%94%20AI%20%D7%97%D7%95%D7%A1%D7%9A%20%D7%9C%D7%95%20%D7%A2%D7%91%D7%95%D7%93%D7%94." target="_blank" rel="noopener">
+    <a class="back" href="https://corewise.co.il" data-en="Main site →">← לאתר הראשי</a>
+    <button class="lang" data-lang-toggle type="button" lang="en" dir="ltr">EN</button>
+    <a class="wa wa--sm" href="https://wa.me/972507594477?text=%D7%94%D7%99%D7%99%20%D7%9C%D7%99%D7%93%D7%95%D7%A8%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%9E%D7%90%D7%AA%D7%A8%20%D7%94%D7%98%D7%9E%D7%A2%D7%95%D7%AA%20%D7%94-AI.%20%D7%99%D7%A9%20%D7%9C%D7%99%20%D7%A2%D7%A1%D7%A7%20%D7%A9%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A8%D7%90%D7%95%D7%AA%20%D7%90%D7%99%D7%A4%D7%94%20AI%20%D7%97%D7%95%D7%A1%D7%9A%20%D7%9C%D7%95%20%D7%A2%D7%91%D7%95%D7%93%D7%94." data-en-href="https://wa.me/972507594477?text=Hi%20Lidor%2C%20I%20came%20from%20the%20AI%20integrations%20site.%20I%20have%20a%20business%20and%20I'd%20like%20to%20see%20where%20AI%20saves%20it%20work." target="_blank" rel="noopener" aria-label="וואטסאפ ללידור" data-en-aria-label="WhatsApp Lidor">
       <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 12 12 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7a2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3Z"/></svg>
-      <span>וואטסאפ ללידור</span>
+      <span data-en="WhatsApp Lidor">וואטסאפ ללידור</span>
     </a>
   </div>
 </header>
@@ -40,24 +42,24 @@
 <section class="hero" aria-labelledby="hero-title">
   <div class="wrap hero__grid">
     <div class="hero__text">
-      <p class="mono hero__eyebrow"><span dir="ltr">AI</span> · בתי עסק · קורוויז</p>
-      <h1 id="hero-title" class="hero__title">
+      <p class="mono hero__eyebrow" data-en-html="<span dir=&quot;ltr&quot;>AI</span> · businesses · Corewise"><span dir="ltr">AI</span> · בתי עסק · קורוויז</p>
+      <h1 id="hero-title" class="hero__title" data-en-html="<span class=&quot;line&quot;>We don't <span class=&quot;strike&quot;>install and leave</span>&nbsp;—</span> <span class=&quot;line&quot;><span class=&quot;mark&quot;>we embed.</span></span>">
         <span class="line">לא <span class="strike">מתקינים ועוזבים</span>&nbsp;—</span>
         <span class="line"><span class="mark">מטמיעים.</span></span>
       </h1>
-      <p class="hero__sub">אצל העסק ואצל הלקוח שלו.</p>
-      <p class="hero__lede">
+      <p class="hero__sub" data-en="In the business, and with its customers.">אצל העסק ואצל הלקוח שלו.</p>
+      <p class="hero__lede" data-en="AI that joins the day-to-day of the business: the messages, the follow-ups, the website, the video. Before a line of code is written we map the process. Before we finish, we set a number that can be measured.">
         AI שנכנס לשגרה של העסק: להודעות, למעקבים, לאתר, לווידאו.
         לפני שכותבים שורת קוד — ממפים את התהליך. לפני שמסיימים — מגדירים מספר שאפשר למדוד.
       </p>
       <div class="hero__cta">
-        <a class="wa" href="https://wa.me/972507594477?text=%D7%94%D7%99%D7%99%20%D7%9C%D7%99%D7%93%D7%95%D7%A8%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%9E%D7%90%D7%AA%D7%A8%20%D7%94%D7%98%D7%9E%D7%A2%D7%95%D7%AA%20%D7%94-AI.%20%D7%99%D7%A9%20%D7%9C%D7%99%20%D7%A2%D7%A1%D7%A7%20%D7%A9%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A8%D7%90%D7%95%D7%AA%20%D7%90%D7%99%D7%A4%D7%94%20AI%20%D7%97%D7%95%D7%A1%D7%9A%20%D7%9C%D7%95%20%D7%A2%D7%91%D7%95%D7%93%D7%94." target="_blank" rel="noopener">איפה AI חוסך לעסק שלי עבודה?</a>
-        <a class="ghost" href="#day">לראות יום אחד בעסק ↓</a>
+        <a class="wa" href="https://wa.me/972507594477?text=%D7%94%D7%99%D7%99%20%D7%9C%D7%99%D7%93%D7%95%D7%A8%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%9E%D7%90%D7%AA%D7%A8%20%D7%94%D7%98%D7%9E%D7%A2%D7%95%D7%AA%20%D7%94-AI.%20%D7%99%D7%A9%20%D7%9C%D7%99%20%D7%A2%D7%A1%D7%A7%20%D7%A9%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A8%D7%90%D7%95%D7%AA%20%D7%90%D7%99%D7%A4%D7%94%20AI%20%D7%97%D7%95%D7%A1%D7%9A%20%D7%9C%D7%95%20%D7%A2%D7%91%D7%95%D7%93%D7%94." data-en-href="https://wa.me/972507594477?text=Hi%20Lidor%2C%20I%20came%20from%20the%20AI%20integrations%20site.%20I%20have%20a%20business%20and%20I'd%20like%20to%20see%20where%20AI%20saves%20it%20work." target="_blank" rel="noopener" data-en="Where does AI save my business work?">איפה AI חוסך לעסק שלי עבודה?</a>
+        <a class="ghost" href="#day" data-en="See one day in a business ↓">לראות יום אחד בעסק ↓</a>
       </div>
     </div>
     <figure class="hero__fig">
-      <img src="img/hero.webp" width="1600" height="900" alt="בית קפה־מאפייה שכונתי לפני שעת פתיחה: דלפק עץ עם טאבלט וטלפון, ויטרינה, מכונת אספרסו, אור בוקר" fetchpriority="high">
-      <figcaption class="mono">בית עסק, 07:20, לפני פתיחה. כאן מתחילים — לא בקוד.</figcaption>
+      <img src="img/hero.webp" width="1600" height="900" alt="בית קפה־מאפייה שכונתי לפני שעת פתיחה: דלפק עץ עם טאבלט וטלפון, ויטרינה, מכונת אספרסו, אור בוקר" data-en-alt="A neighbourhood café-bakery before opening time: a wooden counter with a tablet and a phone, a display case, an espresso machine, morning light" fetchpriority="high">
+      <figcaption class="mono" data-en="A business, 07:20, before opening. This is where it starts — not in the code.">בית עסק, 07:20, לפני פתיחה. כאן מתחילים — לא בקוד.</figcaption>
     </figure>
   </div>
 </section>
@@ -67,82 +69,82 @@
   <div class="wrap">
     <header class="sec-head">
       <p class="mono sec-head__idx">01–05</p>
-      <h2 id="features-title" class="sec-head__title">מה מטמיעים</h2>
-      <p class="sec-head__lede">חמש יכולות. כל אחת עומדת לבד, כולן יוצאות מאותו איפיון. הפרויקטים האמיתיים מופיעים ליד — כהוכחה, לא כתפריט.</p>
+      <h2 id="features-title" class="sec-head__title" data-en="What we embed">מה מטמיעים</h2>
+      <p class="sec-head__lede" data-en="Five capabilities. Each one stands alone, all of them come out of the same spec. The real projects sit alongside — as proof, not as a menu.">חמש יכולות. כל אחת עומדת לבד, כולן יוצאות מאותו איפיון. הפרויקטים האמיתיים מופיעים ליד — כהוכחה, לא כתפריט.</p>
     </header>
 
     <article class="feat reveal" id="f-spec">
       <p class="mono feat__idx">01</p>
       <figure class="feat__fig">
-        <img loading="lazy" src="img/spec.webp" width="1600" height="1067" alt="מפת תהליכים על נייר קראפט: פתקים דביקים ריקים מחוברים בחיצים בעיפרון">
-        <figcaption class="mono">מפת התהליכים. המסמך הראשון של כל הטמעה.</figcaption>
+        <img loading="lazy" src="img/spec.webp" width="1600" height="1067" alt="מפת תהליכים על נייר קראפט: פתקים דביקים ריקים מחוברים בחיצים בעיפרון" data-en-alt="A process map on kraft paper: blank sticky notes joined by pencil arrows">
+        <figcaption class="mono" data-en="The process map. The first document of every rollout.">מפת התהליכים. המסמך הראשון של כל הטמעה.</figcaption>
       </figure>
       <div class="feat__body">
-        <h3 class="feat__title">איפיון עסקי לפני קוד</h3>
-        <p class="feat__desc">מפת התהליכים היא המסמך הראשון. לפני שנכתבת שורת קוד אחת ממפים מה קורה בעסק: מי מקבל פנייה, מה קורה איתה, איפה היא נתקעת ומי סוגר אותה.</p>
-        <p class="feat__gain"><span class="feat__gain-k">מה זה נותן לך</span> יודעים מה בונים ולמה, לפני שמשלמים על זה.</p>
-        <p class="feat__proof"><span class="mono">הכלי הפנימי</span> <a href="https://specly.vercel.app" target="_blank" rel="noopener">Specly</a> — סוכני AI שמראיינים את הצוות ומגישים מסמך איפיון אחד.</p>
+        <h3 class="feat__title" data-en="A business spec before code">איפיון עסקי לפני קוד</h3>
+        <p class="feat__desc" data-en="The process map is the first document. Before a single line of code is written we map what happens in the business: who takes an enquiry, what happens to it, where it gets stuck and who closes it.">מפת התהליכים היא המסמך הראשון. לפני שנכתבת שורת קוד אחת ממפים מה קורה בעסק: מי מקבל פנייה, מה קורה איתה, איפה היא נתקעת ומי סוגר אותה.</p>
+        <p class="feat__gain" data-en-html="<span class=&quot;feat__gain-k&quot;>What you get</span> You know what is being built and why, before you pay for it."><span class="feat__gain-k">מה זה נותן לך</span> יודעים מה בונים ולמה, לפני שמשלמים על זה.</p>
+        <p class="feat__proof" data-en-html="<span class=&quot;mono&quot;>The in-house tool</span> <a href=&quot;https://specly.vercel.app&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;>Specly</a> — AI agents that interview the team and hand back one spec document."><span class="mono">הכלי הפנימי</span> <a href="https://specly.vercel.app" target="_blank" rel="noopener">Specly</a> — סוכני AI שמראיינים את הצוות ומגישים מסמך איפיון אחד.</p>
       </div>
     </article>
 
     <article class="feat reveal" id="f-agents">
       <p class="mono feat__idx">02</p>
       <figure class="feat__fig">
-        <img loading="lazy" src="img/agents.webp" width="1600" height="1067" alt="משרד אחורי של חנות בלילה: לפטופ סגור, טלפון, ערימת חשבוניות מסודרת, מנורת שולחן">
-        <figcaption class="mono">22:40. ההודעות נענו, המעקבים יצאו, הסיכום נשלח.</figcaption>
+        <img loading="lazy" src="img/agents.webp" width="1600" height="1067" alt="משרד אחורי של חנות בלילה: לפטופ סגור, טלפון, ערימת חשבוניות מסודרת, מנורת שולחן" data-en-alt="The back office of a shop at night: a closed laptop, a phone, a neat stack of invoices, a desk lamp">
+        <figcaption class="mono" data-en="22:40. The messages were answered, the follow-ups went out, the summary was sent.">22:40. ההודעות נענו, המעקבים יצאו, הסיכום נשלח.</figcaption>
       </figure>
       <div class="feat__body">
-        <h3 class="feat__title">סוכני <span dir="ltr">AI</span> ואוטומציות</h3>
-        <p class="feat__desc">סוכן שעונה לפניות בוואטסאפ לפי הכללים של העסק, שולח תזכורת ללקוח שלא חזר, ומסכם את היום בערב. משתלב במערכות הקיימות — לא במקומן.</p>
-        <p class="feat__gain"><span class="feat__gain-k">מה זה נותן לך</span> פחות הודעות שנשכחות, פחות שעות מול הטלפון.</p>
-        <p class="feat__proof"><span class="mono">הודעות · מעקבים · סיכומים</span> — שלוש המשימות שחוזרות בכל עסק, ואיתן מתחילים.</p>
+        <h3 class="feat__title" data-en-html="<span dir=&quot;ltr&quot;>AI</span> agents and automations">סוכני <span dir="ltr">AI</span> ואוטומציות</h3>
+        <p class="feat__desc" data-en="An agent that answers WhatsApp enquiries by the rules of the business, sends a reminder to a customer who never came back, and sums the day up in the evening. It plugs into the existing systems — it does not replace them.">סוכן שעונה לפניות בוואטסאפ לפי הכללים של העסק, שולח תזכורת ללקוח שלא חזר, ומסכם את היום בערב. משתלב במערכות הקיימות — לא במקומן.</p>
+        <p class="feat__gain" data-en-html="<span class=&quot;feat__gain-k&quot;>What you get</span> Fewer messages forgotten, fewer hours on the phone."><span class="feat__gain-k">מה זה נותן לך</span> פחות הודעות שנשכחות, פחות שעות מול הטלפון.</p>
+        <p class="feat__proof" data-en-html="<span class=&quot;mono&quot;>Messages · follow-ups · summaries</span> — the three tasks that repeat in every business, and where we start."><span class="mono">הודעות · מעקבים · סיכומים</span> — שלוש המשימות שחוזרות בכל עסק, ואיתן מתחילים.</p>
       </div>
     </article>
 
     <article class="feat reveal" id="f-apps">
       <p class="mono feat__idx">03</p>
       <figure class="feat__fig">
-        <img loading="lazy" src="img/apps.webp" width="1600" height="1067" alt="שולחן עבודה: לפטופ פתוח, טלפון, ומחברת עם סקיצת וויירפריים של אפליקציה">
-        <figcaption class="mono">מסקיצה על נייר למערכת עם משתמשים והרשאות.</figcaption>
+        <img loading="lazy" src="img/apps.webp" width="1600" height="1067" alt="שולחן עבודה: לפטופ פתוח, טלפון, ומחברת עם סקיצת וויירפריים של אפליקציה" data-en-alt="A desk: an open laptop, a phone, and a notebook with an app wireframe sketch">
+        <figcaption class="mono" data-en="From a sketch on paper to a system with users and permissions.">מסקיצה על נייר למערכת עם משתמשים והרשאות.</figcaption>
       </figure>
       <div class="feat__body">
-        <h3 class="feat__title">אתרים · אפליקציות · מערכות</h3>
-        <p class="feat__desc">מדף נחיתה מהיר בעברית נכונה, ועד מערכת מלאה עם משתמשים, תשלומים ודשבורד. אותו צוות, אותו סטנדרט, בבעלות מלאה של העסק.</p>
-        <p class="feat__gain"><span class="feat__gain-k">מה זה נותן לך</span> מוצר אחד שגדל איתך, לא שלושה ספקים.</p>
-        <p class="feat__proof"><span class="mono">הוכחה</span> <a href="https://corewise.co.il" target="_blank" rel="noopener">JobCast</a> — פלטפורמת גיוס מלאה שבנינו: אזורי מעסיק ומועמד, התאמת AI, תשלומים ודשבורדים.</p>
+        <h3 class="feat__title" data-en="Sites · apps · systems">אתרים · אפליקציות · מערכות</h3>
+        <p class="feat__desc" data-en="From a fast landing page in correct Hebrew, to a full system with users, payments and a dashboard. Same team, same standard, owned outright by the business.">מדף נחיתה מהיר בעברית נכונה, ועד מערכת מלאה עם משתמשים, תשלומים ודשבורד. אותו צוות, אותו סטנדרט, בבעלות מלאה של העסק.</p>
+        <p class="feat__gain" data-en-html="<span class=&quot;feat__gain-k&quot;>What you get</span> One product that grows with you, not three vendors."><span class="feat__gain-k">מה זה נותן לך</span> מוצר אחד שגדל איתך, לא שלושה ספקים.</p>
+        <p class="feat__proof" data-en-html="<span class=&quot;mono&quot;>Proof</span> <a href=&quot;https://corewise.co.il&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;>JobCast</a> — a full recruitment platform we built: employer and candidate areas, AI matching, payments and dashboards."><span class="mono">הוכחה</span> <a href="https://corewise.co.il" target="_blank" rel="noopener">JobCast</a> — פלטפורמת גיוס מלאה שבנינו: אזורי מעסיק ומועמד, התאמת AI, תשלומים ודשבורדים.</p>
       </div>
     </article>
 
     <article class="feat reveal" id="f-video">
       <p class="mono feat__idx">04</p>
       <figure class="feat__fig">
-        <img loading="lazy" src="img/video.webp" width="1600" height="1067" alt="פינת הפקת וידאו למוצר: קערה על שולחן מסתובב בתוך אוהל אור, מצלמה על חצובה, תאורת טבעת">
-        <figcaption class="mono">סרטון מוצר · פרסומת · סרט לאירוע. הפקה מבוססת AI מקצה לקצה.</figcaption>
+        <img loading="lazy" src="img/video.webp" width="1600" height="1067" alt="פינת הפקת וידאו למוצר: קערה על שולחן מסתובב בתוך אוהל אור, מצלמה על חצובה, תאורת טבעת" data-en-alt="A product video corner: a bowl on a turntable inside a light tent, a camera on a tripod, a ring light">
+        <figcaption class="mono" data-en="Product clip · advert · event film. AI-based production end to end.">סרטון מוצר · פרסומת · סרט לאירוע. הפקה מבוססת AI מקצה לקצה.</figcaption>
       </figure>
       <div class="feat__body">
-        <h3 class="feat__title">וידאו ופרסום</h3>
-        <p class="feat__desc">סרטון מוצר, פרסומת לרשתות או סרט לאירוע — תסריט, קריינות בעברית, ויזואל, מוזיקה ועריכה. בלי צילומים ובלי שחקנים, ועדיין רציף וקולנועי.</p>
-        <p class="feat__gain"><span class="feat__gain-k">מה זה נותן לך</span> וידאו מוכן תוך ימים, לא חודשים — ותמיד יש מה להעלות.</p>
-        <p class="feat__proof"><span class="mono">הוכחה</span> <a href="https://corewise.co.il" target="_blank" rel="noopener">CANTO</a> — סרטים קולנועיים לאירועי חיים · <a href="https://www.youtube.com/@thehollowsaga" target="_blank" rel="noopener">The Hollow</a> — סדרה בת שישה פרקים שהופקה כולה אצלנו.</p>
+        <h3 class="feat__title" data-en="Video and advertising">וידאו ופרסום</h3>
+        <p class="feat__desc" data-en="A product clip, a social ad or a film for an event — script, Hebrew narration, visuals, music and edit. No shoot and no actors, and still continuous and cinematic.">סרטון מוצר, פרסומת לרשתות או סרט לאירוע — תסריט, קריינות בעברית, ויזואל, מוזיקה ועריכה. בלי צילומים ובלי שחקנים, ועדיין רציף וקולנועי.</p>
+        <p class="feat__gain" data-en-html="<span class=&quot;feat__gain-k&quot;>What you get</span> Video ready in days, not months — and there is always something to post."><span class="feat__gain-k">מה זה נותן לך</span> וידאו מוכן תוך ימים, לא חודשים — ותמיד יש מה להעלות.</p>
+        <p class="feat__proof" data-en-html="<span class=&quot;mono&quot;>Proof</span> <a href=&quot;https://corewise.co.il&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;>CANTO</a> — cinematic films for life events · <a href=&quot;https://www.youtube.com/@thehollowsaga&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;>The Hollow</a> — a six-episode series produced entirely in house."><span class="mono">הוכחה</span> <a href="https://corewise.co.il" target="_blank" rel="noopener">CANTO</a> — סרטים קולנועיים לאירועי חיים · <a href="https://www.youtube.com/@thehollowsaga" target="_blank" rel="noopener">The Hollow</a> — סדרה בת שישה פרקים שהופקה כולה אצלנו.</p>
       </div>
     </article>
 
     <article class="feat reveal" id="f-measure">
       <p class="mono feat__idx">05</p>
       <figure class="feat__fig feat__fig--sheet">
-        <img loading="lazy" src="img/bottomline.webp" width="1600" height="1067" alt="דלפק חנות בסוף יום: גליל קבלות, מחשבון, יומן נייר ועט באור מנורה">
-        <figcaption class="mono">סוף יום. השאלה היחידה: מה השתנה במספר.</figcaption>
+        <img loading="lazy" src="img/bottomline.webp" width="1600" height="1067" alt="דלפק חנות בסוף יום: גליל קבלות, מחשבון, יומן נייר ועט באור מנורה" data-en-alt="A shop counter at the end of the day: a roll of receipts, a calculator, a paper diary and a pen under lamplight">
+        <figcaption class="mono" data-en="End of day. The only question: what changed in the number.">סוף יום. השאלה היחידה: מה השתנה במספר.</figcaption>
       </figure>
       <div class="feat__body">
-        <h3 class="feat__title">נמדד בשורה התחתונה</h3>
-        <p class="feat__desc">כל הטמעה מוגדרת במספר אחד לפני שמתחילים: זמן עד מענה ראשון, שעות ידניות בשבוע, פניות שנסגרות בלי מעורבות. מודדים לפני, מודדים אחרי.</p>
-        <p class="feat__gain"><span class="feat__gain-k">מה זה נותן לך</span> יודעים אם זה עבד. לא מרגישים — יודעים.</p>
-        <div class="sheet" aria-label="דף מדידה לדוגמה">
-          <p class="mono sheet__head">דף מדידה · לדוגמה · הערכים נקבעים בשיחת האיפיון</p>
+        <h3 class="feat__title" data-en="Measured on the bottom line">נמדד בשורה התחתונה</h3>
+        <p class="feat__desc" data-en="Every rollout is defined by one number before it starts: time to first reply, manual hours a week, enquiries that close without anyone stepping in. Measured before, measured after.">כל הטמעה מוגדרת במספר אחד לפני שמתחילים: זמן עד מענה ראשון, שעות ידניות בשבוע, פניות שנסגרות בלי מעורבות. מודדים לפני, מודדים אחרי.</p>
+        <p class="feat__gain" data-en-html="<span class=&quot;feat__gain-k&quot;>What you get</span> You know whether it worked. Not a feeling — knowing."><span class="feat__gain-k">מה זה נותן לך</span> יודעים אם זה עבד. לא מרגישים — יודעים.</p>
+        <div class="sheet" aria-label="דף מדידה לדוגמה" data-en-aria-label="Sample measurement sheet">
+          <p class="mono sheet__head" data-en="Measurement sheet · sample · the values are set in the spec conversation">דף מדידה · לדוגמה · הערכים נקבעים בשיחת האיפיון</p>
           <dl class="sheet__rows">
-            <div class="sheet__row"><dt>זמן עד מענה ראשון לפנייה</dt><dd class="mono">לפני ___ · יעד ___ · אחרי ___</dd></div>
-            <div class="sheet__row"><dt>שעות ידניות בשבוע על מעקבים</dt><dd class="mono">לפני ___ · יעד ___ · אחרי ___</dd></div>
-            <div class="sheet__row"><dt>פניות שנסגרות ללא מעורבות בעל העסק</dt><dd class="mono">לפני ___ · יעד ___ · אחרי ___</dd></div>
+            <div class="sheet__row"><dt data-en="Time to first reply to an enquiry">זמן עד מענה ראשון לפנייה</dt><dd class="mono" data-en="before ___ · target ___ · after ___">לפני ___ · יעד ___ · אחרי ___</dd></div>
+            <div class="sheet__row"><dt data-en="Manual hours a week on follow-ups">שעות ידניות בשבוע על מעקבים</dt><dd class="mono" data-en="before ___ · target ___ · after ___">לפני ___ · יעד ___ · אחרי ___</dd></div>
+            <div class="sheet__row"><dt data-en="Enquiries closed without the owner">פניות שנסגרות ללא מעורבות בעל העסק</dt><dd class="mono" data-en="before ___ · target ___ · after ___">לפני ___ · יעד ___ · אחרי ___</dd></div>
           </dl>
         </div>
       </div>
@@ -154,53 +156,53 @@
 <section class="day" id="day" aria-labelledby="day-title">
   <div class="wrap">
     <header class="sec-head sec-head--light">
-      <p class="mono sec-head__idx">לפני / אחרי</p>
-      <h2 id="day-title" class="sec-head__title">יום אחד בחנות שכונתית</h2>
-      <p class="sec-head__lede">דוגמה, לא עדות. חנות שלא קיימת, יום שלא קרה — אבל כך נראית ההטמעה מבפנים. בלי שמות, בלי מספרים.</p>
+      <p class="mono sec-head__idx" data-en="before / after">לפני / אחרי</p>
+      <h2 id="day-title" class="sec-head__title" data-en="One day in a neighbourhood shop">יום אחד בחנות שכונתית</h2>
+      <p class="sec-head__lede" data-en="An example, not a testimonial. A shop that does not exist, a day that never happened — but this is what a rollout looks like from the inside. No names, no numbers.">דוגמה, לא עדות. חנות שלא קיימת, יום שלא קרה — אבל כך נראית ההטמעה מבפנים. בלי שמות, בלי מספרים.</p>
     </header>
 
-    <div class="day__toggle" role="tablist" aria-label="בחירת עמודה להצגה במסך צר">
-      <button type="button" role="tab" aria-selected="true" data-col="before">לפני</button>
-      <button type="button" role="tab" aria-selected="false" data-col="after">אחרי קורוויז</button>
+    <div class="day__toggle" role="tablist" aria-label="בחירת עמודה להצגה במסך צר" data-en-aria-label="Choose which column to show on a narrow screen">
+      <button type="button" role="tab" aria-selected="true" data-col="before" data-en="Before">לפני</button>
+      <button type="button" role="tab" aria-selected="false" data-col="after" data-en="After Corewise">אחרי קורוויז</button>
     </div>
 
     <div class="day__grid" data-show="before">
-      <p class="mono day__col-head day__col-head--before">לפני</p>
-      <p class="mono day__col-head day__col-head--after">אחרי קורוויז</p>
+      <p class="mono day__col-head day__col-head--before" data-en="Before">לפני</p>
+      <p class="mono day__col-head day__col-head--after" data-en="After Corewise">אחרי קורוויז</p>
 
       <div class="day__row reveal">
         <p class="mono day__time"><bdi>07:30</bdi></p>
-        <p class="day__before">בעל העסק פותח וואטסאפ. הודעות מאתמול בלילה, חלק בלי מענה. מתחיל את היום בחוב.</p>
-        <p class="day__after">הסוכן ענה בלילה על שעות, מחירים וזמינות. סימן את הפניות שדורשות אדם. הבוקר מתחיל מהן.</p>
+        <p class="day__before" data-en="The owner opens WhatsApp. Messages from last night, some of them unanswered. The day starts in debt.">בעל העסק פותח וואטסאפ. הודעות מאתמול בלילה, חלק בלי מענה. מתחיל את היום בחוב.</p>
+        <p class="day__after" data-en="The agent answered overnight on hours, prices and availability. It flagged the enquiries that need a person. The morning starts with those.">הסוכן ענה בלילה על שעות, מחירים וזמינות. סימן את הפניות שדורשות אדם. הבוקר מתחיל מהן.</p>
       </div>
       <div class="day__row reveal">
         <p class="mono day__time"><bdi>09:00</bdi></p>
-        <p class="day__before">לקוח מתקשר לשאול אם המוצר במלאי. עוצרים הכל, בודקים, חוזרים אליו.</p>
-        <p class="day__after">השאלה מגיעה לסוכן, שבודק במלאי ועונה. אם אין — מציע חלופה ומעדכן את בעל העסק.</p>
+        <p class="day__before" data-en="A customer calls to ask whether the product is in stock. Everything stops, someone checks, someone calls back.">לקוח מתקשר לשאול אם המוצר במלאי. עוצרים הכל, בודקים, חוזרים אליו.</p>
+        <p class="day__after" data-en="The question reaches the agent, which checks stock and answers. If there is none — it offers an alternative and tells the owner.">השאלה מגיעה לסוכן, שבודק במלאי ועונה. אם אין — מציע חלופה ומעדכן את בעל העסק.</p>
       </div>
       <div class="day__row reveal">
         <p class="mono day__time"><bdi>12:30</bdi></p>
-        <p class="day__before">הצעת מחיר נשלחה לפני שבוע. אף אחד לא זוכר לחזור ללקוח.</p>
-        <p class="day__after">תזכורת יצאה ללקוח בזמן, ובעל העסק קיבל הודעה קצרה: ההצעה נפתחה, אין תשובה, לחזור?</p>
+        <p class="day__before" data-en="A quote went out a week ago. Nobody remembers to get back to the customer.">הצעת מחיר נשלחה לפני שבוע. אף אחד לא זוכר לחזור ללקוח.</p>
+        <p class="day__after" data-en="The reminder went out to the customer on time, and the owner got a short message: the quote was opened, no reply, follow up?">תזכורת יצאה ללקוח בזמן, ובעל העסק קיבל הודעה קצרה: ההצעה נפתחה, אין תשובה, לחזור?</p>
       </div>
       <div class="day__row reveal">
         <p class="mono day__time"><bdi>16:00</bdi></p>
-        <p class="day__before">רוצים להעלות משהו על המוצר החדש. אין תמונות, אין סרטון. יצלמו מתישהו.</p>
-        <p class="day__after">סרטון מוצר קצר מוכן מהשבוע. עולה בלחיצה, עם הטקסט שכבר נכתב.</p>
+        <p class="day__before" data-en="They want to post something about the new product. No photos, no clip. Someone will shoot it eventually.">רוצים להעלות משהו על המוצר החדש. אין תמונות, אין סרטון. יצלמו מתישהו.</p>
+        <p class="day__after" data-en="A short product clip has been ready since this week. One tap to post, with the copy already written.">סרטון מוצר קצר מוכן מהשבוע. עולה בלחיצה, עם הטקסט שכבר נכתב.</p>
       </div>
       <div class="day__row reveal">
         <p class="mono day__time"><bdi>19:30</bdi></p>
-        <p class="day__before">סוגרים. מנסים להיזכר מי היה צריך תשובה ומי לא קיבל.</p>
-        <p class="day__after">סיכום יום בוואטסאפ: מה נסגר, מה פתוח, מה מחכה למחר. אין צורך להיזכר.</p>
+        <p class="day__before" data-en="Closing up. Trying to remember who needed an answer and who never got one.">סוגרים. מנסים להיזכר מי היה צריך תשובה ומי לא קיבל.</p>
+        <p class="day__after" data-en="An end-of-day summary on WhatsApp: what closed, what is open, what waits for tomorrow. Nothing to remember.">סיכום יום בוואטסאפ: מה נסגר, מה פתוח, מה מחכה למחר. אין צורך להיזכר.</p>
       </div>
       <div class="day__row reveal">
         <p class="mono day__time"><bdi>22:00</bdi></p>
-        <p class="day__before">לקוח כותב דרך האתר. יראו מחר. אולי.</p>
-        <p class="day__after">האתר עונה, קובע, מתעד. בעל העסק ישן.</p>
+        <p class="day__before" data-en="A customer writes through the website. They will see it tomorrow. Maybe.">לקוח כותב דרך האתר. יראו מחר. אולי.</p>
+        <p class="day__after" data-en="The website answers, books, records. The owner is asleep.">האתר עונה, קובע, מתעד. בעל העסק ישן.</p>
       </div>
     </div>
 
-    <p class="day__note">זה ההבדל בין להתקין ללהטמיע: ההטמעה מורגשת אצל העסק, ואצל הלקוח שלו — שמקבל תשובה גם ב־22:00.</p>
+    <p class="day__note" data-en-html="That is the difference between installing and embedding: the rollout is felt inside the business, and by its customers — who get an answer at <bdi>22:00</bdi> too.">זה ההבדל בין להתקין ללהטמיע: ההטמעה מורגשת אצל העסק, ואצל הלקוח שלו — שמקבל תשובה גם ב־22:00.</p>
   </div>
 </section>
 
@@ -208,37 +210,37 @@
 <section class="proof" id="proof" aria-labelledby="proof-title">
   <div class="wrap">
     <header class="sec-head">
-      <p class="mono sec-head__idx">הוכחה</p>
-      <h2 id="proof-title" class="sec-head__title">פרויקטים אמיתיים</h2>
-      <p class="sec-head__lede">בוצע על בסיס הפיצ׳רים למעלה.</p>
+      <p class="mono sec-head__idx" data-en="Proof">הוכחה</p>
+      <h2 id="proof-title" class="sec-head__title" data-en="Real projects">פרויקטים אמיתיים</h2>
+      <p class="sec-head__lede" data-en="Built on the capabilities above.">בוצע על בסיס הפיצ׳רים למעלה.</p>
     </header>
     <ul class="proof__list">
       <li>
         <a href="https://specly.vercel.app" target="_blank" rel="noopener">
-          <span class="mono proof__k">01 · איפיון</span>
+          <span class="mono proof__k" data-en="01 · Spec">01 · איפיון</span>
           <span class="proof__name">Specly</span>
-          <span class="proof__desc">מנוע איפיון: סוכני AI מראיינים את הצוות ומגישים מסמך אחד.</span>
+          <span class="proof__desc" data-en="A spec engine: AI agents interview the team and hand back one document.">מנוע איפיון: סוכני AI מראיינים את הצוות ומגישים מסמך אחד.</span>
         </a>
       </li>
       <li>
         <a href="https://corewise.co.il" target="_blank" rel="noopener">
-          <span class="mono proof__k">03 · מערכות</span>
+          <span class="mono proof__k" data-en="03 · Systems">03 · מערכות</span>
           <span class="proof__name">JobCast</span>
-          <span class="proof__desc">פלטפורמת גיוס מלאה: קליפ קצר במקום קורות חיים, התאמת AI, תשלומים.</span>
+          <span class="proof__desc" data-en="A full recruitment platform: a short clip instead of a CV, AI matching, payments.">פלטפורמת גיוס מלאה: קליפ קצר במקום קורות חיים, התאמת AI, תשלומים.</span>
         </a>
       </li>
       <li>
         <a href="https://corewise.co.il" target="_blank" rel="noopener">
-          <span class="mono proof__k">04 · וידאו</span>
+          <span class="mono proof__k" data-en="04 · Video">04 · וידאו</span>
           <span class="proof__name">CANTO</span>
-          <span class="proof__desc">סרטים קולנועיים לאירועי חיים מתוך תמונות, הפקה מבוססת AI.</span>
+          <span class="proof__desc" data-en="Cinematic films for life events, made out of photographs, AI-based production.">סרטים קולנועיים לאירועי חיים מתוך תמונות, הפקה מבוססת AI.</span>
         </a>
       </li>
       <li>
         <a href="https://www.youtube.com/@thehollowsaga" target="_blank" rel="noopener">
-          <span class="mono proof__k">04 · סדרה</span>
+          <span class="mono proof__k" data-en="04 · Series">04 · סדרה</span>
           <span class="proof__name">The Hollow</span>
-          <span class="proof__desc">שישה פרקים שהופקו כולם בבית: תסריט, דמויות, קריינות, מוזיקה, עריכה.</span>
+          <span class="proof__desc" data-en="Six episodes produced entirely in house: script, characters, narration, music, edit.">שישה פרקים שהופקו כולם בבית: תסריט, דמויות, קריינות, מוזיקה, עריכה.</span>
         </a>
       </li>
     </ul>
@@ -249,24 +251,24 @@
 <section class="how" id="how" aria-labelledby="how-title">
   <div class="wrap how__grid">
     <header class="sec-head">
-      <p class="mono sec-head__idx">איך עובדים</p>
-      <h2 id="how-title" class="sec-head__title">שלושה שלבים. השלישי הוא ההבדל.</h2>
+      <p class="mono sec-head__idx" data-en="How we work">איך עובדים</p>
+      <h2 id="how-title" class="sec-head__title" data-en="Three stages. The third is the difference.">שלושה שלבים. השלישי הוא ההבדל.</h2>
     </header>
     <ol class="steps">
       <li class="step reveal">
-        <p class="mono step__k">א</p>
-        <h3 class="step__title">איפיון</h3>
-        <p class="step__desc">יושבים עם מי שעושה את העבודה בפועל. יוצאים עם מפת תהליכים ומספר יעד אחד.</p>
+        <p class="mono step__k" data-en="A">א</p>
+        <h3 class="step__title" data-en="Spec">איפיון</h3>
+        <p class="step__desc" data-en="We sit with the people who actually do the work. We come out with a process map and one target number.">יושבים עם מי שעושה את העבודה בפועל. יוצאים עם מפת תהליכים ומספר יעד אחד.</p>
       </li>
       <li class="step reveal">
-        <p class="mono step__k">ב</p>
-        <h3 class="step__title">הטמעה אצל העסק</h3>
-        <p class="step__desc">בונים, מחברים למערכות הקיימות, ומלמדים את הצוות. לא עוזבים עד שזה רץ לבד.</p>
+        <p class="mono step__k" data-en="B">ב</p>
+        <h3 class="step__title" data-en="Embedding in the business">הטמעה אצל העסק</h3>
+        <p class="step__desc" data-en="We build, connect to the existing systems, and train the team. We don't leave until it runs on its own.">בונים, מחברים למערכות הקיימות, ומלמדים את הצוות. לא עוזבים עד שזה רץ לבד.</p>
       </li>
       <li class="step reveal">
-        <p class="mono step__k">ג</p>
-        <h3 class="step__title">הטמעה אצל הלקוח שלו</h3>
-        <p class="step__desc">בודקים שהלקוחות של העסק מרגישים את זה: תשובה מהירה יותר, פחות נפילות בין הכיסאות. ואז מודדים מול המספר מהשלב הראשון.</p>
+        <p class="mono step__k" data-en="C">ג</p>
+        <h3 class="step__title" data-en="Embedding with its customers">הטמעה אצל הלקוח שלו</h3>
+        <p class="step__desc" data-en="We check that the customers of the business feel it: a faster answer, fewer things falling between the chairs. Then we measure against the number from stage one.">בודקים שהלקוחות של העסק מרגישים את זה: תשובה מהירה יותר, פחות נפילות בין הכיסאות. ואז מודדים מול המספר מהשלב הראשון.</p>
       </li>
     </ol>
   </div>
@@ -276,12 +278,12 @@
 <section class="cta" id="cta" aria-labelledby="cta-title">
   <div class="wrap cta__grid">
     <div>
-      <h2 id="cta-title" class="cta__title">יש לך עסק? בואו נראה איפה <span dir="ltr">AI</span> חוסך לו עבודה.</h2>
-      <p class="cta__lede">שיחה קצרה בוואטסאפ עם לידור. בלי מצגת. מספרים לנו מה קורה ביום רגיל — ואומרים לכם איפה מתחילים.</p>
+      <h2 id="cta-title" class="cta__title" data-en-html="Have a business? Let's find where <span dir=&quot;ltr&quot;>AI</span> saves it work.">יש לך עסק? בואו נראה איפה <span dir="ltr">AI</span> חוסך לו עבודה.</h2>
+      <p class="cta__lede" data-en="A short WhatsApp conversation with Lidor. No slide deck. Tell us what a normal day looks like — and we'll tell you where to start.">שיחה קצרה בוואטסאפ עם לידור. בלי מצגת. מספרים לנו מה קורה ביום רגיל — ואומרים לכם איפה מתחילים.</p>
     </div>
-    <a class="wa wa--lg" href="https://wa.me/972507594477?text=%D7%94%D7%99%D7%99%20%D7%9C%D7%99%D7%93%D7%95%D7%A8%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%9E%D7%90%D7%AA%D7%A8%20%D7%94%D7%98%D7%9E%D7%A2%D7%95%D7%AA%20%D7%94-AI.%20%D7%99%D7%A9%20%D7%9C%D7%99%20%D7%A2%D7%A1%D7%A7%20%D7%A9%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A8%D7%90%D7%95%D7%AA%20%D7%90%D7%99%D7%A4%D7%94%20AI%20%D7%97%D7%95%D7%A1%D7%9A%20%D7%9C%D7%95%20%D7%A2%D7%91%D7%95%D7%93%D7%94." target="_blank" rel="noopener">
+    <a class="wa wa--lg" href="https://wa.me/972507594477?text=%D7%94%D7%99%D7%99%20%D7%9C%D7%99%D7%93%D7%95%D7%A8%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%9E%D7%90%D7%AA%D7%A8%20%D7%94%D7%98%D7%9E%D7%A2%D7%95%D7%AA%20%D7%94-AI.%20%D7%99%D7%A9%20%D7%9C%D7%99%20%D7%A2%D7%A1%D7%A7%20%D7%A9%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A8%D7%90%D7%95%D7%AA%20%D7%90%D7%99%D7%A4%D7%94%20AI%20%D7%97%D7%95%D7%A1%D7%9A%20%D7%9C%D7%95%20%D7%A2%D7%91%D7%95%D7%93%D7%94." data-en-href="https://wa.me/972507594477?text=Hi%20Lidor%2C%20I%20came%20from%20the%20AI%20integrations%20site.%20I%20have%20a%20business%20and%20I'd%20like%20to%20see%20where%20AI%20saves%20it%20work." target="_blank" rel="noopener">
       <svg aria-hidden="true" viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 12 12 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7a2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3Z"/></svg>
-      <span>לכתוב ללידור בוואטסאפ</span>
+      <span data-en="Message Lidor on WhatsApp">לכתוב ללידור בוואטסאפ</span>
     </a>
   </div>
 </section>
@@ -292,15 +294,15 @@
   <div class="wrap foot__grid">
     <div class="foot__brand">
       <span class="word" dir="ltr">corewise</span>
-      <span class="foot__he">קורוויז · הטמעות <span dir="ltr">AI</span> בבתי עסק</span>
+      <span class="foot__he" data-en-html="Corewise · <span dir=&quot;ltr&quot;>AI</span> integrations for businesses">קורוויז · הטמעות <span dir="ltr">AI</span> בבתי עסק</span>
     </div>
-    <p class="foot__skills">כל הוויזואלים באתר הופקו ביכולות הפנימיות של קורוויז.</p>
-    <nav class="foot__nav" aria-label="מחלקות קורוויז">
-      <a href="https://corewise.co.il">האתר הראשי</a>
-      <a href="../measure/">פתרונות מדידה</a>
-      <a href="../vision/">ראייה ממוחשבת</a>
-      <a href="../pedagogy/">פדגוגיה</a>
-      <a href="../ar/">AR <span class="mono foot__tag">בשלבי הקמה</span></a>
+    <p class="foot__skills" data-en="Every visual on this site was produced with Corewise's in-house capabilities.">כל הוויזואלים באתר הופקו ביכולות הפנימיות של קורוויז.</p>
+    <nav class="foot__nav" aria-label="מחלקות קורוויז" data-en-aria-label="Corewise departments">
+      <a href="https://corewise.co.il" data-en="Main site">האתר הראשי</a>
+      <a href="../measure/" data-en="Measurement solutions">פתרונות מדידה</a>
+      <a href="../vision/" data-en="Computer vision">ראייה ממוחשבת</a>
+      <a href="../pedagogy/" data-en="Pedagogy">פדגוגיה</a>
+      <a href="../ar/" data-en-html="AR <span class=&quot;mono foot__tag&quot;>being built</span>">AR <span class="mono foot__tag">בשלבי הקמה</span></a>
     </nav>
   </div>
 </footer>

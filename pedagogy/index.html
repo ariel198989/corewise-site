@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>קורוויז · פדגוגיה — טכנולוגיה כדרך לחשיבה מחקרית</title>
-<meta name="description" content="פדגוגיה של קורוויז: האקתון יומי/שבועי, הרצאות ארגוניות, סדנאות שיתופיות (תוכנית גפן, שם קוד «מהזחל אל הפרפר»), תוכנית Smart-City ועולם האלקטרוניקה והחומרה. טכנולוגיה כדרך לחשיבה מחקרית — לנוער, למורים, לארגונים.">
-<meta property="og:title" content="קורוויז · פדגוגיה">
-<meta property="og:description" content="טכנולוגיה כדרך לחשיבה מחקרית — לנוער, למורים, לארגונים.">
+<title data-en="Corewise · Pedagogy — technology as a way into research thinking">קורוויז · פדגוגיה — טכנולוגיה כדרך לחשיבה מחקרית</title>
+<meta name="description" content="פדגוגיה של קורוויז: האקתון יומי/שבועי, הרצאות ארגוניות, סדנאות שיתופיות (תוכנית גפן, שם קוד «מהזחל אל הפרפר»), תוכנית Smart-City ועולם האלקטרוניקה והחומרה. טכנולוגיה כדרך לחשיבה מחקרית — לנוער, למורים, לארגונים." data-en-content="Corewise pedagogy: one-day and one-week hackathons, corporate talks, collaborative workshops (the Gefen program, code name «From Caterpillar to Butterfly» / «מהזחל אל הפרפר»), a Smart-City program, and hands-on electronics and hardware. Technology as a way into research thinking — for teens, for teachers, for organizations.">
+<meta property="og:title" content="קורוויז · פדגוגיה" data-en-content="Corewise · Pedagogy">
+<meta property="og:description" content="טכנולוגיה כדרך לחשיבה מחקרית — לנוער, למורים, לארגונים." data-en-content="Technology as a way into research thinking — for teens, for teachers, for organizations.">
 <meta property="og:image" content="img/hero.webp">
 <meta name="theme-color" content="#f4f2ec">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -15,6 +15,7 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Rubik:wght@400;500;700;800&display=swap" rel="stylesheet">
 <link rel="preload" as="image" href="img/hero.webp">
 <link rel="stylesheet" href="style.css">
+<script src="i18n.js" defer></script>
 </head>
 <body>
 
@@ -40,18 +41,19 @@
   </symbol>
 </svg>
 
-<a class="skip" href="#features">דלג לתוכן</a>
+<a class="skip" href="#features" data-en="Skip to content">דלג לתוכן</a>
 
 <header class="top">
   <div class="wrap">
-    <a class="brand" href="./" aria-label="קורוויז — פדגוגיה">
+    <a class="brand" href="./" aria-label="קורוויז — פדגוגיה" data-en-aria-label="Corewise — Pedagogy">
       <span class="word" dir="ltr">corewise</span>
       <span class="sub">/ pedagogy</span>
     </a>
-    <a class="back" href="https://corewise.co.il">← לאתר הראשי</a>
-    <a class="wa wa--sm" href="https://wa.me/972507594477?text=%D7%94%D7%99%D7%99%20%D7%9C%D7%99%D7%93%D7%95%D7%A8%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%9E%D7%90%D7%AA%D7%A8%20%D7%94%D7%A4%D7%93%D7%92%D7%95%D7%92%D7%99%D7%94.%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A9%D7%9E%D7%95%D7%A2%20%D7%A2%D7%9C%20%D7%AA%D7%95%D7%9B%D7%A0%D7%99%D7%AA%20%D7%9C%D7%91%D7%99%D7%AA%20%D7%94%D7%A1%D7%A4%D7%A8%20%2F%20%D7%9C%D7%90%D7%A8%D7%92%D7%95%D7%9F%20%D7%A9%D7%9C%D7%A0%D7%95." target="_blank" rel="noopener">
+    <a class="back" href="https://corewise.co.il" data-en="Main site →">← לאתר הראשי</a>
+    <button class="lang" data-lang-toggle type="button" lang="en" dir="ltr">EN</button>
+    <a class="wa wa--sm" href="https://wa.me/972507594477?text=%D7%94%D7%99%D7%99%20%D7%9C%D7%99%D7%93%D7%95%D7%A8%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%9E%D7%90%D7%AA%D7%A8%20%D7%94%D7%A4%D7%93%D7%92%D7%95%D7%92%D7%99%D7%94.%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A9%D7%9E%D7%95%D7%A2%20%D7%A2%D7%9C%20%D7%AA%D7%95%D7%9B%D7%A0%D7%99%D7%AA%20%D7%9C%D7%91%D7%99%D7%AA%20%D7%94%D7%A1%D7%A4%D7%A8%20%2F%20%D7%9C%D7%90%D7%A8%D7%92%D7%95%D7%9F%20%D7%A9%D7%9C%D7%A0%D7%95." data-en-href="https://wa.me/972507594477?text=Hi%20Lidor%2C%20I%20came%20from%20the%20pedagogy%20site.%20I'd%20love%20to%20hear%20about%20a%20program%20for%20our%20school%20%2F%20organization." target="_blank" rel="noopener" aria-label="וואטסאפ ללידור" data-en-aria-label="WhatsApp Lidor">
       <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 12 12 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7a2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3Z"/></svg>
-      <span>וואטסאפ ללידור</span>
+      <span data-en="WhatsApp Lidor">וואטסאפ ללידור</span>
     </a>
   </div>
 </header>
@@ -69,33 +71,33 @@
 <section class="hero" aria-labelledby="hero-title">
   <div class="wrap hero__grid">
     <div class="hero__text">
-      <p class="mono hero__eyebrow">פדגוגיה · חומרה ואלקטרוניקה · קורוויז</p>
-      <h1 id="hero-title" class="hero__title">טכנולוגיה כדרך <span class="hero__em">לחשיבה מחקרית.</span></h1>
-      <p class="hero__sub">לנוער. למורים. לארגונים.</p>
-      <p class="hero__lede">לא קורס תכנות. שאלה אמיתית, כלים אמיתיים, ותוצר שאפשר להחזיק ביד — מהאקתון של יום אחד ועד תוכנית שנתית לבית ספר.</p>
+      <p class="mono hero__eyebrow" data-en="Pedagogy · hardware and electronics · Corewise">פדגוגיה · חומרה ואלקטרוניקה · קורוויז</p>
+      <h1 id="hero-title" class="hero__title" data-en-html="Technology as a way <span class=&quot;hero__em&quot;>into research thinking.</span>">טכנולוגיה כדרך <span class="hero__em">לחשיבה מחקרית.</span></h1>
+      <p class="hero__sub" data-en="For teens. For teachers. For organizations.">לנוער. למורים. לארגונים.</p>
+      <p class="hero__lede" data-en="Not a coding course. A real question, real tools, and something you can hold in your hand — from a one-day hackathon to a full school year.">לא קורס תכנות. שאלה אמיתית, כלים אמיתיים, ותוצר שאפשר להחזיק ביד — מהאקתון של יום אחד ועד תוכנית שנתית לבית ספר.</p>
       <div class="hero__cta">
-        <a class="wa" href="https://wa.me/972507594477?text=%D7%94%D7%99%D7%99%20%D7%9C%D7%99%D7%93%D7%95%D7%A8%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%9E%D7%90%D7%AA%D7%A8%20%D7%94%D7%A4%D7%93%D7%92%D7%95%D7%92%D7%99%D7%94.%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A9%D7%9E%D7%95%D7%A2%20%D7%A2%D7%9C%20%D7%AA%D7%95%D7%9B%D7%A0%D7%99%D7%AA%20%D7%9C%D7%91%D7%99%D7%AA%20%D7%94%D7%A1%D7%A4%D7%A8%20%2F%20%D7%9C%D7%90%D7%A8%D7%92%D7%95%D7%9F%20%D7%A9%D7%9C%D7%A0%D7%95." target="_blank" rel="noopener">תוכנית לבית הספר / לארגון שלנו</a>
-        <a class="ghost" href="#features">מה יש בתוכנית ↓</a>
+        <a class="wa" href="https://wa.me/972507594477?text=%D7%94%D7%99%D7%99%20%D7%9C%D7%99%D7%93%D7%95%D7%A8%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%9E%D7%90%D7%AA%D7%A8%20%D7%94%D7%A4%D7%93%D7%92%D7%95%D7%92%D7%99%D7%94.%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A9%D7%9E%D7%95%D7%A2%20%D7%A2%D7%9C%20%D7%AA%D7%95%D7%9B%D7%A0%D7%99%D7%AA%20%D7%9C%D7%91%D7%99%D7%AA%20%D7%94%D7%A1%D7%A4%D7%A8%20%2F%20%D7%9C%D7%90%D7%A8%D7%92%D7%95%D7%9F%20%D7%A9%D7%9C%D7%A0%D7%95." data-en-href="https://wa.me/972507594477?text=Hi%20Lidor%2C%20I%20came%20from%20the%20pedagogy%20site.%20I'd%20love%20to%20hear%20about%20a%20program%20for%20our%20school%20%2F%20organization." target="_blank" rel="noopener" data-en="A program for our school / organization">תוכנית לבית הספר / לארגון שלנו</a>
+        <a class="ghost" href="#features" data-en="What's in the program ↓">מה יש בתוכנית ↓</a>
       </div>
     </div>
     <figure class="hero__fig">
-      <img src="img/hero.webp" width="1600" height="900" alt="עמדת עבודה בסדנה: בקר מחובר ללוח ניסוי, מחברת פתוחה עם סקיצות וגרפים, וחלקים מודפסים בתלת־ממד בצבע זית, ליד חלון" fetchpriority="high">
-      <figcaption class="mono">עמדת עבודה בסדנה: בקר, לוח ניסוי, מחברת, וחלק שהודפס באותו בוקר.</figcaption>
+      <img src="img/hero.webp" width="1600" height="900" alt="עמדת עבודה בסדנה: בקר מחובר ללוח ניסוי, מחברת פתוחה עם סקיצות וגרפים, וחלקים מודפסים בתלת־ממד בצבע זית, ליד חלון" data-en-alt="A workshop bench: a controller wired to a breadboard, an open notebook with sketches and graphs, and olive-green 3D-printed parts, beside a window" fetchpriority="high">
+      <figcaption class="mono" data-en="A workshop bench: controller, breadboard, notebook, and a part printed that same morning.">עמדת עבודה בסדנה: בקר, לוח ניסוי, מחברת, וחלק שהודפס באותו בוקר.</figcaption>
     </figure>
   </div>
 
   <!-- signature: the metamorphosis line -->
   <div class="wrap">
-    <div class="meta" role="img" aria-label="מהזחל אל הפרפר — שם הקוד של תוכנית גפן">
-      <span class="meta__word">מהזחל</span>
+    <div class="meta" role="img" aria-label="מהזחל אל הפרפר — שם הקוד של תוכנית גפן" data-en-aria-label="From Caterpillar to Butterfly — the code name of the Gefen program">
+      <span class="meta__word" data-en="From Caterpillar">מהזחל</span>
       <span class="meta__track">
         <svg class="meta__g meta__g--larva" aria-hidden="true"><use href="#g-larva"/></svg>
         <span class="meta__dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
         <svg class="meta__g meta__g--fly" aria-hidden="true"><use href="#g-fly"/></svg>
       </span>
-      <span class="meta__word">אל הפרפר</span>
+      <span class="meta__word" data-en="to Butterfly">אל הפרפר</span>
     </div>
-    <p class="mono meta__cap">שם הקוד של תוכנית גפן לנוער · שילוב מחקר וטכנולוגיה · <a href="#f-gefen">לפרטים ↓</a></p>
+    <p class="mono meta__cap" data-en-html="Code name of the Gefen youth program &mdash; <span class=&quot;codename-he&quot; lang=&quot;he&quot; dir=&quot;rtl&quot;>«מהזחל אל הפרפר»</span> · research and technology together · <a href=&quot;#f-gefen&quot;>Details ↓</a>">שם הקוד של תוכנית גפן לנוער · שילוב מחקר וטכנולוגיה · <a href="#f-gefen">לפרטים ↓</a></p>
   </div>
 </section>
 
@@ -104,8 +106,8 @@
   <div class="wrap">
     <header class="sec-head">
       <p class="mono sec-head__idx"><span dir="ltr">01–05</span></p>
-      <h2 id="features-title" class="sec-head__title">חמישה מסכים. כל אחד עומד לבד.</h2>
-      <p class="sec-head__lede">יכולות, לא פרויקטים. הפרויקטים האמיתיים מופיעים ליד כל יכולת — כהוכחה, לא כתפריט.</p>
+      <h2 id="features-title" class="sec-head__title" data-en="Five screens. Each one stands alone.">חמישה מסכים. כל אחד עומד לבד.</h2>
+      <p class="sec-head__lede" data-en="Capabilities, not projects. The real projects sit next to each capability — as proof, not as a menu.">יכולות, לא פרויקטים. הפרויקטים האמיתיים מופיעים ליד כל יכולת — כהוכחה, לא כתפריט.</p>
     </header>
   </div>
 
@@ -116,14 +118,14 @@
         <svg class="screen__g" aria-hidden="true"><use href="#g-egg"/></svg>
       </div>
       <figure class="screen__fig">
-        <img loading="lazy" src="img/hackathon.webp" width="1600" height="1067" alt="חדר האקתון בבוקר לפני פתיחה: שולחנות ארוכים עם לפטופים, פתקים דביקים על קיר זכוכית, לוח מחיק, כיסאות בירוק זית ואור חלון">
-        <figcaption class="mono">תמונות מהאקתונים שבוצעו · חדר ההאקתון בבוקר, לפני שהקבוצות נכנסות (הפקה פנימית; צילומי המחזורים יעלו כאן).</figcaption>
+        <img loading="lazy" src="img/hackathon.webp" width="1600" height="1067" alt="חדר האקתון בבוקר לפני פתיחה: שולחנות ארוכים עם לפטופים, פתקים דביקים על קיר זכוכית, לוח מחיק, כיסאות בירוק זית ואור חלון" data-en-alt="A hackathon room in the morning before opening: long tables with laptops, sticky notes on a glass wall, a whiteboard, olive-green chairs and window light">
+        <figcaption class="mono" data-en="Photos from hackathons we ran · the hackathon room in the morning, before the teams walk in (produced in house; photos of the cohorts will go up here).">תמונות מהאקתונים שבוצעו · חדר ההאקתון בבוקר, לפני שהקבוצות נכנסות (הפקה פנימית; צילומי המחזורים יעלו כאן).</figcaption>
       </figure>
       <div class="screen__body">
-        <h3 class="screen__title">האקתון יומי / שבועי</h3>
-        <p class="screen__desc">יום אחד או שבוע אחד. קבוצות של 3–5, בעיה מוגדרת מראש, ומועד הצגה קבוע. אנחנו מביאים את הציוד, את המנטורים ואת המסגרת; המשתתפים מביאים את הפתרון.</p>
-        <p class="screen__gain"><span class="screen__gain-k">מה זה נותן לך</span> קבוצה שלמדה לעבוד ביחד תחת לוח זמנים, ותוצר שעובד בסוף היום — לא מצגת על תוצר.</p>
-        <p class="screen__proof"><span class="mono">מתאים ל</span> חטיבות ותיכונים · מכינות · צוותי פיתוח בארגונים</p>
+        <h3 class="screen__title" data-en="Daily / weekly hackathon">האקתון יומי / שבועי</h3>
+        <p class="screen__desc" data-en="One day or one week. Teams of 3–5, a problem defined in advance, and a fixed presentation slot. We bring the equipment, the mentors and the framework; the participants bring the solution.">יום אחד או שבוע אחד. קבוצות של 3–5, בעיה מוגדרת מראש, ומועד הצגה קבוע. אנחנו מביאים את הציוד, את המנטורים ואת המסגרת; המשתתפים מביאים את הפתרון.</p>
+        <p class="screen__gain" data-en-html="<span class=&quot;screen__gain-k&quot;>What you get</span> A team that learned to work together against a clock, and something that works by the end of the day — not a presentation about something that works."><span class="screen__gain-k">מה זה נותן לך</span> קבוצה שלמדה לעבוד ביחד תחת לוח זמנים, ותוצר שעובד בסוף היום — לא מצגת על תוצר.</p>
+        <p class="screen__proof" data-en-html="<span class=&quot;mono&quot;>Fits</span> middle and high schools · pre-army academies · engineering teams inside companies"><span class="mono">מתאים ל</span> חטיבות ותיכונים · מכינות · צוותי פיתוח בארגונים</p>
       </div>
     </div>
   </article>
@@ -134,18 +136,18 @@
         <p class="mono screen__idx">02</p>
         <svg class="screen__g" aria-hidden="true"><use href="#g-larva"/></svg>
       </div>
-      <figure class="screen__fig screen__fig--soon" aria-label="מקום שמור לתמונות מהכנס">
+      <figure class="screen__fig screen__fig--soon" aria-label="מקום שמור לתמונות מהכנס" data-en-aria-label="Reserved space for the conference photos">
         <div class="soon">
-          <p class="soon__title">תמונות מהכנס — בקרוב</p>
-          <p class="mono soon__note">הצילומים מהכנס האחרון ממתינים לאישור לפרסום. לא מציגים כאן תמונה אחרת במקומם.</p>
+          <p class="soon__title" data-en="Conference photos — coming soon">תמונות מהכנס — בקרוב</p>
+          <p class="mono soon__note" data-en="The photos from the last conference are waiting for publication clearance. We are not putting a different picture here in their place.">הצילומים מהכנס האחרון ממתינים לאישור לפרסום. לא מציגים כאן תמונה אחרת במקומם.</p>
         </div>
-        <figcaption class="mono">מקום שמור · תמונות מהכנס · יתעדכן עם קבלת האישור</figcaption>
+        <figcaption class="mono" data-en="Reserved · conference photos · updated once clearance comes through">מקום שמור · תמונות מהכנס · יתעדכן עם קבלת האישור</figcaption>
       </figure>
       <div class="screen__body">
-        <h3 class="screen__title">הרצאות ארגוניות</h3>
-        <p class="screen__desc">שעה עד שעתיים מול צוות או הנהלה: מה ראייה ממוחשבת ו־<span dir="ltr">AI</span> עושים היום בפועל, מה סריקת לידאר משנה בשטח, ואיך מלמדים צוות לחשוב כמו חוקר. עם הדגמות חיות מהמערכות שלנו, לא מצגת בלבד.</p>
-        <p class="screen__gain"><span class="screen__gain-k">מה זה נותן לך</span> צוות שיוצא עם שפה משותפת ועם שאלות טובות יותר — עוד באותו יום.</p>
-        <p class="screen__proof"><span class="mono">פורמטים</span> הרצאת מליאה · סדנת הנהלה · יום עיון פנימי</p>
+        <h3 class="screen__title" data-en="Corporate talks">הרצאות ארגוניות</h3>
+        <p class="screen__desc" data-en-html="One to two hours in front of a team or a leadership group: what computer vision and <span dir=&quot;ltr&quot;>AI</span> actually do today, what a LiDAR scan changes on site, and how you teach a team to think like a researcher. With live demos from our own systems, not slides alone.">שעה עד שעתיים מול צוות או הנהלה: מה ראייה ממוחשבת ו־<span dir="ltr">AI</span> עושים היום בפועל, מה סריקת לידאר משנה בשטח, ואיך מלמדים צוות לחשוב כמו חוקר. עם הדגמות חיות מהמערכות שלנו, לא מצגת בלבד.</p>
+        <p class="screen__gain" data-en-html="<span class=&quot;screen__gain-k&quot;>What you get</span> A team that walks out with a shared vocabulary and better questions — the same day."><span class="screen__gain-k">מה זה נותן לך</span> צוות שיוצא עם שפה משותפת ועם שאלות טובות יותר — עוד באותו יום.</p>
+        <p class="screen__proof" data-en-html="<span class=&quot;mono&quot;>Formats</span> plenary talk · leadership workshop · internal study day"><span class="mono">פורמטים</span> הרצאת מליאה · סדנת הנהלה · יום עיון פנימי</p>
       </div>
     </div>
   </article>
@@ -157,15 +159,15 @@
         <svg class="screen__g" aria-hidden="true"><use href="#g-pupa"/></svg>
       </div>
       <figure class="screen__fig">
-        <img loading="lazy" src="img/gefen.webp" width="1600" height="1067" alt="שולחן מחקר בבית ספר: מיקרוסקופ סטריאו, לפטופ, לוח חיישן מחובר ללוח ניסוי, צנצנת עם ענף ירוק, ומחברת מעבדה פתוחה עם גרפים בעיפרון">
-        <figcaption class="mono">שולחן מחקר של קבוצה: שאלה, חיישן, נתונים, מחברת. באותו סדר.</figcaption>
+        <img loading="lazy" src="img/gefen.webp" width="1600" height="1067" alt="שולחן מחקר בבית ספר: מיקרוסקופ סטריאו, לפטופ, לוח חיישן מחובר ללוח ניסוי, צנצנת עם ענף ירוק, ומחברת מעבדה פתוחה עם גרפים בעיפרון" data-en-alt="A school research bench: a stereo microscope, a laptop, a sensor board wired to a breadboard, a jar holding a green branch, and an open lab notebook with pencil graphs">
+        <figcaption class="mono" data-en="A team's research bench: question, sensor, data, notebook. In that order.">שולחן מחקר של קבוצה: שאלה, חיישן, נתונים, מחברת. באותו סדר.</figcaption>
       </figure>
       <div class="screen__body">
-        <p class="mono screen__kicker">סדנאות שיתופיות · תוכנית גפן</p>
-        <h3 class="screen__title">שם קוד: <span class="codename">«מהזחל אל הפרפר»</span></h3>
-        <p class="screen__desc">תוכנית נוער שמחברת מחקר וטכנולוגיה. כל קבוצה בוחרת שאלה, בונה כלי למדוד אותה — חיישן, מצלמה, מודל — אוספת נתונים ומציגה מסקנה. המטרה: לחזק את החשיבה המחקרית של בני נוער דרך הטכנולוגיה המתקדמת ביותר שיש.</p>
-        <p class="screen__gain"><span class="screen__gain-k">מה זה נותן לך</span> נוער שיודע לשאול, למדוד ולהסיק — לא רק להפעיל.</p>
-        <p class="screen__proof"><span class="mono">שם הקוד רשום</span> כמסלול לשילוב מחקר וטכנולוגיה לנוער · מסלול שנתי או סמסטריאלי</p>
+        <p class="mono screen__kicker" data-en="Collaborative workshops · the Gefen program">סדנאות שיתופיות · תוכנית גפן</p>
+        <h3 class="screen__title" data-en-html="Code name: <span class=&quot;codename&quot;>From Caterpillar to Butterfly</span> <span class=&quot;codename-he&quot; lang=&quot;he&quot; dir=&quot;rtl&quot;>«מהזחל אל הפרפר»</span>">שם קוד: <span class="codename">«מהזחל אל הפרפר»</span></h3>
+        <p class="screen__desc" data-en="A youth program that ties research to technology. Each team picks a question, builds a tool to measure it — a sensor, a camera, a model — collects data and presents a conclusion. The goal: strengthen teenagers' research thinking through the most advanced technology there is.">תוכנית נוער שמחברת מחקר וטכנולוגיה. כל קבוצה בוחרת שאלה, בונה כלי למדוד אותה — חיישן, מצלמה, מודל — אוספת נתונים ומציגה מסקנה. המטרה: לחזק את החשיבה המחקרית של בני נוער דרך הטכנולוגיה המתקדמת ביותר שיש.</p>
+        <p class="screen__gain" data-en-html="<span class=&quot;screen__gain-k&quot;>What you get</span> Teenagers who know how to ask, measure and conclude — not only operate."><span class="screen__gain-k">מה זה נותן לך</span> נוער שיודע לשאול, למדוד ולהסיק — לא רק להפעיל.</p>
+        <p class="screen__proof" data-en-html="<span class=&quot;mono&quot;>The code name is registered</span> as a track for combining research and technology for youth · a full-year or one-semester track"><span class="mono">שם הקוד רשום</span> כמסלול לשילוב מחקר וטכנולוגיה לנוער · מסלול שנתי או סמסטריאלי</p>
       </div>
     </div>
   </article>
@@ -177,14 +179,14 @@
         <svg class="screen__g" aria-hidden="true"><use href="#g-fly"/></svg>
       </div>
       <figure class="screen__fig">
-        <img loading="lazy" src="img/smartcity.webp" width="1600" height="1067" alt="דגם שולחני של עיר חכמה על לוח דיקט: בניינים לבנים, רמזורים ופנסי רחוב זעירים המחווטים לבקר וללוח ניסוי, ולפטופ עם מפת נקודות זוהרת">
-        <figcaption class="mono">דגם עיר על השולחן, בקר בקצה הלוח, מפה חיה על המסך. חומרה ותוכנה באותו פרויקט.</figcaption>
+        <img loading="lazy" src="img/smartcity.webp" width="1600" height="1067" alt="דגם שולחני של עיר חכמה על לוח דיקט: בניינים לבנים, רמזורים ופנסי רחוב זעירים המחווטים לבקר וללוח ניסוי, ולפטופ עם מפת נקודות זוהרת" data-en-alt="A tabletop smart-city model on a plywood board: white buildings, tiny traffic lights and street lamps wired to a controller and a breadboard, and a laptop showing a glowing dot map">
+        <figcaption class="mono" data-en="A city model on the table, a controller at the edge of the board, a live map on screen. Hardware and software in one project.">דגם עיר על השולחן, בקר בקצה הלוח, מפה חיה על המסך. חומרה ותוכנה באותו פרויקט.</figcaption>
       </figure>
       <div class="screen__body">
-        <h3 class="screen__title">תוכנית <span dir="ltr">Smart-City</span></h3>
-        <p class="screen__desc">תוכנית שיתופית שמשלבת חומרה ותוכנה: תלמידים בונים חיישנים ומצלמות שמזהות מפגעים עירוניים — מדרכה שבורה, גזם, תאורה — ומחברים אותם לפלטפורמה משותפת אחת שכל הקבוצות מזינות.</p>
-        <p class="screen__gain"><span class="screen__gain-k">מה זה נותן לך</span> פרויקט עם עיר אמיתית ונתונים אמיתיים — לא תרגיל.</p>
-        <p class="screen__proof"><span class="mono">הוכחה</span> <a href="https://ariel198989.github.io/smart-city" target="_blank" rel="noopener">Smart City</a> — הפלטפורמה שהתלמידים עובדים מולה, פועלת ופתוחה.</p>
+        <h3 class="screen__title" data-en-html="The <span dir=&quot;ltr&quot;>Smart-City</span> program">תוכנית <span dir="ltr">Smart-City</span></h3>
+        <p class="screen__desc" data-en="A collaborative program that puts hardware and software together: students build sensors and cameras that spot urban hazards — a broken pavement, cut branches, street lighting — and connect them to one shared platform every team feeds.">תוכנית שיתופית שמשלבת חומרה ותוכנה: תלמידים בונים חיישנים ומצלמות שמזהות מפגעים עירוניים — מדרכה שבורה, גזם, תאורה — ומחברים אותם לפלטפורמה משותפת אחת שכל הקבוצות מזינות.</p>
+        <p class="screen__gain" data-en-html="<span class=&quot;screen__gain-k&quot;>What you get</span> A project with a real city and real data — not an exercise."><span class="screen__gain-k">מה זה נותן לך</span> פרויקט עם עיר אמיתית ונתונים אמיתיים — לא תרגיל.</p>
+        <p class="screen__proof" data-en-html="<span class=&quot;mono&quot;>Proof</span> <a href=&quot;https://ariel198989.github.io/smart-city&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;>Smart City</a> — the platform the students work against, live and open."><span class="mono">הוכחה</span> <a href="https://ariel198989.github.io/smart-city" target="_blank" rel="noopener">Smart City</a> — הפלטפורמה שהתלמידים עובדים מולה, פועלת ופתוחה.</p>
       </div>
     </div>
   </article>
@@ -193,15 +195,15 @@
     <div class="wrap screen__grid">
       <div class="screen__head">
         <p class="mono screen__idx">05</p>
-        <span class="mono tag">תוכן בהכנה</span>
+        <span class="mono tag" data-en="Content in progress">תוכן בהכנה</span>
       </div>
       <figure class="screen__fig">
-        <img loading="lazy" src="img/hardware.webp" width="1600" height="1067" alt="שולחן אלקטרוניקה: מעגל מודפס ירוק עם רכיבים, מלחם על מעמד עם קורט עשן, מגש רכיבים ממוינים, פינצטה וגששי מולטימטר על משטח חיתוך כהה">
-        <figcaption class="mono">הצד הפיזי של כל תוכנית: הלחמה, מעגלים, בקרים.</figcaption>
+        <img loading="lazy" src="img/hardware.webp" width="1600" height="1067" alt="שולחן אלקטרוניקה: מעגל מודפס ירוק עם רכיבים, מלחם על מעמד עם קורט עשן, מגש רכיבים ממוינים, פינצטה וגששי מולטימטר על משטח חיתוך כהה" data-en-alt="An electronics bench: a green printed circuit board with components, a soldering iron on its stand with a wisp of smoke, a tray of sorted parts, tweezers and multimeter probes on a dark cutting mat">
+        <figcaption class="mono" data-en="The physical side of every program: soldering, circuits, controllers.">הצד הפיזי של כל תוכנית: הלחמה, מעגלים, בקרים.</figcaption>
       </figure>
       <div class="screen__body">
-        <h3 class="screen__title">עולם האלקטרוניקה והחומרה</h3>
-        <p class="screen__desc">הלחמה, מעגלים, בקרים ומדפסות תלת־ממד — הצד הפיזי של כל תוכנית כאן. התכנים המלאים למסך הזה בהכנה ויעלו בקרוב.</p>
+        <h3 class="screen__title" data-en="Electronics and hardware">עולם האלקטרוניקה והחומרה</h3>
+        <p class="screen__desc" data-en="Soldering, circuits, controllers and 3D printers — the physical side of every program here. The full content for this screen is in preparation and goes up soon.">הלחמה, מעגלים, בקרים ומדפסות תלת־ממד — הצד הפיזי של כל תוכנית כאן. התכנים המלאים למסך הזה בהכנה ויעלו בקרוב.</p>
       </div>
     </div>
   </article>
@@ -211,19 +213,19 @@
 <section class="collab" id="collab" aria-labelledby="collab-title">
   <div class="wrap collab__grid">
     <div class="collab__text">
-      <p class="mono sec-head__idx sec-head__idx--light">יכולת בלעדית</p>
-      <h2 id="collab-title" class="collab__title">מערכת שתומכת בשיתופיות בין משתמשים</h2>
-      <p class="collab__lede">כל משתתף עובד מהמסך שלו — וכולם רואים את אותה סדנה. קוד, נתונים, תוצאות ומודלים מסונכרנים בין המשתמשים בזמן אמת, והמדריך רואה את כל הקבוצות בבת אחת.</p>
+      <p class="mono sec-head__idx sec-head__idx--light" data-en="An exclusive capability">יכולת בלעדית</p>
+      <h2 id="collab-title" class="collab__title" data-en="A system built for collaboration between users">מערכת שתומכת בשיתופיות בין משתמשים</h2>
+      <p class="collab__lede" data-en="Every participant works from their own screen — and everyone sees the same workshop. Code, data, results and models stay in sync between users in real time, and the instructor sees every team at once.">כל משתתף עובד מהמסך שלו — וכולם רואים את אותה סדנה. קוד, נתונים, תוצאות ומודלים מסונכרנים בין המשתמשים בזמן אמת, והמדריך רואה את כל הקבוצות בבת אחת.</p>
       <ul class="collab__list">
-        <li><span class="mono">01</span> קבוצה מתחילה בכיתה, ממשיכה מהבית, וחוזרת לאותה סדנה.</li>
-        <li><span class="mono">02</span> תוצאה שקבוצה אחת מגיעה אליה זמינה מיד לשאר.</li>
-        <li><span class="mono">03</span> המדריך רואה איפה כל קבוצה נמצאת — בלי לעבור בין מסכים.</li>
+        <li data-en-html="<span class=&quot;mono&quot;>01</span> A team starts in class, carries on from home, and comes back to the same workshop."><span class="mono">01</span> קבוצה מתחילה בכיתה, ממשיכה מהבית, וחוזרת לאותה סדנה.</li>
+        <li data-en-html="<span class=&quot;mono&quot;>02</span> A result one team reaches is available to the others immediately."><span class="mono">02</span> תוצאה שקבוצה אחת מגיעה אליה זמינה מיד לשאר.</li>
+        <li data-en-html="<span class=&quot;mono&quot;>03</span> The instructor sees where each team stands — without switching screens."><span class="mono">03</span> המדריך רואה איפה כל קבוצה נמצאת — בלי לעבור בין מסכים.</li>
       </ul>
-      <p class="collab__proof"><span class="mono">המערכת</span> <strong>TinkerLab — Workshop OS</strong> · מערכת ההפעלה של הסדנאות שלנו, פותחה בבית.</p>
+      <p class="collab__proof" data-en-html="<span class=&quot;mono&quot;>The system</span> <strong>TinkerLab — Workshop OS</strong> · the operating system of our workshops, built in house."><span class="mono">המערכת</span> <strong>TinkerLab — Workshop OS</strong> · מערכת ההפעלה של הסדנאות שלנו, פותחה בבית.</p>
     </div>
     <figure class="collab__fig">
-      <img loading="lazy" src="img/collab.webp" width="1600" height="900" alt="צילום מלמעלה של שולחן סדנה משותף: ארבעה לפטופים סביבו, על כולם אותו דיאגרמת צמתים ירוקה, פתקים, עפרונות ושלדת רובוט קטנה במרכז">
-      <figcaption class="mono">ארבעה מסכים, סדנה אחת. מה שקורה באחד — קורה בכולם.</figcaption>
+      <img loading="lazy" src="img/collab.webp" width="1600" height="900" alt="צילום מלמעלה של שולחן סדנה משותף: ארבעה לפטופים סביבו, על כולם אותו דיאגרמת צמתים ירוקה, פתקים, עפרונות ושלדת רובוט קטנה במרכז" data-en-alt="A top-down shot of a shared workshop table: four laptops around it, all showing the same green node diagram, sticky notes, pencils and a small robot chassis in the middle">
+      <figcaption class="mono" data-en="Four screens, one workshop. What happens on one happens on all of them.">ארבעה מסכים, סדנה אחת. מה שקורה באחד — קורה בכולם.</figcaption>
     </figure>
   </div>
 </section>
@@ -232,23 +234,23 @@
 <section class="proof" id="proof" aria-labelledby="proof-title">
   <div class="wrap">
     <header class="sec-head">
-      <p class="mono sec-head__idx">הוכחה</p>
-      <h2 id="proof-title" class="sec-head__title">פרויקטים אמיתיים</h2>
-      <p class="sec-head__lede">בוצע על בסיס הפיצ׳רים למעלה.</p>
+      <p class="mono sec-head__idx" data-en="Proof">הוכחה</p>
+      <h2 id="proof-title" class="sec-head__title" data-en="Real projects">פרויקטים אמיתיים</h2>
+      <p class="sec-head__lede" data-en="Built on the capabilities above.">בוצע על בסיס הפיצ׳רים למעלה.</p>
     </header>
     <ul class="proof__list">
       <li>
         <div class="proof__item">
-          <span class="mono proof__k">שיתופיות · 03</span>
+          <span class="mono proof__k" data-en="Collaboration · 03">שיתופיות · 03</span>
           <span class="proof__name">TinkerLab — Workshop OS</span>
-          <span class="proof__desc">מערכת הסדנאות השיתופית: קבוצות, נתונים ומודלים מסונכרנים בזמן אמת, המדריך רואה הכול.</span>
+          <span class="proof__desc" data-en="The collaborative workshop system: teams, data and models in sync in real time, and the instructor sees all of it.">מערכת הסדנאות השיתופית: קבוצות, נתונים ומודלים מסונכרנים בזמן אמת, המדריך רואה הכול.</span>
         </div>
       </li>
       <li>
         <a class="proof__item" href="https://ariel198989.github.io/smart-city" target="_blank" rel="noopener">
-          <span class="mono proof__k">חומרה + תוכנה · 04</span>
+          <span class="mono proof__k" data-en="Hardware + software · 04">חומרה + תוכנה · 04</span>
           <span class="proof__name">Smart City</span>
-          <span class="proof__desc">פלטפורמת מפגעים עירוניים שקבוצות תלמידים מזינות מחיישנים ומצלמות שבנו בעצמן.</span>
+          <span class="proof__desc" data-en="An urban-hazard platform that student teams feed from sensors and cameras they built themselves.">פלטפורמת מפגעים עירוניים שקבוצות תלמידים מזינות מחיישנים ומצלמות שבנו בעצמן.</span>
         </a>
       </li>
     </ul>
@@ -259,27 +261,27 @@
 <section class="how" id="how" aria-labelledby="how-title">
   <div class="wrap">
     <header class="sec-head">
-      <p class="mono sec-head__idx">איך עובדים</p>
-      <h2 id="how-title" class="sec-head__title">שלושה שלבים. מהזחל אל הפרפר.</h2>
+      <p class="mono sec-head__idx" data-en="How we work">איך עובדים</p>
+      <h2 id="how-title" class="sec-head__title" data-en="Three stages. From caterpillar to butterfly.">שלושה שלבים. מהזחל אל הפרפר.</h2>
     </header>
     <ol class="steps">
       <li class="step reveal">
         <svg class="step__g" aria-hidden="true"><use href="#g-larva"/></svg>
-        <p class="mono step__k">א · שאלה</p>
-        <h3 class="step__title">מגדירים שאלה שאפשר למדוד</h3>
-        <p class="step__desc">לא "נלמד רובוטיקה" אלא "כמה זמן לוקח לרמזור בכניסה לבית הספר להתפנות?" שאלה אחת, מדידה, לכל קבוצה.</p>
+        <p class="mono step__k" data-en="A · Question">א · שאלה</p>
+        <h3 class="step__title" data-en="Define a question you can measure">מגדירים שאלה שאפשר למדוד</h3>
+        <p class="step__desc" data-en="Not &quot;let's learn robotics&quot; but &quot;how long does the light at the school gate take to clear?&quot; One question, measurable, per team.">לא "נלמד רובוטיקה" אלא "כמה זמן לוקח לרמזור בכניסה לבית הספר להתפנות?" שאלה אחת, מדידה, לכל קבוצה.</p>
       </li>
       <li class="step reveal">
         <svg class="step__g" aria-hidden="true"><use href="#g-pupa"/></svg>
-        <p class="mono step__k">ב · ניסוי</p>
-        <h3 class="step__title">בונים כלי, אוספים נתונים, טועים ומתקנים</h3>
-        <p class="step__desc">חיישן, מצלמה או מודל — מה שהשאלה דורשת. הכול נרשם במערכת השיתופית, כך שהטעות של קבוצה אחת חוסכת אותה לשנייה.</p>
+        <p class="mono step__k" data-en="B · Experiment">ב · ניסוי</p>
+        <h3 class="step__title" data-en="Build a tool, collect data, get it wrong, fix it">בונים כלי, אוספים נתונים, טועים ומתקנים</h3>
+        <p class="step__desc" data-en="A sensor, a camera or a model — whatever the question calls for. Everything is logged in the shared system, so one team's mistake saves the next team from making it.">חיישן, מצלמה או מודל — מה שהשאלה דורשת. הכול נרשם במערכת השיתופית, כך שהטעות של קבוצה אחת חוסכת אותה לשנייה.</p>
       </li>
       <li class="step reveal">
         <svg class="step__g" aria-hidden="true"><use href="#g-fly"/></svg>
-        <p class="mono step__k">ג · תוצר</p>
-        <h3 class="step__title">מציגים מסקנה ותוצר</h3>
-        <p class="step__desc">לכיתה, להנהלה או לעירייה. תוצר שעובד, נתונים שאפשר לבדוק, ומסקנה במשפט אחד. זה הרגע שבו רואים את השינוי.</p>
+        <p class="mono step__k" data-en="C · Outcome">ג · תוצר</p>
+        <h3 class="step__title" data-en="Present a conclusion and something that works">מציגים מסקנה ותוצר</h3>
+        <p class="step__desc" data-en="To the class, to management or to the municipality. Something that works, data anyone can check, and a conclusion in one sentence. That is the moment the change shows.">לכיתה, להנהלה או לעירייה. תוצר שעובד, נתונים שאפשר לבדוק, ומסקנה במשפט אחד. זה הרגע שבו רואים את השינוי.</p>
       </li>
     </ol>
   </div>
@@ -289,12 +291,12 @@
 <section class="cta" id="cta" aria-labelledby="cta-title">
   <div class="wrap cta__grid">
     <div>
-      <h2 id="cta-title" class="cta__title">יש לכם בית ספר, מכינה או צוות? בואו נבנה תוכנית.</h2>
-      <p class="cta__lede">שיחה קצרה בוואטסאפ עם לידור. מספרים לנו מי הקבוצה ומה יש לה ביד — ואומרים לכם מאיזה מסך מתחילים.</p>
+      <h2 id="cta-title" class="cta__title" data-en="Have a school, an academy or a team? Let's build a program.">יש לכם בית ספר, מכינה או צוות? בואו נבנה תוכנית.</h2>
+      <p class="cta__lede" data-en="A short WhatsApp conversation with Lidor. Tell us who the group is and what they have in hand — and we'll tell you which screen to start from.">שיחה קצרה בוואטסאפ עם לידור. מספרים לנו מי הקבוצה ומה יש לה ביד — ואומרים לכם מאיזה מסך מתחילים.</p>
     </div>
-    <a class="wa wa--lg" href="https://wa.me/972507594477?text=%D7%94%D7%99%D7%99%20%D7%9C%D7%99%D7%93%D7%95%D7%A8%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%9E%D7%90%D7%AA%D7%A8%20%D7%94%D7%A4%D7%93%D7%92%D7%95%D7%92%D7%99%D7%94.%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A9%D7%9E%D7%95%D7%A2%20%D7%A2%D7%9C%20%D7%AA%D7%95%D7%9B%D7%A0%D7%99%D7%AA%20%D7%9C%D7%91%D7%99%D7%AA%20%D7%94%D7%A1%D7%A4%D7%A8%20%2F%20%D7%9C%D7%90%D7%A8%D7%92%D7%95%D7%9F%20%D7%A9%D7%9C%D7%A0%D7%95." target="_blank" rel="noopener">
+    <a class="wa wa--lg" href="https://wa.me/972507594477?text=%D7%94%D7%99%D7%99%20%D7%9C%D7%99%D7%93%D7%95%D7%A8%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%9E%D7%90%D7%AA%D7%A8%20%D7%94%D7%A4%D7%93%D7%92%D7%95%D7%92%D7%99%D7%94.%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A9%D7%9E%D7%95%D7%A2%20%D7%A2%D7%9C%20%D7%AA%D7%95%D7%9B%D7%A0%D7%99%D7%AA%20%D7%9C%D7%91%D7%99%D7%AA%20%D7%94%D7%A1%D7%A4%D7%A8%20%2F%20%D7%9C%D7%90%D7%A8%D7%92%D7%95%D7%9F%20%D7%A9%D7%9C%D7%A0%D7%95." data-en-href="https://wa.me/972507594477?text=Hi%20Lidor%2C%20I%20came%20from%20the%20pedagogy%20site.%20I'd%20love%20to%20hear%20about%20a%20program%20for%20our%20school%20%2F%20organization." target="_blank" rel="noopener">
       <svg aria-hidden="true" viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 12 12 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7a2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3Z"/></svg>
-      <span>לכתוב ללידור בוואטסאפ</span>
+      <span data-en="Message Lidor on WhatsApp">לכתוב ללידור בוואטסאפ</span>
     </a>
   </div>
 </section>
@@ -305,15 +307,15 @@
   <div class="wrap foot__grid">
     <div class="foot__brand">
       <span class="word" dir="ltr">corewise</span>
-      <span class="foot__he">קורוויז · פדגוגיה, חומרה ואלקטרוניקה</span>
+      <span class="foot__he" data-en="Corewise · pedagogy, hardware and electronics">קורוויז · פדגוגיה, חומרה ואלקטרוניקה</span>
     </div>
-    <p class="foot__skills">כל הוויזואלים באתר הופקו ביכולות הפנימיות של קורוויז.</p>
-    <nav class="foot__nav" aria-label="מחלקות קורוויז">
-      <a href="https://corewise.co.il">האתר הראשי</a>
-      <a href="../measure/">פתרונות מדידה</a>
-      <a href="../vision/">ראייה ממוחשבת</a>
-      <a href="../ai/">הטמעות <span dir="ltr">AI</span></a>
-      <a href="../ar/">AR <span class="mono foot__tag">בשלבי הקמה</span></a>
+    <p class="foot__skills" data-en="Every visual on this site was produced with Corewise's in-house capabilities.">כל הוויזואלים באתר הופקו ביכולות הפנימיות של קורוויז.</p>
+    <nav class="foot__nav" aria-label="מחלקות קורוויז" data-en-aria-label="Corewise departments">
+      <a href="https://corewise.co.il" data-en="Main site">האתר הראשי</a>
+      <a href="../measure/" data-en="Measurement solutions">פתרונות מדידה</a>
+      <a href="../vision/" data-en="Computer vision">ראייה ממוחשבת</a>
+      <a href="../ai/" data-en-html="<span dir=&quot;ltr&quot;>AI</span> integrations">הטמעות <span dir="ltr">AI</span></a>
+      <a href="../ar/" data-en-html="AR <span class=&quot;mono foot__tag&quot;>being built</span>">AR <span class="mono foot__tag">בשלבי הקמה</span></a>
     </nav>
   </div>
 </footer>
