@@ -45,7 +45,7 @@
       axisWa: t => 'היי לידור, ראיתי את ' + t + ' בסיור באתר. אשמח לדבר.',
       cardCta: 'השאירו פרטים ונשלח לכם לינק',
       carPrev: 'המסך הקודם', carNext: 'המסך הבא', axisSiteShort: 'אתר ייעודי', axisTapSite: 'הקישו · יש אתר ייעודי',
-      teamRoom: 'לחדר הצוות ↓', teamWa: 'היי לידור, ראיתי אתכם באתר. אשמח לדבר.',
+      teamRoom: 'לחדר הצוות ↓', featOpen: 'לפתוח ↗', teamWa: 'היי לידור, ראיתי אתכם באתר. אשמח לדבר.',
       assistOpen: 'שאלו את קורוויז', assistTitle: 'עוזר קורוויז',
       assistGreet: 'שאלו אותי כל דבר על קורוויז, על חמשת התחומים או על מה שאנחנו עושים.',
       assistPlaceholder: 'כתבו הודעה', assistSend: 'שליחה', assistClose: 'סגירה',
@@ -79,7 +79,7 @@
       axisWa: t => 'Hi Lidor, I saw ' + t + ' on the site tour. I would like to talk.',
       cardCta: 'Leave your details and we will send the link',
       carPrev: 'Previous screen', carNext: 'Next screen', axisSiteShort: 'own site', axisTapSite: 'tap · has its own site',
-      teamRoom: 'Into the team room ↓', teamWa: 'Hi Lidor, I saw you on the site. I would like to talk.',
+      teamRoom: 'Into the team room ↓', featOpen: 'Open ↗', teamWa: 'Hi Lidor, I saw you on the site. I would like to talk.',
       assistOpen: 'Ask Corewise', assistTitle: 'Corewise assistant',
       assistGreet: 'Ask me anything about Corewise, the five business lines, or what we do.',
       assistPlaceholder: 'Type a message', assistSend: 'Send', assistClose: 'Close',
@@ -1292,8 +1292,12 @@
       '<button class="cw-axis__feat" data-i="' + i + '">' +
         (f.img ? '<img src="' + f.img + '" alt="" loading="lazy" decoding="async">' : '<span class="cw-axis__feat-mark">' + (i + 1) + '</span>') +
         '<span class="cw-axis__feat-t"><b>' + esc(f.title) + '</b>' + (f.tag ? '<i>' + esc(f.tag) + '</i>' : '') + '</span>' +
-        '<span class="cw-axis__feat-x">' + esc(f.text) + '</span>' +
+        '<span class="cw-axis__feat-x">' + esc(f.text) +
+          (f.link ? ' <a class="cw-axis__feat-go" href="' + f.link + '" target="_blank" rel="noopener">' + T('featOpen') + '</a>' : '') +
+        '</span>' +
       '</button>').join('');
+    /* a link inside the tile must open the link, not toggle the tile */
+    ff.querySelectorAll('.cw-axis__feat-go').forEach(a => a.addEventListener('click', e => e.stopPropagation()));
     ff.querySelectorAll('.cw-axis__feat').forEach(b => b.onclick = () => {
       const on = b.classList.contains('is-open');
       ff.querySelectorAll('.cw-axis__feat').forEach(x => x.classList.remove('is-open'));

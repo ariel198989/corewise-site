@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title data-en="Corewise · AR, still being built">קורוויז · AR, בשלבי הקמה</title>
-<meta name="description" data-en-content="The Corewise AR track is still being built: walk-in 360 worlds already exist, information layers over real spaces through the phone are in progress. Want to be first? Talk to Lidor." content="ציר ה-AR של קורוויז בשלבי הקמה: עולמות 360 שנכנסים אליהם כבר קיימים, שכבות מידע על מרחבים אמיתיים דרך הטלפון בבנייה. רוצים להיות הראשונים? דברו עם לידור.">
+<meta name="description" data-en-content="The Corewise AR track is being built out from something real: a live virtual supermarket you walk through, 13 departments, a real catalogue. Information layers over real spaces through the phone are next. Want to be first? Talk to Lidor." content="ציר ה-AR של קורוויז נבנה מתוך משהו אמיתי: סופר וירטואלי חי שהולכים בו, 13 מחלקות, קטלוג אמיתי. שכבות מידע על מרחבים אמיתיים דרך הטלפון בדרך. רוצים להיות הראשונים? דברו עם לידור.">
 <meta name="theme-color" content="#f4f2ec">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -42,8 +42,8 @@
           <span class="line"><mark class="hl">עדיין בבנייה.</mark> לא מסתירים.</span>
         </h1>
 
-        <p class="lede" style="--i:2" data-en="Some of it already works in the field, some is still on the bench. This page says exactly what exists, what is being built now, and what comes next.">
-          חלק מהיכולות כבר עובדות בשטח, חלק על השולחן. הדף הזה אומר בדיוק מה קיים, מה נבנה עכשיו ומה הלאה.
+        <p class="lede" style="--i:2" data-en-html='<a class="lede-link" href="#store">The first thing is already standing: a whole supermarket.</a> The rest is being built around it, and this page says exactly what exists, what is in progress and what comes next.'>
+          <a class="lede-link" href="#store">הדבר הראשון כבר עומד: סופר שלם.</a> השאר נבנה מסביבו, והדף הזה אומר בדיוק מה קיים, מה בעבודה ומה הלאה.
         </p>
 
         <div class="cta-row" style="--i:3">
@@ -75,6 +75,39 @@
     </div>
   </section>
 
+  <!-- ============ FEATURED: the virtual supermarket, the thing that already stands ============ -->
+  <section class="feature" id="store" aria-labelledby="store-h">
+    <div class="wrap">
+      <article class="sheet">
+
+        <figure class="sheet-fig" aria-describedby="store-cap">
+          <a class="sheet-frame" href="https://ar-store-eta.vercel.app" target="_blank" rel="noopener" aria-label="להיכנס לחנות הווירטואלית" data-en-aria-label="Enter the virtual shop">
+            <img src="img/store.webp" width="1400" height="700" alt="מעבר במחלקת חלב וביצים בסופר הווירטואלי: מדפים מלאים משני הצדדים ותפריט מחלקות למעלה" data-en-alt="An aisle in the dairy department of the virtual supermarket: full shelves on both sides and a department menu on top" loading="lazy">
+            <span class="corner c1" aria-hidden="true"></span><span class="corner c2" aria-hidden="true"></span>
+            <span class="corner c3" aria-hidden="true"></span><span class="corner c4" aria-hidden="true"></span>
+          </a>
+          <figcaption id="store-cap" data-en-html='<span class="mono">Fig. 02</span> · A screenshot from the shop itself, not a render. The dairy aisle, shelf after shelf.'>
+            <span class="mono">איור 02</span> · צילום מסך מהחנות עצמה, לא רינדור. מחלקת חלב וביצים, מדף אחרי מדף.
+          </figcaption>
+        </figure>
+
+        <div class="sheet-copy">
+          <p class="kicker"><span class="chip chip-live" data-en="live">חי</span><span class="mono" data-en="Product · in the field">מוצר · כבר בשטח</span></p>
+          <h2 id="store-h" data-en="The virtual supermarket">הסופר הווירטואלי</h2>
+          <p class="sheet-lede" data-en="A whole shop you walk through. Not a mock-up, a live product.">חנות שלמה שהולכים בה. לא הדמיה, מוצר חי.</p>
+          <ul class="facts" aria-label="מה יש בחנות" data-en-aria-label="What the shop has">
+            <li data-en="13 departments">13 מחלקות</li>
+            <li data-en="Real catalogue and price comparison">קטלוג אמיתי והשוואת מחירים</li>
+            <li data-en="A cart that travels with you">עגלה שנוסעת איתך</li>
+            <li data-en="A full basket for an event from one sentence">סל שלם לאירוע ממשפט אחד</li>
+          </ul>
+          <a class="btn-out" href="https://ar-store-eta.vercel.app" target="_blank" rel="noopener" data-en-html='Enter the shop <span class="mono" dir="ltr" aria-hidden="true">↗</span>'>להיכנס לחנות <span class="mono" dir="ltr" aria-hidden="true">↗</span></a>
+        </div>
+
+      </article>
+    </div>
+  </section>
+
   <!-- ============ LEDGER: exists / building / next ============ -->
   <section class="ledger" aria-labelledby="ledger-h">
     <div class="wrap">
@@ -91,7 +124,7 @@
           <p data-en="Walk-in 360 worlds, straight from the browser: room after room, doors, information windows.">עולמות 360 שנכנסים אליהם מהדפדפן: חדר אחרי חדר, דלתות, חלונות מידע.</p>
           <ul class="links">
             <li><a href="https://corewise.co.il" target="_blank" rel="noopener" data-en-html='The Corewise main site <span class="mono" dir="ltr">↗</span>'>האתר הראשי של קורוויז <span class="mono" dir="ltr">↗</span></a><span class="link-note" data-en="Built as an AR world you walk through">בנוי כעולם AR שהולכים בו</span></li>
-            <li><a href="https://ar-store-eta.vercel.app" target="_blank" rel="noopener" data-en-html='AR store, Rami Levy <span class="mono" dir="ltr">↗</span>'>חנות AR, רמי לוי <span class="mono" dir="ltr">↗</span></a><span class="link-note" data-en="A 3D supermarket, 13 departments">סופרמרקט תלת-ממדי, 13 מחלקות</span></li>
+            <li><a href="#store" data-en-html='The virtual supermarket <span class="mono" dir="ltr">↑</span>'>הסופר הווירטואלי <span class="mono" dir="ltr">↑</span></a><span class="link-note" data-en="Shown in full above">מוצג בהרחבה למעלה</span></li>
           </ul>
         </article>
 
@@ -104,7 +137,7 @@
           <p data-en="Information layers over real spaces, through the phone, with no app. Point the camera and the information sticks to the place.">שכבות מידע על מרחבים אמיתיים, דרך הטלפון, בלי אפליקציה. מכוונים את המצלמה, המידע נצמד למקום.</p>
           <figure class="mini">
             <img src="img/headset.webp" width="1600" height="1067" alt="משקפי AR על שולחן עבודה בסטודיו הנדסי" data-en-alt="AR glasses on a workbench in an engineering studio" loading="lazy">
-            <figcaption data-en-html='<span class="mono">Fig. 02</span> · The workbench. Hardware is being tested, but the target is the phone.'><span class="mono">איור 02</span> · שולחן העבודה. חומרה נבדקת, אבל היעד הוא הטלפון.</figcaption>
+            <figcaption data-en-html='<span class="mono">Fig. 03</span> · The workbench. Hardware is being tested, but the target is the phone.'><span class="mono">איור 03</span> · שולחן העבודה. חומרה נבדקת, אבל היעד הוא הטלפון.</figcaption>
           </figure>
         </article>
 
@@ -117,7 +150,7 @@
           <p data-en="Anchoring by markers and surfaces: a wall, a table, a shelf, each one able to say what it is and what is on it.">עיגון לפי סמנים ומשטחים: קיר, שולחן, מדף, כל אחד יודע להגיד מה הוא ומה עליו.</p>
           <figure class="mini">
             <img src="img/markers.webp" width="1600" height="1067" alt="קיר בטון עם רשת לוחות סמנים שחור-לבן וטלפון על חצובה מולם" data-en-alt="A concrete wall with a grid of black-and-white marker boards and a phone on a tripod facing them" loading="lazy">
-            <figcaption data-en-html='<span class="mono">Fig. 03</span> · A marker wall. This is how you teach a space to recognise itself.'><span class="mono">איור 03</span> · קיר סמנים. ככה מלמדים מרחב לזהות את עצמו.</figcaption>
+            <figcaption data-en-html='<span class="mono">Fig. 04</span> · A marker wall. This is how you teach a space to recognise itself.'><span class="mono">איור 04</span> · קיר סמנים. ככה מלמדים מרחב לזהות את עצמו.</figcaption>
           </figure>
         </article>
 

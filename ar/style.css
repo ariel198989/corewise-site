@@ -258,6 +258,73 @@ figcaption {
 }
 figcaption .mono { color: var(--ink-2); }
 
+/* ---------- featured: the virtual supermarket ---------- */
+/* One drawing sheet on the paper: the shop screenshot as a framed plate with the
+   same lime corners as the hero, the copy beside it. This is the thing that already
+   stands, so it gets the lime top rule the ledger reserves for "already live". */
+.feature { padding-block: 0 var(--section); scroll-margin-top: 72px; }
+.sheet {
+  display: grid; gap: var(--space-8);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-block-start: 3px solid var(--marker);
+  border-radius: var(--radius-md);
+  padding: clamp(1.1rem, 3vw, 2.5rem);
+  box-shadow: 0 24px 50px -36px rgba(20, 24, 28, .35);
+}
+@media (min-width: 900px) {
+  .sheet {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: clamp(2rem, 4vw, 3.5rem);
+    align-items: center;
+  }
+}
+.sheet-fig { min-width: 0; }
+.sheet-frame {
+  position: relative; display: block;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--ink);
+  box-shadow: 0 2px 6px rgba(20, 24, 28, .12);
+}
+.sheet-frame img {
+  width: 100%; aspect-ratio: 16 / 9; object-fit: cover;
+  transition: transform var(--dur-slow) var(--ease-out);
+}
+.sheet-frame:hover img { transform: scale(1.02); }
+.sheet-frame:focus-visible { outline-offset: 4px; }
+
+.sheet-copy { min-width: 0; }
+.kicker { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); margin-block-end: var(--space-4); color: var(--ink-3); }
+/* .chip (below) pushes itself to the far end of the ledger heads; here it leads the line */
+.kicker .chip-live { margin-inline-start: 0; background: var(--marker); color: var(--ink); font-weight: 500; }
+.sheet-copy h2 { font-size: var(--step-2); font-weight: 700; }
+.sheet-lede { margin-block-start: var(--space-3); font-size: var(--step-1); line-height: 1.5; color: var(--ink-2); max-width: 26ch; }
+
+/* the four facts: a tight stacked list, each line led by the drawing's own middot */
+.facts { margin-block-start: var(--space-6); display: grid; gap: var(--space-1); color: var(--ink-2); font-size: var(--step--1); line-height: 1.5; }
+.facts li { display: flex; align-items: baseline; gap: var(--space-3); }
+.facts li::before { content: "·"; font-family: var(--font-mono); font-size: 1.4em; line-height: 1; color: var(--olive); font-weight: 500; }
+.facts li:first-child { font-weight: 500; color: var(--ink); }
+
+/* outward link: ink outline on paper, lime on hover. Second voice to the WhatsApp pill */
+.btn-out {
+  margin-block-start: var(--space-8);
+  display: inline-flex; align-items: center; gap: var(--space-2);
+  min-height: 48px; padding: var(--space-2) var(--space-6);
+  border: 1.5px solid var(--ink); border-radius: var(--radius-pill);
+  background: transparent; color: var(--ink);
+  font-weight: 500; text-decoration: none;
+  transition: background-color var(--dur-fast) var(--ease-out), transform var(--dur-press) var(--ease-out);
+}
+.btn-out:hover { background: var(--marker); }
+.btn-out:active { transform: translateY(1px); }
+.btn-out .mono { font-size: 1em; }
+
+/* hero lede pointer: a real link, underlined the way the sheet underlines */
+.lede-link { color: var(--ink); font-weight: 500; text-decoration: underline; text-decoration-color: var(--olive); text-decoration-thickness: 2px; text-underline-offset: .18em; }
+.lede-link:hover { background: var(--marker); text-decoration-color: var(--ink); }
+
 /* ---------- ledger ---------- */
 .ledger {
   background: var(--bg-deep);

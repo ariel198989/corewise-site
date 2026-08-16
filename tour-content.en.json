@@ -191,20 +191,27 @@
           "yaw": 160,
           "pitch": 28,
           "title": "AR",
-          "sub": "Augmented reality · Still being built",
+          "sub": "Virtual supermarket · 360 worlds · information layers",
           "still": "axis/ar.webp",
           "room": "ar",
-          "status": "Still being built",
-          "abstract": "The Corewise AR world is being built. This room, the site you're standing in, is the first step: a space you walk into instead of a page you scroll. The rest is on the way.",
+          "abstract": "AR here is not a promise, it is a shop you can already walk through. A complete virtual supermarket: 13 departments, a real catalogue, a cart that travels with you, search that brings the product to you, and an assistant that builds a whole basket for an event from one sentence. The site you are standing in is the next step, and information layers over real spaces are on the way.",
           "features": [
             {
-              "title": "What already exists",
-              "text": "360 tours you walk into, like this site, built entirely in-house."
+              "title": "The virtual supermarket",
+              "text": "A whole shop you walk through. 13 departments, a real catalogue, price comparison, a cart, and a basket built for an event from one sentence.",
+              "img": "works/app-arstore.webp",
+              "tag": "live",
+              "link": "https://ar-store-eta.vercel.app/"
             },
             {
-              "title": "What's on the way",
-              "text": "Information layers over real spaces, through the phone.",
-              "tag": "In progress"
+              "title": "360 worlds",
+              "text": "Tours you step into instead of pages you scroll. This site is one of them.",
+              "tag": "live"
+            },
+            {
+              "title": "Information layers over spaces",
+              "text": "Information that sits on the real space, through the phone.",
+              "tag": "in progress"
             }
           ],
           "site": "ar/"
