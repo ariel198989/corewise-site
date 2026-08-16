@@ -16,9 +16,74 @@
   /* A phone has no arrow keys. The old single string taught a desktop
      keyboard to a thumb, and at 390px it ran under the compass and clipped
      mid-word — the visitor's first read of the build quality. */
-  const HINT = coarse
-    ? 'גררו כדי להסתכל · הקישו על מסך כדי לפתוח'
-    : 'גררו כדי להסתכל · הקישו על מסך כדי לפתוח';
+
+  /* ---------- language ----------
+     Hebrew IS the hall: it ships in the markup and in tour-content.json, so a
+     visitor with no JavaScript, a crawler or a slow phone gets the real thing
+     and nothing ever flashes. English is a file beside it plus a table of the
+     forty-odd strings the engine itself speaks. Never auto-detected — an
+     Israeli visitor on an English-locale laptop still lands in Hebrew; only a
+     click or an explicit ?lang=en moves the hall. */
+  const UI = {
+    he: {
+      hint: 'גררו כדי להסתכל · הקישו על מסך כדי לפתוח',
+      lookup: 'הרימו מבט', home: '← חזרה ללובי', homeAria: 'חזרה ללובי',
+      snd: 'מוזיקת רקע', gyro: 'ג\'ירוסקופ', gyroAria: 'ניווט בתנועת המכשיר',
+      map: 'מפת הקמפוס', mapClose: 'סגירה', close: 'סגירה',
+      padL: 'שמאלה', padU: 'קדימה', padR: 'ימינה',
+      tourGo: '▶ הראו לי הכל', tourStop: '⏸ עצרו', tourDone: 'ראיתם את כל חמשת הצירים',
+      waTitle: 'השאירו פרטים בוואטסאפ', waLabel: 'השאירו פרטים', waLidor: 'וואטסאפ ללידור',
+      lounge: '☕ בואו נדבר', greet: 'היי', langBtn: 'EN', langAria: 'Switch to English',
+      progA: 'גילית ', progB: ' מתוך ',
+      sndOn: '🔇 הפעלת סאונד', sndOff: '🔊 השתקה',
+      tvOn: '🔇 הקישו להפעלת סאונד', tvOff: '🔊 הקישו להשתקה',
+      ytSnd: '🔇 סאונד', ytSndOn: '🔊 סאונד', ytMute: 'השתקה', ytUnmute: 'הפעלת סאונד',
+      ytBig: '⤢ הגדלה', ytSmall: '⤡ הקטנה', ytWatch: '▶ צפייה בסדרה', ytShut: '⤡ סגירה',
+      ytBigAria: 'הגדלת המסך', ytShutAria: 'סגירת המסך המוגדל',
+      axisTap: 'הקישו לפתיחה', axisRoom: 'להיכנס למחלקה המלאה ↓', axisSite: 'האתר הייעודי ↗',
+      axisWa: t => 'היי לידור, ראיתי את ' + t + ' בסיור באתר. אשמח לדבר.',
+      cardCta: 'השאירו פרטים ונשלח לכם לינק',
+      finEyebrow: 'סוף הסיור', finTitle: 'נעים להכיר 👋',
+      finLine: (r, f) => 'ביקרת ב-' + r + ' מחלקות וגילית ' + f + ' נקודות בקמפוס.',
+      finAsk: ' מכאן זה כבר תלוי בכם — במה נתחיל?',
+      finPaths: [
+        ['💡', 'יש לי רעיון למוצר', 'היי, סיירתי בקמפוס Corewise ויש לי רעיון למוצר — אשמח לדבר'],
+        ['🏫', 'אני מבית ספר', 'היי, סיירתי בקמפוס Corewise — אשמח לשמוע על תוכניות AI ואלקטרוניקה לבית הספר שלנו'],
+        ['🎤', 'רוצה הרצאה/סדנה', 'היי, סיירתי בקמפוס Corewise — אשמח לפרטים על הרצאה או סדנה לארגון שלנו'],
+      ],
+    },
+    en: {
+      hint: 'Drag to look around · tap a screen to open it',
+      lookup: 'Look up', home: '← Back to the hall', homeAria: 'Back to the hall',
+      snd: 'Background music', gyro: 'Gyroscope', gyroAria: 'Move the device to look around',
+      map: 'Campus map', mapClose: 'Close', close: 'Close',
+      padL: 'Left', padU: 'Forward', padR: 'Right',
+      tourGo: '▶ Show me everything', tourStop: '⏸ Stop', tourDone: 'That is all five lines of work',
+      waTitle: 'Message us on WhatsApp', waLabel: 'Talk to us', waLidor: 'WhatsApp Lidor',
+      lounge: '☕ Let\'s talk', greet: 'Hi', langBtn: 'עברית', langAria: 'החלפה לעברית',
+      progA: 'Found ', progB: ' of ',
+      sndOn: '🔇 Turn sound on', sndOff: '🔊 Mute',
+      tvOn: '🔇 Tap for sound', tvOff: '🔊 Tap to mute',
+      ytSnd: '🔇 Sound', ytSndOn: '🔊 Sound', ytMute: 'Mute', ytUnmute: 'Turn sound on',
+      ytBig: '⤢ Expand', ytSmall: '⤡ Shrink', ytWatch: '▶ Watch the series', ytShut: '⤡ Close',
+      ytBigAria: 'Expand the screen', ytShutAria: 'Close the expanded screen',
+      axisTap: 'Tap to open', axisRoom: 'Step into the full department ↓', axisSite: 'Dedicated site ↗',
+      axisWa: t => 'Hi Lidor, I saw ' + t + ' on the site tour. I would like to talk.',
+      cardCta: 'Leave your details and we will send the link',
+      finEyebrow: 'End of the tour', finTitle: 'Good to meet you 👋',
+      finLine: (r, f) => 'You walked ' + r + ' departments and found ' + f + ' points on campus.',
+      finAsk: ' From here it is up to you — where do we start?',
+      finPaths: [
+        ['💡', 'I have a product idea', 'Hi, I toured the Corewise campus and I have a product idea — I would like to talk'],
+        ['🏫', 'I am from a school', 'Hi, I toured the Corewise campus — I would like to hear about the AI and electronics programmes for our school'],
+        ['🎤', 'I want a talk or workshop', 'Hi, I toured the Corewise campus — I would like details on a talk or workshop for our organisation'],
+      ],
+    },
+  };
+  const urlLang = new URL(location.href).searchParams.get('lang');
+  let LANG = urlLang === 'en' || urlLang === 'he' ? urlLang
+    : ((() => { try { return localStorage.getItem('cw-lang'); } catch (e) { return null; } })() || 'he');
+  const T = k => UI[LANG][k] !== undefined ? UI[LANG][k] : UI.he[k];
 
   let CFG = null, ROOMS = {}, cur = null;
   let renderer, scene, camera, sphereA, sphereB, rafId;
@@ -49,7 +114,12 @@
   const deg = d => d * Math.PI / 180;
 
   /* ---------- boot ---------- */
-  fetch('tour-content.json?v=' + Date.now()).then(r => r.json()).then(cfg => {
+  document.documentElement.lang = LANG;
+  document.documentElement.dir = LANG === 'en' ? 'ltr' : 'rtl';
+  const CONTENT = l => 'tour-content' + (l === 'en' ? '.en' : '') + '.json?v=1786780000';
+  fetch(CONTENT(LANG)).then(r => r.ok ? r.json() : Promise.reject())
+    .catch(() => fetch(CONTENT('he')).then(r => r.json()))
+    .then(cfg => {
     CFG = cfg;
     cfg.departments.forEach(d => ROOMS[d.id] = d);
     buildDOM();
@@ -73,37 +143,38 @@
       <div class="cw-motes"></div>
       <div class="cw-title"><span></span></div>
       <div class="cw-sky" aria-hidden="true"><div class="cw-sky__in"></div></div>
-      <div class="cw-lookup"><i>⌃</i><span>הרימו מבט</span></div>
+      <div class="cw-lookup"><i>⌃</i><span>${T('lookup')}</span></div>
       <header class="cw-top">
         <span class="cw-brand">corewise</span>
         <span class="cw-room"></span>
-        <button class="cw-home" hidden aria-label="חזרה ללובי">← חזרה ללובי</button>
+        <button class="cw-home" hidden aria-label="${T('homeAria')}">${T('home')}</button>
         <span class="cw-prog"></span>
         <span class="cw-tools">
-          <button class="cw-snd" title="מוזיקת רקע" aria-label="מוזיקת רקע" aria-pressed="true"><i></i><i></i><i></i></button>
-          <button class="cw-gyro" title="ג'ירוסקופ" aria-label="ניווט בתנועת המכשיר">${ICON.gyro}</button>
-          <button class="cw-map" title="מפת הקמפוס" aria-label="מפת הקמפוס">${ICON.map}</button>
+          <button class="cw-lang" data-lang-toggle type="button" lang="${LANG === 'en' ? 'he' : 'en'}" dir="${LANG === 'en' ? 'rtl' : 'ltr'}" aria-label="${T('langAria')}">${T('langBtn')}</button>
+          <button class="cw-snd" title="${T('snd')}" aria-label="${T('snd')}" aria-pressed="true"><i></i><i></i><i></i></button>
+          <button class="cw-gyro" title="${T('gyro')}" aria-label="${T('gyroAria')}">${ICON.gyro}</button>
+          <button class="cw-map" title="${T('map')}" aria-label="${T('map')}">${ICON.map}</button>
         </span>
       </header>
-      <div class="cw-hint">${HINT}</div>
+      <div class="cw-hint">${T('hint')}</div>
       <div class="cw-tour" hidden>
-        <button class="cw-tour__go">▶ הראו לי הכל</button>
+        <button class="cw-tour__go">${T('tourGo')}</button>
         <span class="cw-tour__dots" aria-hidden="true"></span>
       </div>
       <div class="cw-pad">
-        <button data-k="left" aria-label="שמאלה">←</button>
-        <button data-k="up" class="cw-pad__up" aria-label="קדימה">↑</button>
-        <button data-k="right" aria-label="ימינה">→</button>
+        <button data-k="left" aria-label="${T('padL')}">←</button>
+        <button data-k="up" class="cw-pad__up" aria-label="${T('padU')}">↑</button>
+        <button data-k="right" aria-label="${T('padR')}">→</button>
       </div>
       <div class="cw-compass"><div class="cw-compass__ring"></div></div>
-      <a class="cw-wa" href="${WA}" target="_blank" rel="noopener" title="השאירו פרטים בוואטסאפ">
+      <a class="cw-wa" href="${WA}" target="_blank" rel="noopener" title="${T('waTitle')}">
         <svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.1.6 4.2 1.6 6L4 29l8.2-1.6c1.7.9 3.6 1.4 5.8 1.4 6.6 0 12-5.4 12-12S22.6 3 16 3zm0 21.8c-1.9 0-3.7-.5-5.3-1.5l-.4-.2-4.9.9.9-4.8-.3-.4C5 17.8 4.4 16 4.4 15 4.4 8.9 9.9 4.4 16 4.4S27.6 8.9 27.6 15 22.1 24.8 16 24.8zm6.5-8.3c-.4-.2-2.1-1-2.4-1.1-.3-.1-.6-.2-.8.2-.2.4-.9 1.1-1.1 1.3-.2.2-.4.2-.8.1-2.1-.9-3.5-2.7-3.7-3.1-.2-.4 0-.6.2-.8l.5-.6c.2-.2.2-.4.3-.6.1-.2 0-.5 0-.6-.1-.2-.8-2-1.1-2.7-.3-.7-.6-.6-.8-.6h-.7c-.2 0-.6.1-.9.5-.3.4-1.2 1.2-1.2 2.9s1.2 3.4 1.4 3.6c.2.2 2.4 3.7 5.9 5.1 3.5 1.4 3.5.9 4.1.9.6-.1 2.1-.8 2.4-1.7.3-.8.3-1.6.2-1.7-.1-.2-.3-.3-.7-.5z"/></svg>
-        <span>השאירו פרטים</span>
+        <span>${T('waLabel')}</span>
       </a>
       <div class="cw-scrim" hidden></div>
       <div class="cw-axis" hidden aria-modal="true" role="dialog">
         <div class="cw-axis__wall">
-          <button class="cw-axis__x">← חזרה ללובי</button>
+          <button class="cw-axis__x">${T('home')}</button>
           <div class="cw-axis__media"></div>
           <div class="cw-axis__bubble"></div>
           <div class="cw-axis__feats"></div>
@@ -111,7 +182,7 @@
       </div>
       <div class="cw-card" hidden></div>
       <div class="cw-finale" hidden></div>
-      <div class="cw-mapui" style="display:none"><div class="cw-mapui__in"><h3>מפת הקמפוס</h3><div class="cw-mapui__grid"></div><button class="cw-mapui__x">סגירה</button></div></div>
+      <div class="cw-mapui" style="display:none"><div class="cw-mapui__in"><h3>${T('map')}</h3><div class="cw-mapui__grid"></div><button class="cw-mapui__x">${T('mapClose')}</button></div></div>
       <div class="cw-load"><span></span></div>`;
     document.body.appendChild(root);
     el = {
@@ -144,6 +215,7 @@
 
     $('.cw-scrim', root).onclick = closePanels;
     $('.cw-gyro', root).onclick = toggleGyro;
+    $('.cw-lang', root).onclick = () => setLang(LANG === 'en' ? 'he' : 'en');
     $('.cw-map', root).onclick = () => openMap(true);
     $('.cw-mapui__x', root).onclick = () => openMap(false);
 
@@ -355,7 +427,7 @@
     if (id === 'lobby') {
       /* the hall has screens, not doors. The one door left is PEOPLE — the
          lounge — under the Before/After screen on the back wall. */
-      return [{ to: 'team', yaw: 180, pitch: -12, home: true, label: '☕ בואו נדבר' }];
+      return [{ to: 'team', yaw: 180, pitch: -12, home: true, label: T('lounge') }];
     }
     /* inside a wing: the way back to the lobby sits opposite its own bearing,
        and the two neighbouring wings are reachable to either side. */
@@ -363,7 +435,7 @@
     const prev = WINGS[(i - 1 + WINGS.length) % WINGS.length];
     const next = WINGS[(i + 1) % WINGS.length];
     return [
-      { to: 'lobby', yaw: 180, pitch: -6, label: '← חזרה ללובי', home: true },
+      { to: 'lobby', yaw: 180, pitch: -6, label: T('home'), home: true },
       { to: prev, yaw: -75, pitch: -6 },
       { to: next, yaw: 75, pitch: -6, next: true },
     ];
@@ -606,18 +678,14 @@
   /* The last wing closes the loop: what you saw, then three ways to start talking. */
   function showFinale() {
     const rooms = visited.size, found = seen.size;
-    const line = 'ביקרת ב-' + rooms + ' מחלקות וגילית ' + found + ' נקודות בקמפוס.';
-    const paths = [
-      ['💡', 'יש לי רעיון למוצר', 'היי, סיירתי בקמפוס Corewise ויש לי רעיון למוצר — אשמח לדבר'],
-      ['🏫', 'אני מבית ספר', 'היי, סיירתי בקמפוס Corewise — אשמח לשמוע על תוכניות AI ואלקטרוניקה לבית הספר שלנו'],
-      ['🎤', 'רוצה הרצאה/סדנה', 'היי, סיירתי בקמפוס Corewise — אשמח לפרטים על הרצאה או סדנה לארגון שלנו'],
-    ];
+    const line = T('finLine')(rooms, found);
+    const paths = T('finPaths');
     const box = el.finale;
     box.innerHTML =
-      '<button class="cw-fin__x" aria-label="סגירה">✕</button>' +
-      '<span class="cw-fin__eyebrow">סוף הסיור</span>' +
-      '<h3>נעים להכיר 👋</h3>' +
-      '<p>' + line + ' מכאן זה כבר תלוי בכם — במה נתחיל?</p>' +
+      '<button class="cw-fin__x" aria-label="' + T('close') + '">✕</button>' +
+      '<span class="cw-fin__eyebrow">' + T('finEyebrow') + '</span>' +
+      '<h3>' + T('finTitle') + '</h3>' +
+      '<p>' + line + T('finAsk') + '</p>' +
       '<div class="cw-fin__paths">' + paths.map(p =>
         '<a href="https://wa.me/972507594477?text=' + encodeURIComponent(p[2]) + '" target="_blank" rel="noopener">' +
         '<b>' + p[0] + '</b><span>' + p[1] + '</span></a>').join('') + '</div>';
@@ -628,7 +696,7 @@
   }
   function roomProgress(d) {
     const list = d.hotspots || [];
-    const got = list.filter(h => seen.has(d.id + '|' + h.title)).length;
+    const got = list.filter((h, i) => seen.has(d.id + '|' + i)).length;
     return { got, total: list.length };
   }
   function paintProgress() {
@@ -639,8 +707,8 @@
        the moment there is something to count. Narrow screens collapse it
        to "1/4" so the room name keeps its room. */
     el.prog.innerHTML = total && got
-      ? '<span class="cw-prog__l">גילית </span>' + got +
-        '<span class="cw-prog__l"> מתוך </span><span class="cw-prog__s">/</span>' + total
+      ? '<span class="cw-prog__l">' + T('progA') + '</span>' + got +
+        '<span class="cw-prog__l">' + T('progB') + '</span><span class="cw-prog__s">/</span>' + total
       : '';
     el.prog.classList.toggle('done', total > 0 && got === total);
     /* completing a room lights the way onward */
@@ -660,10 +728,10 @@
     el.spots.innerHTML = '';
     spots = []; doors = []; tvYaw = null; axisScreens = [];
     let prod = 0;
-    (d.hotspots || []).forEach(h => {
+    (d.hotspots || []).forEach((h, i) => {
       const kind = h.kind || 'story';
       const b = document.createElement('button');
-      const key = d.id + '|' + h.title;
+      const key = d.id + '|' + i;          /* index, not title: titles change with language */
       b.className = 'cw-spot is-' + kind + (seen.has(key) ? ' is-seen' : '');
       b.style.setProperty('--ph', (Math.random() * 2).toFixed(2) + 's');   /* breathe out of sync */
       /* AN AXIS SCREEN. Five of these ring the hall. Each is a real screen
@@ -678,7 +746,7 @@
           '<span class="cw-spot__frame">' +
             '<span class="cw-spot__chip">' + esc(h.title) + (h.status ? ' · ' + esc(h.status) : '') + '</span>' +
             '<span class="cw-spot__glass">' + media +
-              '<span class="cw-spot__tag">' + esc(h.sub || '') + ' · <b>הקישו לפתיחה</b></span>' +
+              '<span class="cw-spot__tag">' + esc(h.sub || '') + ' · <b>' + T('axisTap') + '</b></span>' +
             '</span>' +
             '<i class="cw-spot__anchor" aria-hidden="true"></i>' +
           '</span>';
@@ -695,7 +763,7 @@
             '<span class="cw-spot__chip">' + esc(h.title || 'COREWISE TV') + ' · LIVE</span>' +
             '<span class="cw-spot__glass">' +
               '<video src="' + h.video + '" autoplay muted loop playsinline></video>' +
-              '<span class="cw-spot__tag">🔇 הקישו להפעלת סאונד</span>' +
+              '<span class="cw-spot__tag">' + T('tvOn') + '</span>' +
             '</span>' +
             '<i class="cw-spot__anchor" aria-hidden="true"></i>' +
           '</span>';
@@ -703,7 +771,7 @@
           const v = b.querySelector('video'), tag = b.querySelector('.cw-spot__tag');
           v.muted = !v.muted;
           if (!v.muted) { v.play().catch(() => {}); duck(true); } else duck(false);
-          tag.textContent = v.muted ? '🔇 הקישו להפעלת סאונד' : '🔊 הקישו להשתקה';
+          tag.textContent = v.muted ? T('tvOn') : T('tvOff');
         };
         el.spots.appendChild(b);
         spots.push({ el: b, v: vec(h.yaw, h.pitch) });
@@ -740,8 +808,8 @@
               '<button class="cw-yt-nav" data-d="1" aria-label="פרק הבא">›</button>' +
             '</span>' +
             '<span class="cw-yt-bar">' +
-              '<button class="cw-yt-snd" aria-label="הפעלת סאונד">🔇 סאונד</button>' +
-              '<button class="cw-yt-big" aria-label="הגדלת המסך">⤢ הגדלה</button>' +
+              '<button class="cw-yt-snd" aria-label="' + T('ytUnmute') + '">' + T('ytSnd') + '</button>' +
+              '<button class="cw-yt-big" aria-label="' + T('ytBigAria') + '">' + (coarse ? T('ytWatch') : T('ytBig')) + '</button>' +
             '</span>' +
             (h.blurb ? '<span class="cw-yt-note">' + esc(h.blurb) + '</span>' : '') +
             '<i class="cw-spot__anchor" aria-hidden="true"></i>' +
@@ -778,9 +846,9 @@
           if (!player) return;
           loud = !loud;
           if (loud) { player.unMute(); player.setVolume(100); } else player.mute();
-          snd.textContent = loud ? '🔊 סאונד' : '🔇 סאונד';
+          snd.textContent = loud ? T('ytSndOn') : T('ytSnd');
           snd.classList.toggle('is-on', loud);
-          snd.setAttribute('aria-label', loud ? 'השתקה' : 'הפעלת סאונד');
+          snd.setAttribute('aria-label', loud ? T('ytMute') : T('ytUnmute'));
           duck(loud);
         };
         /* THEATRE MODE. project() rewrites left/top every frame, so the
@@ -802,9 +870,9 @@
         const size = on => {
           w.classList.toggle('is-big', on);
           scrim.classList.toggle('is-on', on);
-          big.textContent = on ? (coarse ? '⤡ סגירה' : '⤡ הקטנה')
-                               : (coarse ? '▶ צפייה בסדרה' : '⤢ הגדלה');
-          big.setAttribute('aria-label', on ? 'סגירת המסך המוגדל' : 'הגדלת המסך');
+          big.textContent = on ? (coarse ? T('ytShut') : T('ytSmall'))
+                               : (coarse ? T('ytWatch') : T('ytBig'));
+          big.setAttribute('aria-label', on ? T('ytShutAria') : T('ytBigAria'));
         };
         size(false);
         big.onclick = () => size(!w.classList.contains('is-big'));
@@ -907,7 +975,7 @@
     if (cur !== 'lobby' || !axisScreens.length) return;
     tourOn = true; tourStep = 0;
     el.root.classList.add('tour-on');
-    $('.cw-tour__go', el.root).textContent = '⏸ עצרו';
+    $('.cw-tour__go', el.root).textContent = T('tourStop');
     closeAxis();
     /* start from the screen nearest to where you already look, then go round */
     let best = 0, bestAbs = 999;
@@ -925,7 +993,7 @@
       const lon0 = lon, rel = ((yaw - lon0) % 360 + 540) % 360 - 180, t0 = performance.now();
       const fin = () => { const k = Math.min(1, (performance.now() - t0) / 900); lon = lon0 + rel * k; if (k < 1) requestAnimationFrame(fin); };
       requestAnimationFrame(fin);
-      announce('ראיתם את כל חמשת הצירים');
+      announce(T('tourDone'));
       if (home) home.el.classList.add('is-facing');
       return;
     }
@@ -947,7 +1015,7 @@
   function stopTour() {
     tourOn = false; clearTimeout(tourT); cancelAnimationFrame(tourRaf);
     el.root.classList.remove('tour-on');
-    const b = $('.cw-tour__go', el.root); if (b) b.textContent = '▶ הראו לי הכל';
+    const b = $('.cw-tour__go', el.root); if (b) b.textContent = T('tourGo');
     paintTourDots();
   }
 
@@ -964,7 +1032,7 @@
     el.axis.style.setProperty('--acc', ACCENT[h.room] || ACCENT.lobby);
     m.innerHTML = h.video
       ? '<video src="' + h.video + '" poster="' + (h.poster || '') + '" autoplay muted loop playsinline></video>' +
-        '<button class="cw-axis__snd">🔇 הפעלת סאונד</button>'
+        '<button class="cw-axis__snd">' + T('sndOn') + '</button>'
       : '<img src="' + h.still + '" alt="" class="cw-kb">';
     const v = m.querySelector('video'), snd = m.querySelector('.cw-axis__snd');
     if (v) {
@@ -973,7 +1041,7 @@
       snd.onclick = () => {
         v.muted = !v.muted;
         if (!v.muted) v.play().catch(() => {});
-        snd.textContent = v.muted ? '🔇 הפעלת סאונד' : '🔊 השתקה';
+        snd.textContent = v.muted ? T('sndOn') : T('sndOff');
         duck(!v.muted);
       };
     }
@@ -982,9 +1050,9 @@
       '<h2>' + esc(h.title) + (h.status ? ' <em>' + esc(h.status) + '</em>' : '') + '</h2>' +
       '<p>' + esc(h.abstract || '') + '</p>' +
       '<div class="cw-axis__go">' +
-        (h.room && ROOMS[h.room] ? '<button class="cw-axis__room">להיכנס למחלקה המלאה ↓</button>' : '') +
-        (h.site ? '<a class="cw-axis__site" href="' + h.site + '">האתר הייעודי ↗</a>' : '') +
-        '<a class="cw-axis__wa" href="' + WA + '?text=' + encodeURIComponent('היי לידור, ראיתי את ' + h.title + ' בסיור באתר. אשמח לדבר.') + '" target="_blank" rel="noopener">וואטסאפ ללידור</a>' +
+        (h.room && ROOMS[h.room] ? '<button class="cw-axis__room">' + T('axisRoom') + '</button>' : '') +
+        (h.site ? '<a class="cw-axis__site" href="' + h.site + (LANG === 'en' ? '?lang=en' : '') + '">' + T('axisSite') + '</a>' : '') +
+        '<a class="cw-axis__wa" href="' + WA + '?text=' + encodeURIComponent(T('axisWa')(h.title)) + '" target="_blank" rel="noopener">' + T('waLidor') + '</a>' +
       '</div>' +
       '<small class="cw-axis__made">' + esc((ROOMS.lobby && ROOMS.lobby.note) || '') + '</small>';
     const rb = bb.querySelector('.cw-axis__room');
@@ -1087,7 +1155,7 @@
     const c = el.card, kind = h.kind || 'story';
     c.className = 'cw-card is-' + kind;
     c.innerHTML =
-      '<button class="cw-card__x" aria-label="סגירה">✕</button>' +
+      '<button class="cw-card__x" aria-label="' + T('close') + '">✕</button>' +
       '<span class="cw-card__grab" aria-hidden="true"></span>' +
       (h.img ? '<img src="' + h.img + '" alt="" decoding="async">' : '') +
       '<div class="cw-card__body">' +
@@ -1101,7 +1169,7 @@
         (h.quote ? '<blockquote class="cw-quote">' + esc(h.quote) + '</blockquote>' : '') +
         (h.link ? '<a class="cw-card__cta" href="' + h.link + '" target="_blank" rel="noopener">' +
           '<svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.1.6 4.2 1.6 6L4 29l8.2-1.6c1.7.9 3.6 1.4 5.8 1.4 6.6 0 12-5.4 12-12S22.6 3 16 3zm0 21.8c-1.9 0-3.7-.5-5.3-1.5l-.4-.2-4.9.9.9-4.8-.3-.4C5 17.8 4.4 16 4.4 15 4.4 8.9 9.9 4.4 16 4.4S27.6 8.9 27.6 15 22.1 24.8 16 24.8z"/></svg>' +
-          esc(h.linkLabel || 'השאירו פרטים ונשלח לכם לינק') + '</a>' : '') +
+          esc(h.linkLabel || T('cardCta')) + '</a>' : '') +
       '</div>';
     c.querySelector('.cw-card__x').onclick = closePanels;
     el.scrim.hidden = false;
@@ -1172,6 +1240,68 @@
     }).join('');
     g.querySelectorAll('button').forEach(b => b.onclick = () => { openMap(false); go(b.dataset.r); });
     el.mapui.style.display = 'grid';
+  }
+
+  /* ---------- the language switch ----------
+     Everything the visitor has EARNED survives the flip: the room they are
+     standing in, where they are looking, which rooms they walked and which
+     points they found. Only the words are replaced, and the panorama is never
+     re-fetched — it has no language. */
+  function paintChrome() {
+    const q = (sel, fn) => { const e = $(sel, el.root); if (e) fn(e); };
+    q('.cw-lookup span', e => e.textContent = T('lookup'));
+    q('.cw-home', e => { e.textContent = T('home'); e.setAttribute('aria-label', T('homeAria')); });
+    q('.cw-hint', e => e.textContent = T('hint'));
+    q('.cw-snd', e => { e.title = T('snd'); e.setAttribute('aria-label', T('snd')); });
+    q('.cw-gyro', e => { e.title = T('gyro'); e.setAttribute('aria-label', T('gyroAria')); });
+    q('.cw-map', e => { e.title = T('map'); e.setAttribute('aria-label', T('map')); });
+    q('.cw-mapui__in h3', e => e.textContent = T('map'));
+    q('.cw-mapui__x', e => e.textContent = T('mapClose'));
+    q('.cw-tour__go', e => e.textContent = tourOn ? T('tourStop') : T('tourGo'));
+    q('.cw-axis__x', e => e.textContent = T('home'));
+    q('.cw-wa', e => e.title = T('waTitle'));
+    q('.cw-wa span', e => e.textContent = T('waLabel'));
+    q('.cw-pad [data-k=left]', e => e.setAttribute('aria-label', T('padL')));
+    q('.cw-pad [data-k=up]', e => e.setAttribute('aria-label', T('padU')));
+    q('.cw-pad [data-k=right]', e => e.setAttribute('aria-label', T('padR')));
+    q('.cw-lang', e => {
+      e.textContent = T('langBtn');
+      e.setAttribute('aria-label', T('langAria'));
+      e.lang = LANG === 'en' ? 'he' : 'en';
+      e.dir = LANG === 'en' ? 'rtl' : 'ltr';
+    });
+  }
+
+  let langBusy = false;
+  function setLang(next) {
+    if (langBusy || next === LANG) return;
+    langBusy = true;
+    const keepLon = lon, keepLat = lat, keepCur = cur, wasOpen = axisOpen;
+    fetch(CONTENT(next)).then(r => r.ok ? r.json() : Promise.reject()).then(cfg => {
+      LANG = next;
+      try { localStorage.setItem('cw-lang', next); } catch (e) {}
+      const u = new URL(location.href);
+      if (next === 'en') u.searchParams.set('lang', 'en'); else u.searchParams.delete('lang');
+      history.replaceState(null, '', u);          /* a shared link keeps the language */
+      CFG = cfg; ROOMS = {};
+      cfg.departments.forEach(d => ROOMS[d.id] = d);
+      document.documentElement.lang = next;
+      document.documentElement.dir = next === 'en' ? 'ltr' : 'rtl';
+      paintChrome();
+      const d = ROOMS[keepCur];
+      if (d) {
+        el.room.textContent = d.title;
+        el.title.classList.remove('on');
+        el.title.querySelector('span').textContent = '';   /* the banner is stale the moment the words change */
+        el.wa.href = WA + (d.wa ? '?text=' + encodeURIComponent(d.wa) : '');
+        buildMarkers(d); buildSky(d); buildCompass(keepCur); paintProgress(); paintTourDots();
+        lon = keepLon; lat = keepLat;               /* you do not get spun around */
+        if (wasOpen) {
+          const same = (d.hotspots || []).find(x => x.kind === 'axis' && x.yaw === wasOpen.yaw);
+          if (same) openAxis(same);
+        }
+      }
+    }).catch(() => {}).finally(() => { langBusy = false; });
   }
 
   function toggleGyro() {
