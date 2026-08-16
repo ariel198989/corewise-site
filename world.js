@@ -292,6 +292,26 @@
     const K = { ArrowLeft: 'left', ArrowRight: 'right', ArrowUp: 'up', ArrowDown: 'down', a: 'left', d: 'right', w: 'up', s: 'down' };
     addEventListener('keydown', e => {
       if (e.key === 'Escape') { closePanels(); openMap(false); return; }
+      /* typing in the assistant is typing, not steering */
+      if (e.target && e.target.closest && e.target.closest('input, textarea, [contenteditable]')) return;
+      /* In the lobby the left and right arrows step the rail: the row is
+         the thing on screen, and a keyboard should turn through it the way
+         a thumb does. Enter opens the focused card. Looking around still
+         has A/D and the mouse. */
+      if (cur === 'lobby' && axisScreens.length && el.axis.hidden) {
+        if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+          e.preventDefault();
+          if (e.repeat) return;
+          /* physical: left arrow moves the row left regardless of language */
+          railTo(railAt + (e.key === 'ArrowRight' ? 1 : -1) * (document.documentElement.dir === 'rtl' ? -1 : 1), 480);
+          stopTour();
+          return;
+        }
+        if (e.key === 'Enter' && document.activeElement === document.body) {
+          const a = axisScreens[railAt];
+          if (a && a.el) { e.preventDefault(); a.el.click(); return; }
+        }
+      }
       const k = K[e.key] || K[e.key.toLowerCase()];
       if (k) { keys[k] = true; keys.shift = e.shiftKey; e.preventDefault(); }
     });
