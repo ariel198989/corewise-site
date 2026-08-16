@@ -11,8 +11,9 @@
  * screens, the model appends [[open:<id>]] and the client flies the hall to
  * that screen and opens it. Answering and pointing are the same gesture.
  *
- * The key lives in Vercel's environment (ANTHROPIC_API_KEY), never in the
- * browser.
+ * Gemini 2.5 Flash answers by default (GEMINI_API_KEY); Anthropic is kept as
+ * a fallback so a key of either kind brings the bot to life. The key lives in
+ * Vercel's environment, never in the browser.
  */
 import { readFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
@@ -113,38 +114,59 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(204).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'POST only' });
 
-  const key = process.env.ANTHROPIC_API_KEY;
-  if (!key) return res.status(503).json({ error: 'no key configured' });
+  const gem = process.env.GEMINI_API_KEY;
+  const claude = process.env.ANTHROPIC_API_KEY;
+  if (!gem && !claude) return res.status(503).json({ error: 'no key configured' });
 
   const body = req.body || {};
   const text = String(body.message || '').slice(0, 500).trim();
   if (!text) return res.status(400).json({ error: 'empty' });
   /* last few turns only, capped, so one visitor cannot balloon the prompt */
   const history = Array.isArray(body.history) ? body.history.slice(-8) : [];
-  const messages = history
+  const turns = history
     .filter(m => m && (m.role === 'user' || m.role === 'assistant') && typeof m.content === 'string')
     .map(m => ({ role: m.role, content: m.content.slice(0, 800) }))
     .concat([{ role: 'user', content: text }]);
 
   try {
     if (!KNOWLEDGE) KNOWLEDGE = buildKnowledge();
-    const r = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-        'x-api-key': key,
-        'anthropic-version': '2023-06-01',
-      },
-      body: JSON.stringify({
-        model: 'claude-sonnet-5',
-        max_tokens: 500,
-        system: [{ type: 'text', text: SYSTEM(KNOWLEDGE), cache_control: { type: 'ephemeral' } }],
-        messages,
-      }),
-    });
-    if (!r.ok) return res.status(502).json({ error: 'upstream ' + r.status });
-    const j = await r.json();
-    let reply = (j.content && j.content[0] && j.content[0].text) || '';
+    const system = SYSTEM(KNOWLEDGE);
+    let reply = '';
+
+    if (gem) {
+      /* Gemini calls the assistant's own turns "model", not "assistant", and
+         takes the system prompt in its own field rather than in the thread.
+         Thinking is switched off: this is retrieval from a fixed brief, and
+         the latency it buys back is worth more than the deliberation. */
+      const r = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json', 'x-goog-api-key': gem },
+        body: JSON.stringify({
+          system_instruction: { parts: [{ text: system }] },
+          contents: turns.map(m => ({ role: m.role === 'assistant' ? 'model' : 'user', parts: [{ text: m.content }] })),
+          generationConfig: { maxOutputTokens: 600, temperature: 0.6, thinkingConfig: { thinkingBudget: 0 } },
+        }),
+      });
+      if (!r.ok) return res.status(502).json({ error: 'upstream ' + r.status });
+      const j = await r.json();
+      const parts = j?.candidates?.[0]?.content?.parts || [];
+      reply = parts.map(p => p.text || '').join('').trim();
+    } else {
+      const r = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json', 'x-api-key': claude, 'anthropic-version': '2023-06-01' },
+        body: JSON.stringify({
+          model: 'claude-sonnet-5',
+          max_tokens: 500,
+          system: [{ type: 'text', text: system, cache_control: { type: 'ephemeral' } }],
+          messages: turns,
+        }),
+      });
+      if (!r.ok) return res.status(502).json({ error: 'upstream ' + r.status });
+      const j = await r.json();
+      reply = (j.content && j.content[0] && j.content[0].text) || '';
+    }
+
     if (!reply) return res.status(502).json({ error: 'empty reply' });
 
     /* pull the steering tag out of the prose before it reaches the visitor */
