@@ -259,14 +259,6 @@
           ]
         },
         {
-          "yaw": 0,
-          "pitch": -10,
-          "kind": "tv",
-          "title": "Before / After",
-          "video": "hero_seq_source.mp4",
-          "text": "The store before, a tired owner, dumb cameras; after Corewise, smart cameras, alerts on the phone, profit going up. Produced with a technique of our own."
-        },
-        {
           "kind": "team",
           "id": "team",
           "yaw": 180,

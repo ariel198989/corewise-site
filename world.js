@@ -236,7 +236,7 @@
     /* the visitor taking the wheel ends the guided pass — any real input */
     ['pointerdown', 'keydown', 'wheel'].forEach(ev => addEventListener(ev, e => {
       if (!tourOn) return;
-      if (e.target && e.target.closest && e.target.closest('.cw-tour, .cw-axis__snd')) return;
+      if (e.target && e.target.closest && e.target.closest('.cw-tour')) return;
       stopTour();
     }, { passive: true }));
     /* "חזרה ללובי" is never something you look for: one button, top bar,
@@ -1281,20 +1281,15 @@
     axisOpen = h;
     const m = $('.cw-axis__media', el.axis), bb = $('.cw-axis__bubble', el.axis), ff = $('.cw-axis__feats', el.axis);
     el.axis.style.setProperty('--acc', ACCENT[h.room] || ACCENT.lobby);
+    /* no sound toggle: the wall film is ambience behind the words, and a
+       button offering to make it talk over them was one box too many */
     m.innerHTML = h.video
-      ? '<video src="' + h.video + '" poster="' + (h.poster || '') + '" autoplay muted loop playsinline></video>' +
-        '<button class="cw-axis__snd">' + T('sndOn') + '</button>'
+      ? '<video src="' + h.video + '" poster="' + (h.poster || '') + '" autoplay muted loop playsinline></video>'
       : '<img src="' + h.still + '" alt="" class="cw-kb">';
-    const v = m.querySelector('video'), snd = m.querySelector('.cw-axis__snd');
+    const v = m.querySelector('video');
     if (v) {
       const wallV = (axisScreens.find(a => a.h === h || (a.h && a.h.id && a.h.id === h.id)) || {}).v;
       if (wallV && wallV.currentTime) v.currentTime = wallV.currentTime;
-      snd.onclick = () => {
-        v.muted = !v.muted;
-        if (!v.muted) v.play().catch(() => {});
-        snd.textContent = v.muted ? T('sndOn') : T('sndOff');
-        duck(!v.muted);
-      };
     }
     bb.innerHTML =
       '<span class="cw-axis__eyebrow">' + esc(h.sub || '') + '</span>' +
