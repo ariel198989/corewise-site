@@ -864,8 +864,32 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
 
 /* ---- the guided pass ---- */
 .cw-tour {
-  position: absolute; left: 50%; bottom: calc(max(20px, env(safe-area-inset-bottom)) + 76px); transform: translateX(-50%); z-index: 22;
-  display: flex; align-items: center; gap: 12px; direction: rtl;
+  position: absolute; left: 50%; bottom: calc(max(20px, env(safe-area-inset-bottom)) + 70px); transform: translateX(-50%); z-index: 22;
+  display: flex; flex-direction: column; align-items: center; gap: 10px; direction: rtl;
+}
+/* ---------- the carousel control ----------
+   One bar that names the screen you are on and steps to the next, so five
+   screens hung around a sphere read as one row you turn through. */
+.cw-car {
+  display: flex; align-items: center; gap: 4px;
+  background: rgba(20,24,28,.62); border: 1px solid rgba(255,255,255,.14);
+  -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+  border-radius: 100px; padding: 4px;
+}
+.cw-car__nav {
+  width: 34px; height: 34px; border-radius: 50%; flex: none; cursor: pointer;
+  border: 0; background: transparent; color: rgba(255,255,255,.72); font-size: 1.15rem; line-height: 0;
+  transition: background .16s, color .16s;
+}
+.cw-car__nav:hover { background: rgba(255,255,255,.14); color: #fff; }
+.cw-car__nav:focus-visible { outline: 2px solid var(--cw-lime); outline-offset: -2px; }
+.cw-car__mid {
+  display: flex; flex-direction: column; align-items: center; gap: 5px;
+  min-width: 168px; padding: 2px 8px 4px;
+}
+.cw-car__name {
+  color: #fff; font: 600 .82rem/1.2 Rubik, system-ui, sans-serif; white-space: nowrap;
+  overflow: hidden; text-overflow: ellipsis; max-width: 42vw; text-align: center;
 }
 .cw-tour[hidden] { display: none; }
 .cw-tour__go {
@@ -877,13 +901,17 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
 .tour-on .cw-tour__go { background: rgba(12,15,18,.7); color: #fff; border: 1px solid rgba(255,255,255,.3); box-shadow: none; }
 .cw-tour__dots { display: flex; gap: 6px; }
 .cw-tour__dots i { width: 9px; height: 9px; border-radius: 50%; background: rgba(255,255,255,.35); border: 1px solid rgba(255,255,255,.4); transition: background .3s, transform .3s; }
-.cw-tour__dots i.on { background: var(--cw-lime, #C6F24E); border-color: var(--cw-lime, #C6F24E); }
+.cw-tour__dots i.on { background: rgba(255,255,255,.6); border-color: rgba(255,255,255,.65); }
+/* the one you are standing in front of, not merely one you have seen */
+.cw-tour__dots i.now { background: var(--cw-lime, #C6F24E); border-color: var(--cw-lime, #C6F24E); transform: scale(1.25); }
 .cw-tour__dots i.now { transform: scale(1.5); }
 /* the wall stays put on the pass: no hover lifts, no idle drift */
 .tour-on .cw-hint, .tour-on .cw-pad, .tour-on .cw-lookup { opacity: 0; pointer-events: none; }
 .axis-open .cw-tour { z-index: 45; }
 @media (max-width: 860px) {
-  .cw-tour { bottom: calc(max(20px, env(safe-area-inset-bottom)) + 66px); }
+  /* the bar grew a second row, and the agent stands in the same corner it
+     used to have to itself: give the column the height it now needs */
+  .cw-tour { bottom: calc(max(20px, env(safe-area-inset-bottom)) + 128px); gap: 8px; }
   .cw-tour__go { font-size: .84rem; padding: 12px 16px; }
 }
 
@@ -1072,3 +1100,18 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
    declarations above silently outrank it: the panel was open on arrival and
    the launcher survived leaving the lobby. */
 .cw-assist[hidden], .cw-assist-open[hidden] { display: none !important; }
+
+@media (max-width: 860px) {
+  .cw-car__mid { min-width: 132px; }
+  .cw-car__name { font-size: .78rem; max-width: 52vw; }
+  .cw-car__nav { width: 38px; height: 38px; }
+}
+
+/* Carousel focus. --focus runs 1 at dead centre to 0 out at the edges, so the
+   screen you are turned toward is full strength and the rest sit back. They
+   are still there, still real, just not competing. */
+.cw-spot.is-axis .cw-spot__frame {
+  opacity: calc(.34 + var(--focus, 1) * .66);
+  transition: opacity .25s linear;
+}
+.cw-spot.is-axis .cw-spot__chip { opacity: calc(.3 + var(--focus, 1) * .7); }

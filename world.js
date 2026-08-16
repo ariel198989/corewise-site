@@ -44,6 +44,7 @@
       axisTap: 'הקישו לפתיחה', axisRoom: 'להיכנס למחלקה המלאה ↓', axisSite: 'האתר הייעודי ↗',
       axisWa: t => 'היי לידור, ראיתי את ' + t + ' בסיור באתר. אשמח לדבר.',
       cardCta: 'השאירו פרטים ונשלח לכם לינק',
+      carPrev: 'המסך הקודם', carNext: 'המסך הבא',
       assistOpen: 'שאלו את קורוויז', assistTitle: 'עוזר קורוויז',
       assistGreet: 'שאלו אותי כל דבר על קורוויז, על חמשת התחומים או על מה שאנחנו עושים.',
       assistPlaceholder: 'כתבו הודעה', assistSend: 'שליחה', assistClose: 'סגירה',
@@ -76,6 +77,7 @@
       axisTap: 'Tap to open', axisRoom: 'Step into the full department ↓', axisSite: 'Dedicated site ↗',
       axisWa: t => 'Hi Lidor, I saw ' + t + ' on the site tour. I would like to talk.',
       cardCta: 'Leave your details and we will send the link',
+      carPrev: 'Previous screen', carNext: 'Next screen',
       assistOpen: 'Ask Corewise', assistTitle: 'Corewise assistant',
       assistGreet: 'Ask me anything about Corewise, the five business lines, or what we do.',
       assistPlaceholder: 'Type a message', assistSend: 'Send', assistClose: 'Close',
@@ -169,8 +171,15 @@
       </header>
       <div class="cw-hint">${T('hint')}</div>
       <div class="cw-tour" hidden>
+        <div class="cw-car">
+          <button class="cw-car__nav" data-d="-1" aria-label="${T('carPrev')}">‹</button>
+          <span class="cw-car__mid">
+            <span class="cw-car__name"></span>
+            <span class="cw-tour__dots" aria-hidden="true"></span>
+          </span>
+          <button class="cw-car__nav" data-d="1" aria-label="${T('carNext')}">›</button>
+        </div>
         <button class="cw-tour__go">${T('tourGo')}</button>
-        <span class="cw-tour__dots" aria-hidden="true"></span>
       </div>
       <div class="cw-pad">
         <button data-k="left" aria-label="${T('padL')}">←</button>
@@ -219,6 +228,7 @@
       assistIn: $('.cw-assist__in', root), assistForm: $('.cw-assist__row', root),
     };
     $('.cw-tour__go', root).onclick = () => tourOn ? stopTour() : startTour();
+    root.querySelectorAll('.cw-car__nav').forEach(b => b.onclick = () => carGo(Number(b.dataset.d)));
     /* the visitor taking the wheel ends the guided pass — any real input */
     ['pointerdown', 'keydown', 'wheel'].forEach(ev => addEventListener(ev, e => {
       if (!tourOn) return;
@@ -266,8 +276,8 @@
       latVel = latVel * 0.5 + dLat * 0.5;
       px = e.clientX; py = e.clientY;
     });
-    c.addEventListener('pointerup', () => drag = false);
-    c.addEventListener('pointercancel', () => { drag = false; lonVel = latVel = 0; });
+    c.addEventListener('pointerup', () => { drag = false; carSettle(); });
+    c.addEventListener('pointercancel', () => { drag = false; lonVel = latVel = 0; carSettle(); });
     /* FOV_MIN is 64, not 58: the pano is 4096px around — at 58 degrees on a
        desktop monitor the GPU upsamples it ~2.2x and the zoom goes soft. 64
        keeps the lean-in without ever showing the texture its own ceiling. */
@@ -387,6 +397,7 @@
       d.el.classList.toggle('is-far', rel > 46);
     });
     tendScreens();
+    if (cur === 'lobby' && !tourOn) paintCar();
     if (compassDots.length) {
       compassDots.forEach(c => {
         const rel = ((c.yaw - lon) % 360 + 540) % 360 - 180;
@@ -410,6 +421,13 @@
     axisScreens.forEach(a => {
       const on = a === best && bestAbs < 40 && el.axis.hidden;
       a.el.classList.toggle('is-facing', on);
+      /* the carousel's focus, in the room itself: the screen you are turned
+         toward is whole, the others recede. Without this the five read as
+         debris floating at random angles, especially on a phone where two of
+         them are always half off the edge. */
+      const rel = Math.abs(((a.yaw - lon) % 360 + 540) % 360 - 180);
+      const k = Math.max(0, Math.min(1, 1 - (rel - 14) / 52));
+      a.el.style.setProperty('--focus', k.toFixed(3));
       if (!a.v) return;
       if (on && a.v.paused) a.v.play().catch(() => {});
       else if (!on && !a.v.paused) a.v.pause();
@@ -659,6 +677,7 @@
     el.assistOpenBtn.hidden = id !== 'lobby';
     if (id !== 'lobby') openAssist(false);
     paintTourDots();
+    if (id === 'lobby') paintCar();
     visited.add(id);
     buildMarkers(d);
     buildSky(d);
@@ -996,9 +1015,70 @@
   const seenAxes = new Set();
   function paintTourDots() {
     const box = $('.cw-tour__dots', el.root); if (!box) return;
+    const at = tourOn ? tourStep % Math.max(1, axisScreens.length) : carIndex();
     box.innerHTML = axisScreens.map((a, i) =>
-      '<i class="' + (seenAxes.has(a.yaw) ? 'on' : '') + (tourOn && i === tourStep ? ' now' : '') + '"></i>').join('');
+      '<i class="' + (seenAxes.has(a.yaw) ? 'on' : '') + (i === at ? ' now' : '') + '"></i>').join('');
   }
+  /* ---------- the carousel ----------
+     Five screens hung around a sphere are five screens you meet edge-on: at
+     any moment you are looking at a piece of one and a sliver of another, all
+     at different angles and apparent sizes. So the hall snaps. Let go of a
+     drag and it eases to the nearest screen, and the arrows step between them
+     in order, which makes the five read as one row you are turning through
+     rather than five things floating at random.
+     They stay on the walls, because that is the room. Only the way you move
+     between them is a carousel. */
+  const carIndex = () => {
+    if (!axisScreens.length) return 0;
+    let best = 0, bestAbs = 999;
+    axisScreens.forEach((a, i) => {
+      const r = Math.abs(((a.yaw - lon) % 360 + 540) % 360 - 180);
+      if (r < bestAbs) { bestAbs = r; best = i; }
+    });
+    return best;
+  };
+  function carGo(step) {
+    if (cur !== 'lobby' || !axisScreens.length) return;
+    stopTour();
+    const i = (carIndex() + step + axisScreens.length) % axisScreens.length;
+    carSnap(axisScreens[i].yaw, 620);
+  }
+  let carRaf = 0;
+  function carSnap(yaw, ms) {
+    cancelAnimationFrame(carRaf);
+    const lon0 = lon, rel = ((yaw - lon0) % 360 + 540) % 360 - 180, t0 = performance.now();
+    if (Math.abs(rel) < 0.4) return;
+    const ease = k => 1 - Math.pow(1 - k, 3);
+    const step = () => {
+      const k = Math.min(1, (performance.now() - t0) / ms);
+      lon = lon0 + rel * ease(k);
+      lat += (12 - lat) * 0.06;                 /* and level with them */
+      paintCar();
+      if (k < 1) carRaf = requestAnimationFrame(step);
+    };
+    carRaf = requestAnimationFrame(step);
+  }
+  /* a released drag settles onto the nearest screen instead of stopping
+     wherever the thumb happened to leave off */
+  function carSettle() {
+    if (cur !== 'lobby' || tourOn || !axisScreens.length || !el.axis.hidden) return;
+    clearTimeout(carSettle._t);
+    carSettle._t = setTimeout(() => {
+      if (drag || tourOn || cur !== 'lobby') return;
+      if (Math.abs(lonVel) > 0.25) return carSettle();   /* still coasting */
+      carSnap(axisScreens[carIndex()].yaw, 480);
+    }, 160);
+  }
+  function paintCar() {
+    const n = $('.cw-car__name', el.root);
+    if (!n || !axisScreens.length) return;
+    const a = axisScreens[carIndex()];
+    const h = (ROOMS.lobby?.hotspots || []).find(x => x.kind === 'axis' && x.yaw === a.yaw);
+    const t = h ? h.title : '';
+    if (n.textContent !== t) n.textContent = t;
+    paintTourDots();
+  }
+
   function glideTo(yaw, ms, done) {
     const lon0 = lon, rel = ((yaw - lon0) % 360 + 540) % 360 - 180, t0 = performance.now();
     const ease = k => k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
