@@ -1115,3 +1115,25 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
   transition: opacity .25s linear;
 }
 .cw-spot.is-axis .cw-spot__chip { opacity: calc(.3 + var(--focus, 1) * .7); }
+
+/* Each expertise has a full site of its own, and on the wall that fact was
+   the quietest of three buttons inside a panel you had to open first. A badge
+   on the screen itself says so before you click anything. */
+.cw-spot__site {
+  /* The chip forces direction: ltr on itself, so ITS inline-end is the right
+     edge while an RTL-inheriting badge's inline-start is also the right edge.
+     Both logical properties resolved to the same corner. Physical, therefore,
+     and deliberately: the chip owns the right, this owns the left. */
+  position: absolute; top: -13px; left: 12px; right: auto; z-index: 2;
+  font: 600 .62rem/1 'IBM Plex Mono', monospace; letter-spacing: .04em;
+  color: #14181c; background: var(--cw-lime, #C6F24E);
+  border-radius: 100px; padding: 5px 9px; white-space: nowrap;
+  opacity: calc(.25 + var(--focus, 1) * .75);
+}
+/* and inside the wall it stops being the dimmest option */
+.cw-axis__site { border-color: var(--cw-lime) !important; color: var(--cw-lime) !important; }
+
+/* On a phone the frame is 46vw and the department chip alone can be 134px of
+   it. The badge would sit on top of the chip, so there the same fact rides
+   the caption line instead, which spans the full width. */
+@media (max-width: 860px) { .cw-spot__site { display: none; } }

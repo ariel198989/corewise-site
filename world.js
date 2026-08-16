@@ -44,7 +44,7 @@
       axisTap: 'הקישו לפתיחה', axisRoom: 'להיכנס למחלקה המלאה ↓', axisSite: 'האתר הייעודי ↗',
       axisWa: t => 'היי לידור, ראיתי את ' + t + ' בסיור באתר. אשמח לדבר.',
       cardCta: 'השאירו פרטים ונשלח לכם לינק',
-      carPrev: 'המסך הקודם', carNext: 'המסך הבא',
+      carPrev: 'המסך הקודם', carNext: 'המסך הבא', axisSiteShort: 'אתר ייעודי', axisTapSite: 'הקישו · יש אתר ייעודי',
       assistOpen: 'שאלו את קורוויז', assistTitle: 'עוזר קורוויז',
       assistGreet: 'שאלו אותי כל דבר על קורוויז, על חמשת התחומים או על מה שאנחנו עושים.',
       assistPlaceholder: 'כתבו הודעה', assistSend: 'שליחה', assistClose: 'סגירה',
@@ -77,7 +77,7 @@
       axisTap: 'Tap to open', axisRoom: 'Step into the full department ↓', axisSite: 'Dedicated site ↗',
       axisWa: t => 'Hi Lidor, I saw ' + t + ' on the site tour. I would like to talk.',
       cardCta: 'Leave your details and we will send the link',
-      carPrev: 'Previous screen', carNext: 'Next screen',
+      carPrev: 'Previous screen', carNext: 'Next screen', axisSiteShort: 'own site', axisTapSite: 'tap · has its own site',
       assistOpen: 'Ask Corewise', assistTitle: 'Corewise assistant',
       assistGreet: 'Ask me anything about Corewise, the five business lines, or what we do.',
       assistPlaceholder: 'Type a message', assistSend: 'Send', assistClose: 'Close',
@@ -804,7 +804,9 @@
           '<span class="cw-spot__frame">' +
             '<span class="cw-spot__chip">' + esc(h.title) + (h.status ? ' · ' + esc(h.status) : '') + '</span>' +
             '<span class="cw-spot__glass">' + media +
-              '<span class="cw-spot__tag">' + esc(h.sub || '') + ' · <b>' + T('axisTap') + '</b></span>' +
+              '<span class="cw-spot__tag">' + esc(h.sub || '') + ' · <b>' +
+              T(coarse && h.site ? 'axisTapSite' : 'axisTap') + '</b></span>' +
+            (h.site ? '<span class="cw-spot__site">' + T('axisSiteShort') + '</span>' : '') +
             '</span>' +
             '<i class="cw-spot__anchor" aria-hidden="true"></i>' +
           '</span>';
