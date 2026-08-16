@@ -1,4 +1,4 @@
-// measuresolve — reveal-on-scroll only. Everything else is CSS.
+// measuresolve. Reveal-on-scroll only. Everything else is CSS.
 (function () {
   document.documentElement.classList.remove('no-js');
   var items = document.querySelectorAll('.reveal');

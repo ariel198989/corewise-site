@@ -1,4 +1,4 @@
-// ar site — tiny, no framework. Replays the hero information-layer once when the figure re-enters view.
+// ar site. Tiny, no framework. Replays the hero information-layer once when the figure re-enters view.
 (function () {
   'use strict';
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;

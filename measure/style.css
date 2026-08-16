@@ -1,8 +1,8 @@
 /* DIRECTION: technical drawing on paper (Swiss precision row, RTL). SEED: "measuresolve" = 12 → 12 % 8 = 4→ swapped to 1 (dark-technical was the previous project).
-   REFERENCE: named precedent — engineering dimension sheets (DIN 406 dimension lines) + Teenage Engineering spec pages.
+   REFERENCE: named precedent. Engineering dimension sheets (DIN 406 dimension lines) + Teenage Engineering spec pages.
    TYPE: Rubik 700/400 (Hebrew) + IBM Plex Mono for units, indices, dims.   SCALE: perfect fourth.
    BASE: off-white #f4f2ec / charcoal #14181c.   ACCENT: LiDAR teal #26d07c on dark (8.5:1), #117a48 as ink on paper (4.8:1).
-   LAYOUT PRIMITIVE: a "measurement sheet" row — oversized unit figure + dimension line + image with caption, repeated 5x.
+   LAYOUT PRIMITIVE: a "measurement sheet" row, oversized unit figure + dimension line + image with caption, repeated 5x.
    MOTION PERSONALITY: mathematical (expo-out, no bounce).
    ONE MEMORABLE THING: every feature is introduced by its output unit (מ״מ, מ³, %·°, STL) set at poster size, sitting on a real dimension line. */
 
@@ -121,6 +121,23 @@ h3 { font-size: var(--step-1); font-weight: 600; line-height: 1.3; }
 .toplink { font-size: var(--step--1); color: var(--on-dark-muted); white-space: nowrap; }
 .toplink:hover { color: var(--on-dark); }
 
+/* language switch. A quiet text button in the sheet's own mono voice */
+.lang {
+  position: relative;
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 2.5rem; min-width: 2.75rem; padding-inline: var(--space-3);
+  margin: 0; border: 1px solid rgba(244, 242, 236, .28); border-radius: var(--radius-pill);
+  background: none; color: var(--on-dark-muted);
+  font-family: var(--font-mono); font-size: var(--step--1); font-weight: 600; line-height: 1;
+  letter-spacing: .02em; white-space: nowrap; cursor: pointer;
+  transition: color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+}
+.lang::after { /* 44px touch target without a 44px-looking button */
+  content: ""; position: absolute; inset-inline: 0; top: 50%; translate: 0 -50%; height: 2.75rem;
+}
+.lang:hover { color: var(--accent); border-color: var(--accent); }
+.lang:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
 /* ---------- hero ---------- */
 .hero {
   background: var(--ink); color: var(--on-dark);
@@ -180,8 +197,10 @@ figcaption { font-size: var(--step--1); color: var(--on-dark-muted); line-height
   content: ""; position: absolute; inset-inline: 0; top: 50%; height: 9px; translate: 0 -50%;
   border-inline: 1px solid currentColor;
 }
-.dim b {
-  position: absolute; inset-inline-start: 50%; top: 50%; translate: 50% -50%;
+.dim b { /* centred by auto inline margins. `translate` has no logical form,
+            so a percentage nudge would mis-centre the moment dir flips */
+  position: absolute; inset-inline: 0; top: 50%; translate: 0 -50%;
+  width: max-content; margin-inline: auto;
   padding-inline: var(--space-2); font-weight: 500; white-space: nowrap; z-index: 1;
   background: var(--paper);
 }
@@ -189,7 +208,9 @@ figcaption { font-size: var(--step--1); color: var(--on-dark-muted); line-height
 .dim-side { height: auto; width: 1.4rem; }
 .dim-side::before { inset: 0 auto 0 50%; width: 1px; height: auto; }
 .dim-side::after { inset: 0 auto 0 50%; width: 9px; height: auto; translate: -50% 0; border-inline: 0; border-block: 1px solid currentColor; }
-.dim-side b { inset: 50% auto auto 50%; translate: -50% -50%; writing-mode: vertical-rl; rotate: 180deg; padding-inline: 0; padding-block: var(--space-2); }
+/* the vertical dimension line is symmetric about its own centre: physical
+   left/translate here are direction-free on purpose, so it must not mirror. */
+.dim-side b { inset: 50% auto auto 50%; translate: -50% -50%; margin-inline: 0; writing-mode: vertical-rl; rotate: 180deg; padding-inline: 0; padding-block: var(--space-2); }
 
 /* ---------- features ---------- */
 .features { padding-block: clamp(4rem, 10vw, 9rem); }
@@ -200,8 +221,11 @@ figcaption { font-size: var(--step--1); color: var(--on-dark-muted); line-height
 }
 .feat:last-of-type { border-block-end: 1px solid var(--hair); }
 .feat-copy { display: flex; flex-direction: column; }
-.feat-idx { font-family: var(--font-mono); font-size: var(--step--1); color: var(--ink-3); order: -2; text-align: right; }
-.feat-copy .unit[dir="ltr"] { text-align: right; }
+/* the index and the unit hug the reading edge of the column. align-self on a
+   column flex container follows the CONTAINER's direction, so a dir="ltr"
+   chip ("01", "STL", "%·°") still lands on the Hebrew right / English left. */
+.feat-idx { font-family: var(--font-mono); font-size: var(--step--1); color: var(--ink-3); order: -2; align-self: start; }
+.feat-copy .unit { align-self: start; }
 .unit {
   font-family: var(--font-mono), var(--font-he); font-weight: 600;
   font-size: var(--step-5); line-height: .95; letter-spacing: -.02em;
