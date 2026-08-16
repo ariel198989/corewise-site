@@ -11,6 +11,22 @@ document.documentElement.classList.add('js');
   els.forEach((el) => io.observe(el));
 })();
 
+/* Detection-box captions live in a data-l attribute (CSS content: attr(data-l)), which the
+   shared i18n engine cannot reach. The English sits beside it in data-l-en; swap on demand.
+   Boxes with a purely numeric label (the people-counting frame) carry no data-l-en and stay put. */
+(() => {
+  const boxes = [...document.querySelectorAll('[data-l-en]')];
+  const paint = () => {
+    const en = document.documentElement.lang === 'en';
+    boxes.forEach((b) => {
+      if (!b.dataset.lHe) b.dataset.lHe = b.dataset.l;
+      b.dataset.l = en ? b.dataset.lEn : b.dataset.lHe;
+    });
+  };
+  paint();
+  addEventListener('cw:langchange', paint);
+})();
+
 (() => {
   const cam = document.getElementById('cam');
   if (!cam) return;
@@ -22,10 +38,20 @@ document.documentElement.classList.add('js');
   const detections = cam.querySelectorAll('.det .box, .det .line').length;
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  /* The camera-status readout is written by JS, so its copy cannot live in data-en.
+     One table per language, picked off document.documentElement.lang and repainted
+     whenever the shared engine fires cw:langchange. */
   const LABELS = {
-    dumb: { status: 'מקליטה בלבד', count: '0', chip: 'RAW' },
-    smart: { status: 'מזהה אירועים', count: String(detections), chip: 'AI · ON' },
+    he: {
+      dumb: { status: 'מקליטה בלבד', count: '0', chip: 'RAW' },
+      smart: { status: 'מזהה אירועים', count: String(detections), chip: 'AI · ON' },
+    },
+    en: {
+      dumb: { status: 'recording only', count: '0', chip: 'RAW' },
+      smart: { status: 'detecting events', count: String(detections), chip: 'AI · ON' },
+    },
   };
+  const strings = () => LABELS[document.documentElement.lang === 'en' ? 'en' : 'he'];
 
   let userTouched = false;
 
@@ -33,10 +59,15 @@ document.documentElement.classList.add('js');
     cam.dataset.mode = mode;
     toggle.dataset.mode = mode;
     buttons.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.set === mode)));
-    status.textContent = LABELS[mode].status;
-    count.textContent = LABELS[mode].count;
-    chip.textContent = LABELS[mode].chip;
+    const s = strings()[mode];
+    status.textContent = s.status;
+    count.textContent = s.count;
+    chip.textContent = s.chip;
   };
+
+  // the engine restores markup values on a switch back to Hebrew; re-assert the live state
+  addEventListener('cw:langchange', () => setMode(cam.dataset.mode));
+  if (document.documentElement.lang === 'en') setMode(cam.dataset.mode);
 
   buttons.forEach((b) => b.addEventListener('click', () => { userTouched = true; setMode(b.dataset.set); }));
 
