@@ -920,3 +920,99 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
    white-space: nowrap on every span a spot owns — so the screen caption
    ran off the end of its own bezel and lost its last word. It wraps. */
 .cw-spot:not(.is-product) .cw-spot__tag { white-space: normal; }
+
+/* ---------- the lobby assistant ----------
+   It stands beside the WhatsApp button, in the same corner and at the same
+   weight, because the two are the same offer at different temperatures: ask
+   the site a question, or go talk to a person. Charcoal against the
+   WhatsApp green so they read as a pair without competing. */
+.cw-assist-open {
+  position: fixed; z-index: 28;
+  left: 18px; bottom: calc(max(18px, env(safe-area-inset-bottom)) + 58px);
+  display: inline-flex; align-items: center; gap: 8px; cursor: pointer;
+  background: rgba(20,24,28,.82); color: #fff; font: 600 .84rem/1 Rubik, system-ui, sans-serif;
+  padding: 11px 16px; border-radius: 100px; border: 1px solid rgba(255,255,255,.16);
+  -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+  box-shadow: 0 10px 26px rgba(8,11,14,.34);
+  transition: background .2s, border-color .2s, transform .2s;
+}
+.cw-assist-open svg { width: 19px; height: 19px; flex: none; }
+.cw-assist-open:hover { background: rgba(20,24,28,.95); border-color: rgba(255,255,255,.32); }
+.cw-assist-open.is-on { background: var(--cw-lime); color: #0c0f12; border-color: var(--cw-lime); }
+.cw-assist-open:focus-visible { outline: 2px solid var(--cw-lime); outline-offset: 3px; }
+
+.cw-assist {
+  position: fixed; z-index: 29;
+  left: 18px; bottom: calc(max(18px, env(safe-area-inset-bottom)) + 116px);
+  width: min(370px, calc(100vw - 36px)); max-height: min(60vh, 520px);
+  display: flex; flex-direction: column; overflow: hidden;
+  background: #fff; color: var(--cw-ink); border-radius: 18px;
+  box-shadow: 0 24px 60px rgba(8,11,14,.42);
+  animation: cwAssistIn .24s cubic-bezier(.2,.8,.2,1);
+}
+@keyframes cwAssistIn { from { opacity: 0; transform: translateY(12px) scale(.97) } }
+@media (prefers-reduced-motion: reduce) { .cw-assist { animation: none; } }
+.cw-assist__head {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  padding: 13px 16px; border-bottom: 1px solid rgba(20,24,28,.1); flex: none;
+}
+.cw-assist__title { font-weight: 700; font-size: .92rem; }
+.cw-assist__x {
+  border: 0; background: transparent; cursor: pointer; font-size: .95rem;
+  color: rgba(20,24,28,.5); padding: 4px 6px; border-radius: 8px; line-height: 1;
+}
+.cw-assist__x:hover { background: rgba(20,24,28,.07); color: var(--cw-ink); }
+.cw-assist__log {
+  flex: 1 1 auto; overflow-y: auto; padding: 14px 16px;
+  display: flex; flex-direction: column; gap: 9px; font-size: .88rem; line-height: 1.6;
+}
+.cw-assist__greet { margin: 0; color: rgba(20,24,28,.6); }
+.cw-assist__msg {
+  margin: 0; padding: 9px 13px; border-radius: 14px; max-width: 88%;
+  white-space: pre-wrap; overflow-wrap: anywhere;
+}
+.cw-assist__msg.is-user {
+  align-self: flex-end; background: var(--cw-ink); color: #fff;
+  border-end-end-radius: 5px;
+}
+.cw-assist__msg.is-bot {
+  align-self: flex-start; background: rgba(20,24,28,.07);
+  border-end-start-radius: 5px;
+}
+.cw-assist__msg.is-wait { color: rgba(20,24,28,.45); }
+/* three dots that keep time while the answer is on its way */
+.cw-assist__msg.is-wait::after {
+  content: ""; animation: cwDots 1.2s steps(4, end) infinite;
+}
+@keyframes cwDots { 0% { content: "" } 25% { content: "." } 50% { content: ".." } 75% { content: "..." } }
+.cw-assist__msg.is-err { background: rgba(226,75,74,.1); color: #8f2523; }
+.cw-assist__row {
+  display: flex; align-items: center; gap: 8px; padding: 11px 12px;
+  border-top: 1px solid rgba(20,24,28,.1); flex: none;
+}
+.cw-assist__in {
+  flex: 1 1 auto; min-width: 0; border: 1px solid rgba(20,24,28,.16);
+  border-radius: 100px; padding: 10px 14px; font: inherit; font-size: .88rem;
+  color: var(--cw-ink); background: #fff;
+}
+.cw-assist__in:focus { outline: none; border-color: var(--cw-lime-d); }
+.cw-assist__go {
+  flex: none; width: 38px; height: 38px; border-radius: 50%; cursor: pointer;
+  border: 0; background: var(--cw-lime); color: #0c0f12; font-size: 1rem; font-weight: 700;
+}
+.cw-assist__go:hover { background: var(--cw-lime-d); }
+.cw-assist__go:focus-visible { outline: 2px solid var(--cw-ink); outline-offset: 2px; }
+
+/* On a phone the panel is a sheet: full width at the bottom, above the
+   launcher, so the keyboard does not shove it off screen. */
+@media (max-width: 860px) {
+  .cw-assist-open { padding: 12px; bottom: calc(max(18px, env(safe-area-inset-bottom)) + 56px); }
+  .cw-assist-open span { display: none; }
+  .cw-assist {
+    left: 10px; right: 10px; width: auto;
+    bottom: calc(max(18px, env(safe-area-inset-bottom)) + 112px);
+    max-height: 56vh;
+  }
+}
+/* the idle dim leaves the assistant alone: it is a conversation, not chrome */
+.cw.is-idle .cw-assist-open { opacity: .55; }

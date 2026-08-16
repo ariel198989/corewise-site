@@ -12,6 +12,7 @@
   const ICON = {
     gyro: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="8.3"/><path d="M15.1 8.9 10.2 10.6 8.9 15.1 13.8 13.4z" fill="currentColor" stroke="none"/></svg>',
     map: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true"><path d="M9 4.7 3.7 7v12.3L9 17l6 2.3 5.3-2.3V4.7L15 7z"/><path d="M9 4.7V17M15 7v12.3"/></svg>',
+    chat: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M4 6.5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H9l-4 3.3V16.5H6a2 2 0 0 1-2-2z"/><circle cx="9" cy="10.3" r=".9" fill="currentColor" stroke="none"/><circle cx="12.5" cy="10.3" r=".9" fill="currentColor" stroke="none"/><circle cx="16" cy="10.3" r=".9" fill="currentColor" stroke="none"/></svg>',
   };
   /* A phone has no arrow keys. The old single string taught a desktop
      keyboard to a thumb, and at 390px it ran under the compass and clipped
@@ -43,6 +44,10 @@
       axisTap: 'הקישו לפתיחה', axisRoom: 'להיכנס למחלקה המלאה ↓', axisSite: 'האתר הייעודי ↗',
       axisWa: t => 'היי לידור, ראיתי את ' + t + ' בסיור באתר. אשמח לדבר.',
       cardCta: 'השאירו פרטים ונשלח לכם לינק',
+      assistOpen: 'שאלו את קורוויז', assistTitle: 'עוזר קורוויז',
+      assistGreet: 'שאלו אותי כל דבר על קורוויז, על חמשת התחומים או על מה שאנחנו עושים.',
+      assistPlaceholder: 'כתבו הודעה', assistSend: 'שליחה', assistClose: 'סגירה',
+      assistThinking: 'חושב', assistError: 'ההודעה לא נשלחה. נסו שוב או כתבו ללידור בוואטסאפ.',
       finEyebrow: 'סוף הסיור', finTitle: 'נעים להכיר 👋',
       finLine: (r, f) => 'ביקרת ב-' + r + ' מחלקות וגילית ' + f + ' נקודות בקמפוס.',
       finAsk: ' מכאן זה כבר תלוי בכם - במה נתחיל?',
@@ -70,6 +75,10 @@
       axisTap: 'Tap to open', axisRoom: 'Step into the full department ↓', axisSite: 'Dedicated site ↗',
       axisWa: t => 'Hi Lidor, I saw ' + t + ' on the site tour. I would like to talk.',
       cardCta: 'Leave your details and we will send the link',
+      assistOpen: 'Ask Corewise', assistTitle: 'Corewise assistant',
+      assistGreet: 'Ask me anything about Corewise, the five business lines, or what we do.',
+      assistPlaceholder: 'Type a message', assistSend: 'Send', assistClose: 'Close',
+      assistThinking: 'Thinking', assistError: 'The message did not send. Try again or message Lidor on WhatsApp.',
       finEyebrow: 'End of the tour', finTitle: 'Good to meet you 👋',
       finLine: (r, f) => 'You walked ' + r + ' departments and found ' + f + ' points on campus.',
       finAsk: ' From here it is up to you - where do we start?',
@@ -171,6 +180,20 @@
         <svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.1.6 4.2 1.6 6L4 29l8.2-1.6c1.7.9 3.6 1.4 5.8 1.4 6.6 0 12-5.4 12-12S22.6 3 16 3zm0 21.8c-1.9 0-3.7-.5-5.3-1.5l-.4-.2-4.9.9.9-4.8-.3-.4C5 17.8 4.4 16 4.4 15 4.4 8.9 9.9 4.4 16 4.4S27.6 8.9 27.6 15 22.1 24.8 16 24.8zm6.5-8.3c-.4-.2-2.1-1-2.4-1.1-.3-.1-.6-.2-.8.2-.2.4-.9 1.1-1.1 1.3-.2.2-.4.2-.8.1-2.1-.9-3.5-2.7-3.7-3.1-.2-.4 0-.6.2-.8l.5-.6c.2-.2.2-.4.3-.6.1-.2 0-.5 0-.6-.1-.2-.8-2-1.1-2.7-.3-.7-.6-.6-.8-.6h-.7c-.2 0-.6.1-.9.5-.3.4-1.2 1.2-1.2 2.9s1.2 3.4 1.4 3.6c.2.2 2.4 3.7 5.9 5.1 3.5 1.4 3.5.9 4.1.9.6-.1 2.1-.8 2.4-1.7.3-.8.3-1.6.2-1.7-.1-.2-.3-.3-.7-.5z"/></svg>
         <span>${T('waLabel')}</span>
       </a>
+      <button class="cw-assist-open" hidden aria-label="${T('assistOpen')}" aria-expanded="false">
+        ${ICON.chat}<span>${T('assistOpen')}</span>
+      </button>
+      <div class="cw-assist" hidden role="dialog" aria-modal="false" aria-label="${T('assistTitle')}">
+        <div class="cw-assist__head">
+          <span class="cw-assist__title">${T('assistTitle')}</span>
+          <button class="cw-assist__x" aria-label="${T('assistClose')}">✕</button>
+        </div>
+        <div class="cw-assist__log"><p class="cw-assist__greet">${T('assistGreet')}</p></div>
+        <form class="cw-assist__row">
+          <input class="cw-assist__in" type="text" autocomplete="off" placeholder="${T('assistPlaceholder')}" maxlength="500">
+          <button class="cw-assist__go" type="submit" aria-label="${T('assistSend')}">↑</button>
+        </form>
+      </div>
       <div class="cw-scrim" hidden></div>
       <div class="cw-axis" hidden aria-modal="true" role="dialog">
         <div class="cw-axis__wall">
@@ -190,6 +213,8 @@
       room: $('.cw-room', root), prog: $('.cw-prog', root), hint: $('.cw-hint', root), card: $('.cw-card', root), finale: $('.cw-finale', root), scrim: $('.cw-scrim', root), wa: $('.cw-wa', root),
  load: $('.cw-load', root), mapui: $('.cw-mapui', root), snd: $('.cw-snd', root),
       home: $('.cw-home', root), axis: $('.cw-axis', root), tour: $('.cw-tour', root),
+      assistOpenBtn: $('.cw-assist-open', root), assist: $('.cw-assist', root), assistLog: $('.cw-assist__log', root),
+      assistIn: $('.cw-assist__in', root), assistForm: $('.cw-assist__row', root),
     };
     $('.cw-tour__go', root).onclick = () => tourOn ? stopTour() : startTour();
     /* the visitor taking the wheel ends the guided pass — any real input */
@@ -218,6 +243,14 @@
     $('.cw-lang', root).onclick = () => setLang(LANG === 'en' ? 'he' : 'en');
     $('.cw-map', root).onclick = () => openMap(true);
     $('.cw-mapui__x', root).onclick = () => openMap(false);
+    $('.cw-assist-open', root).onclick = () => openAssist(el.assist.hidden);
+    $('.cw-assist__x', root).onclick = () => openAssist(false);
+    $('.cw-assist__row', root).addEventListener('submit', e => {
+      e.preventDefault();
+      const v = el.assistIn.value;
+      el.assistIn.value = '';
+      assistSend(v);
+    });
 
     /* look controls */
     const c = el.canvas;
@@ -619,6 +652,10 @@
     el.wa.href = WA + (d.wa ? '?text=' + encodeURIComponent(d.wa) : '');
     el.home.hidden = id === 'lobby';
     el.tour.hidden = id !== 'lobby';
+    /* the assistant only stands in the lobby for now; leaving the room
+       closes it rather than leaving it orphaned open behind a screen */
+    el.assistOpenBtn.hidden = id !== 'lobby';
+    if (id !== 'lobby') openAssist(false);
     paintTourDots();
     visited.add(id);
     buildMarkers(d);
@@ -1227,6 +1264,55 @@
     }
   }
 
+  /* ---------- the lobby assistant ----------
+     Scoped hard on the server: it only answers questions about Corewise, and
+     the knowledge it draws from is generated from this same tour-content.json
+     so it can never claim a feature the hall itself does not show. It stands
+     in the lobby only, next to the WhatsApp button it hands off to when a
+     visitor wants a human instead of an answer. */
+  let assistHistory = [], assistBusy = false;
+  function openAssist(show) {
+    el.assist.hidden = !show;
+    el.assistOpenBtn.setAttribute('aria-expanded', String(show));
+    el.assistOpenBtn.classList.toggle('is-on', show);
+    if (show) { duck(true); setTimeout(() => el.assistIn.focus(), 260); }
+    else duck(false);
+  }
+  function assistBubble(role, text) {
+    const p = document.createElement('p');
+    p.className = 'cw-assist__msg is-' + role;
+    p.textContent = text;
+    el.assistLog.appendChild(p);
+    el.assistLog.scrollTop = el.assistLog.scrollHeight;
+    return p;
+  }
+  async function assistSend(text) {
+    if (assistBusy || !text.trim()) return;
+    assistBusy = true;
+    assistBubble('user', text);
+    assistHistory.push({ role: 'user', content: text });
+    const wait = assistBubble('bot', T('assistThinking'));
+    wait.classList.add('is-wait');
+    try {
+      const r = await fetch('/api/assistant', {
+        method: 'POST', headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ message: text, history: assistHistory.slice(0, -1) }),
+      });
+      const j = await r.json().catch(() => ({}));
+      if (!r.ok || !j.reply) throw new Error('bad response');
+      wait.classList.remove('is-wait');
+      wait.textContent = j.reply;
+      assistHistory.push({ role: 'assistant', content: j.reply });
+      assistHistory = assistHistory.slice(-16);
+    } catch (e) {
+      wait.classList.remove('is-wait'); wait.classList.add('is-err');
+      wait.textContent = T('assistError');
+    } finally {
+      assistBusy = false;
+      el.assistLog.scrollTop = el.assistLog.scrollHeight;
+    }
+  }
+
   function openMap(show) {
     if (!show) { el.mapui.style.display = 'none'; return; }
     if (!cur) return;
@@ -1261,6 +1347,13 @@
     q('.cw-axis__x', e => e.textContent = T('home'));
     q('.cw-wa', e => e.title = T('waTitle'));
     q('.cw-wa span', e => e.textContent = T('waLabel'));
+    q('.cw-assist-open span', e => e.textContent = T('assistOpen'));
+    q('.cw-assist-open', e => e.setAttribute('aria-label', T('assistOpen')));
+    q('.cw-assist__title', e => e.textContent = T('assistTitle'));
+    q('.cw-assist__x', e => e.setAttribute('aria-label', T('assistClose')));
+    q('.cw-assist__greet', e => e.textContent = T('assistGreet'));
+    q('.cw-assist__in', e => e.placeholder = T('assistPlaceholder'));
+    q('.cw-assist__go', e => e.setAttribute('aria-label', T('assistSend')));
     q('.cw-pad [data-k=left]', e => e.setAttribute('aria-label', T('padL')));
     q('.cw-pad [data-k=up]', e => e.setAttribute('aria-label', T('padU')));
     q('.cw-pad [data-k=right]', e => e.setAttribute('aria-label', T('padR')));
