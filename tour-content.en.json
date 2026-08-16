@@ -261,7 +261,7 @@
         },
         {
           "yaw": -72,
-          "pitch": -16,
+          "pitch": 26,
           "title": "The embedding promise",
           "text": "Corewise doesn't install and leave, we embed: in the business, and with its customers. I promise you will use this, and love it. That's the power. Our symbol: the ring is your business, and the glowing core at the center is the AI we embed in it. Everything we build starts from your business core, not from the technology.",
           "img": "works/cw-logo.webp",
@@ -279,7 +279,7 @@
         },
         {
           "yaw": 72,
-          "pitch": -16,
+          "pitch": 26,
           "title": "This site is a product",
           "text": "Next-Gen Landing Page: what you're seeing right now is a live example of the next-generation landing page we build for clients, a world you walk into, instead of a page you scroll.",
           "kind": "story"

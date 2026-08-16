@@ -151,6 +151,7 @@
     root.innerHTML = `
       <canvas class="cw-canvas"></canvas>
       <div class="cw-spots"></div>
+      <div class="cw-rail" hidden aria-label="Corewise" role="region"></div>
       <div class="cw-veil"></div>
       <div class="cw-grade" aria-hidden="true"></div>
       <div class="cw-motes"></div>
@@ -224,6 +225,7 @@
       room: $('.cw-room', root), prog: $('.cw-prog', root), hint: $('.cw-hint', root), card: $('.cw-card', root), finale: $('.cw-finale', root), scrim: $('.cw-scrim', root), wa: $('.cw-wa', root),
  load: $('.cw-load', root), mapui: $('.cw-mapui', root), snd: $('.cw-snd', root),
       home: $('.cw-home', root), axis: $('.cw-axis', root), tour: $('.cw-tour', root),
+      rail: $('.cw-rail', root),
       assistOpenBtn: $('.cw-assist-open', root), assist: $('.cw-assist', root), assistLog: $('.cw-assist__log', root),
       assistIn: $('.cw-assist__in', root), assistForm: $('.cw-assist__row', root),
     };
@@ -397,7 +399,13 @@
       d.el.classList.toggle('is-far', rel > 46);
     });
     tendScreens();
-    if (cur === 'lobby' && !tourOn) paintCar();
+    if (cur === 'lobby' && axisScreens.length && !drag && !tourOn && el.axis.hidden) {
+      /* the parallax is a fraction of the card's bearing, and the fraction
+         has to respect the field of view: on a 116-degree desktop 19 degrees
+         is a nod, on a 60-degree phone it walks the wordmark off the edge */
+      const target = ((axisScreens[railAt] || {}).yaw || 0) * (innerWidth <= 860 ? 0.04 : 0.13);
+      lon += (target - lon) * 0.05;
+    }
     if (compassDots.length) {
       compassDots.forEach(c => {
         const rel = ((c.yaw - lon) % 360 + 540) % 360 - 180;
@@ -413,21 +421,9 @@
      Hysteresis so a screen at the edge does not stutter on/off. */
   function tendScreens() {
     if (!axisScreens.length) return;
-    let best = null, bestAbs = 999;
-    axisScreens.forEach(a => {
-      const rel = Math.abs(((a.yaw - lon) % 360 + 540) % 360 - 180);
-      if (rel < bestAbs) { bestAbs = rel; best = a; }
-    });
-    axisScreens.forEach(a => {
-      const on = a === best && bestAbs < 40 && el.axis.hidden;
-      a.el.classList.toggle('is-facing', on);
-      /* the carousel's focus, in the room itself: the screen you are turned
-         toward is whole, the others recede. Without this the five read as
-         debris floating at random angles, especially on a phone where two of
-         them are always half off the edge. */
-      const rel = Math.abs(((a.yaw - lon) % 360 + 540) % 360 - 180);
-      const k = Math.max(0, Math.min(1, 1 - (rel - 14) / 52));
-      a.el.style.setProperty('--focus', k.toFixed(3));
+    axisScreens.forEach((a, i) => {
+      const on = i === railAt && el.axis.hidden && Math.abs(railPos - railAt) < 0.5;
+      a.el.classList.toggle('is-focus', i === railAt);
       if (!a.v) return;
       if (on && a.v.paused) a.v.play().catch(() => {});
       else if (!on && !a.v.paused) a.v.pause();
@@ -785,6 +781,7 @@
   function buildMarkers(d) {
     el.spots.innerHTML = '';
     spots = []; doors = []; tvYaw = null; axisScreens = [];
+    railReset(d.id === 'lobby');
     let prod = 0;
     (d.hotspots || []).forEach((h, i) => {
       const kind = h.kind || 'story';
@@ -796,25 +793,9 @@
          on the wall — bezel, chip, glass — that shows its film only while it
          is the one you are facing (the others rest on a poster), so five
          screens cost the phone one video. Click: the wall opens. */
-      if (kind === 'axis') {
-        const media = h.video
-          ? '<video src="' + h.video + '" poster="' + (h.poster || '') + '" preload="none" muted loop playsinline></video>'
-          : '<img src="' + h.still + '" alt="" decoding="async" class="cw-kb">';
-        b.innerHTML =
-          '<span class="cw-spot__frame">' +
-            '<span class="cw-spot__chip">' + esc(h.title) + (h.status ? ' · ' + esc(h.status) : '') + '</span>' +
-            '<span class="cw-spot__glass">' + media +
-              '<span class="cw-spot__tag">' + esc(h.sub || '') + ' · <b>' +
-              T(coarse && h.site ? 'axisTapSite' : 'axisTap') + '</b></span>' +
-            (h.site ? '<span class="cw-spot__site">' + T('axisSiteShort') + '</span>' : '') +
-            '</span>' +
-            '<i class="cw-spot__anchor" aria-hidden="true"></i>' +
-          '</span>';
-        b.onclick = () => openAxis(h);
-        el.spots.appendChild(b);
-        spots.push({ el: b, v: vec(h.yaw, h.pitch) });
-        axisScreens.push({ el: b, yaw: h.yaw, v: b.querySelector('video') });
-        tvYaw = h.yaw;                       /* screens want a still camera */
+      if (kind === 'axis' || (kind === 'tv' && d.id === 'lobby' && h.video)) {
+        railAdd(h, kind === 'tv');
+        tvYaw = 0;                           /* screens want a still camera */
         return;
       }
       if (kind === 'tv' && h.video) {
@@ -1021,62 +1002,139 @@
     box.innerHTML = axisScreens.map((a, i) =>
       '<i class="' + (seenAxes.has(a.yaw) ? 'on' : '') + (i === at ? ' now' : '') + '"></i>').join('');
   }
-  /* ---------- the carousel ----------
-     Five screens hung around a sphere are five screens you meet edge-on: at
-     any moment you are looking at a piece of one and a sliver of another, all
-     at different angles and apparent sizes. So the hall snaps. Let go of a
-     drag and it eases to the nearest screen, and the arrows step between them
-     in order, which makes the five read as one row you are turning through
-     rather than five things floating at random.
-     They stay on the walls, because that is the room. Only the way you move
-     between them is a carousel. */
-  const carIndex = () => {
-    if (!axisScreens.length) return 0;
-    let best = 0, bestAbs = 999;
+  /* ---------- the rail ----------
+     Six screens hung round a sphere were six screens you met edge-on, at
+     different angles and apparent sizes, with two of them always half off a
+     phone. So they came off the wall. They live in a rail now: one card in
+     focus, whole and centred, the neighbours receding in real perspective
+     behind it. The room stays a room. The wall stays a wall with a name on
+     it and nothing else. That is the whole fix. */
+  let railAt = 0, railPos = 0, railRaf = 0, railW = 0, railGap = 0;
+  const railCards = () => axisScreens;
+
+  function railReset(on) {
+    el.rail.innerHTML = '';
+    el.rail.hidden = !on;
+    railAt = 0; railPos = 0;
+    cancelAnimationFrame(railRaf);
+  }
+  function railAdd(h, isFilm) {
+    const b = document.createElement('button');
+    b.className = 'cw-card3' + (isFilm ? ' is-film' : '');
+    b.type = 'button';
+    const media = h.video
+      ? '<video src="' + h.video + '" poster="' + (h.poster || '') + '" preload="' + (isFilm ? 'metadata' : 'none') + '" muted loop playsinline></video>'
+      : '<img src="' + h.still + '" alt="" decoding="async" class="cw-kb">';
+    b.innerHTML =
+      '<span class="cw-card3__glass">' + media +
+        '<span class="cw-card3__chip">' + esc(h.title) + (h.status ? ' \u00b7 ' + esc(h.status) : (isFilm ? ' \u00b7 LIVE' : '')) + '</span>' +
+        (h.site ? '<span class="cw-card3__site">' + T('axisSiteShort') + '</span>' : '') +
+        '<span class="cw-card3__tag">' + esc(isFilm ? (h.text || '') : (h.sub || '')) + '</span>' +
+      '</span>';
+    const i = axisScreens.length;
+    b.onclick = () => {
+      if (i !== railAt) { railTo(i, 560); return; }
+      openAxis(isFilm ? Object.assign({}, h, { abstract: h.text, features: [] }) : h);
+    };
+    el.rail.appendChild(b);
+    axisScreens.push({ el: b, yaw: h.yaw, v: b.querySelector('video'), h, film: isFilm });
+    railLayout();
+    paintRail();
+  }
+  function railLayout() {
+    const mob = innerWidth <= 860;
+    railW = mob ? Math.round(innerWidth * 0.76) : Math.round(Math.max(300, Math.min(innerWidth * 0.34, 520)));
+    railGap = Math.round(railW * (mob ? 0.86 : 0.74));
+    el.rail.style.setProperty('--cw', railW + 'px');
+    el.rail.style.height = Math.round(railW * 9 / 16 + 30) + 'px';
+  }
+  addEventListener('resize', () => { if (axisScreens.length) { railLayout(); paintRail(); } });
+  function paintRail() {
+    const n = axisScreens.length;
     axisScreens.forEach((a, i) => {
-      const r = Math.abs(((a.yaw - lon) % 360 + 540) % 360 - 180);
-      if (r < bestAbs) { bestAbs = r; best = i; }
+      /* shortest signed distance round the loop, so card 6 sits just left of
+         card 0 instead of six places to its right */
+      let d = i - railPos;
+      if (d > n / 2) d -= n; else if (d < -n / 2) d += n;
+      const ad = Math.abs(d);
+      const far = ad > 2.7;
+      a.el.style.transform = 'translate3d(' + (d * railGap).toFixed(1) + 'px,0,' + (-ad * 230).toFixed(1) + 'px) rotateY(' + (-d * 9).toFixed(2) + 'deg) scale(' + (1 - Math.min(ad, 2) * 0.09).toFixed(3) + ')';
+      a.el.style.opacity = far ? '0' : (1 - Math.min(ad, 2) * 0.34).toFixed(3);
+      a.el.style.zIndex = String(100 - Math.round(ad * 10));
+      a.el.style.pointerEvents = far ? 'none' : '';
+      a.el.setAttribute('aria-hidden', far ? 'true' : 'false');
     });
-    return best;
-  };
+    paintCar();
+  }
+  function railTo(i, ms) {
+    if (!axisScreens.length) return;
+    railAt = ((i % axisScreens.length) + axisScreens.length) % axisScreens.length;
+    /* go the short way round on a loop of seven */
+    let from = railPos;
+    const n = axisScreens.length;
+    while (railAt - from > n / 2) from += n;
+    while (from - railAt > n / 2) from -= n;
+    cancelAnimationFrame(railRaf);
+    const t0 = performance.now(), ease = k => 1 - Math.pow(1 - k, 3);
+    const step = () => {
+      const k = Math.min(1, (performance.now() - t0) / (ms || 560));
+      railPos = from + (railAt - from) * ease(k);
+      paintRail();
+      if (k < 1) railRaf = requestAnimationFrame(step);
+      else { railPos = railAt; paintRail(); tendScreens(); }
+    };
+    railRaf = requestAnimationFrame(step);
+  }
+  /* swipe and drag on the rail itself; the canvas underneath keeps its own
+     look-around drag, the two never fight */
+  (function railDrag() {
+    let x0 = null, p0 = 0, moved = false;
+    addEventListener('pointerdown', e => {
+      if (!e.target.closest || !e.target.closest('.cw-rail')) return;
+      x0 = e.clientX; p0 = railPos; moved = false;
+      cancelAnimationFrame(railRaf);
+    });
+    addEventListener('pointermove', e => {
+      if (x0 == null) return;
+      const dx = e.clientX - x0;
+      if (Math.abs(dx) > 6) moved = true;
+      railPos = p0 - dx / railGap * (document.documentElement.dir === 'rtl' ? -1 : 1);
+      paintRail();
+    }, { passive: true });
+    const up = e => {
+      if (x0 == null) return;
+      x0 = null;
+      if (moved) {
+        /* a card click that turned into a drag must not also open */
+        const kill = ev => { ev.stopPropagation(); ev.preventDefault(); removeEventListener('click', kill, true); };
+        addEventListener('click', kill, true);
+        setTimeout(() => removeEventListener('click', kill, true), 0);
+      }
+      railTo(Math.round(railPos), 420);
+    };
+    addEventListener('pointerup', up); addEventListener('pointercancel', up);
+    addEventListener('wheel', e => {
+      if (cur !== 'lobby' || !axisScreens.length || !e.target.closest || !e.target.closest('.cw-rail')) return;
+      if (Math.abs(e.deltaX) < Math.abs(e.deltaY)) return;
+      e.preventDefault();
+      clearTimeout(railDrag._w);
+      railDrag._w = setTimeout(() => railTo(railAt + Math.sign(e.deltaX) * (document.documentElement.dir === 'rtl' ? -1 : 1), 480), 40);
+    }, { passive: false });
+  })();
+
+  const carIndex = () => railAt;
   function carGo(step) {
     if (cur !== 'lobby' || !axisScreens.length) return;
     stopTour();
-    const i = (carIndex() + step + axisScreens.length) % axisScreens.length;
-    carSnap(axisScreens[i].yaw, 620);
+    /* the arrows read in the direction the words run */
+    railTo(railAt + step * (document.documentElement.dir === 'rtl' ? -1 : 1), 560);
   }
-  let carRaf = 0;
-  function carSnap(yaw, ms) {
-    cancelAnimationFrame(carRaf);
-    const lon0 = lon, rel = ((yaw - lon0) % 360 + 540) % 360 - 180, t0 = performance.now();
-    if (Math.abs(rel) < 0.4) return;
-    const ease = k => 1 - Math.pow(1 - k, 3);
-    const step = () => {
-      const k = Math.min(1, (performance.now() - t0) / ms);
-      lon = lon0 + rel * ease(k);
-      lat += (12 - lat) * 0.06;                 /* and level with them */
-      paintCar();
-      if (k < 1) carRaf = requestAnimationFrame(step);
-    };
-    carRaf = requestAnimationFrame(step);
-  }
-  /* a released drag settles onto the nearest screen instead of stopping
-     wherever the thumb happened to leave off */
-  function carSettle() {
-    if (cur !== 'lobby' || tourOn || !axisScreens.length || !el.axis.hidden) return;
-    clearTimeout(carSettle._t);
-    carSettle._t = setTimeout(() => {
-      if (drag || tourOn || cur !== 'lobby') return;
-      if (Math.abs(lonVel) > 0.25) return carSettle();   /* still coasting */
-      carSnap(axisScreens[carIndex()].yaw, 480);
-    }, 160);
-  }
+  function carSettle() {}
   function paintCar() {
     const n = $('.cw-car__name', el.root);
     if (!n || !axisScreens.length) return;
-    const a = axisScreens[carIndex()];
-    const h = (ROOMS.lobby?.hotspots || []).find(x => x.kind === 'axis' && x.yaw === a.yaw);
-    const t = h ? h.title : '';
+    const a = axisScreens[railAt];
+    const t = a && a.h ? a.h.title : '';
     if (n.textContent !== t) n.textContent = t;
     paintTourDots();
   }
@@ -1098,10 +1156,7 @@
     el.root.classList.add('tour-on');
     $('.cw-tour__go', el.root).textContent = T('tourStop');
     closeAxis();
-    /* start from the screen nearest to where you already look, then go round */
-    let best = 0, bestAbs = 999;
-    axisScreens.forEach((a, i) => { const r = Math.abs(((a.yaw - lon) % 360 + 540) % 360 - 180); if (r < bestAbs) { bestAbs = r; best = i; } });
-    tourStep = best;
+    tourStep = railAt;
     tourNext(0);
   }
   function tourNext(count) {
@@ -1120,10 +1175,11 @@
     }
     const a = axisScreens[tourStep % axisScreens.length];
     paintTourDots();
-    glideTo(a.yaw, 1100, () => {
+    railTo(tourStep, 700);
+    tourT = setTimeout(() => {
       if (!tourOn) return;
-      const h = (ROOMS.lobby.hotspots || []).find(x => x.kind === 'axis' && x.yaw === a.yaw);
-      if (h) openAxis(h);
+      const h = a.h;
+      if (h) openAxis(a.film ? Object.assign({}, h, { abstract: h.text, features: [] }) : h);
       seenAxes.add(a.yaw); paintTourDots();
       tourT = setTimeout(() => {
         if (!tourOn) return;
@@ -1131,7 +1187,7 @@
         tourStep = (tourStep + 1) % axisScreens.length;
         tourT = setTimeout(() => tourNext(count + 1), 350);
       }, 7000);
-    });
+    }, 780);
   }
   function stopTour() {
     tourOn = false; clearTimeout(tourT); cancelAnimationFrame(tourRaf);
@@ -1157,7 +1213,7 @@
       : '<img src="' + h.still + '" alt="" class="cw-kb">';
     const v = m.querySelector('video'), snd = m.querySelector('.cw-axis__snd');
     if (v) {
-      const wallV = (axisScreens.find(a => a.yaw === h.yaw) || {}).v;
+      const wallV = (axisScreens.find(a => a.h === h || (a.h && a.h.id && a.h.id === h.id)) || {}).v;
       if (wallV && wallV.currentTime) v.currentTime = wallV.currentTime;
       snd.onclick = () => {
         v.muted = !v.muted;
@@ -1395,17 +1451,10 @@
      reads. Its own glide, because the guided pass's one bails when the tour
      is off. */
   function assistGoTo(id) {
-    const h = (ROOMS.lobby?.hotspots || []).find(x => x.kind === 'axis' && x.id === id);
-    if (!h || cur !== 'lobby') return;
-    const lon0 = lon, rel = ((h.yaw - lon0) % 360 + 540) % 360 - 180, t0 = performance.now();
-    const ease = k => k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
-    const step = () => {
-      const k = Math.min(1, (performance.now() - t0) / 900);
-      lon = lon0 + rel * ease(k); lat += (14 - lat) * 0.08;
-      if (k < 1) requestAnimationFrame(step);
-      else { openAxis(h); seenAxes.add(h.yaw); paintTourDots(); }
-    };
-    requestAnimationFrame(step);
+    const i = axisScreens.findIndex(a => a.h && a.h.id === id);
+    if (i < 0 || cur !== 'lobby') return;
+    railTo(i, 700);
+    setTimeout(() => { const a = axisScreens[i]; if (a) { openAxis(a.h); seenAxes.add(a.yaw); paintTourDots(); } }, 780);
   }
 
   async function assistSend(text) {
