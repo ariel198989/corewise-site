@@ -1,12 +1,12 @@
 {
-  "_comment": "Content config for the Corewise AR tour. Add works here — no rendering needed. Each dept panel: title, sub, works[{title,desc,img,url}], stats[{n,l}]",
+  "_comment": "Content config for the Corewise AR tour. Add works here, no rendering needed. Each dept panel: title, sub, works[{title,desc,img,url}], stats[{n,l}]",
   "departments": [
     {
       "id": "lobby",
       "eyebrow": "Welcome",
       "title": "The Entrance",
-      "sub": "The hall — five tracks, one screen each",
-      "body": "One hall. Five large screens around you — one for every track. Tap a screen: the film plays, the summary sits beside it, the features sit below.",
+      "sub": "The hall, five tracks, one screen each",
+      "body": "One hall. Five large screens around you, one for every track. Tap a screen: the film plays, the summary sits beside it, the features sit below.",
       "stats": [
         {
           "n": "18K+",
@@ -32,7 +32,7 @@
           "video": "apps-tv.mp4",
           "poster": "axis/ai-poster.webp",
           "room": "ai",
-          "abstract": "We don't install and leave — we embed. In the business, and with its customers. We start by mapping how the business actually works, and only then build: AI agents, automations, websites and systems, video and advertising — everything that grows a business, fully owned by it.",
+          "abstract": "We don't install and leave, we embed. In the business, and with its customers. We start by mapping how the business actually works, and only then build: AI agents, automations, websites and systems, video and advertising, everything that grows a business, fully owned by it.",
           "features": [
             {
               "title": "Business mapping before code",
@@ -40,7 +40,7 @@
             },
             {
               "title": "AI agents and automations",
-              "text": "Work that repeats moves to an agent — messages, follow-ups, summaries."
+              "text": "Work that repeats moves to an agent, messages, follow-ups, summaries."
             },
             {
               "title": "Websites · Apps · Systems",
@@ -49,7 +49,7 @@
             },
             {
               "title": "Video and advertising",
-              "text": "A product clip, an ad, or a film for an event — AI-based production end to end.",
+              "text": "A product clip, an ad, or a film for an event, AI-based production end to end.",
               "img": "works/canto.webp"
             },
             {
@@ -69,7 +69,7 @@
           "still": "axis/measure.webp",
           "room": "measure",
           "site": "measure/",
-          "abstract": "Engineering-grade measurement from a LiDAR scan. No tape measure, no estimate — a number. The depth of a surface, the height of a stair, the volume of a pit, the slope of a ramp, and a 3D model that goes straight to the printer. Real projects were delivered on these features.",
+          "abstract": "Engineering-grade measurement from a LiDAR scan. No tape measure, no estimate, a number. The depth of a surface, the height of a stair, the volume of a pit, the slope of a ramp, and a 3D model that goes straight to the printer. Real projects were delivered on these features.",
           "features": [
             {
               "title": "Depth",
@@ -77,7 +77,7 @@
             },
             {
               "title": "Stair measurement",
-              "text": "Height and width of every stair in a flight — automatically, from one scan."
+              "text": "Height and width of every stair in a flight, automatically, from one scan."
             },
             {
               "title": "Pit measurement",
@@ -105,12 +105,12 @@
           "yaw": 36,
           "pitch": 28,
           "title": "Computer Vision",
-          "sub": "Any dumb camera — turned smart",
+          "sub": "Any dumb camera, turned smart",
           "video": "vision-tv.mp4",
           "poster": "axis/vision-poster.webp",
           "room": "vision",
           "site": "vision/",
-          "abstract": "We turn any dumb camera into a smart one — to your spec. This is a product, not a workshop: the camera already on your wall gains a new capability, and the alert lands on your phone.",
+          "abstract": "We turn any dumb camera into a smart one, to your spec. This is a product, not a workshop: the camera already on your wall gains a new capability, and the alert lands on your phone.",
           "features": [
             {
               "title": "Door open / closed",
@@ -127,7 +127,7 @@
             },
             {
               "title": "Fall detection",
-              "text": "An instant alert to the phone when a fall is detected — an aid to supervision, not a replacement for it.",
+              "text": "An instant alert to the phone when a fall is detected, an aid to supervision, not a replacement for it.",
               "tag": "New"
             },
             {
@@ -151,26 +151,26 @@
           "poster": "axis/pedagogy-poster.webp",
           "room": "school",
           "site": "pedagogy/",
-          "abstract": "Technology as a way into research thinking — for youth, for teachers and for organizations. Every program runs on a system of ours that supports real-time collaboration between participants: a capability that exists nowhere else.",
+          "abstract": "Technology as a way into research thinking, for youth, for teachers and for organizations. Every program runs on a system of ours that supports real-time collaboration between participants: a capability that exists nowhere else.",
           "features": [
             {
               "title": "One-day / one-week hackathon",
-              "text": "One day, teams, a real problem — and a working result at the end.",
+              "text": "One day, teams, a real problem, and a working result at the end.",
               "img": "works/tinkerlab.webp"
             },
             {
               "title": "Corporate talks",
-              "text": "AI talks for organizations and management teams. Photos from the last conference — coming soon.",
+              "text": "AI talks for organizations and management teams. Photos from the last conference, coming soon.",
               "tag": "Photos coming soon"
             },
             {
-              "title": "Collaborative workshops — \"From Caterpillar to Butterfly\"",
+              "title": "Collaborative workshops, \"From Caterpillar to Butterfly\"",
               "text": "A Gefen program for youth: research and technology together, strengthening the research mind through the most advanced technology there is.",
               "tag": "Gefen program"
             },
             {
               "title": "Smart-City program",
-              "text": "A collaborative program that combines hardware and software — the city as a lab.",
+              "text": "A collaborative program that combines hardware and software, the city as a lab.",
               "img": "works/smartcity.webp"
             },
             {
@@ -195,11 +195,11 @@
           "still": "axis/ar.webp",
           "room": "ar",
           "status": "Still being built",
-          "abstract": "The Corewise AR world is being built. This room — the site you're standing in — is the first step: a space you walk into instead of a page you scroll. The rest is on the way.",
+          "abstract": "The Corewise AR world is being built. This room, the site you're standing in, is the first step: a space you walk into instead of a page you scroll. The rest is on the way.",
           "features": [
             {
               "title": "What already exists",
-              "text": "360 tours you walk into, like this site — built entirely in-house."
+              "text": "360 tours you walk into, like this site, built entirely in-house."
             },
             {
               "title": "What's on the way",
@@ -215,13 +215,13 @@
           "kind": "tv",
           "title": "Before / After",
           "video": "hero_seq_source.mp4",
-          "text": "The store before — a tired owner, dumb cameras; after Corewise — smart cameras, alerts on the phone, profit going up. Produced with a technique of our own."
+          "text": "The store before, a tired owner, dumb cameras; after Corewise, smart cameras, alerts on the phone, profit going up. Produced with a technique of our own."
         },
         {
           "yaw": -72,
           "pitch": -16,
           "title": "The embedding promise",
-          "text": "Corewise doesn't install and leave — we embed: in the business, and with its customers. I promise you will use this — and love it. That's the power. Our symbol: the ring is your business, and the glowing core at the center is the AI we embed in it. Everything we build starts from your business core — not from the technology.",
+          "text": "Corewise doesn't install and leave, we embed: in the business, and with its customers. I promise you will use this, and love it. That's the power. Our symbol: the ring is your business, and the glowing core at the center is the AI we embed in it. Everything we build starts from your business core, not from the technology.",
           "img": "works/cw-logo.webp",
           "kind": "story",
           "metrics": [
@@ -239,7 +239,7 @@
           "yaw": 72,
           "pitch": -16,
           "title": "This site is a product",
-          "text": "Next-Gen Landing Page: what you're seeing right now is a live example of the next-generation landing page we build for clients — a world you walk into, instead of a page you scroll.",
+          "text": "Next-Gen Landing Page: what you're seeing right now is a live example of the next-generation landing page we build for clients, a world you walk into, instead of a page you scroll.",
           "kind": "story"
         }
       ],
@@ -247,7 +247,7 @@
         "icon": "◎",
         "title": "The core above you",
         "lines": [
-          "Corewise — the smart core of your business",
+          "Corewise, the smart core of your business",
           "6 departments · one team · zero outsourcing"
         ],
         "stat": [
@@ -263,13 +263,13 @@
       "eyebrow": "Department · Measurement Solutions",
       "title": "The Measurement Lab",
       "sub": "LiDAR · Depth · Stair · Pit · Slope · Mesh",
-      "body": "This is where we measure with a laser. One scan — and every stair, pit and slope becomes a number. Lidor Dahan: Ph.D. in electrical and computer engineering, about six years in autonomous-vehicle algorithms.",
+      "body": "This is where we measure with a laser. One scan, and every stair, pit and slope becomes a number. Lidor Dahan: Ph.D. in electrical and computer engineering, about six years in autonomous-vehicle algorithms.",
       "hotspots": [
         {
           "yaw": -40,
           "pitch": 4,
           "title": "Stair, pit, slope",
-          "text": "Scan once. The height of every stair, the volume of every pit and the slope of every ramp come out as numbers — no tape measure, and no climbing into the pit.",
+          "text": "Scan once. The height of every stair, the volume of every pit and the slope of every ramp come out as numbers, no tape measure, and no climbing into the pit.",
           "kind": "story",
           "metrics": [
             [
@@ -292,7 +292,7 @@
         {
           "yaw": -100,
           "pitch": 0,
-          "title": "CoreInspect — engineering home inspection",
+          "title": "CoreInspect, engineering home inspection",
           "text": "A home inspection system built on these features: scan, measure, report.",
           "img": "works/app-coreinspect.webp",
           "link": "https://coreinspect.vercel.app/",
@@ -305,7 +305,7 @@
           "yaw": 110,
           "pitch": 0,
           "title": "Urban LiDAR scanning",
-          "text": "Depth mapping of a whole street — sidewalks, hazards, slopes.",
+          "text": "Depth mapping of a whole street, sidewalks, hazards, slopes.",
           "img": "works/vision-lidar.webp",
           "link": "https://roadsense-ivory.vercel.app/",
           "linkLabel": "To RoadSense ←",
@@ -341,22 +341,22 @@
       "id": "vision",
       "eyebrow": "Department 04",
       "title": "Computer Vision",
-      "sub": "Any dumb camera — turned smart",
+      "sub": "Any dumb camera, turned smart",
       "body": "A product, not a workshop: the camera already on your wall gains a new capability to your spec, and the alert lands on your phone.",
       "works": [
         {
           "title": "Urban LiDAR scanning",
-          "desc": "A point cloud of a whole street — every point is a laser distance measurement",
+          "desc": "A point cloud of a whole street, every point is a laser distance measurement",
           "img": "works/vision-lidar.webp"
         },
         {
           "title": "Sensor fusion",
-          "desc": "Camera, LiDAR and radar on one image — each sensor covers what the others miss",
+          "desc": "Camera, LiDAR and radar on one image, each sensor covers what the others miss",
           "img": "works/vision-fusion.webp"
         },
         {
           "title": "Neural depth map",
-          "desc": "A network that infers distance for every pixel — from a flat image to 3D",
+          "desc": "A network that infers distance for every pixel, from a flat image to 3D",
           "img": "works/vision-depth.webp"
         }
       ],
@@ -367,13 +367,13 @@
           "kind": "tv",
           "title": "Computer Vision · TV",
           "video": "vision-tv.mp4",
-          "text": "The room screen — the department film."
+          "text": "The room screen, the department film."
         },
         {
           "yaw": -40,
           "pitch": 4,
           "title": "Door · Person · Count",
-          "text": "A door left open, a person entering when they shouldn't, and people counting that's already production ready — three capabilities on the same camera.",
+          "text": "A door left open, a person entering when they shouldn't, and people counting that's already production ready, three capabilities on the same camera.",
           "kind": "story",
           "metrics": [
             [
@@ -390,20 +390,20 @@
           "yaw": 40,
           "pitch": 2,
           "title": "Fall detection",
-          "text": "An instant alert to the phone when a fall is detected. An aid to supervision — not a replacement for it.",
+          "text": "An instant alert to the phone when a fall is detected. An aid to supervision, not a replacement for it.",
           "kind": "story"
         },
         {
           "yaw": 110,
           "pitch": 0,
           "title": "Overgrowth and broken sidewalk",
-          "text": "Vegetation pushing into the road and a hazard on the sidewalk — detected from the municipal cameras already in place.",
+          "text": "Vegetation pushing into the road and a hazard on the sidewalk, detected from the municipal cameras already in place.",
           "kind": "story"
         },
         {
           "yaw": -100,
           "pitch": 0,
-          "title": "Smart City — computer vision",
+          "title": "Smart City, computer vision",
           "text": "Urban hazards detected by the camera and delivered to a dashboard.",
           "img": "works/smartcity.webp",
           "link": "https://ariel198989.github.io/smart-city",
@@ -441,17 +441,17 @@
       "eyebrow": "Department 06",
       "title": "Pedagogy",
       "sub": "Hackathons · Talks · Gefen · Smart-City · Electronics",
-      "body": "Students build technology with their hands — sensors, circuits and smart models. Dedicated platforms we developed run alongside every workshop.",
+      "body": "Students build technology with their hands, sensors, circuits and smart models. Dedicated platforms we developed run alongside every workshop.",
       "works": [
         {
           "title": "TinkerLab",
-          "desc": "Workshop OS — a platform for AI workshops in schools, with a personal agent beside every student",
+          "desc": "Workshop OS, a platform for AI workshops in schools, with a personal agent beside every student",
           "img": "works/tinkerlab.webp",
           "url": "https://wa.me/972507594477?text=%D7%94%D7%99%D7%99%2C%20%D7%A8%D7%90%D7%99%D7%AA%D7%99%20%D7%90%D7%AA%20TinkerLab%20%D7%91%D7%A1%D7%99%D7%95%D7%A8%20%D7%91%D7%90%D7%AA%D7%A8%20Corewise%20%E2%80%94%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A7%D7%91%D7%9C%20%D7%9C%D7%99%D7%A0%D7%A7%20%D7%9C%D7%9E%D7%A2%D7%A8%D7%9B%D7%AA%20%D7%95%D7%A4%D7%A8%D7%98%D7%99%D7%9D%20%D7%A0%D7%95%D7%A1%D7%A4%D7%99%D7%9D"
         },
         {
           "title": "Smart City",
-          "desc": "A computer vision platform — students train a model that detects hazards in the city",
+          "desc": "A computer vision platform, students train a model that detects hazards in the city",
           "img": "works/smartcity.webp",
           "url": "https://wa.me/972507594477?text=%D7%94%D7%99%D7%99%2C%20%D7%A8%D7%90%D7%99%D7%AA%D7%99%20%D7%90%D7%AA%20Smart%20City%20%D7%91%D7%A1%D7%99%D7%95%D7%A8%20%D7%91%D7%90%D7%AA%D7%A8%20Corewise%20%E2%80%94%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A7%D7%91%D7%9C%20%D7%9C%D7%99%D7%A0%D7%A7%20%D7%9C%D7%9E%D7%A2%D7%A8%D7%9B%D7%AA%20%D7%95%D7%A4%D7%A8%D7%98%D7%99%D7%9D%20%D7%A0%D7%95%D7%A1%D7%A4%D7%99%D7%9D"
         }
@@ -460,7 +460,7 @@
         {
           "yaw": 35,
           "pitch": 0,
-          "title": "TinkerLab — Workshop OS",
+          "title": "TinkerLab, Workshop OS",
           "text": "Our platform for workshops in schools: every student works with a personal AI agent, and the teacher sees in real time who is stuck, who is moving, and what the next step is.",
           "img": "works/tinkerlab.webp",
           "link": "https://wa.me/972507594477?text=%D7%94%D7%99%D7%99%2C%20%D7%A8%D7%90%D7%99%D7%AA%D7%99%20%D7%90%D7%AA%20TinkerLab%20%E2%80%94%20Workshop%20OS%20%D7%91%D7%A7%D7%9E%D7%A4%D7%95%D7%A1%20Corewise%20%E2%80%94%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A4%D7%A8%D7%98%D7%99%D7%9D",
@@ -488,7 +488,7 @@
         {
           "yaw": 100,
           "pitch": 5,
-          "title": "Smart City — computer vision",
+          "title": "Smart City, computer vision",
           "text": "The flagship project: students photograph hazards in their own city and train a model that detects them automatically. Real technology meeting civic responsibility.",
           "img": "works/smartcity.webp",
           "link": "https://wa.me/972507594477?text=%D7%94%D7%99%D7%99%2C%20%D7%A8%D7%90%D7%99%D7%AA%D7%99%20%D7%90%D7%AA%20Smart%20City%20%E2%80%94%20%D7%A8%D7%90%D7%99%D7%99%D7%94%20%D7%9E%D7%9E%D7%95%D7%97%D7%A9%D7%91%D7%AA%20%D7%91%D7%A7%D7%9E%D7%A4%D7%95%D7%A1%20Corewise%20%E2%80%94%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A4%D7%A8%D7%98%D7%99%D7%9D",
@@ -519,13 +519,13 @@
           "kind": "tv",
           "title": "AI and electronics for schools · ",
           "video": "school-tv.mp4",
-          "text": "The room screen — the department film."
+          "text": "The room screen, the department film."
         },
         {
           "yaw": -50,
           "pitch": -8,
           "title": "\"From Caterpillar to Butterfly\"",
-          "text": "A Gefen program for youth — research and technology together. The goal: strengthen the research mind of young people through the most advanced technology there is. Official code name.",
+          "text": "A Gefen program for youth, research and technology together. The goal: strengthen the research mind of young people through the most advanced technology there is. Official code name.",
           "kind": "story",
           "metrics": [
             [
@@ -549,7 +549,7 @@
           "yaw": 130,
           "pitch": 6,
           "title": "Electronics and hardware",
-          "text": "Sensors, circuits, robots — detailed content in progress.",
+          "text": "Sensors, circuits, robots, detailed content in progress.",
           "kind": "story"
         }
       ],
@@ -558,7 +558,7 @@
         "title": "The next generation",
         "lines": [
           "Every student gets a personal agent",
-          "They don't learn about technology — they build it"
+          "They don't learn about technology, they build it"
         ],
         "stat": [
           "1:1",
@@ -572,7 +572,7 @@
       "eyebrow": "Department 05",
       "title": "Talks and Workshops",
       "sub": "Conferences · Organizations · Management teams",
-      "body": "Practical talks and workshops on AI — from the big stage to a deep-dive session for a dev team. Behind us is one of the largest AI communities in Israel.",
+      "body": "Practical talks and workshops on AI, from the big stage to a deep-dive session for a dev team. Behind us is one of the largest AI communities in Israel.",
       "stats": [
         {
           "n": "18K+",
@@ -586,12 +586,12 @@
       "works": [
         {
           "title": "Ariel on stage",
-          "desc": "A talk on the AI revolution at a professional conference — a full room of developers and founders",
+          "desc": "A talk on the AI revolution at a professional conference, a full room of developers and founders",
           "img": "works/lecture1.webp"
         },
         {
           "title": "The technological revolution",
-          "desc": "Democratizing software development — one of the flagship Corewise talks",
+          "desc": "Democratizing software development, one of the flagship Corewise talks",
           "img": "works/lecture2.webp"
         }
       ],
@@ -600,7 +600,7 @@
           "yaw": 0,
           "pitch": 0,
           "title": "Ariel on stage",
-          "text": "Talks on the AI revolution at professional conferences, inside organizations and for management teams — a full room of developers and founders. Talks that turn frightening buzz into a work plan.",
+          "text": "Talks on the AI revolution at professional conferences, inside organizations and for management teams, a full room of developers and founders. Talks that turn frightening buzz into a work plan.",
           "img": "works/lecture1.webp",
           "kind": "story"
         },
@@ -608,7 +608,7 @@
           "yaw": 60,
           "pitch": 0,
           "title": "The technological revolution",
-          "text": "The flagship talk: democratizing software development — how AI lets any business build products that were once reserved for tech giants.",
+          "text": "The flagship talk: democratizing software development, how AI lets any business build products that were once reserved for tech giants.",
           "img": "works/lecture2.webp",
           "kind": "story"
         },
@@ -616,7 +616,7 @@
           "yaw": -70,
           "pitch": -5,
           "title": "Deep-dive workshops for teams",
-          "text": "Hands-on workshops for dev teams and organizations — building with AI, automations, and working methods that double output. The team leaves with tools in hand, not a slide deck.",
+          "text": "Hands-on workshops for dev teams and organizations, building with AI, automations, and working methods that double output. The team leaves with tools in hand, not a slide deck.",
           "kind": "story",
           "metrics": [
             [
@@ -644,7 +644,7 @@
           "kind": "tv",
           "title": "Talks and Workshops · TV",
           "video": "hero_seq_source.mp4",
-          "text": "The room screen — the department film."
+          "text": "The room screen, the department film."
         }
       ],
       "sky": {
@@ -670,7 +670,7 @@
       "works": [
         {
           "title": "Specly",
-          "desc": "An enterprise mapping engine — AI agents that turn team conversations into a PRD and a strategic memo for the CEO",
+          "desc": "An enterprise mapping engine, AI agents that turn team conversations into a PRD and a strategic memo for the CEO",
           "img": "works/specly.webp",
           "url": "https://wa.me/972507594477?text=%D7%94%D7%99%D7%99%2C%20%D7%A8%D7%90%D7%99%D7%AA%D7%99%20%D7%90%D7%AA%20Specly%20%D7%91%D7%A1%D7%99%D7%95%D7%A8%20%D7%91%D7%90%D7%AA%D7%A8%20Corewise%20%E2%80%94%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A7%D7%91%D7%9C%20%D7%9C%D7%99%D7%A0%D7%A7%20%D7%9C%D7%9E%D7%A2%D7%A8%D7%9B%D7%AA%20%D7%95%D7%A4%D7%A8%D7%98%D7%99%D7%9D%20%D7%A0%D7%95%D7%A1%D7%A4%D7%99%D7%9D"
         }
@@ -680,7 +680,7 @@
           "yaw": 0,
           "pitch": 15,
           "title": "Deep business mapping",
-          "text": "Every project starts here: we break your business processes into one clear diagram, find where automation and AI agents create the most value — and only then build.",
+          "text": "Every project starts here: we break your business processes into one clear diagram, find where automation and AI agents create the most value, and only then build.",
           "kind": "story",
           "metrics": [
             [
@@ -696,7 +696,7 @@
         {
           "yaw": 80,
           "pitch": 0,
-          "title": "Specly — the mapping engine",
+          "title": "Specly, the mapping engine",
           "text": "A series of AI agents that interview your team, cross-check contradictions between departments, and hand the CEO a full PRD plus a strategic memo at senior-consultant level.",
           "img": "works/specly.webp",
           "link": "https://wa.me/972507594477?text=%D7%94%D7%99%D7%99%2C%20%D7%A8%D7%90%D7%99%D7%AA%D7%99%20%D7%90%D7%AA%20Specly%20%E2%80%94%20%D7%9E%D7%A0%D7%95%D7%A2%20%D7%90%D7%99%D7%A4%D7%99%D7%95%D7%9F%20%D7%91%D7%A7%D7%9E%D7%A4%D7%95%D7%A1%20Corewise%20%E2%80%94%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A4%D7%A8%D7%98%D7%99%D7%9D",
@@ -725,7 +725,7 @@
           "yaw": -90,
           "pitch": 0,
           "title": "AI agents and automations",
-          "text": "Chatbots that speak the way your business speaks, automations that handle leads overnight, and agents that summarize, file and alert. Integrated into the existing systems — not instead of them.",
+          "text": "Chatbots that speak the way your business speaks, automations that handle leads overnight, and agents that summarize, file and alert. Integrated into the existing systems, not instead of them.",
           "kind": "story"
         },
         {
@@ -741,7 +741,7 @@
           "kind": "tv",
           "title": "AI Mapping and Embedding · TV",
           "video": "hero_seq_source.mp4",
-          "text": "The room screen — the department film."
+          "text": "The room screen, the department film."
         }
       ],
       "sky": {
@@ -763,11 +763,11 @@
       "eyebrow": "Department 02",
       "title": "Websites · Apps · Systems",
       "sub": "Web and mobile · CRM · Internal systems",
-      "body": "From the landing page to a full system with users, payments and dashboards — fully owned by you.",
+      "body": "From the landing page to a full system with users, payments and dashboards, fully owned by you.",
       "works": [
         {
           "title": "JobCast",
-          "desc": "A smart recruiting platform built on video and AI — a short clip instead of a résumé",
+          "desc": "A smart recruiting platform built on video and AI, a short clip instead of a résumé",
           "img": "works/jobcast.webp",
           "url": "https://wa.me/972507594477?text=%D7%94%D7%99%D7%99%2C%20%D7%A8%D7%90%D7%99%D7%AA%D7%99%20%D7%90%D7%AA%20JobCast%20%D7%91%D7%A1%D7%99%D7%95%D7%A8%20%D7%91%D7%90%D7%AA%D7%A8%20Corewise%20%E2%80%94%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A7%D7%91%D7%9C%20%D7%9C%D7%99%D7%A0%D7%A7%20%D7%9C%D7%9E%D7%A2%D7%A8%D7%9B%D7%AA%20%D7%95%D7%A4%D7%A8%D7%98%D7%99%D7%9D%20%D7%A0%D7%95%D7%A1%D7%A4%D7%99%D7%9D"
         }
@@ -777,7 +777,7 @@
           "yaw": -45,
           "pitch": 0,
           "title": "Websites and landing pages",
-          "text": "From a brand site to a store — fast, precise in Hebrew RTL, and built to convert. Including personal portfolio sites, like Ariel's.",
+          "text": "From a brand site to a store, fast, precise in Hebrew RTL, and built to convert. Including personal portfolio sites, like Ariel's.",
           "img": "works/arielai.webp",
           "link": "https://wa.me/972507594477?text=%D7%94%D7%99%D7%99%2C%20%D7%A8%D7%90%D7%99%D7%AA%D7%99%20%D7%90%D7%AA%20%D7%90%D7%AA%D7%A8%D7%99%D7%9D%20%D7%95%D7%93%D7%A4%D7%99%20%D7%A0%D7%97%D7%99%D7%AA%D7%94%20%D7%91%D7%A7%D7%9E%D7%A4%D7%95%D7%A1%20Corewise%20%E2%80%94%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A4%D7%A8%D7%98%D7%99%D7%9D",
           "linkLabel": "Leave your details and we'll send a link ←",
@@ -798,12 +798,12 @@
             ]
           ],
           "short": "Ariel AI",
-          "tagline": "Brand sites, landing pages and stores — precise RTL, built to convert"
+          "tagline": "Brand sites, landing pages and stores, precise RTL, built to convert"
         },
         {
           "yaw": 40,
           "pitch": 5,
-          "title": "JobCast — recruiting platform",
+          "title": "JobCast, recruiting platform",
           "text": "A full system we built: a short clip instead of a résumé, AI matching between candidates and roles, employer and candidate areas, payments and dashboards.",
           "img": "works/jobcast.webp",
           "link": "https://wa.me/972507594477?text=%D7%94%D7%99%D7%99%2C%20%D7%A8%D7%90%D7%99%D7%AA%D7%99%20%D7%90%D7%AA%20JobCast%20%E2%80%94%20%D7%A4%D7%9C%D7%98%D7%A4%D7%95%D7%A8%D7%9E%D7%AA%20%D7%92%D7%99%D7%95%D7%A1%20%D7%91%D7%A7%D7%9E%D7%A4%D7%95%D7%A1%20Corewise%20%E2%80%94%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A4%D7%A8%D7%98%D7%99%D7%9D",
@@ -824,7 +824,7 @@
               "Clip length"
             ]
           ],
-          "quote": "A short clip instead of a résumé — employers see a person, not a document.",
+          "quote": "A short clip instead of a résumé, employers see a person, not a document.",
           "short": "JobCast",
           "tagline": "A short clip instead of a résumé, with AI matching to the role"
         },
@@ -832,7 +832,7 @@
           "yaw": 100,
           "pitch": 0,
           "title": "CRM and internal systems",
-          "text": "Customer, operations and process management systems — tailored to your business and fully owned by you: code, data and infrastructure. No vendor lock-in, no inflated monthly license fees.",
+          "text": "Customer, operations and process management systems, tailored to your business and fully owned by you: code, data and infrastructure. No vendor lock-in, no inflated monthly license fees.",
           "kind": "story",
           "metrics": [
             [
@@ -858,7 +858,7 @@
           "kind": "tv",
           "title": "Websites · Apps · Systems",
           "video": "apps-tv.mp4",
-          "text": "The room screen — the department film."
+          "text": "The room screen, the department film."
         },
         {
           "yaw": -155,
@@ -867,7 +867,7 @@
           "img": "works/app-arstore.webp",
           "title": "The 3D supermarket",
           "short": "AR STORE",
-          "text": "A whole store in 3D: a guided tour across 13 departments, a search that brings the product to you, and an event cart built from a single spoken sentence — exact quantities and budget included. Built for retail chains that want a next-generation shopping experience.",
+          "text": "A whole store in 3D: a guided tour across 13 departments, a search that brings the product to you, and an event cart built from a single spoken sentence, exact quantities and budget included. Built for retail chains that want a next-generation shopping experience.",
           "link": "https://ar-store-eta.vercel.app/",
           "linkLabel": "Open the live system ←"
         }
@@ -884,18 +884,18 @@
           "Yours"
         ]
       },
-      "wa": "Hi Lidor, I was in the websites and systems room on the site tour. I have something I want to build — can we talk?"
+      "wa": "Hi Lidor, I was in the websites and systems room on the site tour. I have something I want to build, can we talk?"
     },
     {
       "id": "video",
       "eyebrow": "Department 01",
       "title": "Video and Advertising",
       "sub": "Marketing clips · Ads · Event films · AI content",
-      "body": "End-to-end AI video production: script, narration, editing and music — from a product clip to a cinematic film for a life event.",
+      "body": "End-to-end AI video production: script, narration, editing and music, from a product clip to a cinematic film for a life event.",
       "works": [
         {
           "title": "CANTO",
-          "desc": "A cinematic film platform for life events — upload photos, get a film within 48 hours",
+          "desc": "A cinematic film platform for life events, upload photos, get a film within 48 hours",
           "img": "works/canto.webp",
           "url": "https://wa.me/972507594477?text=%D7%94%D7%99%D7%99%2C%20%D7%A8%D7%90%D7%99%D7%AA%D7%99%20%D7%90%D7%AA%20CANTO%20%D7%91%D7%A1%D7%99%D7%95%D7%A8%20%D7%91%D7%90%D7%AA%D7%A8%20Corewise%20%E2%80%94%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A7%D7%91%D7%9C%20%D7%9C%D7%99%D7%A0%D7%A7%20%D7%9C%D7%9E%D7%A2%D7%A8%D7%9B%D7%AA%20%D7%95%D7%A4%D7%A8%D7%98%D7%99%D7%9D%20%D7%A0%D7%95%D7%A1%D7%A4%D7%99%D7%9D"
         }
@@ -905,7 +905,7 @@
           "yaw": -40,
           "pitch": 5,
           "title": "Video and advertising production",
-          "text": "Product clips, ads for social, brand films and cinematic films for life events — AI-based production end to end: script, professional Hebrew narration, editing, music and subtitles.",
+          "text": "Product clips, ads for social, brand films and cinematic films for life events, AI-based production end to end: script, professional Hebrew narration, editing, music and subtitles.",
           "kind": "story",
           "metrics": [
             [
@@ -925,8 +925,8 @@
         {
           "yaw": 35,
           "pitch": 0,
-          "title": "CANTO — event films",
-          "text": "Our platform for cinematic films for life events: upload photos, tell the story — and within 48 hours you get a 90-second film that moves the whole room.",
+          "title": "CANTO, event films",
+          "text": "Our platform for cinematic films for life events: upload photos, tell the story, and within 48 hours you get a 90-second film that moves the whole room.",
           "img": "works/canto.webp",
           "link": "https://wa.me/972507594477?text=%D7%94%D7%99%D7%99%2C%20%D7%A8%D7%90%D7%99%D7%AA%D7%99%20%D7%90%D7%AA%20CANTO%20%E2%80%94%20%D7%A1%D7%A8%D7%98%D7%99%20%D7%90%D7%99%D7%A8%D7%95%D7%A2%D7%99%D7%9D%20%D7%91%D7%A7%D7%9E%D7%A4%D7%95%D7%A1%20Corewise%20%E2%80%94%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A4%D7%A8%D7%98%D7%99%D7%9D",
           "linkLabel": "Leave your details and we'll send a link ←",
@@ -946,22 +946,22 @@
               "Delivery time"
             ]
           ],
-          "quote": "Upload photos in the evening — get a film that feels like a cinematic production.",
+          "quote": "Upload photos in the evening, get a film that feels like a cinematic production.",
           "short": "CANTO",
-          "tagline": "From photos to a cinematic film — within 48 hours"
+          "tagline": "From photos to a cinematic film, within 48 hours"
         },
         {
           "yaw": 120,
           "pitch": -5,
           "title": "The 15-second method",
-          "text": "A trade secret: long AI films are built here by chaining — every segment picks up exactly where the previous one's motion ended, so the film is genuinely continuous, with no jumps.",
+          "text": "A trade secret: long AI films are built here by chaining, every segment picks up exactly where the previous one's motion ended, so the film is genuinely continuous, with no jumps.",
           "kind": "story"
         },
         {
           "yaw": -98,
           "pitch": 6,
           "title": "This site itself 😉",
-          "text": "The tour you're experiencing right now — the world, the flights between rooms, these rooms — was produced entirely with our video and AI technology. It's a live demo of what we build for clients.",
+          "text": "The tour you're experiencing right now, the world, the flights between rooms, these rooms, was produced entirely with our video and AI technology. It's a live demo of what we build for clients.",
           "kind": "story"
         },
         {
@@ -970,7 +970,7 @@
           "kind": "tv",
           "title": "Video and Advertising · TV",
           "video": "video-tv.mp4",
-          "text": "The room screen — the department film."
+          "text": "The room screen, the department film."
         },
         {
           "yaw": -170,
@@ -1003,7 +1003,7 @@
               "id": "troDiYIzXcU"
             }
           ],
-          "blurb": "The Hollow — a six-episode cinematic series built entirely in-house: script, characters, narration, music and editing. No filming and no actors. This is exactly the capability behind every video we produce for a client — from a twenty-second ad to a full series."
+          "blurb": "The Hollow, a six-episode cinematic series built entirely in-house: script, characters, narration, music and editing. No filming and no actors. This is exactly the capability behind every video we produce for a client, from a twenty-second ad to a full series."
         }
       ],
       "sky": {
@@ -1018,20 +1018,20 @@
           "From idea to film"
         ]
       },
-      "wa": "Hi Lidor, I was in the video room on the site tour. I'd like to talk about producing a clip — an ad, a product video or a film for an event."
+      "wa": "Hi Lidor, I was in the video room on the site tour. I'd like to talk about producing a clip, an ad, a product video or a film for an event."
     },
     {
       "id": "ar",
       "eyebrow": "Department · AR",
       "title": "The AR Lab",
       "sub": "Augmented reality · Still being built",
-      "body": "The lab is still coming together — the gear is here, the walls are still bare. What already works: the space you're standing in.",
+      "body": "The lab is still coming together, the gear is here, the walls are still bare. What already works: the space you're standing in.",
       "hotspots": [
         {
           "yaw": 0,
           "pitch": 4,
           "title": "Still being built",
-          "text": "The Corewise AR world is being built right now. We're not hiding it: the room is empty because it really is under construction. The first step is already here — this site, a space you walk into.",
+          "text": "The Corewise AR world is being built right now. We're not hiding it: the room is empty because it really is under construction. The first step is already here, this site, a space you walk into.",
           "kind": "story"
         },
         {
@@ -1063,7 +1063,7 @@
       "eyebrow": "End of the tour",
       "title": "Let's talk",
       "sub": "Ariel Ohayon · Lidor Dahan",
-      "body": "Ariel — founder and head of development, owner of the Claude Israel community. Lidor — CEO and founder, Ph.D. in electrical and computer engineering.",
+      "body": "Ariel, founder and head of development, owner of the Claude Israel community. Lidor, CEO and founder, Ph.D. in electrical and computer engineering.",
       "works": [
         {
           "title": "Ariel Ohayon",
@@ -1086,7 +1086,7 @@
           "yaw": -45,
           "pitch": 0,
           "title": "Ariel Ohayon",
-          "text": "Founder and head of development. Owner of the Claude Israel community (18K+), speaker, and builder of AI products. B.A. in economics and business administration. Everything that works in the field — he brings to your projects.",
+          "text": "Founder and head of development. Owner of the Claude Israel community (18K+), speaker, and builder of AI products. B.A. in economics and business administration. Everything that works in the field, he brings to your projects.",
           "img": "ariel.webp",
           "kind": "story",
           "metrics": [
@@ -1122,7 +1122,7 @@
           "yaw": 0,
           "pitch": -10,
           "title": "Sit down for a coffee ☕",
-          "text": "The best way to start: a short conversation about your business. No commitment, no jargon — just working out what's possible.",
+          "text": "The best way to start: a short conversation about your business. No commitment, no jargon, just working out what's possible.",
           "link": "https://wa.me/972507594477?text=%D7%94%D7%99%D7%99%2C%20%D7%A8%D7%90%D7%99%D7%AA%D7%99%20%D7%90%D7%AA%20%D7%A9%D7%91%D7%95%20%D7%9C%D7%A7%D7%A4%D7%94%20%E2%98%95%20%D7%91%D7%A7%D7%9E%D7%A4%D7%95%D7%A1%20Corewise%20%E2%80%94%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A4%D7%A8%D7%98%D7%99%D7%9D",
           "linkLabel": "WhatsApp Lidor ←",
           "kind": "action"
@@ -1133,7 +1133,7 @@
           "kind": "tv",
           "title": "Let's talk · TV",
           "video": "hero_seq_source.mp4",
-          "text": "The room screen — the department film."
+          "text": "The room screen, the department film."
         }
       ],
       "sky": {

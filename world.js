@@ -45,11 +45,11 @@
       cardCta: 'השאירו פרטים ונשלח לכם לינק',
       finEyebrow: 'סוף הסיור', finTitle: 'נעים להכיר 👋',
       finLine: (r, f) => 'ביקרת ב-' + r + ' מחלקות וגילית ' + f + ' נקודות בקמפוס.',
-      finAsk: ' מכאן זה כבר תלוי בכם — במה נתחיל?',
+      finAsk: ' מכאן זה כבר תלוי בכם - במה נתחיל?',
       finPaths: [
-        ['💡', 'יש לי רעיון למוצר', 'היי, סיירתי בקמפוס Corewise ויש לי רעיון למוצר — אשמח לדבר'],
-        ['🏫', 'אני מבית ספר', 'היי, סיירתי בקמפוס Corewise — אשמח לשמוע על תוכניות AI ואלקטרוניקה לבית הספר שלנו'],
-        ['🎤', 'רוצה הרצאה/סדנה', 'היי, סיירתי בקמפוס Corewise — אשמח לפרטים על הרצאה או סדנה לארגון שלנו'],
+        ['💡', 'יש לי רעיון למוצר', 'היי, סיירתי בקמפוס Corewise ויש לי רעיון למוצר, אשמח לדבר'],
+        ['🏫', 'אני מבית ספר', 'היי, סיירתי בקמפוס Corewise, אשמח לשמוע על תוכניות AI ואלקטרוניקה לבית הספר שלנו'],
+        ['🎤', 'רוצה הרצאה/סדנה', 'היי, סיירתי בקמפוס Corewise, אשמח לפרטים על הרצאה או סדנה לארגון שלנו'],
       ],
     },
     en: {
@@ -72,11 +72,11 @@
       cardCta: 'Leave your details and we will send the link',
       finEyebrow: 'End of the tour', finTitle: 'Good to meet you 👋',
       finLine: (r, f) => 'You walked ' + r + ' departments and found ' + f + ' points on campus.',
-      finAsk: ' From here it is up to you — where do we start?',
+      finAsk: ' From here it is up to you - where do we start?',
       finPaths: [
-        ['💡', 'I have a product idea', 'Hi, I toured the Corewise campus and I have a product idea — I would like to talk'],
-        ['🏫', 'I am from a school', 'Hi, I toured the Corewise campus — I would like to hear about the AI and electronics programmes for our school'],
-        ['🎤', 'I want a talk or workshop', 'Hi, I toured the Corewise campus — I would like details on a talk or workshop for our organisation'],
+        ['💡', 'I have a product idea', 'Hi, I toured the Corewise campus and I have a product idea, I would like to talk'],
+        ['🏫', 'I am from a school', 'Hi, I toured the Corewise campus, I would like to hear about the AI and electronics programmes for our school'],
+        ['🎤', 'I want a talk or workshop', 'Hi, I toured the Corewise campus, I would like details on a talk or workshop for our organisation'],
       ],
     },
   };
