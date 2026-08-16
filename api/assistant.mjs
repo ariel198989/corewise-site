@@ -32,7 +32,7 @@ function buildKnowledge() {
 
   L.push('# Corewise');
   L.push('An AI and technology company in Israel. Two founders who do the work themselves, no outsourcing.');
-  L.push('Ariel Ohayon: founder and lead developer. Runs the Claude Israel community (18K+ members), speaks at conferences, builds AI products. BA in economics and business administration.');
+  L.push('Ariel Ohayon: CTO, founder, and Corewise’s lead developer. Speaks on AI at conferences, runs workshops inside companies, and embeds AI in organisations. Runs the "Claude Israel" community (קלוד ישראל), 25,000 members, one of the largest AI communities in Israel. BA in economics and business administration, and a licensed financial planner. His range covers the whole field Corewise works in: video production, complex system development, AR, computer vision and LiDAR.');
   L.push('Lidor Dahan: CEO and founder. PhD in electrical and computer engineering, about six years developing AI for autonomous vehicles, founded ventures in computer vision and smart cities.');
   L.push('Contact: WhatsApp Lidor at 972507594477, link https://wa.me/972507594477. That is the only contact route; there is no phone number, email or contact form published on the site.');
   L.push('');

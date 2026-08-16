@@ -9,7 +9,7 @@
       "body": "One hall. Five large screens around you, one for every track. Tap a screen: the film plays, the summary sits beside it, the features sit below.",
       "stats": [
         {
-          "n": "18K+",
+          "n": "25K+",
           "l": "Claude Israel community"
         },
         {
@@ -278,13 +278,16 @@
           "people": [
             {
               "name": "Ariel Ohayon",
-              "role": "Founder and lead developer",
+              "role": "CTO and founder · lead developer",
               "img": "works/ariel.webp",
-              "text": "Runs the Claude Israel community, 18K members. Speaks on the AI shift at conferences and inside organisations, and builds AI products. BA in economics and business administration. Everything that works in the field, he brings to your project.",
+              "text": "CTO and founder, and Corewise’s lead developer. Speaks on AI at conferences, runs workshops inside companies and embeds AI in organisations. Runs the \"Claude Israel\" community, 25K members. BA in economics and business administration, and a licensed financial planner. Broad range across the whole field: from video to complex systems, AR, computer vision and LiDAR. Everything that works in the field, he brings to your project.",
               "tags": [
-                "Claude Israel",
-                "Engineering",
-                "Speaking"
+                "Claude Israel 25K",
+                "Talks and workshops",
+                "Video",
+                "AR",
+                "Computer vision",
+                "LiDAR"
               ]
             },
             {
@@ -659,7 +662,7 @@
       "body": "Practical talks and workshops on AI, from the big stage to a deep-dive session for a dev team. Behind us is one of the largest AI communities in Israel.",
       "stats": [
         {
-          "n": "18K+",
+          "n": "25K+",
           "l": "Members of the Claude Israel community"
         },
         {
@@ -739,7 +742,7 @@
           "Conferences · Organizations · Management teams"
         ],
         "stat": [
-          "18K+",
+          "25K+",
           "Community behind us"
         ]
       },
@@ -1151,7 +1154,7 @@
       "works": [
         {
           "title": "Ariel Ohayon",
-          "desc": "Founder · Head of development · Speaker · Claude Israel community (18K+)",
+          "desc": "CTO and founder · Lead developer · Speaker · Claude Israel community (25K+)",
           "img": "ariel.webp"
         },
         {
@@ -1170,12 +1173,12 @@
           "yaw": -45,
           "pitch": 0,
           "title": "Ariel Ohayon",
-          "text": "Founder and head of development. Owner of the Claude Israel community (18K+), speaker, and builder of AI products. B.A. in economics and business administration. Everything that works in the field, he brings to your projects.",
+          "text": "CTO and founder, and Corewise’s lead developer. Speaks on AI at conferences, runs workshops inside companies and embeds AI in organisations. Runs the \"Claude Israel\" community, 25K members. BA in economics and business administration, and a licensed financial planner. Broad range across the whole field: from video to complex systems, AR, computer vision and LiDAR. Everything that works in the field, he brings to your project.",
           "img": "ariel.webp",
           "kind": "story",
           "metrics": [
             [
-              "18K+",
+              "25K+",
               "Community"
             ],
             [
