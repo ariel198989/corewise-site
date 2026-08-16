@@ -927,7 +927,7 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
    the site a question, or go talk to a person. Charcoal against the
    WhatsApp green so they read as a pair without competing. */
 .cw-assist-open {
-  position: fixed; z-index: 28;
+  position: fixed; z-index: 44;
   left: 18px; bottom: calc(max(18px, env(safe-area-inset-bottom)) + 58px);
   display: inline-flex; align-items: center; gap: 8px; cursor: pointer;
   background: rgba(20,24,28,.82); color: #fff; font: 600 .84rem/1 Rubik, system-ui, sans-serif;
@@ -942,7 +942,7 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
 .cw-assist-open:focus-visible { outline: 2px solid var(--cw-lime); outline-offset: 3px; }
 
 .cw-assist {
-  position: fixed; z-index: 29;
+  position: fixed; z-index: 45;
   left: 18px; bottom: calc(max(18px, env(safe-area-inset-bottom)) + 116px);
   width: min(370px, calc(100vw - 36px)); max-height: min(60vh, 520px);
   display: flex; flex-direction: column; overflow: hidden;
@@ -1016,3 +1016,13 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
 }
 /* the idle dim leaves the assistant alone: it is a conversation, not chrome */
 .cw.is-idle .cw-assist-open { opacity: .55; }
+
+/* the openers: four things worth asking, so nobody faces an empty box */
+.cw-assist__chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px; }
+.cw-assist__chip {
+  border: 1px solid rgba(20,24,28,.16); background: #fff; cursor: pointer;
+  border-radius: 100px; padding: 7px 12px; font: inherit; font-size: .8rem;
+  color: rgba(20,24,28,.72); transition: background .16s, border-color .16s, color .16s;
+}
+.cw-assist__chip:hover { background: rgba(198,242,78,.22); border-color: var(--cw-lime-d); color: var(--cw-ink); }
+.cw-assist__chip:focus-visible { outline: 2px solid var(--cw-lime-d); outline-offset: 2px; }

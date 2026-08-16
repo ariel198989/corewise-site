@@ -1,11 +1,15 @@
 /* The lobby assistant's brain.
  *
- * Scoped hard: this only answers questions about Corewise, this site, and
- * what the company does. The knowledge base below is built from
- * tour-content.json at cold start, so it is always the same facts the hall
- * itself shows and never drifts into inventing a feature that does not
- * exist. The model is told to decline anything outside that scope and hand
- * the visitor to WhatsApp instead of guessing.
+ * Scoped hard: it only answers questions about Corewise, this site, and what
+ * the company does. The knowledge base is generated from tour-content.json at
+ * cold start, so it is always exactly the facts the hall itself shows and can
+ * never invent a capability that does not exist. Everything the visitor could
+ * find by walking the whole campus is in here, so the assistant is a shortcut
+ * through the building rather than a thinner version of it.
+ *
+ * It can also MOVE the visitor: when an answer is about one of the five
+ * screens, the model appends [[open:<id>]] and the client flies the hall to
+ * that screen and opens it. Answering and pointing are the same gesture.
  *
  * The key lives in Vercel's environment (ANTHROPIC_API_KEY), never in the
  * browser.
@@ -16,43 +20,89 @@ import { fileURLToPath } from 'node:url';
 
 const here = dirname(fileURLToPath(import.meta.url));
 
+/* the ids the model is allowed to steer to, and the room each one owns */
+const AXES = ['ai', 'measure', 'vision', 'pedagogy', 'ar'];
+
 function buildKnowledge() {
   const d = JSON.parse(readFileSync(join(here, '..', 'tour-content.json'), 'utf8'));
   const rooms = {};
   d.departments.forEach(r => { rooms[r.id] = r; });
   const L = [];
-  L.push('Corewise: an AI and technology company based in Israel.');
-  L.push('Founders: Ariel Ohayon, lead developer, runs the Claude Israel community (18K+ members). Lidor Dahan, CEO, PhD in electrical and computer engineering, about six years working on autonomous vehicle algorithms.');
-  L.push('The corewise.co.il website is itself a live 360 degree walk-in hall, not a scrolling page. The lobby has five big screens, one per business line. Clicking a screen opens it in place with a film, a short summary, and the specific capabilities as smaller tiles beneath.');
-  L.push('Every video shown on the site was produced with Corewise’s own internal AI production skills, end to end.');
-  L.push('To talk to a real person: WhatsApp Lidor at 972507594477 (link https://wa.me/972507594477).');
+
+  L.push('# Corewise');
+  L.push('An AI and technology company in Israel. Two founders who do the work themselves, no outsourcing.');
+  L.push('Ariel Ohayon: founder and lead developer. Runs the Claude Israel community (18K+ members), speaks at conferences, builds AI products. BA in economics and business administration.');
+  L.push('Lidor Dahan: CEO and founder. PhD in electrical and computer engineering, about six years developing AI for autonomous vehicles, founded ventures in computer vision and smart cities.');
+  L.push('Contact: WhatsApp Lidor at 972507594477, link https://wa.me/972507594477. That is the only contact route; there is no phone number, email or contact form published on the site.');
   L.push('');
-  L.push('=== The five business lines ===');
+  L.push('## How this website works');
+  L.push('It is a live 360 degree hall you stand inside and look around, not a page you scroll. The lobby has five big screens on the walls, one per business line, plus a Before/After film under the logo wall. Clicking a screen opens it in place: the film plays, a short summary sits beside it, and the specific capabilities appear as smaller tiles beneath. Each screen also leads to a full department room you can walk into, and to that department’s own dedicated site.');
+  L.push('There is a "Show me everything" guided pass in the lobby that visits all five screens in turn. There is a campus map in the top bar, a language switch (Hebrew default, English optional), and background music that can be muted.');
+  L.push('Every video and every image on the site was produced with Corewise’s own internal AI production skills, end to end. The site is itself the portfolio piece.');
+  L.push('');
+
+  L.push('# The five business lines');
+  L.push('When an answer is about one of these, append its [[open:id]] tag. The ids are: ' + AXES.join(', ') + '.');
   (rooms.lobby?.hotspots || []).forEach(h => {
     if (h.kind !== 'axis') return;
-    L.push('## ' + h.title + ' | ' + (h.sub || ''));
-    if (h.abstract) L.push(h.abstract);
-    if (h.site) L.push('Its own site: https://corewise.co.il/' + h.site);
-    (h.features || []).forEach(f => {
-      L.push('- ' + f.title + (f.tag ? ' (' + f.tag + ')' : '') + ': ' + (f.text || ''));
-    });
     L.push('');
+    L.push('## ' + h.title + ' (id: ' + h.id + ') | ' + (h.sub || ''));
+    if (h.status) L.push('Status: ' + h.status);
+    if (h.abstract) L.push(h.abstract);
+    if (h.site) L.push('Dedicated site: https://corewise.co.il/' + h.site);
+    if (h.room && rooms[h.room]) L.push('Walk-in room: "' + rooms[h.room].title + '"');
+    (h.features || []).forEach(f => {
+      L.push('- ' + f.title + (f.tag ? ' [' + f.tag + ']' : '') + ': ' + (f.text || ''));
+    });
   });
-  L.push('=== Talks and workshops ===');
-  (rooms.stage?.hotspots || []).forEach(h => { if (h.text) L.push(h.title + ': ' + h.text); });
   L.push('');
-  L.push('=== The team ===');
-  (rooms.team?.hotspots || []).forEach(h => { if (h.kind === 'story' && h.text) L.push(h.title + ': ' + h.text); });
+
+  /* every room in full: this is what a visitor would find by walking the
+     entire campus, so the assistant is never thinner than the building */
+  L.push('# Every room in detail');
+  Object.values(rooms).forEach(r => {
+    if (r.id === 'lobby') return;
+    L.push('');
+    L.push('## Room: ' + r.title + (r.sub ? ' | ' + r.sub : ''));
+    if (r.body) L.push(r.body);
+    (r.hotspots || []).forEach(h => {
+      if (h.kind === 'tv' || h.kind === 'yt') return;   /* screens, not facts */
+      const bits = [];
+      if (h.text) bits.push(h.text);
+      if (h.quote) bits.push('Quote: "' + h.quote + '"');
+      if (Array.isArray(h.metrics)) bits.push('Numbers: ' + h.metrics.map(m => m.join(' ')).join(', '));
+      if (Array.isArray(h.tech)) bits.push('Built with: ' + h.tech.join(', '));
+      if (h.link && /^https?:/.test(h.link)) bits.push('Link: ' + h.link);
+      L.push('- ' + h.title + ': ' + bits.join(' '));
+    });
+    if (Array.isArray(r.works)) {
+      r.works.forEach(w => L.push('- Work: ' + w.title + '. ' + (w.desc || '')));
+    }
+  });
+
+  L.push('');
+  L.push('# Things to be careful about');
+  L.push('Fall detection is an alert aid that complements human supervision. It is NOT a medical device and must never be described as life-saving or as a substitute for care.');
+  L.push('The AR line is openly still being built. Do not promise delivery dates for it.');
+  L.push('Conference photographs from the last event are not cleared for publication yet.');
+  L.push('"From Caterpillar to Butterfly" (מהזחל אל הפרפר) is a registered code name of the Gefen youth programme, not a slogan.');
+  L.push('There are no public prices, packages or client names on the site. If asked about cost, timelines or references, say that depends on scope and hand over the WhatsApp link.');
   return L.join('\n');
 }
 
 let KNOWLEDGE = null;   /* built once per warm function instance */
 
-const SYSTEM = know => `You are the assistant standing in the lobby of the Corewise website, a company AI and technology campus that visitors walk through in 3D.
+const SYSTEM = know => `You are the assistant standing in the lobby of the Corewise website, an AI and technology company whose site is a 3D hall visitors walk through.
 
-Answer ONLY questions about Corewise: its five business lines, its features, the team, how to get in touch, or how the site itself works. If asked anything else (general knowledge, other companies, coding help, personal advice, anything unrelated to Corewise), politely decline in one short sentence and steer back: say you can only help with questions about Corewise, and suggest what you can answer instead.
+Your job is to be the fastest way to find anything about Corewise. You know the whole campus, so answer the actual question directly instead of telling people where to click.
 
-Reply in the same language the visitor just wrote in: Hebrew or English. Keep answers short, two to four sentences, plain conversational text with no markdown headers, no bullet lists, no em dashes (use a comma or a period instead). If a fact is not in the knowledge base below, say you are not sure and offer the WhatsApp link rather than guessing. If the visitor wants a human, a quote, or to book something, give the WhatsApp link.
+SCOPE. Only Corewise: its five business lines, its capabilities, its projects, the team, how to get in touch, and how this site works. If asked anything else (general knowledge, other companies, coding help, personal advice, current events), decline warmly in one short sentence and offer what you can help with instead. Never answer the off-topic question even partially.
+
+STYLE. Reply in the same language the visitor just used, Hebrew or English. Two to four sentences, conversational, concrete. No markdown, no headers, no bullet lists, no bold. Never use an em dash; use a comma or a full stop. Lead with the answer, not with preamble. When a capability has a number or a limit attached, give it.
+
+HONESTY. If a fact is not in the knowledge base, say plainly that you are not sure and give the WhatsApp link (https://wa.me/972507594477). Never invent a feature, a price, a timeline or a client name. Prices and schedules always depend on scope, so hand those to Lidor.
+
+NAVIGATION. When your answer is about one of the five business lines, end your message with a tag on its own, exactly like [[open:vision]], choosing from: ai, measure, vision, pedagogy, ar. The visitor's view will fly to that screen and open it, so write the sentence before it as if you are showing them something ("here it is", "opening it for you"). Use at most one tag, and only when it genuinely matches. Never mention the tag itself.
 
 Knowledge base:
 ${know}`;
@@ -73,7 +123,7 @@ export default async function handler(req, res) {
   const history = Array.isArray(body.history) ? body.history.slice(-8) : [];
   const messages = history
     .filter(m => m && (m.role === 'user' || m.role === 'assistant') && typeof m.content === 'string')
-    .map(m => ({ role: m.role, content: m.content.slice(0, 500) }))
+    .map(m => ({ role: m.role, content: m.content.slice(0, 800) }))
     .concat([{ role: 'user', content: text }]);
 
   try {
@@ -86,17 +136,26 @@ export default async function handler(req, res) {
         'anthropic-version': '2023-06-01',
       },
       body: JSON.stringify({
-        model: 'claude-haiku-4-5-20251001',
-        max_tokens: 400,
-        system: SYSTEM(KNOWLEDGE),
+        model: 'claude-sonnet-5',
+        max_tokens: 500,
+        system: [{ type: 'text', text: SYSTEM(KNOWLEDGE), cache_control: { type: 'ephemeral' } }],
         messages,
       }),
     });
     if (!r.ok) return res.status(502).json({ error: 'upstream ' + r.status });
     const j = await r.json();
-    const reply = (j.content && j.content[0] && j.content[0].text) || '';
+    let reply = (j.content && j.content[0] && j.content[0].text) || '';
     if (!reply) return res.status(502).json({ error: 'empty reply' });
-    return res.status(200).json({ reply });
+
+    /* pull the steering tag out of the prose before it reaches the visitor */
+    let go = null;
+    reply = reply.replace(/\[\[open:([a-z]+)\]\]/gi, (_, id) => {
+      const k = String(id).toLowerCase();
+      if (!go && AXES.includes(k)) go = k;
+      return '';
+    }).replace(/—/g, ',').trim();
+
+    return res.status(200).json({ reply, go });
   } catch (e) {
     return res.status(502).json({ error: 'upstream failed' });
   }

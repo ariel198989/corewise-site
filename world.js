@@ -47,6 +47,7 @@
       assistOpen: 'שאלו את קורוויז', assistTitle: 'עוזר קורוויז',
       assistGreet: 'שאלו אותי כל דבר על קורוויז, על חמשת התחומים או על מה שאנחנו עושים.',
       assistPlaceholder: 'כתבו הודעה', assistSend: 'שליחה', assistClose: 'סגירה',
+      assistChips: ['מה זה זיהוי נפילה?', 'מה אתם מודדים עם לידאר?', 'יש לכם תוכנית לבית ספר?', 'איך מתחילים?'],
       assistThinking: 'חושב', assistError: 'ההודעה לא נשלחה. נסו שוב או כתבו ללידור בוואטסאפ.',
       finEyebrow: 'סוף הסיור', finTitle: 'נעים להכיר 👋',
       finLine: (r, f) => 'ביקרת ב-' + r + ' מחלקות וגילית ' + f + ' נקודות בקמפוס.',
@@ -78,6 +79,7 @@
       assistOpen: 'Ask Corewise', assistTitle: 'Corewise assistant',
       assistGreet: 'Ask me anything about Corewise, the five business lines, or what we do.',
       assistPlaceholder: 'Type a message', assistSend: 'Send', assistClose: 'Close',
+      assistChips: ['What is fall detection?', 'What can you measure with LiDAR?', 'Do you run school programmes?', 'How do we start?'],
       assistThinking: 'Thinking', assistError: 'The message did not send. Try again or message Lidor on WhatsApp.',
       finEyebrow: 'End of the tour', finTitle: 'Good to meet you 👋',
       finLine: (r, f) => 'You walked ' + r + ' departments and found ' + f + ' points on campus.',
@@ -1271,11 +1273,25 @@
      in the lobby only, next to the WhatsApp button it hands off to when a
      visitor wants a human instead of an answer. */
   let assistHistory = [], assistBusy = false;
+  function paintAssistChips() {
+    const log = el.assistLog;
+    const old = $('.cw-assist__chips', el.root); if (old) old.remove();
+    if (assistHistory.length) return;   /* only before the first question */
+    const box = document.createElement('div');
+    box.className = 'cw-assist__chips';
+    T('assistChips').forEach(q => {
+      const b = document.createElement('button');
+      b.type = 'button'; b.className = 'cw-assist__chip'; b.textContent = q;
+      b.onclick = () => assistSend(q);
+      box.appendChild(b);
+    });
+    log.appendChild(box);
+  }
   function openAssist(show) {
     el.assist.hidden = !show;
     el.assistOpenBtn.setAttribute('aria-expanded', String(show));
     el.assistOpenBtn.classList.toggle('is-on', show);
-    if (show) { duck(true); setTimeout(() => el.assistIn.focus(), 260); }
+    if (show) { paintAssistChips(); duck(true); setTimeout(() => el.assistIn.focus(), 260); }
     else duck(false);
   }
   function assistBubble(role, text) {
@@ -1286,9 +1302,29 @@
     el.assistLog.scrollTop = el.assistLog.scrollHeight;
     return p;
   }
+  /* Answering and pointing are the same gesture: when the reply is about one
+     of the five screens, the hall turns to it and opens it while the visitor
+     reads. Its own glide, because the guided pass's one bails when the tour
+     is off. */
+  function assistGoTo(id) {
+    const h = (ROOMS.lobby?.hotspots || []).find(x => x.kind === 'axis' && x.id === id);
+    if (!h || cur !== 'lobby') return;
+    const lon0 = lon, rel = ((h.yaw - lon0) % 360 + 540) % 360 - 180, t0 = performance.now();
+    const ease = k => k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+    const step = () => {
+      const k = Math.min(1, (performance.now() - t0) / 900);
+      lon = lon0 + rel * ease(k); lat += (14 - lat) * 0.08;
+      if (k < 1) requestAnimationFrame(step);
+      else { openAxis(h); seenAxes.add(h.yaw); paintTourDots(); }
+    };
+    requestAnimationFrame(step);
+  }
+
   async function assistSend(text) {
     if (assistBusy || !text.trim()) return;
     assistBusy = true;
+    const chips = $('.cw-assist__chips', el.root);
+    if (chips) chips.remove();          /* the openers have done their job */
     assistBubble('user', text);
     assistHistory.push({ role: 'user', content: text });
     const wait = assistBubble('bot', T('assistThinking'));
@@ -1304,6 +1340,7 @@
       wait.textContent = j.reply;
       assistHistory.push({ role: 'assistant', content: j.reply });
       assistHistory = assistHistory.slice(-16);
+      if (j.go) assistGoTo(j.go);
     } catch (e) {
       wait.classList.remove('is-wait'); wait.classList.add('is-err');
       wait.textContent = T('assistError');
@@ -1352,6 +1389,7 @@
     q('.cw-assist__title', e => e.textContent = T('assistTitle'));
     q('.cw-assist__x', e => e.setAttribute('aria-label', T('assistClose')));
     q('.cw-assist__greet', e => e.textContent = T('assistGreet'));
+    if (!el.assist.hidden) paintAssistChips();
     q('.cw-assist__in', e => e.placeholder = T('assistPlaceholder'));
     q('.cw-assist__go', e => e.setAttribute('aria-label', T('assistSend')));
     q('.cw-pad [data-k=left]', e => e.setAttribute('aria-label', T('padL')));
