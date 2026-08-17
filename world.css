@@ -109,14 +109,22 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
    the wordmark. They are one row of equal circles now, so the top of the frame
    is the room and the bottom is the controls. The words survive as accessible
    names, not as pixels. */
-.cw {
+:root {
   --cw-bar-s: 56px;                                   /* circle */
   --cw-bar-g: 10px;                                   /* gap */
   --cw-bar-x: 18px;
   --cw-bar-y: max(18px, env(safe-area-inset-bottom));
 }
 @media (max-width: 860px) {
-  .cw { --cw-bar-s: 52px; --cw-bar-g: 8px; --cw-bar-x: 14px; }
+  :root { --cw-bar-s: 52px; --cw-bar-g: 8px; --cw-bar-x: 14px; }
+}
+/* The accessibility widget is shared with the department sites and appends
+   itself to body, so it is sized here rather than in a11y.css: in the hall it
+   is one of the row, at the row's size and on the row's baseline. */
+#cw-a11y-trigger {
+  width: var(--cw-bar-s); height: var(--cw-bar-s);
+  inset-block-end: var(--cw-bar-y);
+  right: var(--cw-bar-x);
 }
 /* a circle has no room for a caption; the button keeps its aria-label */
 .cw-wa span, .cw-assist-open__l {
@@ -144,10 +152,10 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
    away from the doors it exists to reach. */
 .cw-pad {
   position: fixed; z-index: 27; bottom: max(20px, env(safe-area-inset-bottom));
-  /* clear of the accessibility trigger, which is pinned to the physical right
-     at 48px plus its own 1rem inset. The pad's third arrow used to sit
-     underneath it and could not be pressed at all. */
-  right: calc(20px + 48px + 1rem);
+  /* clear of the accessibility trigger, which is the last circle in the row.
+     The pad's third arrow used to sit underneath it and could not be pressed
+     at all. Driven by the row's own tokens so it cannot drift again. */
+  right: calc(var(--cw-bar-x) + var(--cw-bar-s) + var(--cw-bar-g));
   display: flex; align-items: center; gap: 8px;
 }
 .cw-pad button {
@@ -708,7 +716,10 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
 @media (max-width: 860px) {
   .cw-lookup { top: 7vh; }
   .cw-hint { font-size: .72rem; top: calc(max(14px, env(safe-area-inset-top)) + 54px); }
-  .cw-compass { width: 52px; height: 52px; }
+  /* the compass is a status ring, not a control, and centred on the phone it
+     sat inside the button row and read as a fourth button. The row stays
+     controls only. */
+  .cw-compass { display: none; }
   .cw-door__l { font-size: .95rem; padding: 11px 20px; }
   /* The look-around pad goes away on a phone. The whole frame is already a
      drag surface, the hint says so ("גררו כדי להסתכל"), and at 390px the pad
@@ -940,7 +951,6 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
 @media (max-width: 860px) {
   /* the bar grew a second row, and the agent stands in the same corner it
      used to have to itself: give the column the height it now needs */
-  .cw-tour { bottom: calc(max(20px, env(safe-area-inset-bottom)) + 128px); gap: 8px; }
   .cw-tour__go { font-size: .84rem; padding: 12px 16px; }
 }
 
@@ -988,7 +998,8 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
   left: calc(var(--cw-bar-x) + var(--cw-bar-s) + var(--cw-bar-g));
   bottom: var(--cw-bar-y);
   width: var(--cw-bar-s); height: var(--cw-bar-s);
-  display: grid; place-items: center; cursor: pointer; overflow: hidden;
+  display: grid; place-items: center; cursor: pointer;
+  overflow: hidden; clip-path: circle(50%);
   background: rgba(20,24,28,.82); color: #fff; font: 600 .84rem/1 Rubik, system-ui, sans-serif;
   padding: 0; border-radius: 50%; border: 1px solid rgba(255,255,255,.16);
   -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
@@ -1117,9 +1128,12 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
      grid item that overflows its track does not stay centred. */
   position: absolute; inset: 0; display: block;
   width: 100%; height: 100%; margin: 0;
-  transform: scale(1.28);
+  /* the renderer frames him inside his own bounds, which leaves a ring of air
+     in a 56px circle. A gentle scale fills it without touching the edge, and
+     the button's clip-path is there in case a different export runs bigger. */
+  transform: scale(1.18);
 }
-.cw-assist-open:hover .cw-agent { transform: scale(1.35); }
+.cw-assist-open:hover .cw-agent { transform: scale(1.26); }
 .cw-agent svg { width: 20px; height: 20px; position: absolute; inset: auto 0 10px; margin: auto; }
 .cw-agent.is-ready svg { display: none; }
 .cw-agent__c { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
