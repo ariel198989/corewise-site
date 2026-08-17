@@ -302,8 +302,12 @@
         if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
           e.preventDefault();
           if (e.repeat) return;
-          /* physical: left arrow moves the row left regardless of language */
-          railTo(railAt + (e.key === 'ArrowRight' ? 1 : -1) * (document.documentElement.dir === 'rtl' ? -1 : 1), 480);
+          /* Purely physical, and deliberately NOT mirrored for Hebrew: the
+             right arrow brings the card sitting on the right into focus. The
+             row is a row of objects in space, not a line of text, so mirroring
+             it by document direction just made the key disagree with the
+             screen. */
+          railTo(railAt + (e.key === 'ArrowRight' ? 1 : -1), 480);
           stopTour();
           return;
         }
@@ -1135,7 +1139,7 @@
       if (x0 == null) return;
       const dx = e.clientX - x0;
       if (Math.abs(dx) > 6) moved = true;
-      railPos = p0 - dx / railGap * (document.documentElement.dir === 'rtl' ? -1 : 1);
+      railPos = p0 - dx / railGap;
       paintRail();
     }, { passive: true });
     const up = e => {
@@ -1155,7 +1159,7 @@
       if (Math.abs(e.deltaX) < Math.abs(e.deltaY)) return;
       e.preventDefault();
       clearTimeout(railDrag._w);
-      railDrag._w = setTimeout(() => railTo(railAt + Math.sign(e.deltaX) * (document.documentElement.dir === 'rtl' ? -1 : 1), 480), 40);
+      railDrag._w = setTimeout(() => railTo(railAt + Math.sign(e.deltaX), 480), 40);
     }, { passive: false });
   })();
 
@@ -1163,8 +1167,11 @@
   function carGo(step) {
     if (cur !== 'lobby' || !axisScreens.length) return;
     stopTour();
-    /* the arrows read in the direction the words run */
-    railTo(railAt + step * (document.documentElement.dir === 'rtl' ? -1 : 1), 560);
+    /* Physical, like the keys and the drag. The nav is forced to LTR order in
+       CSS so the glyph that points right is the one on the right, in both
+       languages: a row of screens is furniture, not a line of text, and
+       mirroring it made every input disagree with the picture. */
+    railTo(railAt + step, 560);
   }
   function carSettle() {}
   function paintCar() {

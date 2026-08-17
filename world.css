@@ -891,6 +891,12 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
    screens hung around a sphere read as one row you turn through. */
 .cw-car {
   display: flex; align-items: center; gap: 4px;
+  /* LTR order on purpose, in both languages: the rail moves physically, so
+     the glyph that points right has to BE the one on the right. Left to the
+     document direction, RTL swapped the two arrows and every one of them
+     then pointed away from the way the row actually travelled. The label
+     inside turns back to the document direction below. */
+  direction: ltr;
   background: rgba(20,24,28,.62); border: 1px solid rgba(255,255,255,.14);
   -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
   border-radius: 100px; padding: 4px;
@@ -905,7 +911,10 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
 .cw-car__mid {
   display: flex; flex-direction: column; align-items: center; gap: 5px;
   min-width: 168px; padding: 2px 8px 4px;
+  /* the arrows are physical, the words are not */
+  direction: rtl;
 }
+html[lang="en"] .cw-car__mid { direction: ltr; }
 .cw-car__name {
   color: #fff; font: 600 .82rem/1.2 Rubik, system-ui, sans-serif; white-space: nowrap;
   overflow: hidden; text-overflow: ellipsis; max-width: 42vw; text-align: center;
