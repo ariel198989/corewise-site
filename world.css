@@ -89,10 +89,11 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
    on a phone the card is a near-full-height sheet, and a CTA floating on
    top of the text you are reading is clutter, not conversion */
 .cw-wa {
-  position: fixed; z-index: 28; left: 18px; bottom: max(18px, env(safe-area-inset-bottom));
-  display: inline-flex; align-items: center; gap: 9px; text-decoration: none;
-  background: #1EBE5D; color: #06331a; font-weight: 700; font-size: .88rem;
-  padding: 11px 18px; border-radius: 100px;
+  position: fixed; z-index: 28; left: var(--cw-bar-x); bottom: var(--cw-bar-y);
+  display: grid; place-items: center; text-decoration: none;
+  width: var(--cw-bar-s); height: var(--cw-bar-s);
+  background: #1EBE5D; color: #06331a;
+  border-radius: 50%;
   /* a neutral drop, not a coloured halo — and it no longer pulses. An
      infinite glow on a "leave your number" button reads as pressure before
      a single sentence has said what the company does. */
@@ -101,7 +102,28 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
 }
 .cw-wa svg { width: 20px; height: 20px; }
 .cw-wa:hover { background: #25D366; transform: translateY(-2px); }
-@media (max-width: 860px) { .cw-wa span { display: none; } .cw-wa { padding: 13px; } }
+
+/* ---------- the bottom control row ----------
+   WhatsApp, the assistant and the pass button used to be three labelled pills
+   scattered up the left edge, which on a phone ran off the screen and crowded
+   the wordmark. They are one row of equal circles now, so the top of the frame
+   is the room and the bottom is the controls. The words survive as accessible
+   names, not as pixels. */
+.cw {
+  --cw-bar-s: 56px;                                   /* circle */
+  --cw-bar-g: 10px;                                   /* gap */
+  --cw-bar-x: 18px;
+  --cw-bar-y: max(18px, env(safe-area-inset-bottom));
+}
+@media (max-width: 860px) {
+  .cw { --cw-bar-s: 52px; --cw-bar-g: 8px; --cw-bar-x: 14px; }
+}
+/* a circle has no room for a caption; the button keeps its aria-label */
+.cw-wa span, .cw-assist-open__l {
+  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+  overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap;
+}
+.cw-wa svg { width: 24px; height: 24px; }
 
 /* map */
 .cw-mapui { position: absolute; inset: 0; z-index: 50; display: grid; place-items: center; background: rgba(12,15,18,.72); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
@@ -121,7 +143,11 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
    control in the frame. The lime ring on the forward key was pulling the eye
    away from the doors it exists to reach. */
 .cw-pad {
-  position: fixed; z-index: 27; right: 20px; bottom: max(20px, env(safe-area-inset-bottom));
+  position: fixed; z-index: 27; bottom: max(20px, env(safe-area-inset-bottom));
+  /* clear of the accessibility trigger, which is pinned to the physical right
+     at 48px plus its own 1rem inset. The pad's third arrow used to sit
+     underneath it and could not be pressed at all. */
+  right: calc(20px + 48px + 1rem);
   display: flex; align-items: center; gap: 8px;
 }
 .cw-pad button {
@@ -684,8 +710,12 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
   .cw-hint { font-size: .72rem; top: calc(max(14px, env(safe-area-inset-top)) + 54px); }
   .cw-compass { width: 52px; height: 52px; }
   .cw-door__l { font-size: .95rem; padding: 11px 20px; }
-  .cw-pad button { width: 44px; height: 44px; }
-  .cw-pad__up { width: 50px; height: 50px; }
+  /* The look-around pad goes away on a phone. The whole frame is already a
+     drag surface, the hint says so ("גררו כדי להסתכל"), and at 390px the pad
+     and the new bottom-left row would have overlapped by about 34px, which is
+     exactly the crowding this row was meant to end. Arrow keys still pan on
+     any device with a keyboard. */
+  .cw-pad { display: none; }
 }
 
 /* 3. Reduced motion was honoured in two places out of a dozen. The camera's
@@ -883,13 +913,17 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
 
 /* ---- the guided pass ---- */
 .cw-tour {
-  position: absolute; left: 50%; bottom: calc(max(20px, env(safe-area-inset-bottom)) + 70px); transform: translateX(-50%); z-index: 22;
-  display: flex; flex-direction: column; align-items: center; gap: 10px; direction: rtl;
+  position: fixed; z-index: 22;
+  left: calc(var(--cw-bar-x) + (var(--cw-bar-s) + var(--cw-bar-g)) * 2);
+  bottom: var(--cw-bar-y);
+  display: flex; align-items: center;
 }
 .cw-tour[hidden] { display: none; }
 .cw-tour__go {
   border: 0; background: var(--cw-lime, #C6F24E); color: #14181c; cursor: pointer;
-  font: 700 .92rem/1 Rubik, system-ui, sans-serif; border-radius: 100px; padding: 14px 20px;
+  width: var(--cw-bar-s); height: var(--cw-bar-s);
+  display: grid; place-items: center; padding: 0;
+  font: 700 1.15rem/1 Rubik, system-ui, sans-serif; border-radius: 50%;
   box-shadow: 0 14px 40px rgba(198,242,78,.28), 0 2px 0 rgba(0,0,0,.2); transition: transform .2s, box-shadow .2s;
 }
 .cw-tour__go:hover { transform: translateY(-1px); box-shadow: 0 18px 46px rgba(198,242,78,.36); }
@@ -951,10 +985,12 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
    WhatsApp green so they read as a pair without competing. */
 .cw-assist-open {
   position: fixed; z-index: 44;
-  left: 18px; bottom: calc(max(18px, env(safe-area-inset-bottom)) + 58px);
-  display: inline-flex; align-items: center; gap: 8px; cursor: pointer;
+  left: calc(var(--cw-bar-x) + var(--cw-bar-s) + var(--cw-bar-g));
+  bottom: var(--cw-bar-y);
+  width: var(--cw-bar-s); height: var(--cw-bar-s);
+  display: grid; place-items: center; cursor: pointer; overflow: hidden;
   background: rgba(20,24,28,.82); color: #fff; font: 600 .84rem/1 Rubik, system-ui, sans-serif;
-  padding: 11px 16px; border-radius: 100px; border: 1px solid rgba(255,255,255,.16);
+  padding: 0; border-radius: 50%; border: 1px solid rgba(255,255,255,.16);
   -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
   box-shadow: 0 10px 26px rgba(8,11,14,.34);
   transition: background .2s, border-color .2s, transform .2s;
@@ -966,7 +1002,7 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
 
 .cw-assist {
   position: fixed; z-index: 45;
-  left: 18px; bottom: calc(max(18px, env(safe-area-inset-bottom)) + 116px);
+  left: var(--cw-bar-x); bottom: calc(var(--cw-bar-y) + var(--cw-bar-s) + var(--cw-bar-g));
   width: min(370px, calc(100vw - 36px)); max-height: min(60vh, 520px);
   display: flex; flex-direction: column; overflow: hidden;
   /* the hall's own material: dark glass with a hairline, the same as the
@@ -1076,20 +1112,20 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
    and a companion the visitor is meant to recognise has to be big enough to
    have a face. The overflow is deliberate, the pill is his plinth. */
 .cw-agent {
-  position: relative; display: block; width: 68px; height: 68px; flex: none;
-  margin-top: -30px; margin-bottom: -8px;
+  /* absolutely placed, not a grid item: he is wider than his button on purpose
+     so he fills the circle rather than floating in the middle of it, and a
+     grid item that overflows its track does not stay centred. */
+  position: absolute; inset: 0; display: block;
+  width: 100%; height: 100%; margin: 0;
+  transform: scale(1.28);
 }
+.cw-assist-open:hover .cw-agent { transform: scale(1.35); }
 .cw-agent svg { width: 20px; height: 20px; position: absolute; inset: auto 0 10px; margin: auto; }
 .cw-agent.is-ready svg { display: none; }
 .cw-agent__c { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
-.cw-assist-open { padding: 8px 16px 8px 12px; gap: 8px; align-items: flex-end; }
 /* he is the reason to look, so the button leans on him rather than the label */
-.cw-assist-open:hover .cw-agent { transform: scale(1.06); }
 .cw-agent { transition: transform .2s cubic-bezier(.2,.8,.2,1); }
-@media (max-width: 860px) {
-  .cw-assist-open { padding: 6px 10px; }
-  .cw-agent { width: 58px; height: 58px; margin-top: -26px; margin-bottom: -6px; }
-}
+
 
 /* [hidden] is only display:none at UA-stylesheet strength, so the display
    declarations above silently outrank it: the panel was open on arrival and
@@ -1207,7 +1243,8 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0f12; fon
 
 /* a short desktop frame: the carousel bar and the pass button share one row
    so the rail above them can keep a usable height */
-.cw.is-short .cw-tour { flex-direction: row; gap: 10px; bottom: calc(max(20px, env(safe-area-inset-bottom)) + 16px); }
+/* the short-screen override is gone with the pill: the tour button now sits
+   in the bottom row like everything else, at every height */
 .cw.is-short .cw-hint { display: none; }
 
 /* ---------- who we are ----------

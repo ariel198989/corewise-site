@@ -174,7 +174,7 @@
       </header>
       <div class="cw-hint">${T('hint')}</div>
       <div class="cw-tour" hidden>
-        <button class="cw-tour__go">${T('tourGo')}</button>
+        <button class="cw-tour__go" aria-label="${T('tourGo')}"></button>
       </div>
       <div class="cw-pad">
         <button data-k="left" aria-label="${T('padL')}">←</button>
@@ -224,6 +224,7 @@
       assistIn: $('.cw-assist__in', root), assistForm: $('.cw-assist__row', root),
     };
     $('.cw-tour__go', root).onclick = () => tourOn ? stopTour() : startTour();
+    paintTourBtn();          /* the markup ships the button empty */
     /* the visitor taking the wheel ends the guided pass — any real input */
     ['pointerdown', 'keydown', 'wheel'].forEach(ev => addEventListener(ev, e => {
       if (!tourOn) return;
@@ -1180,7 +1181,7 @@
     if (cur !== 'lobby' || !axisScreens.length) return;
     tourOn = true; tourStep = 0;
     el.root.classList.add('tour-on');
-    $('.cw-tour__go', el.root).textContent = T('tourStop');
+    paintTourBtn();
     closeAxis();
     tourStep = railAt;
     tourNext(0);
@@ -1215,10 +1216,20 @@
       }, 7000);
     }, 780);
   }
+  /* The pass button is a round icon now, so the words move to the accessible
+     name and only the glyph stays on screen. The strings already lead with
+     their glyph ("▶ הראו לי הכל"), so one split keeps both in one place. */
+  function paintTourBtn() {
+    const b = $('.cw-tour__go', el.root); if (!b) return;
+    const s = tourOn ? T('tourStop') : T('tourGo');
+    const i = s.indexOf(' ');
+    b.textContent = i < 0 ? s : s.slice(0, i);
+    b.setAttribute('aria-label', i < 0 ? s : s.slice(i + 1));
+  }
   function stopTour() {
     tourOn = false; clearTimeout(tourT); cancelAnimationFrame(tourRaf);
     el.root.classList.remove('tour-on');
-    const b = $('.cw-tour__go', el.root); if (b) b.textContent = T('tourGo');
+    paintTourBtn();
     paintTourDots();
   }
 
@@ -1578,7 +1589,7 @@
     q('.cw-map', e => { e.title = T('map'); e.setAttribute('aria-label', T('map')); });
     q('.cw-mapui__in h3', e => e.textContent = T('map'));
     q('.cw-mapui__x', e => e.textContent = T('mapClose'));
-    q('.cw-tour__go', e => e.textContent = tourOn ? T('tourStop') : T('tourGo'));
+    paintTourBtn();
     q('.cw-axis__x', e => e.textContent = T('home'));
     q('.cw-wa', e => e.title = T('waTitle'));
     q('.cw-wa span', e => e.textContent = T('waLabel'));
