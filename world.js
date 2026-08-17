@@ -174,14 +174,6 @@
       </header>
       <div class="cw-hint">${T('hint')}</div>
       <div class="cw-tour" hidden>
-        <div class="cw-car">
-          <button class="cw-car__nav" data-d="-1" aria-label="${T('carPrev')}">‹</button>
-          <span class="cw-car__mid">
-            <span class="cw-car__name"></span>
-            <span class="cw-tour__dots" aria-hidden="true"></span>
-          </span>
-          <button class="cw-car__nav" data-d="1" aria-label="${T('carNext')}">›</button>
-        </div>
         <button class="cw-tour__go">${T('tourGo')}</button>
       </div>
       <div class="cw-pad">
@@ -232,7 +224,6 @@
       assistIn: $('.cw-assist__in', root), assistForm: $('.cw-assist__row', root),
     };
     $('.cw-tour__go', root).onclick = () => tourOn ? stopTour() : startTour();
-    root.querySelectorAll('.cw-car__nav').forEach(b => b.onclick = () => carGo(Number(b.dataset.d)));
     /* the visitor taking the wheel ends the guided pass — any real input */
     ['pointerdown', 'keydown', 'wheel'].forEach(ev => addEventListener(ev, e => {
       if (!tourOn) return;
@@ -280,8 +271,8 @@
       latVel = latVel * 0.5 + dLat * 0.5;
       px = e.clientX; py = e.clientY;
     });
-    c.addEventListener('pointerup', () => { drag = false; carSettle(); });
-    c.addEventListener('pointercancel', () => { drag = false; lonVel = latVel = 0; carSettle(); });
+    c.addEventListener('pointerup', () => { drag = false; });
+    c.addEventListener('pointercancel', () => { drag = false; lonVel = latVel = 0; });
     /* FOV_MIN is 64, not 58: the pano is 4096px around — at 58 degrees on a
        desktop monitor the GPU upsamples it ~2.2x and the zoom goes soft. 64
        keeps the lean-in without ever showing the texture its own ceiling. */
@@ -699,7 +690,6 @@
     el.assistOpenBtn.hidden = id !== 'lobby';
     if (id !== 'lobby') openAssist(false);
     paintTourDots();
-    if (id === 'lobby') paintCar();
     visited.add(id);
     buildMarkers(d);
     buildSky(d);
@@ -1078,7 +1068,11 @@
     /* The wordmark owns the upper half of the frame. The rail may take what
        is left below it and above the controls, and never more: on a wide
        short monitor a width-only rule climbed straight over the name. */
-    const reserve = mob ? 232 : (short ? 104 : 178);
+    /* 52px lighter than it was: the carousel pill (34px of button plus the
+       column gap) used to sit between the rail and the pass button. The
+       short layout is unchanged, because there the pill sat beside the
+       button rather than above it and cost no height. */
+    const reserve = mob ? 180 : (short ? 104 : 126);
     const maxH = H - reserve - 30 - H * 0.5;
     let w = mob ? W * 0.76 : Math.max(300, Math.min(W * 0.34, 520));
     w = Math.min(w, Math.max(220, maxH * 16 / 9));
@@ -1105,7 +1099,7 @@
       a.el.style.pointerEvents = far ? 'none' : '';
       a.el.setAttribute('aria-hidden', far ? 'true' : 'false');
     });
-    paintCar();
+    paintTourDots();
   }
   function railTo(i, ms) {
     if (!axisScreens.length) return;
@@ -1163,25 +1157,13 @@
     }, { passive: false });
   })();
 
+  /* The carousel pill (arrows, the focused card's name, the position dots) is
+     gone. It restated what the rail already shows: the centre card carries its
+     own title, and its neighbours are visible on both sides, so the pill was a
+     second, smaller copy of the row sitting on top of the row. What it used to
+     do is all still here: arrow keys, drag, swipe, horizontal wheel, and
+     clicking a neighbour to bring it forward. */
   const carIndex = () => railAt;
-  function carGo(step) {
-    if (cur !== 'lobby' || !axisScreens.length) return;
-    stopTour();
-    /* Physical, like the keys and the drag. The nav is forced to LTR order in
-       CSS so the glyph that points right is the one on the right, in both
-       languages: a row of screens is furniture, not a line of text, and
-       mirroring it made every input disagree with the picture. */
-    railTo(railAt + step, 560);
-  }
-  function carSettle() {}
-  function paintCar() {
-    const n = $('.cw-car__name', el.root);
-    if (!n || !axisScreens.length) return;
-    const a = axisScreens[railAt];
-    const t = a && a.h ? a.h.title : '';
-    if (n.textContent !== t) n.textContent = t;
-    paintTourDots();
-  }
 
   function glideTo(yaw, ms, done) {
     const lon0 = lon, rel = ((yaw - lon0) % 360 + 540) % 360 - 180, t0 = performance.now();
