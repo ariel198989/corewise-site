@@ -1,0 +1,170 @@
+/* Corewise client strip, the moving logo bar.
+   Shared verbatim by every site that shows it; copy, do not fork.
+
+   Two things drive the design.
+
+   First, WCAG 2.2.2: content that moves automatically for more than five
+   seconds needs a way to stop it. We publish an accessibility statement, so
+   this is not optional here. The strip therefore ships a real pause button,
+   pauses on hover and on keyboard focus, and honours both the visitor's
+   operating-system reduced-motion setting and the a11y-reduce-motion class
+   our own widget sets.
+
+   Second, a logo strip that renders logos at whatever size their files
+   happen to be looks like a ransom note. Every logo is normalised to the
+   same optical height and desaturated at rest, so the row reads as one line
+   of text rather than a pile of brands, and colour returns on hover. */
+
+.cw-clients {
+  --h: 34px;                 /* optical logo height, the whole thing keys off this */
+  --gap: clamp(2.5rem, 6vw, 5rem);
+  --speed: 42s;
+  position: relative;
+  padding-block: clamp(1.75rem, 4vw, 2.75rem);
+  overflow: hidden;
+}
+
+.cw-clients__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  max-width: 72rem;
+  margin-inline: auto;
+  margin-block-end: 1.1rem;
+  padding-inline: 1.25rem;
+}
+
+.cw-clients__title {
+  margin: 0;
+  font: 500 .78rem/1.4 var(--font-mono, "IBM Plex Mono", ui-monospace, monospace);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  opacity: .62;
+}
+
+.cw-clients__pause {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  min-height: 32px;
+  padding: .3rem .7rem;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  background: transparent;
+  color: inherit;
+  font: 500 .72rem/1 inherit;
+  opacity: .55;
+  cursor: pointer;
+  transition: opacity .15s ease;
+}
+.cw-clients__pause:hover, .cw-clients__pause:focus-visible { opacity: 1; }
+.cw-clients__pause i { font-style: normal; }
+
+/* The viewport. The mask fades both ends so logos enter and leave instead of
+   being guillotined at the edge. */
+.cw-clients__view {
+  position: relative;
+  display: flex;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+          mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+/* Two identical tracks sit side by side and both translate by exactly one
+   track width, so the seam lands where the first logo already is. Any other
+   arrangement produces a visible jump once per loop. */
+.cw-clients__track {
+  display: flex;
+  align-items: center;
+  gap: var(--gap);
+  padding-inline-end: var(--gap);
+  flex: 0 0 auto;
+  animation: cw-clients-roll var(--speed) linear infinite;
+  will-change: transform;
+}
+
+@keyframes cw-clients-roll {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-100%, 0, 0); }
+}
+
+/* direction: the strip always travels the same visual way, whatever the
+   document direction, so an RTL page does not reverse the reading rhythm */
+[dir="rtl"] .cw-clients__track { animation-name: cw-clients-roll-rtl; }
+@keyframes cw-clients-roll-rtl {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(100%, 0, 0); }
+}
+
+.cw-clients__view:hover .cw-clients__track,
+.cw-clients__view:focus-within .cw-clients__track,
+.cw-clients.is-paused .cw-clients__track { animation-play-state: paused; }
+
+/* ---------- an item ---------- */
+.cw-clients__item {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  height: var(--h);
+  text-decoration: none;
+  color: inherit;
+}
+
+.cw-clients__item img {
+  height: var(--h);
+  width: auto;
+  max-width: 190px;
+  object-fit: contain;
+  filter: grayscale(1);
+  opacity: .62;
+  transition: filter .25s ease, opacity .25s ease;
+}
+.cw-clients__item:hover img,
+.cw-clients__item:focus-visible img { filter: grayscale(0); opacity: 1; }
+
+/* A wordmark for a client with no logo file. It is deliberately not styled to
+   imitate a logo: it is set in the page's own type, so it reads as a name we
+   typed rather than a brand asset we invented. */
+.cw-clients__word {
+  display: grid;
+  place-items: center;
+  height: var(--h);
+  padding-inline: .2rem;
+  font: 600 clamp(.95rem, 2.2vw, 1.15rem)/1 inherit;
+  letter-spacing: -.01em;
+  white-space: nowrap;
+  opacity: .55;
+  transition: opacity .25s ease;
+}
+.cw-clients__item:hover .cw-clients__word,
+.cw-clients__item:focus-visible .cw-clients__word { opacity: 1; }
+
+/* On a dark surface a dark logo disappears. Invert the raster logos there and
+   let the SVG take currentColor. */
+.cw-clients.is-dark .cw-clients__item img { filter: grayscale(1) invert(1) brightness(1.6); }
+.cw-clients.is-dark .cw-clients__item:hover img { filter: none; }
+
+/* ---------- motion off ----------
+   Both switches: the visitor's OS setting, and our own widget's class. When
+   motion is off the strip stops being a marquee and becomes a wrapped row,
+   which is the honest static equivalent rather than a frozen half-cut line. */
+@media (prefers-reduced-motion: reduce) {
+  .cw-clients__track { animation: none; }
+  .cw-clients__view { -webkit-mask-image: none; mask-image: none; overflow: visible; }
+  .cw-clients__track:nth-child(2) { display: none; }
+  .cw-clients__track { flex-wrap: wrap; justify-content: center; row-gap: 1.5rem; }
+  .cw-clients__pause { display: none; }
+}
+html.a11y-reduce-motion .cw-clients__track { animation: none; }
+html.a11y-reduce-motion .cw-clients__view { -webkit-mask-image: none; mask-image: none; overflow: visible; }
+html.a11y-reduce-motion .cw-clients__track:nth-child(2) { display: none; }
+html.a11y-reduce-motion .cw-clients__track { flex-wrap: wrap; justify-content: center; row-gap: 1.5rem; }
+html.a11y-reduce-motion .cw-clients__pause { display: none; }
+
+@media print {
+  .cw-clients__track { animation: none; }
+  .cw-clients__track:nth-child(2) { display: none; }
+  .cw-clients__pause { display: none; }
+}
