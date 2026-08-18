@@ -20,8 +20,13 @@
   const CLIENTS = [
     { name: 'המכללה האקדמית ספיר', img: 'clients/sapir.svg',  url: 'https://www.sapir.ac.il' },
     { name: 'אולמדע',              img: 'clients/olmeda.webp', url: 'https://www.olmeda.co.il' },
-    { name: 'ירחג שיווק' },        /* no logo file yet, renders as a wordmark */
+    /* No logo file yet, so these render as typeset wordmarks rather than as
+       invented logo art. Drop a file into clients/ and add an `img` key to
+       promote one; nothing else changes. */
+    { name: 'ירחג שיווק' },
     { name: 'נכון מאיר חן' },
+    { name: 'רשת אמונה' },
+    { name: 'בית ספר נווה מיכאל' },
   ];
 
   const STR = {
