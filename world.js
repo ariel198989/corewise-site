@@ -1082,9 +1082,6 @@
     el.rail.style.setProperty('--cw', railW + 'px');
     el.rail.style.height = Math.round(railW * 9 / 16 + 30) + 'px';
     el.rail.style.bottom = 'calc(max(20px, env(safe-area-inset-bottom)) + ' + reserve + 'px)';
-    /* the client strip rides above the rail, and the rail's height is
-       computed here rather than in CSS, so publish the top edge */
-    document.documentElement.style.setProperty('--cw-rail-top', (reserve + Math.round(railW * 9 / 16 + 30)) + 'px');
     el.root.classList.toggle('is-short', short);
   }
   addEventListener('resize', () => { if (axisScreens.length) { railLayout(); paintRail(); } });
