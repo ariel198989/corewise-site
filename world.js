@@ -131,7 +131,7 @@
   /* ---------- boot ---------- */
   document.documentElement.lang = LANG;
   document.documentElement.dir = LANG === 'en' ? 'ltr' : 'rtl';
-  const CONTENT = l => 'tour-content' + (l === 'en' ? '.en' : '') + '.json?v=1786780000';
+  const CONTENT = l => 'tour-content' + (l === 'en' ? '.en' : '') + '.json?v=1787032000';
   fetch(CONTENT(LANG)).then(r => r.ok ? r.json() : Promise.reject())
     .catch(() => fetch(CONTENT('he')).then(r => r.json()))
     .then(cfg => {

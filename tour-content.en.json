@@ -145,7 +145,7 @@
           "id": "pedagogy",
           "yaw": 72,
           "pitch": 28,
-          "title": "Pedagogy",
+          "title": "Yitzhak Ohayon Pedagogy",
           "sub": "Hackathons · Talks · Gefen · Smart-City · Electronics",
           "video": "school-tv.mp4",
           "poster": "axis/pedagogy-poster.webp",
@@ -528,7 +528,7 @@
     {
       "id": "school",
       "eyebrow": "Department 06",
-      "title": "Pedagogy",
+      "title": "The Yitzhak Ohayon Pedagogy Department",
       "sub": "Hackathons · Talks · Gefen · Smart-City · Electronics",
       "body": "Students build technology with their hands, sensors, circuits and smart models. Dedicated platforms we developed run alongside every workshop.",
       "works": [
