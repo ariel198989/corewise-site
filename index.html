@@ -16,11 +16,11 @@
 <link rel="preload" as="image" href="home/campus-still.webp">
 <link rel="stylesheet" href="a11y.css?v=1787100000">
 <link rel="stylesheet" href="clients.css?v=1787100000">
-<link rel="stylesheet" href="home.css?v=1787216000">
+<link rel="stylesheet" href="home.css?v=1787220000">
 <script src="a11y.js?v=1787100000"></script>
 <script src="i18n.js?v=1787100000" defer></script>
 <script src="clients.js?v=1787100000" defer></script>
-<script src="home.js?v=1787216000" defer></script>
+<script src="home.js?v=1787220000" defer></script>
 </head>
 <body class="grain">
 
@@ -30,7 +30,8 @@
   <a class="top__brand" href="/" aria-label="קורוויז, לדף הבית" data-en-aria-label="Corewise, home">corewise</a>
   <nav class="top__nav" aria-label="ניווט ראשי" data-en-aria-label="Main navigation">
     <a href="#work" data-en="What we do">מה אנחנו עושים</a>
-    <a href="#built" data-en="What we built">מה שבנינו</a>
+    <a href="#learn" data-en="Workshops">סדנאות והרצאות</a>
+    <a href="#built" data-en="The campus">הקמפוס</a>
     <a href="#who" data-en="Who we are">מי אנחנו</a>
   </nav>
   <span class="top__right">
@@ -100,11 +101,41 @@
     </div>
   </section>
 
+
+  <!-- ── workshops and talks ───────────────────────────────────────── -->
+  <section id="learn" class="learn" aria-labelledby="learn-h">
+    <header class="sec-head">
+      <h2 id="learn-h" data-en="Workshops and talks">סדנאות והרצאות</h2>
+      <p data-en="We are asked to come and teach almost as often as we are asked to come and build. Same material, a room instead of a repository.">מזמינים אותנו ללמד כמעט באותה תדירות שמזמינים אותנו לבנות. אותו חומר, רק שבמקום מאגר קוד יש חדר.</p>
+    </header>
+
+    <div class="lgrid">
+      <article class="lcard">
+        <h3 data-en="A talk inside your organisation">הרצאה בארגון</h3>
+        <p data-en="An hour or two in front of a team, on what AI actually changes in their work rather than in the headlines. No slideware about the future.">שעה או שעתיים מול צוות, על מה שבינה מלאכותית באמת משנה בעבודה שלו ולא בכותרות. בלי מצגת על העתיד.</p>
+      </article>
+      <article class="lcard">
+        <h3 data-en="A deep workshop">סדנת עומק</h3>
+        <p data-en="A day where a team builds something of its own and leaves with it working. We stay on the tools, not on the theory.">יום שבו צוות בונה משהו משלו ויוצא איתו עובד. אנחנו נשארים על הכלים, לא על התיאוריה.</p>
+      </article>
+      <article class="lcard">
+        <h3 data-en="A hackathon, a day or a week">האקתון, יום או שבוע</h3>
+        <p data-en="A format we run for schools and for companies. At the end of it there is a working thing, and somebody who did not know they could build it.">פורמט שאנחנו מריצים לבתי ספר ולחברות. בסוף יש דבר שעובד, ומישהו שלא ידע שהוא מסוגל לבנות אותו.</p>
+      </article>
+      <article class="lcard">
+        <h3 data-en="A year-long school programme">תוכנית שנתית לבית ספר</h3>
+        <p data-en="Electronics, sensors and smart models, with platforms we wrote for the classroom. This is the department named for Yitzhak Ohayon.">אלקטרוניקה, חיישנים ומודלים חכמים, עם פלטפורמות שכתבנו לכיתה. זו המחלקה ע"ש יצחק אוחיון.</p>
+      </article>
+    </div>
+
+    <p class="learn__proof" data-en="Ariel opened the Claude Israel community on the day Claude launched; it now has 25,000 members. We have run a full municipal programme around one of our computer vision products, and taught at Sapir College.">אריאל פתח את קהילת קלוד ישראל ביום שקלוד יצא, והיום יש בה 25 אלף איש. הרצנו פעילות עירונית שלמה סביב אחד ממוצרי הראייה הממוחשבת שלנו, ולימדנו במכללת ספיר.</p>
+  </section>
+
   <!-- ── proof: the things we made ─────────────────────────────────── -->
   <section id="built" class="built" aria-labelledby="built-h">
     <header class="sec-head">
-      <h2 id="built-h" data-en="What we built">מה שבנינו</h2>
-      <p data-en="Not a portfolio of slides. Three things you can open right now.">לא תיק עבודות של שקפים. שלושה דברים שאפשר לפתוח עכשיו.</p>
+      <h2 id="built-h" data-en="Rather than describe what we can build">במקום לתאר מה אנחנו יודעים לבנות</h2>
+      <p data-en="This campus is ours. We built it here, and you can walk through it.">הקמפוס הזה הוא שלנו. בנינו אותו כאן, ואפשר להסתובב בתוכו.</p>
     </header>
 
     <!-- One address to read the company, one address to be shown what it can
@@ -119,22 +150,6 @@
       </span>
     </a>
 
-    <div class="cards cards--two">
-      <a class="card" href="https://ar-store-eta.vercel.app/" target="_blank" rel="noopener">
-        <img src="works/app-arstore.webp" alt="הסופרמרקט הווירטואלי" data-en-alt="The virtual supermarket" loading="lazy" decoding="async" width="600" height="400">
-        <div class="card__t">
-          <h3 data-en="The virtual supermarket">הסופרמרקט הווירטואלי</h3>
-          <p data-en="Thirteen departments, a real catalogue, a cart and a checkout. It is code, a 3D experience and a live planogram at the same time: three departments inside one project.">שלוש עשרה מחלקות, קטלוג אמיתי, עגלה וקופה. הוא בו זמנית קוד, חוויה תלת ממדית ופלנוגרמה חיה: שלוש מחלקות בפרויקט אחד.</p>
-        </div>
-      </a>
-      <a class="card" href="https://www.youtube.com/@thehollowsaga" target="_blank" rel="noopener">
-        <img src="axis/before-poster.webp" alt="פריים מתוך הסדרה The Hollow" data-en-alt="A frame from the series The Hollow" loading="lazy" decoding="async" width="600" height="400">
-        <div class="card__t">
-          <h3 data-en="The Hollow, a six episode series">The Hollow, סדרה בשישה פרקים</h3>
-          <p data-en="Written, produced, scored and cut in house. No camera and no actors. We made it to find the edge of what we could do.">נכתבה, הופקה, הולחנה ונערכה אצלנו. בלי מצלמה ובלי שחקנים. הפקנו אותה כדי לבדוק איפה הגבול.</p>
-        </div>
-      </a>
-    </div>
   </section>
 
   <!-- ── who ───────────────────────────────────────────────────────── -->
@@ -147,7 +162,7 @@
         <img src="ariel.webp" alt="אריאל אוחיון" data-en-alt="Ariel Ohayon" loading="lazy" decoding="async" width="300" height="300">
         <div>
           <h3>אריאל אוחיון <span data-en="Founder and CTO">מייסד ו-CTO</span></h3>
-          <p data-en="Lead developer at Corewise, lecturer and workshop leader. Founded the Claude Israel community on the day Claude launched as a chatbot; it now has 25,000 members and was one of the first in the world.">אחראי הפיתוח הראשי בקורוויז, מרצה ומוביל סדנאות. פתח את קהילת «קלוד ישראל» ביום שקלוד יצא כצ'אטבוט, היום 25 אלף איש, ומהראשונות בעולם.</p>
+          <p data-en="Lead developer at Corewise, lecturer and workshop leader. Founded the Claude Israel community on the day Claude launched as a chatbot; it now has 25,000 members and was one of the first in the world.">אחראי הפיתוח הראשי בקורוויז, מרצה ומוביל סדנאות. פתח את את קהילת קלוד ישראל ביום שקלוד יצא כצ'אטבוט, היום 25 אלף איש, ומהראשונות בעולם.</p>
         </div>
       </article>
       <article class="person">

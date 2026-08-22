@@ -426,6 +426,8 @@ p { margin: 0; }
    the page at opacity 0. A reveal that can strand content is not a reveal, it
    is an outage. */
 .js-reveal .dcard,
+.js-reveal .lcard,
+.js-reveal .door,
 .js-reveal .card,
 .js-reveal .person,
 .js-reveal .campus {
@@ -436,6 +438,8 @@ p { margin: 0; }
    (0,2,0), and a tie decided by source order is a fragile way to keep content
    on screen. */
 .js-reveal .dcard.is-in,
+.js-reveal .lcard.is-in,
+.js-reveal .door.is-in,
 .js-reveal .card.is-in,
 .js-reveal .person.is-in,
 .js-reveal .campus.is-in { opacity: 1; transform: none; }
@@ -451,3 +455,39 @@ html.a11y-reduce-motion .stagger > * { opacity: 1; transform: none; animation: n
 html.a11y-reduce-motion .js-reveal .card,
 html.a11y-reduce-motion .js-reveal .person,
 html.a11y-reduce-motion .js-reveal .campus { opacity: 1; transform: none; transition: none; }
+
+/* ---------- workshops and talks ----------
+   One of the three things Corewise actually sells, and it had no place on the
+   page at all. Text-led on purpose: a workshop has no product shot worth
+   showing, and four stock photographs of people at laptops would say less than
+   four honest sentences. The colour comes from the rules, not from imagery. */
+.learn {
+  padding: clamp(3.5rem, 9vw, 7rem) clamp(1rem, 4vw, 3rem);
+  border-block-start: 1px solid var(--line);
+}
+.lgrid {
+  display: grid; gap: var(--space-4);
+  grid-template-columns: repeat(2, 1fr);
+  max-width: 68rem; margin-inline: auto;
+}
+.lcard {
+  padding: var(--space-6);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(180deg, var(--surface), var(--ink-2));
+  border-inline-start: 3px solid var(--accent);
+}
+.lcard:nth-child(2) { border-inline-start-color: #26D07C; }
+.lcard:nth-child(3) { border-inline-start-color: #E8834A; }
+.lcard:nth-child(4) { border-inline-start-color: #6E9B0E; }
+.lcard h3 { font-size: var(--step-1); font-weight: 700; }
+.lcard p {
+  margin-block-start: var(--space-3);
+  color: var(--text-muted); font-size: var(--step--1); line-height: 1.75;
+}
+.learn__proof {
+  max-width: 52rem; margin: var(--space-8) auto 0;
+  padding-inline-start: var(--space-4);
+  border-inline-start: 2px solid var(--accent);
+  color: var(--text-muted); font-size: var(--step--1); line-height: 1.8;
+}
+@media (max-width: 760px) { .lgrid { grid-template-columns: 1fr; } }
