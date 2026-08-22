@@ -71,9 +71,15 @@
   new MutationObserver(paint).observe(document.documentElement,
     { attributes: true, attributeFilter: ['lang'] });
 
+  /* The door is 1088 CSS px at most, so a desktop at 2x wants the 1080p file
+     and a phone at 3x is already oversupplied by the 720p one. Choosing here
+     rather than in markup keeps it to a single request: <source media> was
+     dropped from the spec and browsers ignore it. */
+  const pick = () => (innerWidth <= 820 && vid.dataset.srcSm) ? vid.dataset.srcSm : vid.dataset.src;
+
   function sync() {
     if (wanted && near) {
-      if (!vid.src) vid.src = vid.dataset.src;
+      if (!vid.src) vid.src = pick();
       const p = vid.play();
       if (p && p.catch) p.catch(() => {});   /* autoplay refused: poster stands */
     } else {
