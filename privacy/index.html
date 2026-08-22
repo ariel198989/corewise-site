@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>קורוויז · מדיניות פרטיות</title>
+<meta name="description" content="מדיניות הפרטיות של קורוויז: איזה מידע נאסף, למה, עם מי הוא משותף וכיצד ניתן לעיין בו, לתקן אותו או למחוק אותו.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://www.corewise.co.il/privacy/">
+<meta name="theme-color" content="#F6F3EB">
+<meta property="og:title" content="קורוויז · מדיניות פרטיות">
+<meta property="og:description" content="איזה מידע נאסף, למה, עם מי הוא משותף וכיצד ניתן לעיין בו, לתקן אותו או למחוק אותו.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.corewise.co.il/privacy/">
+<meta property="og:locale" content="he_IL">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<!-- blocking, so the visitor's saved accessibility preferences are applied
+     before first paint rather than flashing the default in first -->
+<link rel="stylesheet" href="../a11y.css?v=1787600000">
+<script src="../a11y.js?v=1787600000"></script>
+<style>
+  /* The supplied draft was dark and self-styled. The site is warm paper now,
+     and a legal page that arrives in a different palette reads as somebody
+     else's document, so it takes the front page's tokens. Kept self-contained
+     like the accessibility statement: neither page needs the marketing CSS. */
+  :root {
+    color-scheme: light;
+    --paper:   #F6F3EB;
+    --paper-2: #FFFDF7;
+    --paper-3: #EFEBE1;
+    --ink:     #14120E;
+    --ink-2:   #56524A;   /* 7.4:1 on --paper */
+    --line:    rgba(20,18,14,.13);
+    --line-2:  rgba(20,18,14,.08);
+    --lime:    #C6F24E;
+    --olive-d: #47650A;   /* 5.6:1 on --paper, the link colour */
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--paper); color: var(--ink);
+    font: 400 1.05rem/1.75 Rubik, system-ui, -apple-system, 'Segoe UI', sans-serif;
+    word-spacing: .05em; -webkit-font-smoothing: antialiased;
+  }
+  .mono { font-family: 'IBM Plex Mono', ui-monospace, monospace; }
+
+  .top {
+    position: sticky; top: 0; z-index: 10;
+    border-block-end: 1px solid var(--line-2);
+    background: color-mix(in srgb, var(--paper) 86%, transparent);
+    -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+  }
+  .wrap { max-width: 46rem; margin-inline: auto; padding-inline: 1.5rem; }
+  .top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-block: 1rem; }
+  .brand { display: flex; align-items: center; gap: .65rem; text-decoration: none; color: var(--ink); }
+  .brand svg { display: block; flex: none; }
+  .brand span { font: 500 1.15rem/1 'IBM Plex Mono', monospace; }
+  .back { font: 400 .85rem 'IBM Plex Mono', monospace; color: var(--ink-2); text-decoration: none; }
+  .back:hover { color: var(--ink); text-decoration: underline; }
+
+  main { padding-block: 3rem 5rem; }
+  .kicker { font: 500 .76rem/1.4 'IBM Plex Mono', monospace; letter-spacing: .16em; color: var(--olive-d); }
+  h1 { margin: .8rem 0 0; font-size: clamp(1.9rem, 5.5vw, 2.8rem); font-weight: 700; line-height: 1.15; letter-spacing: -.02em; text-wrap: balance; }
+  .stamp {
+    margin-block-start: 1.4rem; padding-block-start: 1.1rem; border-block-start: 1px solid var(--line);
+    display: flex; gap: 1.6rem; flex-wrap: wrap;
+    font: 400 .8rem 'IBM Plex Mono', monospace; color: var(--ink-2);
+  }
+  .stamp b { color: var(--ink); font-weight: 500; }
+
+  .lede { margin-block-start: 2rem; font-size: 1.15rem; line-height: 1.7; color: var(--ink-2); }
+
+  section { margin-block-start: 2.8rem; }
+  h2 {
+    margin: 0 0 .8rem; font-size: 1.3rem; font-weight: 700; line-height: 1.35;
+    display: flex; align-items: baseline; gap: .7rem; text-wrap: balance;
+  }
+  h2 .n { font: 500 .82rem 'IBM Plex Mono', monospace; color: var(--olive-d); flex: none; }
+  p { margin: 0 0 .85rem; }
+  p:last-child { margin-block-end: 0; }
+
+  ul { margin: 0 0 .85rem; padding-inline-start: 0; list-style: none; }
+  li { position: relative; padding-inline-start: 1.3rem; margin-block-end: .55rem; }
+  /* the lime is decorative here, so its low contrast on paper carries no
+     information the marker text does not already carry */
+  li::before {
+    content: ""; position: absolute; inset-inline-start: .15rem; inset-block-start: .72em;
+    inline-size: 7px; block-size: 7px; border-radius: 2px; background: var(--olive-d);
+  }
+  b, strong { font-weight: 600; }
+
+  .tw { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; margin: 0 0 .85rem; background: var(--paper-2); }
+  table { width: 100%; border-collapse: collapse; font-size: .95rem; min-width: 30rem; }
+  th { text-align: start; padding: .75rem 1rem; font-weight: 600; font-size: .9rem; background: var(--paper-3); border-block-end: 1px solid var(--line); white-space: nowrap; }
+  td { padding: .75rem 1rem; border-block-end: 1px solid var(--line-2); vertical-align: top; color: var(--ink-2); }
+  td b { color: var(--ink); }
+  tbody tr:last-child td { border-block-end: none; }
+
+  a { color: var(--olive-d); text-underline-offset: 3px; }
+  a:hover { text-decoration-thickness: 2px; }
+  a:focus-visible { outline: 2px solid var(--olive-d); outline-offset: 3px; border-radius: 3px; }
+
+  .contact {
+    margin-block-start: 2.8rem; padding: 1.5rem;
+    border: 1px solid var(--line); border-radius: 16px; background: var(--paper-2);
+  }
+  .contact h2 { margin-block-end: .6rem; }
+  .contact p { color: var(--ink-2); }
+  .contact .row { font: 400 .98rem 'IBM Plex Mono', monospace; color: var(--ink); margin: 0 0 .35rem; }
+
+  .foot {
+    margin-block-start: 3.5rem; padding-block-start: 1.4rem; border-block-start: 1px solid var(--line);
+    display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+    font: 400 .8rem 'IBM Plex Mono', monospace; color: var(--ink-2);
+  }
+  .foot a { color: var(--ink-2); }
+</style>
+</head>
+<body>
+
+<a class="cw-skip" href="#main">דלג לתוכן הראשי</a>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="/" aria-label="קורוויז, לדף הבית">
+      <svg width="28" height="28" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="45" fill="none" stroke="#14120E" stroke-width="10"/><circle cx="50" cy="50" r="18" fill="#6E9B0E"/></svg>
+      <span>corewise</span>
+    </a>
+    <a class="back" href="/">← חזרה לאתר</a>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+  <div class="wrap">
+
+    <div class="title">
+      <div class="kicker">מסמך משפטי</div>
+      <h1>מדיניות פרטיות</h1>
+      <div class="stamp">
+        <span><b>עודכן:</b> 21 באוגוסט 2026</span>
+        <span><b>גרסה:</b> 1.0</span>
+        <span><b>תחולה:</b> corewise.co.il ונכסים דיגיטליים</span>
+      </div>
+    </div>
+
+    <p class="lede">
+      בקורוויז אנחנו אוספים מידע אישי רק כדי לחזור אליכם ולהבין אם השירות שלנו רלוונטי לעסק שלכם. המסמך הזה מפרט איזה מידע נאסף, למה, עם מי הוא משותף, וכיצד תוכלו לעיין בו, לתקן אותו או למחוק אותו.
+    </p>
+
+    <section>
+      <h2><span class="n">01</span> מי אנחנו</h2>
+      <p>
+        מדיניות זו חלה על קורוויז (להלן: "Corewise", "אנחנו"), המפעילה את האתר corewise.co.il.
+        אנחנו מספקים שירותי טכנולוגיה לעסקים: הטמעות בינה מלאכותית, ראייה ממוחשבת, מדידות LiDAR, הפקות וידאו ופרסום, מציאות רבודה והכשרות טכנולוגיות לארגונים.
+      </p>
+      <p>
+        המדיניות חלה על אתר corewise.co.il, על עמודי קורוויז ברשתות החברתיות, ועל טפסי יצירת קשר ומודעות לידים שאנו מפעילים בפלטפורמות של Meta.
+      </p>
+    </section>
+
+    <section>
+      <h2><span class="n">02</span> איזה מידע נאסף</h2>
+      <p>אנחנו נמנעים מאיסוף מידע שאיננו זקוקים לו. בפועל נאספות שתי קטגוריות בלבד:</p>
+
+      <div class="tw" tabindex="0" role="region" aria-label="טבלת סוגי המידע הנאסף">
+        <table>
+          <thead>
+            <tr><th scope="col">קטגוריה</th><th scope="col">מה כלול</th><th scope="col">איך נאסף</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><b>מידע שאתם מוסרים</b></td>
+              <td>שם מלא · מספר טלפון · שם העסק · תחום העניין שבחרתם · כתובת דוא״ל (אם מסרתם) · תוכן הודעות ששלחתם אלינו</td>
+              <td>טופס לידים בפייסבוק ובאינסטגרם · טופס יצירת קשר באתר · הודעות בוואטסאפ ובמסנג׳ר · שיחות טלפון</td>
+            </tr>
+            <tr>
+              <td><b>מידע טכני</b></td>
+              <td>כתובת IP · סוג דפדפן ומכשיר · עמודים שנצפו ומשך השהייה · מקור ההגעה לאתר</td>
+              <td>איסוף אוטומטי באמצעות קובצי Cookie וכלי מדידה, לרבות Meta Pixel</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>
+        <b>איננו אוספים</b> מספרי תעודת זהות, פרטי אמצעי תשלום, מידע רפואי, או כל מידע רגיש אחר כהגדרתו בחוק הגנת הפרטיות. אין באתר איסוף מכוון של מידע על קטינים מתחת לגיל 18.
+      </p>
+    </section>
+
+    <section>
+      <h2><span class="n">03</span> למה המידע משמש</h2>
+      <ul>
+        <li><b>יצירת קשר.</b> לחזור אליכם בטלפון, בדוא״ל או בוואטסאפ לגבי הפנייה שהשארתם.</li>
+        <li><b>התאמת הצעה.</b> להבין את צורכי העסק שלכם ולהציע פתרון מתאים.</li>
+        <li><b>שיפור השיווק.</b> למדוד אילו מודעות ואילו מסרים מייצרים פניות רלוונטיות, ולהימנע מהצגת מודעות למי שכבר פנה אלינו.</li>
+        <li><b>חובות חוקיות.</b> לעמוד בדרישות דין, לרבות ניהול ספרים ודיווח.</li>
+      </ul>
+      <p>
+        איננו מוכרים מידע אישי לצדדים שלישיים, ואיננו משתמשים בו לקבלת החלטות אוטומטיות בעלות השלכה משפטית עליכם.
+      </p>
+    </section>
+
+    <section>
+      <h2><span class="n">04</span> עם מי המידע משותף</h2>
+      <p>המידע נחשף רק לגורמים הנדרשים לצורך התפעול השוטף:</p>
+      <ul>
+        <li><b>Meta Platforms.</b> טפסי לידים ומודעות פועלים בתשתית של Meta, ולכן המידע שמסרתם בטופס נשמר אצלה בהתאם ל<a href="https://www.facebook.com/privacy/policy/" target="_blank" rel="noopener noreferrer">מדיניות הפרטיות שלה</a>.</li>
+        <li><b>ספקי תשתית.</b> שירותי אחסון, דיוור וניהול קשרי לקוחות, הפועלים על פי הוראותינו בלבד.</li>
+        <li><b>רשויות מוסמכות.</b> ככל שנידרש לכך על פי דין או צו שיפוטי.</li>
+      </ul>
+      <p>
+        חלק מהספקים מאחסנים מידע מחוץ לישראל. במקרים אלה אנו פועלים להבטיח רמת הגנה נאותה בהתאם לתקנות הגנת הפרטיות (העברת מידע אל מאגרי מידע שמחוץ לגבולות המדינה).
+      </p>
+    </section>
+
+    <section>
+      <h2><span class="n">05</span> קובצי Cookie וכלי מדידה</h2>
+      <p>
+        באתר נעשה שימוש בקובצי Cookie הכרחיים לתפעולו, וכן ב־<b>Meta Pixel</b> — כלי מדידה המאפשר לנו לדעת אילו מודעות הובילו לפנייה ולהציג מודעות מותאמות.
+      </p>
+      <p>
+        ניתן לחסום או למחוק קובצי Cookie דרך הגדרות הדפדפן. חסימה עשויה לפגוע בחלק מפעולות האתר. להגבלת מודעות מותאמות ברשתות של Meta ניתן להשתמש ב<a href="https://www.facebook.com/adpreferences/ad_settings" target="_blank" rel="noopener noreferrer">הגדרות המודעות</a> בחשבונכם.
+      </p>
+    </section>
+
+    <section>
+      <h2><span class="n">06</span> כמה זמן המידע נשמר</h2>
+      <ul>
+        <li><b>פנייה שלא הבשילה.</b> עד 24 חודשים ממועד הפנייה האחרונה, ולאחר מכן נמחקת.</li>
+        <li><b>לקוחות.</b> למשך ההתקשרות ושבע שנים לאחריה, כנדרש לצורכי חשבונאות ומס.</li>
+        <li><b>לידים במערכות Meta.</b> Meta מוחקת לידים מ"מרכז הלידים" כתשעים יום לאחר קליטתם. אנו מייצאים אותם קודם לכן למערכות שלנו.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2><span class="n">07</span> הזכויות שלכם</h2>
+      <p>על פי <b>חוק הגנת הפרטיות, התשמ״א־1981</b>, עומדות לכם הזכויות הבאות:</p>
+      <ul>
+        <li><b>עיון.</b> לדעת איזה מידע עליכם מוחזק אצלנו.</li>
+        <li><b>תיקון.</b> לבקש לתקן מידע שאינו נכון, שלם או מעודכן.</li>
+        <li><b>מחיקה.</b> לבקש למחוק את המידע, בכפוף לחובות שמירה על פי דין.</li>
+        <li><b>הסרה מדיוור.</b> לבקש שלא לקבל פניות שיווקיות. נפעל לכך מיידית.</li>
+      </ul>
+      <p>למימוש כל אחת מהזכויות — פנייה אחת לכתובת הדוא״ל שבתחתית העמוד. נשיב בתוך 30 יום.</p>
+    </section>
+
+    <section>
+      <h2><span class="n">08</span> אבטחת מידע</h2>
+      <p>
+        אנו נוקטים אמצעים סבירים לאבטחת המידע, לרבות הצפנת תעבורה, הגבלת גישה לעובדים הזקוקים לה לצורך תפקידם, ואימות דו־שלבי בחשבונות הניהול. עם זאת, אף מערכת אינה חסינה לחלוטין, ואיננו יכולים להתחייב לאבטחה מוחלטת.
+      </p>
+    </section>
+
+    <section>
+      <h2><span class="n">09</span> שינויים במדיניות</h2>
+      <p>
+        מדיניות זו עשויה להתעדכן מעת לעת. הגרסה העדכנית תפורסם תמיד בעמוד זה, ותאריך העדכון יופיע בראשו. שינוי מהותי יובא לידיעת מי שמסר לנו את פרטיו.
+      </p>
+    </section>
+
+    <div class="contact">
+      <h2>יצירת קשר בנושאי פרטיות</h2>
+      <p>לכל שאלה, בקשת עיון או בקשת מחיקה:</p>
+      <p class="row"><a href="mailto:liron@corewise.co.il">liron@corewise.co.il</a></p>
+      <p class="row"><a href="/">corewise.co.il</a></p>
+    </div>
+
+    <div class="foot">
+      <span>קורוויז · מדיניות פרטיות</span>
+      <span><a href="/negishut/">הצהרת נגישות</a> · גרסה 1.0 · 21.08.2026</span>
+    </div>
+
+  </div>
+</main>
+
+</body>
+</html>
