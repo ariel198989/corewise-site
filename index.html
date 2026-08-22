@@ -16,11 +16,11 @@
 <link rel="preload" as="image" href="home/campus-still.webp">
 <link rel="stylesheet" href="a11y.css?v=1787100000">
 <link rel="stylesheet" href="clients.css?v=1787100000">
-<link rel="stylesheet" href="home.css?v=1787200600">
+<link rel="stylesheet" href="home.css?v=1787210000">
 <script src="a11y.js?v=1787100000"></script>
 <script src="i18n.js?v=1787100000" defer></script>
 <script src="clients.js?v=1787100000" defer></script>
-<script src="home.js?v=1787200600" defer></script>
+<script src="home.js?v=1787210000" defer></script>
 </head>
 <body class="grain">
 
@@ -67,32 +67,32 @@
       <p data-en="We capture reality, turn it into a system, and hand it to people. Every department has a site of its own.">אנחנו לוכדים את המציאות, הופכים אותה למערכת, ומגישים אותה לבני אדם. לכל מחלקה יש אתר משלה.</p>
     </header>
     <div class="dgrid">
-      <a class="dcard" href="/vision/">
+      <a class="dcard" href="/vision/" style="--dot:#C6F24E">
         <img src="vision/img/hero.webp" alt="פריים ממצלמת אבטחה עם שכבת זיהוי" data-en-alt="A security camera frame with a detection layer" loading="lazy" decoding="async" width="640" height="400">
         <h3 data-en="Computer vision">ראייה ממוחשבת</h3>
         <p data-en="The cameras already on your wall spot an empty shelf, a person who fell or dumped green waste, and the alert reaches a phone.">המצלמות שכבר תלויות אצלכם מזהות מדף ריק, אדם שנפל או גזם שנזרק, וההתרעה מגיעה לנייד.</p>
       </a>
-      <a class="dcard" href="/measure/">
+      <a class="dcard" href="/measure/" style="--dot:#26D07C">
         <img src="measure/img/hero.webp" alt="סריקת לידאר של גרם מדרגות" data-en-alt="A LiDAR scan of a staircase" loading="lazy" decoding="async" width="640" height="400">
         <h3 data-en="LiDAR measurement">פתרונות מדידה בלידאר</h3>
         <p data-en="One scan from a phone returns an engineering measurement: depth, stairs, pit volume, slope, and a model ready to print.">סריקה אחת מהטלפון מחזירה מדידה הנדסית: עומק, מדרגות, נפח בור, שיפוע ומודל מוכן להדפסה.</p>
       </a>
-      <a class="dcard" href="/ai/">
+      <a class="dcard" href="/ai/" style="--dot:#6E9B0E">
         <img src="ai/img/hero.webp" alt="בעל עסק מול מערכת שנבנתה עבורו" data-en-alt="A business owner in front of a system built for them" loading="lazy" decoding="async" width="640" height="400">
         <h3 data-en="AI embedded in businesses">הטמעות AI בבתי עסק</h3>
         <p data-en="We start with a business spec, not with code. Agents, automations, sites and systems, and every rollout is measured by a number.">מתחילים באיפיון עסקי, לא בקוד. סוכנים, אוטומציות, אתרים ומערכות, וכל הטמעה נמדדת במספר.</p>
       </a>
-      <a class="dcard" href="/video/">
+      <a class="dcard" href="/video/" style="--dot:#E8834A">
         <img src="video/img/hero.webp" alt="פריים מתוך סרט אירוע" data-en-alt="A frame from an event film" loading="lazy" decoding="async" width="640" height="400">
         <h3 data-en="Video and advertising">וידאו ופרסום</h3>
         <p data-en="Films for life events and for advertising: bar and bat mitzvah, a wedding, a life story built out of old photographs. From the first frame to the last mix.">סרטים לאירועי חיים ולפרסום: בר ובת מצווה, חתונה, וסיפור חיים מתוך תמונות ישנות. מהפריים הראשון עד המיקס האחרון.</p>
       </a>
-      <a class="dcard" href="/pedagogy/">
+      <a class="dcard" href="/pedagogy/" style="--dot:#C6F24E">
         <img src="pedagogy/img/hero.webp" alt="עמדת עבודה עם אלקטרוניקה ומחברת" data-en-alt="A workbench with electronics and a notebook" loading="lazy" decoding="async" width="640" height="400">
         <h3 data-en="The Yitzhak Ohayon Pedagogy Department">המחלקה הפדגוגית ע"ש יצחק אוחיון</h3>
         <p data-en="Hackathons, deep workshops and school programmes. Children build technology with their hands.">האקתונים, סדנאות עומק ותוכניות לבתי ספר. ילדים בונים טכנולוגיה בידיים.</p>
       </a>
-      <a class="dcard" href="/ar/">
+      <a class="dcard" href="/ar/" style="--dot:#6E9B0E">
         <img src="ar/img/store.webp" alt="סופרמרקט וירטואלי" data-en-alt="A virtual supermarket" loading="lazy" decoding="async" width="640" height="400">
         <h3 data-en="AR and spatial">AR ומרחב<span class="tag" data-en="in build">בהקמה</span></h3>
         <p data-en="A virtual supermarket you walk through, 13 departments and a real catalogue, and a live planogram for chains.">סופרמרקט וירטואלי שמסתובבים בתוכו, 13 מחלקות וקטלוג אמיתי, ופלנוגרמה חיה לרשתות.</p>
@@ -107,21 +107,17 @@
       <p data-en="Not a portfolio of slides. Three things you can open right now.">לא תיק עבודות של שקפים. שלושה דברים שאפשר לפתוח עכשיו.</p>
     </header>
 
-    <!-- the campus: a still until you ask for it, then the real thing -->
-    <figure class="campus" id="campus">
-      <div class="campus__stage" data-campus data-src="/campus.html">
-        <img class="campus__still" src="home/campus-still.webp" alt="הלובי של הקמפוס הווירטואלי של קורוויז" data-en-alt="The lobby of the Corewise virtual campus" width="1600" height="905" decoding="async">
-        <button type="button" class="campus__go" data-campus-go>
-          <span class="campus__ico" aria-hidden="true">▸</span>
-          <span data-en="Enter the campus">היכנסו לקמפוס</span>
-        </button>
-        <button type="button" class="campus__close" data-campus-close hidden aria-label="יציאה מהקמפוס" data-en-aria-label="Leave the campus">✕</button>
-      </div>
-      <figcaption>
-        <strong data-en="The virtual campus">הקמפוס הווירטואלי</strong>
-        <span data-en="A hall you walk through, built in house with WebGL. It loads only when you ask for it.">אולם שמסתובבים בתוכו, שנבנה אצלנו ב-WebGL. הוא נטען רק כשמבקשים אותו.</span>
-      </figcaption>
-    </figure>
+    <!-- One address to read the company, one address to be shown what it can
+         build. This is the door to the second one: a real link, not an iframe
+         that half-opens the experience inside the page. -->
+    <a class="door" href="/campus/">
+      <img class="door__bg" src="home/campus-still.webp" alt="הלובי של הקמפוס הווירטואלי של קורוויז" data-en-alt="The lobby of the Corewise virtual campus" width="1600" height="905" decoding="async" loading="lazy">
+      <span class="door__in">
+        <span class="door__kick" data-en="Built in house, in WebGL">נבנה אצלנו, ב-WebGL</span>
+        <span class="door__t" data-en="Walk through our campus">הסתובבו בקמפוס שלנו</span>
+        <span class="door__go"><span data-en="Enter">כניסה</span> <i aria-hidden="true">←</i></span>
+      </span>
+    </a>
 
     <div class="cards cards--two">
       <a class="card" href="https://ar-store-eta.vercel.app/" target="_blank" rel="noopener">
@@ -192,7 +188,7 @@
       <a href="/video/" data-en="Video">וידאו ופרסום</a>
       <a href="/pedagogy/" data-en="Yitzhak Ohayon Pedagogy">פדגוגיה ע"ש יצחק אוחיון</a>
       <a href="/ar/">AR</a>
-      <a href="/campus.html" data-en="The virtual campus">הקמפוס הווירטואלי</a>
+      <a href="/campus/" data-en="The virtual campus">הקמפוס הווירטואלי</a>
       <a href="/negishut/" data-en="Accessibility statement">הצהרת נגישות</a>
     </nav>
     <p class="foot__fine" dir="ltr" data-en-html="© corewise · 2026">© corewise · <span dir="rtl">קורוויז</span> · 2026</p>

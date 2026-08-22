@@ -11,9 +11,12 @@
   color-scheme: dark;
 
   /* neutral ladder, lifted off pure black so white text does not halate */
-  --bg:           #0A0C0E;
-  --surface:      #14181C;
-  --surface-high: #1C2126;
+  /* an ink with a little green in it rather than neutral charcoal, so the dark
+     reads as a considered colour instead of the default dark theme */
+  --bg:           #090C0D;
+  --ink-2:        #0E1416;
+  --surface:      #141A1C;
+  --surface-high: #1B2325;
   --line:         rgba(255,255,255,.10);
   --text:         #F2F0EB;
   --text-muted:   #A8AFB5;   /* 7.1:1 on --bg */
@@ -55,7 +58,11 @@ html { scroll-behavior: smooth; }
 
 body {
   margin: 0;
-  background: var(--bg);
+  background:
+    radial-gradient(1200px 680px at 78% -8%, rgba(38,208,124,.055), transparent 62%),
+    radial-gradient(980px 560px at 12% 4%, rgba(198,242,78,.05), transparent 60%),
+    linear-gradient(180deg, var(--ink-2) 0%, var(--bg) 46%);
+  background-attachment: fixed;
   color: var(--text);
   /* Hebrew reads a touch larger than Latin, and never tracked */
   font: 400 var(--step-0)/1.75 var(--font);
@@ -197,7 +204,11 @@ p { margin: 0; }
    gave the eye nowhere to rest, and this is the same paper the department sites
    themselves use, so the jump into one of them is continuous. */
 .dept {
-  background: #F2F0EB; color: #14181C;
+  color: #14181C;
+  background:
+    radial-gradient(900px 520px at 88% 0%, rgba(38,208,124,.10), transparent 60%),
+    radial-gradient(700px 460px at 6% 100%, rgba(232,131,74,.08), transparent 60%),
+    #F2F0EB;
 }
 .dept .sec-head p { color: #4C5157; }
 
@@ -218,9 +229,19 @@ p { margin: 0; }
 }
 .dcard:hover img { opacity: .88; }
 .dcard h3 {
+  display: flex; align-items: baseline; gap: .55rem;
   margin-block-start: var(--space-4);
   font-size: var(--step-1); font-weight: 700;
 }
+/* The dot is that department's OWN accent, taken from its own stylesheet:
+   lime for the software lines, green for measurement, orange for film, olive
+   for AR. Four real hues, no invented brand colours. */
+.dcard h3::before {
+  content: ""; flex: none; width: 9px; height: 9px; border-radius: 50%;
+  background: var(--dot, var(--accent));
+  transform: translateY(-2px);
+}
+.dcard img { box-shadow: 0 1px 2px rgba(20,24,28,.08), 0 12px 30px rgba(20,24,28,.10); }
 .dcard p {
   margin-block-start: var(--space-2);
   color: #4C5157; font-size: var(--step--1); line-height: 1.7;
@@ -276,6 +297,46 @@ p { margin: 0; }
   .card img { aspect-ratio: 16 / 11; }
   .card__t { padding: var(--space-4); }
 }
+
+/* ---------- the door to the campus ----------
+   Full bleed, one line of promise, one word of instruction. It is a link and
+   it goes somewhere, because a half-opened experience inside a page is worse
+   than a clean address you can also send to somebody on its own. */
+.door {
+  position: relative; display: block; overflow: hidden;
+  max-width: 68rem; margin: 0 auto var(--space-6);
+  border-radius: var(--radius-lg); aspect-ratio: 21 / 9;
+  text-decoration: none; color: var(--text); isolation: isolate;
+}
+.door__bg {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  z-index: -2; transition: scale var(--dur-slow) var(--ease-out);
+}
+.door::after {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background:
+    radial-gradient(120% 90% at 50% 120%, rgba(9,12,13,.94), transparent 62%),
+    linear-gradient(180deg, rgba(9,12,13,.34), rgba(9,12,13,.72));
+}
+.door:hover .door__bg { scale: 1.035; }
+.door__in {
+  position: absolute; inset-block-end: 0; inset-inline: 0;
+  display: grid; gap: var(--space-2); justify-items: center;
+  padding: var(--space-12) var(--space-6) clamp(2rem, 5vw, 3.5rem);
+  text-align: center;
+}
+.door__kick { font: 500 var(--step--1) var(--mono); color: var(--accent); }
+.door__t { font-size: var(--step-2); font-weight: 800; }
+.door__go {
+  display: inline-flex; align-items: center; gap: .5rem;
+  margin-block-start: var(--space-3); padding: .7rem 1.5rem;
+  border-radius: var(--radius-pill); background: var(--accent); color: var(--accent-on);
+  font: 600 var(--step--1) var(--font);
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+.door:hover .door__go { transform: translateY(-2px); }
+.door__go i { font-style: normal; }
+@media (max-width: 700px) { .door { aspect-ratio: 4 / 3; } }
 
 /* ---------- the campus, as an exhibit ---------- */
 .campus { margin: 0 auto var(--space-6); max-width: 68rem; }
