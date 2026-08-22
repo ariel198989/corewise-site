@@ -3,41 +3,222 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>Corewise · סיור וירטואלי בקמפוס</title>
-<meta name="description" content="היכנסו לקמפוס Corewise: טיילו בין המחלקות, וידאו ופרסום, הטמעות AI בעסקים, פתרונות מדידה בלידאר, ראייה ממוחשבת, פדגוגיה ו-AR.">
+<title data-en="Corewise · We build systems, measure ground, produce films and teach children to build">Corewise · בונים מערכות, מודדים שטח, מפיקים סרטים ומלמדים ילדים לבנות</title>
+<meta name="description" content="קורוויז: שש מחלקות תחת קורה אחת. ראייה ממוחשבת, מדידה בלידאר, הטמעות AI, וידאו ופרסום, פדגוגיה ו-AR. בונים בעצמנו, ונשארים עד שזה עובד." data-en-content="Corewise: six departments under one roof. Computer vision, LiDAR measurement, AI embedded in businesses, video and advertising, pedagogy and AR. We build it ourselves, and we stay until it works.">
+<meta property="og:title" content="Corewise · בונים בעצמנו, ונשארים עד שזה עובד" data-en-content="Corewise · We build it ourselves, and we stay until it works">
+<meta property="og:description" content="שש מחלקות תחת קורה אחת: ראייה ממוחשבת, מדידה בלידאר, הטמעות AI, וידאו, פדגוגיה ו-AR." data-en-content="Six departments under one roof: computer vision, LiDAR, AI, video, pedagogy and AR.">
+<meta property="og:image" content="home/campus-still.webp">
+<meta name="theme-color" content="#0A0C0E">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="a11y.css?v=1786960000">
-<link rel="stylesheet" href="world.css?v=1787032000">
-<script src="a11y.js?v=1786960000"></script>
+<link rel="preload" as="image" href="home/campus-still.webp">
+<link rel="stylesheet" href="a11y.css?v=1787100000">
+<link rel="stylesheet" href="clients.css?v=1787100000">
+<link rel="stylesheet" href="home.css?v=1787102400">
+<script src="a11y.js?v=1787100000"></script>
+<script src="i18n.js?v=1787100000" defer></script>
+<script src="clients.js?v=1787100000" defer></script>
+<script src="home.js?v=1787102400" defer></script>
 </head>
-<body>
+<body class="grain">
 
-<a class="cw-skip" href="#cw-alt">דלג לתוכן הראשי</a>
+<a class="cw-skip" href="#main" data-en="Skip to main content">דלג לתוכן הראשי</a>
 
-<!-- The campus is a WebGL space: rewarding to walk through, and not something
-     a screen reader can be walked through. So the text version of the same
-     site is not an afterthought hidden behind the tour, it is the first thing
-     in the DOM and the first stop on Tab. It is always in the accessibility
-     tree, becomes visible the moment it takes focus, and needs neither
-     world.js nor a GPU to be useful. -->
-<nav id="cw-alt" class="cw-alt" tabindex="-1" aria-label="גרסת טקסט של הקמפוס">
-  <h1>Corewise</h1>
-  <p>הסיור בקמפוס הוא חוויה תלת ממדית חזותית. זו גרסת הטקסט המלאה שלו, וכל מחלקה כאן היא אתר עצמאי ונגיש:</p>
-  <ul>
-    <li><a href="/video/">וידאו ופרסום</a></li>
-    <li><a href="/ai/">הטמעות AI בבתי עסק</a></li>
-    <li><a href="/measure/">פתרונות מדידה בלידאר</a></li>
-    <li><a href="/vision/">ראייה ממוחשבת</a></li>
-    <li><a href="/pedagogy/">פדגוגיה ע"ש יצחק אוחיון</a></li>
-    <li><a href="/ar/">AR</a></li>
-    <li><a href="/negishut/">הצהרת נגישות</a></li>
-    <li><a href="https://wa.me/972507594477">לפניה בוואטסאפ</a></li>
-  </ul>
-</nav>
+<header class="top" role="banner">
+  <a class="top__brand" href="/" aria-label="קורוויז, לדף הבית" data-en-aria-label="Corewise, home">corewise</a>
+  <nav class="top__nav" aria-label="ניווט ראשי" data-en-aria-label="Main navigation">
+    <a href="#work" data-en="What we do">מה אנחנו עושים</a>
+    <a href="#built" data-en="What we built">מה שבנינו</a>
+    <a href="#who" data-en="Who we are">מי אנחנו</a>
+  </nav>
+  <span class="top__right">
+    <button type="button" class="top__lang" data-lang-toggle lang="en" dir="ltr" aria-label="Switch to English">EN</button>
+    <a class="top__wa" href="https://wa.me/972507594477" data-en="Talk to us">דברו איתנו</a>
+  </span>
+</header>
 
-<script src="agent3d.js?v=1786822000"></script>
-<script src="world.js?v=1787032000"></script>
+<main id="main" tabindex="-1" role="main">
+
+  <!-- ── the answer, in five seconds ───────────────────────────────── -->
+  <section class="hero">
+    <div class="ambient" aria-hidden="true"></div>
+    <div class="hero__in stagger">
+      <p class="eyebrow" style="--i:0" data-en="Corewise · six departments, one roof">קורוויז · שש מחלקות, קורה אחת</p>
+      <h1 style="--i:1" data-en-html="We build systems, measure ground, produce films<br> and teach children to build.">בונים מערכות, מודדים שטח, מפיקים סרטים<br> ומלמדים ילדים לבנות.</h1>
+      <p class="hero__lede" style="--i:2" data-en="All of it in house. And we stay until it works.">הכל אצלנו בבית. ואנחנו נשארים עד שזה עובד.</p>
+      <p class="hero__thesis" style="--i:3" data-en="Artificial intelligence on its own is already predictable. What gets interesting is when you connect it to a machine, a sensor, a shelf, and it hands back a real number.">בינה מלאכותית לבדה היא כבר צפויה. מה שמעניין מתחיל כשמחברים אותה למכונה, לחיישן, למדף, ומקבלים בחזרה מספר אמיתי.</p>
+      <div class="hero__cta" style="--i:4">
+        <a class="btn btn--primary" href="#work" data-en="See the six departments">שש המחלקות שלנו</a>
+        <a class="btn btn--ghost" href="#built" data-en="See what we built">מה שבנינו</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── the client wall ───────────────────────────────────────────── -->
+  <section data-cw-clients data-theme="dark" data-base="" class="home-clients"></section>
+
+  <!-- ── six departments ───────────────────────────────────────────── -->
+  <section id="work" class="dept" aria-labelledby="dept-h">
+    <header class="sec-head">
+      <h2 id="dept-h" data-en="Six departments. One chain.">שש מחלקות. שרשרת אחת.</h2>
+      <p data-en="We capture reality, turn it into a system, and hand it to people. Every department has a site of its own.">אנחנו לוכדים את המציאות, הופכים אותה למערכת, ומגישים אותה לבני אדם. לכל מחלקה יש אתר משלה.</p>
+    </header>
+
+    <p class="dept__group" data-en="Capturing reality">לוכדים את המציאות</p>
+    <div class="cards">
+      <a class="card card--wide" href="/vision/">
+        <img src="vision/img/hero.webp" alt="פריים ממצלמת אבטחה עם שכבת זיהוי" data-en-alt="A security camera frame with a detection layer" loading="lazy" decoding="async" width="900" height="506">
+        <div class="card__t">
+          <h3 data-en="Computer vision">ראייה ממוחשבת</h3>
+          <p data-en="The cameras already on your wall spot an empty shelf, a person who fell or dumped green waste, and the alert reaches a phone.">המצלמות שכבר תלויות אצלכם מזהות מדף ריק, אדם שנפל או גזם שנזרק, וההתרעה מגיעה לנייד.</p>
+        </div>
+      </a>
+      <a class="card" href="/measure/">
+        <img src="measure/img/hero.webp" alt="סריקת לידאר של גרם מדרגות" data-en-alt="A LiDAR scan of a staircase" loading="lazy" decoding="async" width="600" height="400">
+        <div class="card__t">
+          <h3 data-en="LiDAR measurement">פתרונות מדידה בלידאר</h3>
+          <p data-en="One scan from a phone returns an engineering measurement: depth, stairs, pit volume, slope, and a model ready to print.">סריקה אחת מהטלפון מחזירה מדידה הנדסית: עומק, מדרגות, נפח בור, שיפוע ומודל מוכן להדפסה.</p>
+        </div>
+      </a>
+    </div>
+
+    <p class="dept__group" data-en="Turning it into a system">הופכים אותה למערכת</p>
+    <div class="cards">
+      <a class="card" href="/ai/">
+        <img src="ai/img/hero.webp" alt="בעל עסק מול מערכת שנבנתה עבורו" data-en-alt="A business owner in front of a system built for them" loading="lazy" decoding="async" width="600" height="400">
+        <div class="card__t">
+          <h3 data-en="AI embedded in businesses">הטמעות AI בבתי עסק</h3>
+          <p data-en="We start with a business spec, not with code. Agents, automations, sites and systems, and every rollout is measured by a number.">מתחילים באיפיון עסקי, לא בקוד. סוכנים, אוטומציות, אתרים ומערכות, וכל הטמעה נמדדת במספר.</p>
+        </div>
+      </a>
+      <a class="card card--wide" href="/ar/">
+        <img src="ar/img/store.webp" alt="סופרמרקט וירטואלי שמסתובבים בתוכו" data-en-alt="A virtual supermarket you can walk through" loading="lazy" decoding="async" width="900" height="506">
+        <div class="card__t">
+          <h3 data-en="AR and spatial">AR ומרחב <span class="tag" data-en="in build">בהקמה</span></h3>
+          <p data-en="A whole virtual supermarket you walk through, with 13 departments and a real catalogue, and a live planogram a chain can test before touching a single branch.">סופרמרקט וירטואלי שלם שמסתובבים בתוכו, 13 מחלקות וקטלוג אמיתי, ופלנוגרמה חיה שרשת יכולה לבחון לפני שנגעה בסניף אחד.</p>
+        </div>
+      </a>
+    </div>
+
+    <p class="dept__group" data-en="Handing it to people">מגישים אותה לבני אדם</p>
+    <div class="cards">
+      <a class="card card--wide" href="/video/">
+        <img src="video/img/hero.webp" alt="פריים מתוך סרט אירוע" data-en-alt="A frame from an event film" loading="lazy" decoding="async" width="900" height="506">
+        <div class="card__t">
+          <h3 data-en="Video and advertising">וידאו ופרסום</h3>
+          <p data-en="Films for life events and for advertising: bar and bat mitzvah, a wedding, a grandparent's life story built out of old photographs. From the first frame to the last mix, in house.">סרטים לאירועי חיים ולפרסום: בר ובת מצווה, חתונה, וסיפור חיים של סבא וסבתא מתוך תמונות ישנות. מהפריים הראשון עד המיקס האחרון, אצלנו.</p>
+        </div>
+      </a>
+      <a class="card" href="/pedagogy/">
+        <img src="pedagogy/img/hero.webp" alt="עמדת עבודה עם אלקטרוניקה ומחברת" data-en-alt="A workbench with electronics and a notebook" loading="lazy" decoding="async" width="600" height="400">
+        <div class="card__t">
+          <h3 data-en="The Yitzhak Ohayon Pedagogy Department">המחלקה הפדגוגית ע"ש יצחק אוחיון</h3>
+          <p data-en="Hackathons, deep workshops and school programmes. Children build technology with their hands, because whoever builds these systems in a decade is sitting in a classroom today.">האקתונים, סדנאות עומק ותוכניות לבתי ספר. ילדים בונים טכנולוגיה בידיים, כי מי שיבנה את המערכות האלה בעוד עשור יושב היום בכיתה.</p>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ── proof: the things we made ─────────────────────────────────── -->
+  <section id="built" class="built" aria-labelledby="built-h">
+    <header class="sec-head">
+      <h2 id="built-h" data-en="What we built">מה שבנינו</h2>
+      <p data-en="Not a portfolio of slides. Three things you can open right now.">לא תיק עבודות של שקפים. שלושה דברים שאפשר לפתוח עכשיו.</p>
+    </header>
+
+    <!-- the campus: a still until you ask for it, then the real thing -->
+    <figure class="campus" id="campus">
+      <div class="campus__stage" data-campus data-src="/campus.html">
+        <img class="campus__still" src="home/campus-still.webp" alt="הלובי של הקמפוס הווירטואלי של קורוויז" data-en-alt="The lobby of the Corewise virtual campus" width="1600" height="905" decoding="async">
+        <button type="button" class="campus__go" data-campus-go>
+          <span class="campus__ico" aria-hidden="true">▸</span>
+          <span data-en="Enter the campus">היכנסו לקמפוס</span>
+        </button>
+        <button type="button" class="campus__close" data-campus-close hidden aria-label="יציאה מהקמפוס" data-en-aria-label="Leave the campus">✕</button>
+      </div>
+      <figcaption>
+        <strong data-en="The virtual campus">הקמפוס הווירטואלי</strong>
+        <span data-en="A hall you walk through, built in house with WebGL. It loads only when you ask for it.">אולם שמסתובבים בתוכו, שנבנה אצלנו ב-WebGL. הוא נטען רק כשמבקשים אותו.</span>
+      </figcaption>
+    </figure>
+
+    <div class="cards cards--two">
+      <a class="card" href="https://ar-store-eta.vercel.app/" target="_blank" rel="noopener">
+        <img src="works/app-arstore.webp" alt="הסופרמרקט הווירטואלי" data-en-alt="The virtual supermarket" loading="lazy" decoding="async" width="600" height="400">
+        <div class="card__t">
+          <h3 data-en="The virtual supermarket">הסופרמרקט הווירטואלי</h3>
+          <p data-en="Thirteen departments, a real catalogue, a cart and a checkout. It is code, a 3D experience and a live planogram at the same time: three departments inside one project.">שלוש עשרה מחלקות, קטלוג אמיתי, עגלה וקופה. הוא בו זמנית קוד, חוויה תלת ממדית ופלנוגרמה חיה: שלוש מחלקות בפרויקט אחד.</p>
+        </div>
+      </a>
+      <a class="card" href="https://www.youtube.com/@thehollowsaga" target="_blank" rel="noopener">
+        <img src="axis/before-poster.webp" alt="פריים מתוך הסדרה The Hollow" data-en-alt="A frame from the series The Hollow" loading="lazy" decoding="async" width="600" height="400">
+        <div class="card__t">
+          <h3 data-en="The Hollow, a six episode series">The Hollow, סדרה בשישה פרקים</h3>
+          <p data-en="Written, produced, scored and cut in house. No camera and no actors. We made it to find the edge of what we could do.">נכתבה, הופקה, הולחנה ונערכה אצלנו. בלי מצלמה ובלי שחקנים. הפקנו אותה כדי לבדוק איפה הגבול.</p>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ── who ───────────────────────────────────────────────────────── -->
+  <section id="who" class="who" aria-labelledby="who-h">
+    <header class="sec-head">
+      <h2 id="who-h" data-en="Who we are">מי אנחנו</h2>
+    </header>
+    <div class="people">
+      <article class="person">
+        <img src="ariel.webp" alt="אריאל אוחיון" data-en-alt="Ariel Ohayon" loading="lazy" decoding="async" width="300" height="300">
+        <div>
+          <h3>אריאל אוחיון <span data-en="Founder and CTO">מייסד ו-CTO</span></h3>
+          <p data-en="Lead developer at Corewise, lecturer and workshop leader. Founded the Claude Israel community on the day Claude launched as a chatbot; it now has 25,000 members and was one of the first in the world.">אחראי הפיתוח הראשי בקורוויז, מרצה ומוביל סדנאות. פתח את קהילת «קלוד ישראל» ביום שקלוד יצא כצ'אטבוט, היום 25 אלף איש, ומהראשונות בעולם.</p>
+        </div>
+      </article>
+      <article class="person">
+        <img src="lidor.jpeg" alt="לידור דהן" data-en-alt="Lidor Dahan" loading="lazy" decoding="async" width="300" height="300">
+        <div>
+          <h3>לידור דהן <span data-en="Founder">מייסד</span></h3>
+          <p data-en="PhD in electrical and computer engineering, six years developing AI for autonomous vehicles. He is the reason the AI here touches sensors, radar and LiDAR rather than staying in a chat window.">דוקטור להנדסת חשמל ומחשבים, שש שנים בפיתוח AI לרכב אוטונומי. בזכותו ה-AI כאן נוגע בחיישנים, ברדאר ובלידאר במקום להישאר בחלון צ'אט.</p>
+        </div>
+      </article>
+      <article class="person person--soon">
+        <div>
+          <h3 data-en="A third partner">שותף שלישי</h3>
+          <p data-en="A captain in the reserves, deep product knowledge, and dozens of retail businesses he has worked with. More on him soon.">סרן במילואים, הבנה עמוקה בעולמות המוצר, ועשרות עסקים בקמעונאות שליווה. עוד עליו בקרוב.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ── contact ───────────────────────────────────────────────────── -->
+  <section class="cta" aria-labelledby="cta-h">
+    <h2 id="cta-h" data-en="If you have a camera, a machine, a shelf or a plot of land, you have a number you are not measuring.">אם יש לכם מצלמה, מכונה, מדף או שטח, יש לכם נתון שאתם לא מודדים.</h2>
+    <p data-en="Tell us what you are trying to do. If it is not for us, we will say so.">ספרו לנו מה אתם מנסים לעשות. אם זה לא בשבילנו, נגיד לכם.</p>
+    <div class="cta__row">
+      <a class="btn btn--primary btn--lg" href="https://wa.me/972507594477" data-en="Message us on WhatsApp">לפניה בוואטסאפ</a>
+      <a class="btn btn--ghost btn--lg" href="tel:+972507594477" dir="ltr">050-759-4477</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot" role="contentinfo">
+  <div class="foot__in">
+    <span class="foot__brand">corewise</span>
+    <nav class="foot__nav" aria-label="אתרי המחלקות" data-en-aria-label="Department sites">
+      <a href="/vision/" data-en="Computer vision">ראייה ממוחשבת</a>
+      <a href="/measure/" data-en="LiDAR measurement">פתרונות מדידה</a>
+      <a href="/ai/" data-en="AI in businesses">הטמעות AI</a>
+      <a href="/video/" data-en="Video">וידאו ופרסום</a>
+      <a href="/pedagogy/" data-en="Yitzhak Ohayon Pedagogy">פדגוגיה ע"ש יצחק אוחיון</a>
+      <a href="/ar/">AR</a>
+      <a href="/campus.html" data-en="The virtual campus">הקמפוס הווירטואלי</a>
+      <a href="/negishut/" data-en="Accessibility statement">הצהרת נגישות</a>
+    </nav>
+    <p class="foot__fine" dir="ltr" data-en-html="© corewise · 2026">© corewise · <span dir="rtl">קורוויז</span> · 2026</p>
+  </div>
+</footer>
+
 </body>
 </html>

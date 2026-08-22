@@ -1,0 +1,337 @@
+/* DIRECTION: dark technical, brand-locked. The campus already fixed the palette
+   (near-black hall, lime signal, Rubik), so the front door inherits it rather
+   than rolling its own: a visitor who walks from this page into the campus must
+   not feel they changed company.
+   ONE MEMORABLE THING: the campus sits in the page as a still photograph and
+   only wakes into WebGL when asked, so the answer to "what do you do" arrives
+   before a single megabyte of panorama.
+   MOTION PERSONALITY: mathematical (expo-out, no bounce, out faster than in). */
+
+:root {
+  color-scheme: dark;
+
+  /* neutral ladder, lifted off pure black so white text does not halate */
+  --bg:           #0A0C0E;
+  --surface:      #14181C;
+  --surface-high: #1C2126;
+  --line:         rgba(255,255,255,.10);
+  --text:         #F2F0EB;
+  --text-muted:   #A8AFB5;   /* 7.1:1 on --bg */
+  --text-subtle:  #7C858C;   /* 4.6:1, labels only */
+
+  /* one accent, and it is the hall's */
+  --accent:    #C6F24E;
+  --accent-on: #0A0C0E;
+  --wa:        #1EBE5D;
+
+  --font: 'Rubik', 'Heebo', 'Assistant', 'Noto Sans Hebrew', sans-serif;
+  --mono: 'IBM Plex Mono', ui-monospace, monospace;
+
+  /* perfect fourth, marketing */
+  --step--1: clamp(.85rem, .82rem + .15vw, .93rem);
+  --step-0:  clamp(1.05rem, 1rem + .22vw, 1.18rem);
+  --step-1:  clamp(1.35rem, 1.24rem + .5vw, 1.6rem);
+  --step-2:  clamp(1.8rem, 1.55rem + 1.1vw, 2.5rem);
+  --step-3:  clamp(2.3rem, 1.8rem + 2.3vw, 3.6rem);
+  --step-4:  clamp(2.9rem, 1.9rem + 4.4vw, 5.4rem);
+
+  --space-2:.5rem; --space-3:.75rem; --space-4:1rem; --space-6:1.5rem;
+  --space-8:2rem;  --space-12:3rem;  --space-16:4rem; --space-24:6rem;
+
+  --radius-md: 10px;
+  --radius-lg: 18px;
+  --radius-pill: 999px;
+
+  --shadow-2: 0 2px 6px hsl(200 14% 3% / .4), 0 10px 30px hsl(200 14% 3% / .3);
+  --shadow-3: 0 10px 40px hsl(200 14% 3% / .5);
+
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+  --dur-fast: 180ms; --dur-base: 260ms; --dur-slow: 420ms;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  /* Hebrew reads a touch larger than Latin, and never tracked */
+  font: 400 var(--step-0)/1.75 var(--font);
+  letter-spacing: 0;
+  word-spacing: .05em;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* 3% grain: the page is almost entirely flat colour, and without it the large
+   dark fields band on cheap panels */
+.grain::after {
+  content: ""; position: fixed; inset: 0; z-index: 1;
+  pointer-events: none; opacity: .03; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; }
+
+h1, h2, h3 { line-height: 1.22; margin: 0; font-weight: 700; }
+p { margin: 0; }
+
+.eyebrow {
+  font: 500 var(--step--1)/1.4 var(--mono);
+  color: var(--accent);
+  opacity: .85;
+}
+
+/* ---------- header ---------- */
+.top {
+  position: sticky; top: 0; z-index: 40;
+  display: flex; align-items: center; gap: var(--space-6);
+  padding: var(--space-4) clamp(1rem, 4vw, 3rem);
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+  border-block-end: 1px solid var(--line);
+}
+.top__brand { font: 700 1.05rem/1 var(--mono); letter-spacing: .02em; text-decoration: none; }
+.top__nav { display: flex; gap: var(--space-6); margin-inline-start: auto; }
+.top__nav a { font-size: var(--step--1); color: var(--text-muted); text-decoration: none; transition: color var(--dur-fast) var(--ease-out); }
+.top__nav a:hover { color: var(--text); }
+.top__right { display: flex; align-items: center; gap: var(--space-3); margin-inline-start: var(--space-4); }
+.top__lang {
+  min-height: 34px; padding: .3rem .7rem; cursor: pointer;
+  border: 1px solid var(--line); border-radius: var(--radius-pill);
+  background: transparent; color: var(--text-muted); font: 500 .78rem var(--font);
+}
+.top__lang:hover { color: var(--text); }
+.top__wa {
+  padding: .55rem 1.05rem; border-radius: var(--radius-pill);
+  background: var(--accent); color: var(--accent-on);
+  font: 600 var(--step--1) var(--font); text-decoration: none;
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+.top__wa:hover { transform: translateY(-1px); }
+@media (max-width: 760px) { .top__nav { display: none; } .top__right { margin-inline-start: auto; } }
+
+/* ---------- hero ---------- */
+.hero {
+  position: relative;
+  padding: clamp(4rem, 11vw, 9rem) clamp(1rem, 4vw, 3rem) clamp(3rem, 7vw, 6rem);
+  overflow: hidden;
+}
+/* gradient as lighting, not decoration */
+.ambient {
+  position: absolute; inset-block-start: -30%; inset-inline-start: 50%;
+  translate: -50% 0; width: min(1000px, 110vw); aspect-ratio: 1;
+  border-radius: 50%; background: var(--accent);
+  opacity: .05; filter: blur(340px); pointer-events: none;
+}
+.hero__in { position: relative; max-width: 68rem; margin-inline: auto; }
+.hero h1 {
+  margin: var(--space-4) 0 var(--space-6);
+  font-size: var(--step-4); font-weight: 800; line-height: 1.06;
+  max-width: 22ch;
+}
+.hero__lede { font-size: var(--step-1); font-weight: 500; max-width: 40ch; }
+.hero__thesis {
+  margin-block-start: var(--space-6); max-width: 56ch;
+  color: var(--text-muted); font-size: var(--step-0);
+  padding-inline-start: var(--space-4);
+  border-inline-start: 2px solid var(--accent);
+}
+.hero__cta { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-block-start: var(--space-8); }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 46px; padding: .7rem 1.4rem; border-radius: var(--radius-pill);
+  font: 600 var(--step--1) var(--font); text-decoration: none; cursor: pointer;
+  border: 1px solid transparent;
+  transition: transform var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out);
+}
+.btn--lg { min-height: 54px; padding: .9rem 1.9rem; font-size: var(--step-0); }
+.btn--primary { background: var(--accent); color: var(--accent-on); }
+.btn--primary:hover { transform: translateY(-2px); }
+.btn--ghost { border-color: var(--line); color: var(--text); }
+.btn--ghost:hover { background: var(--surface); }
+
+/* ---------- the client wall on this page ---------- */
+.home-clients {
+  border-block: 1px solid var(--line);
+  --h: 30px;
+}
+/* the shared strip fades its own title to .62, which on this ground lands at
+   2.67:1. Opacity off, colour set explicitly. */
+.home-clients .cw-clients__title { color: var(--text-muted); opacity: 1; }
+
+/* ---------- sections ---------- */
+.sec-head { max-width: 68rem; margin-inline: auto; margin-block-end: var(--space-8); }
+.sec-head h2 { font-size: var(--step-3); font-weight: 800; max-width: 20ch; }
+.sec-head p { margin-block-start: var(--space-3); color: var(--text-muted); max-width: 52ch; }
+
+.dept, .built, .who, .cta { padding: clamp(3.5rem, 9vw, 7rem) clamp(1rem, 4vw, 3rem); }
+
+.dept__group {
+  max-width: 68rem; margin: var(--space-12) auto var(--space-4);
+  font: 500 var(--step--1) var(--mono); color: var(--text-subtle);
+}
+.dept__group:first-of-type { margin-block-start: 0; }
+
+/* ONE layout primitive, repeated: a two-up row where one cell is wider.
+   The imbalance is the hierarchy; equal cards would be a wall. */
+.cards {
+  display: grid; gap: var(--space-4);
+  grid-template-columns: 1.45fr 1fr;
+  max-width: 68rem; margin-inline: auto;
+}
+.cards--two { grid-template-columns: 1fr 1fr; }
+.cards:has(.card--wide:last-child) { grid-template-columns: 1fr 1.45fr; }
+
+.card {
+  position: relative; display: block; overflow: hidden;
+  border-radius: var(--radius-lg); background: var(--surface);
+  text-decoration: none; isolation: isolate;
+  transition: transform var(--dur-base) var(--ease-out);
+}
+.card:hover { transform: translateY(-3px); }
+.card img {
+  width: 100%; aspect-ratio: 16 / 10; object-fit: cover;
+  transition: scale var(--dur-slow) var(--ease-out);
+}
+.card:hover img { scale: 1.03; }
+/* the scrim is what makes the text legible over a photograph, and it is the
+   only "border" this design gets */
+.card::after {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(180deg, transparent 30%, hsl(200 14% 4% / .55) 62%, hsl(200 14% 4% / .96) 100%);
+}
+.card__t { position: absolute; inset-block-end: 0; inset-inline: 0; padding: var(--space-6); }
+.card__t h3 { font-size: var(--step-1); }
+.card__t p {
+  margin-block-start: var(--space-2); color: var(--text-muted);
+  font-size: var(--step--1); line-height: 1.65; max-width: 46ch;
+}
+.tag {
+  display: inline-block; margin-inline-start: .4rem; vertical-align: middle;
+  padding: .18rem .5rem; border-radius: var(--radius-pill);
+  background: var(--accent); color: var(--accent-on);
+  font: 600 .62rem/1.4 var(--mono);
+}
+
+@media (max-width: 860px) {
+  .cards, .cards--two, .cards:has(.card--wide:last-child) { grid-template-columns: 1fr; }
+  .card img { aspect-ratio: 16 / 11; }
+  .card__t { padding: var(--space-4); }
+}
+
+/* ---------- the campus, as an exhibit ---------- */
+.campus { margin: 0 auto var(--space-6); max-width: 68rem; }
+.campus__stage {
+  position: relative; overflow: hidden;
+  border-radius: var(--radius-lg); background: var(--surface);
+  aspect-ratio: 16 / 9;
+}
+.campus__still { width: 100%; height: 100%; object-fit: cover; }
+.campus__stage iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.campus__go {
+  position: absolute; inset: 0; z-index: 2;
+  display: grid; place-content: center; gap: var(--space-3);
+  justify-items: center;
+  border: 0; cursor: pointer; color: var(--text);
+  background: linear-gradient(180deg, hsl(200 14% 4% / .28), hsl(200 14% 4% / .62));
+  font: 600 var(--step-0) var(--font);
+  transition: background var(--dur-base) var(--ease-out);
+}
+.campus__go:hover { background: linear-gradient(180deg, hsl(200 14% 4% / .18), hsl(200 14% 4% / .5)); }
+.campus__ico {
+  display: grid; place-items: center; width: 66px; height: 66px;
+  border-radius: 50%; background: var(--accent); color: var(--accent-on);
+  font-size: 1.5rem; padding-inline-start: 4px;
+  transition: transform var(--dur-base) var(--ease-out);
+}
+.campus__go:hover .campus__ico { transform: scale(1.06); }
+.campus__close {
+  position: absolute; z-index: 3;
+  inset-block-start: var(--space-3); inset-inline-end: var(--space-3);
+  width: 40px; height: 40px; border-radius: 50%; cursor: pointer;
+  border: 1px solid var(--line); background: hsl(200 14% 4% / .7); color: var(--text);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+}
+.campus__close[hidden] { display: none; }
+.campus figcaption {
+  display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-4);
+  margin-block-start: var(--space-4); color: var(--text-muted); font-size: var(--step--1);
+}
+.campus figcaption strong { color: var(--text); }
+
+/* ---------- who ---------- */
+.people {
+  display: grid; gap: var(--space-6);
+  grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+  max-width: 68rem; margin-inline: auto;
+}
+.person { display: flex; gap: var(--space-4); align-items: flex-start; }
+.person img {
+  width: 84px; height: 84px; flex: none;
+  border-radius: 50%; object-fit: cover; object-position: 50% 22%;
+}
+.person h3 { font-size: var(--step-1); }
+.person h3 span {
+  display: block; margin-block-start: .2rem;
+  font: 500 var(--step--1) var(--mono); color: var(--accent); opacity: .8;
+}
+.person p { margin-block-start: var(--space-3); color: var(--text-muted); font-size: var(--step--1); line-height: 1.7; }
+.person--soon { opacity: .72; }
+
+/* ---------- closing ---------- */
+.cta { text-align: center; }
+.cta h2 { font-size: var(--step-2); font-weight: 800; max-width: 24ch; margin-inline: auto; }
+.cta p { margin: var(--space-4) auto 0; color: var(--text-muted); max-width: 42ch; }
+.cta__row { display: flex; flex-wrap: wrap; gap: var(--space-3); justify-content: center; margin-block-start: var(--space-8); }
+
+/* ---------- footer ---------- */
+.foot { border-block-start: 1px solid var(--line); padding: var(--space-12) clamp(1rem, 4vw, 3rem); }
+.foot__in { max-width: 68rem; margin-inline: auto; display: grid; gap: var(--space-6); }
+.foot__brand { font: 700 1.05rem var(--mono); }
+.foot__nav { display: flex; flex-wrap: wrap; gap: var(--space-3) var(--space-6); }
+.foot__nav a { color: var(--text-muted); font-size: var(--step--1); text-decoration: none; }
+.foot__nav a:hover { color: var(--text); }
+.foot__fine { color: var(--text-subtle); font: 400 .8rem var(--mono); }
+
+/* ---------- one orchestrated load, then nothing ---------- */
+.stagger > * {
+  opacity: 0; transform: translateY(10px);
+  animation: rise var(--dur-slow) var(--ease-out) forwards;
+  animation-delay: calc(var(--i) * 70ms);
+}
+@keyframes rise { to { opacity: 1; transform: none; } }
+
+/* Reveal on scroll, but content is visible by DEFAULT and only hidden once
+   JavaScript has confirmed it can un-hide it. The first build used
+   animation-timeline: view(), which never advanced here and left two thirds of
+   the page at opacity 0. A reveal that can strand content is not a reveal, it
+   is an outage. */
+.js-reveal .card,
+.js-reveal .person,
+.js-reveal .campus {
+  opacity: 0; transform: translateY(14px);
+  transition: opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out);
+}
+/* specificity raised deliberately: the hidden rule and a bare .is-in tie at
+   (0,2,0), and a tie decided by source order is a fragile way to keep content
+   on screen. */
+.js-reveal .card.is-in,
+.js-reveal .person.is-in,
+.js-reveal .campus.is-in { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .stagger > * { opacity: 1; transform: none; animation: none; }
+  .js-reveal .card, .js-reveal .person, .js-reveal .campus { opacity: 1; transform: none; transition: none; }
+  .card:hover { transform: none; }
+  .card:hover img { scale: 1; }
+}
+html.a11y-reduce-motion .stagger > * { opacity: 1; transform: none; animation: none; }
+html.a11y-reduce-motion .js-reveal .card,
+html.a11y-reduce-motion .js-reveal .person,
+html.a11y-reduce-motion .js-reveal .campus { opacity: 1; transform: none; transition: none; }
