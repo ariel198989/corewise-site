@@ -1057,6 +1057,12 @@
     b.onclick = () => {
       if (i !== railAt) { railTo(i, 560); return; }
       if (isTeam) return openTeam(h);
+      /* Every department already has a real 360 room behind it, and the flat
+         wall panel was standing in front of that room repeating what the
+         department's own site says better. Pressing a card now walks in.
+         Cards with no room of their own — the films, the stories — keep the
+         panel, because for them it is the only thing there is. */
+      if (h.room && ROOMS[h.room]) return go(h.room, false, h.yaw);
       openAxis(isFilm ? Object.assign({}, h, { abstract: h.text, features: [] }) : h);
     };
     el.rail.appendChild(b);

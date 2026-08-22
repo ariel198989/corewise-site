@@ -8,21 +8,21 @@
 <meta property="og:title" content="Corewise · בונים בעצמנו, ונשארים עד שזה עובד" data-en-content="Corewise · We build it ourselves, and we stay until it works">
 <meta property="og:description" content="שש מחלקות תחת קורה אחת: ראייה ממוחשבת, מדידה בלידאר, הטמעות AI, וידאו, פדגוגיה ו-AR." data-en-content="Six departments under one roof: computer vision, LiDAR, AI, video, pedagogy and AR.">
 <meta property="og:image" content="home/campus-still.webp">
-<meta name="theme-color" content="#0A0C0E">
+<meta name="theme-color" content="#F6F3EB">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="preload" as="image" href="home/campus-still.webp">
 <link rel="stylesheet" href="a11y.css?v=1787100000">
-<link rel="stylesheet" href="clients.css?v=1787100000">
-<link rel="stylesheet" href="home.css?v=1787400000">
+<link rel="stylesheet" href="clients.css?v=1787500000">
+<link rel="stylesheet" href="home.css?v=1787520000">
 <script src="a11y.js?v=1787100000"></script>
 <script src="i18n.js?v=1787100000" defer></script>
-<script src="clients.js?v=1787100000" defer></script>
-<script src="home.js?v=1787400000" defer></script>
+<script src="clients.js?v=1787500000" defer></script>
+<script src="home.js?v=1787520000" defer></script>
 </head>
-<body class="grain">
+<body>
 
 <a class="cw-skip" href="#main" data-en="Skip to main content">דלג לתוכן הראשי</a>
 
@@ -50,15 +50,33 @@
       <p class="hero__lede" style="--i:1" data-en="Sometimes in code, and sometimes in the camera already on your wall.">לפעמים בקוד, ולפעמים במצלמה שכבר תלויה אצלכם.</p>
       <div class="hero__cta" style="--i:2">
         <a class="btn btn--primary btn--lg" href="#work" data-en="See what we do">מה אנחנו עושים</a>
+        <a class="btn btn--ghost btn--lg" href="#learn" data-en="Workshops and talks">סדנאות והרצאות</a>
       </div>
     </div>
   </section>
 
+  <!-- Colour arrives before any of the copy does, and it is colour from the
+       work itself: a scan, a classroom, a shop floor. -->
+  <div class="strip" role="list">
+    <figure role="listitem">
+      <img src="measure/img/hero.webp" alt="סורק לידאר על גרם מדרגות, עם ענן נקודות" data-en-alt="A LiDAR scanner on a staircase with a point cloud" loading="lazy" decoding="async" width="1600" height="904">
+      <figcaption data-en="A staircase, measured">מדרגות, נמדדות</figcaption>
+    </figure>
+    <figure role="listitem">
+      <img src="pedagogy/img/hero.webp" alt="שולחן עבודה עם זרוע רובוטית ומחברת שרטוטים" data-en-alt="A workbench with a robot arm and a drawing notebook" loading="lazy" decoding="async" width="1600" height="900">
+      <figcaption data-en="A workbench, wired">שולחן עבודה, מחווט</figcaption>
+    </figure>
+    <figure role="listitem">
+      <img src="ar/img/store.webp" alt="מעבר בסופרמרקט וירטואלי, שילוט מחלקות ומדפים מלאים משני הצדדים" data-en-alt="An aisle in a virtual supermarket, department signage and full shelves on both sides" loading="lazy" decoding="async" width="1400" height="700">
+      <figcaption data-en="A shop, walkable">חנות, שמסתובבים בה</figcaption>
+    </figure>
+  </div>
+
   <!-- ── the client wall ───────────────────────────────────────────── -->
-  <section data-cw-clients data-theme="dark" data-base="" class="home-clients"></section>
+  <section data-cw-clients data-base="" class="home-clients"></section>
 
   <section class="thesis">
-    <p data-en="Artificial intelligence on its own is already predictable. What gets interesting is when you connect it to a machine, a sensor, a shelf, and it hands back a real number.">בינה מלאכותית לבדה היא כבר צפויה. מה שמעניין מתחיל כשמחברים אותה למכונה, לחיישן, למדף, ומקבלים בחזרה מספר אמיתי.</p>
+    <p data-en-html="Artificial intelligence on its own is already predictable. It gets interesting when you connect it to a machine, a sensor, a shelf, and it hands back <mark>a real number</mark>.">בינה מלאכותית לבדה היא כבר צפויה. מה שמעניין מתחיל כשמחברים אותה למכונה, לחיישן, למדף, ומקבלים בחזרה <mark>מספר אמיתי</mark>.</p>
   </section>
 
   <!-- ── six departments ───────────────────────────────────────────── -->
@@ -68,35 +86,71 @@
       <p data-en="We capture reality, turn it into a system, and hand it to people. Every department has a site of its own.">אנחנו לוכדים את המציאות, הופכים אותה למערכת, ומגישים אותה לבני אדם. לכל מחלקה יש אתר משלה.</p>
     </header>
     <div class="dgrid">
-      <a class="dcard" href="/vision/" style="--dot:#C6F24E">
-        <img src="vision/img/hero.webp" alt="פריים ממצלמת אבטחה עם שכבת זיהוי" data-en-alt="A security camera frame with a detection layer" loading="lazy" decoding="async" width="640" height="400">
-        <h3 data-en="Computer vision">ראייה ממוחשבת</h3>
-        <p data-en="The cameras already on your wall spot an empty shelf, a person who fell or dumped green waste, and the alert reaches a phone.">המצלמות שכבר תלויות אצלכם מזהות מדף ריק, אדם שנפל או גזם שנזרק, וההתרעה מגיעה לנייד.</p>
+      <a class="dcard" href="/vision/" style="--acc:#6E9B0E;--acc-d:#47650A">
+        <span class="dcard__shot">
+          <img src="vision/img/hero.webp" alt="פריים ממצלמת אבטחה בכניסה לחנות, אדם יוצא ומשאיר חבילה על הרצפה" data-en-alt="A security camera frame at a shop entrance, a person leaving and a parcel left on the floor" loading="lazy" decoding="async" width="1600" height="900">
+          <span class="dcard__chip" data-en="Computer vision">ראייה ממוחשבת</span>
+        </span>
+        <span class="dcard__body">
+          <h3 data-en="Computer vision">ראייה ממוחשבת</h3>
+          <p data-en="The cameras already on your wall spot an empty shelf, a person who fell or dumped green waste, and the alert reaches a phone.">המצלמות שכבר תלויות אצלכם מזהות מדף ריק, אדם שנפל או גזם שנזרק, וההתרעה מגיעה לנייד.</p>
+          <span class="dcard__go" data-en="Open the department site"><i aria-hidden="true">←</i> לאתר המחלקה</span>
+        </span>
       </a>
-      <a class="dcard" href="/measure/" style="--dot:#26D07C">
-        <img src="measure/img/hero.webp" alt="סריקת לידאר של גרם מדרגות" data-en-alt="A LiDAR scan of a staircase" loading="lazy" decoding="async" width="640" height="400">
-        <h3 data-en="LiDAR measurement">פתרונות מדידה בלידאר</h3>
-        <p data-en="One scan from a phone returns an engineering measurement: depth, stairs, pit volume, slope, and a model ready to print.">סריקה אחת מהטלפון מחזירה מדידה הנדסית: עומק, מדרגות, נפח בור, שיפוע ומודל מוכן להדפסה.</p>
+      <a class="dcard" href="/measure/" style="--acc:#26D07C;--acc-d:#0B6B44">
+        <span class="dcard__shot">
+          <img src="measure/img/hero.webp" alt="סריקת לידאר של גרם מדרגות" data-en-alt="A LiDAR scan of a staircase" loading="lazy" decoding="async" width="1600" height="904">
+          <span class="dcard__chip" data-en="LiDAR">לידאר</span>
+        </span>
+        <span class="dcard__body">
+          <h3 data-en="LiDAR measurement">פתרונות מדידה בלידאר</h3>
+          <p data-en="One scan from a phone returns an engineering measurement: depth, stairs, pit volume, slope, and a model ready to print.">סריקה אחת מהטלפון מחזירה מדידה הנדסית: עומק, מדרגות, נפח בור, שיפוע ומודל מוכן להדפסה.</p>
+          <span class="dcard__go" data-en="Open the department site"><i aria-hidden="true">←</i> לאתר המחלקה</span>
+        </span>
       </a>
-      <a class="dcard" href="/ai/" style="--dot:#6E9B0E">
-        <img src="ai/img/hero.webp" alt="בעל עסק מול מערכת שנבנתה עבורו" data-en-alt="A business owner in front of a system built for them" loading="lazy" decoding="async" width="640" height="400">
-        <h3 data-en="AI embedded in businesses">הטמעות AI בבתי עסק</h3>
-        <p data-en="We start with a business spec, not with code. Agents, automations, sites and systems, and every rollout is measured by a number.">מתחילים באיפיון עסקי, לא בקוד. סוכנים, אוטומציות, אתרים ומערכות, וכל הטמעה נמדדת במספר.</p>
+      <a class="dcard" href="/ai/" style="--acc:#B4530A;--acc-d:#8E4108">
+        <span class="dcard__shot">
+          <img src="ai/img/hero.webp" alt="דלפק של בית קפה ומאפייה, עם מסך קופה על השיש" data-en-alt="The counter of a cafe and bakery, with a point of sale screen on it" loading="lazy" decoding="async" width="1600" height="904">
+          <span class="dcard__chip" data-en="AI">AI</span>
+        </span>
+        <span class="dcard__body">
+          <h3 data-en="AI embedded in businesses">הטמעות AI בבתי עסק</h3>
+          <p data-en="We start with a business spec, not with code. Agents, automations, sites and systems, and every rollout is measured by a number.">מתחילים באיפיון עסקי, לא בקוד. סוכנים, אוטומציות, אתרים ומערכות, וכל הטמעה נמדדת במספר.</p>
+          <span class="dcard__go" data-en="Open the department site"><i aria-hidden="true">←</i> לאתר המחלקה</span>
+        </span>
       </a>
-      <a class="dcard" href="/video/" style="--dot:#E8834A">
-        <img src="video/img/hero.webp" alt="פריים מתוך סרט אירוע" data-en-alt="A frame from an event film" loading="lazy" decoding="async" width="640" height="400">
-        <h3 data-en="Video and advertising">וידאו ופרסום</h3>
-        <p data-en="Films for life events and for advertising: bar and bat mitzvah, a wedding, a life story built out of old photographs. From the first frame to the last mix.">סרטים לאירועי חיים ולפרסום: בר ובת מצווה, חתונה, וסיפור חיים מתוך תמונות ישנות. מהפריים הראשון עד המיקס האחרון.</p>
+      <a class="dcard" href="/video/" style="--acc:#B4530A;--acc-d:#8E4108">
+        <span class="dcard__shot">
+          <img src="video/img/hero.webp" alt="ידיים מחזיקות צרור תצלומים ישנים מעל שולחן עץ" data-en-alt="Hands holding a bundle of old photographs over a wooden table" loading="lazy" decoding="async" width="1600" height="900">
+          <span class="dcard__chip" data-en="Video">וידאו</span>
+        </span>
+        <span class="dcard__body">
+          <h3 data-en="Video and advertising">וידאו ופרסום</h3>
+          <p data-en="Films for life events and for advertising: bar and bat mitzvah, a wedding, a life story built out of old photographs. From the first frame to the last mix.">סרטים לאירועי חיים ולפרסום: בר ובת מצווה, חתונה, וסיפור חיים מתוך תמונות ישנות. מהפריים הראשון עד המיקס האחרון.</p>
+          <span class="dcard__go" data-en="Open the department site"><i aria-hidden="true">←</i> לאתר המחלקה</span>
+        </span>
       </a>
-      <a class="dcard" href="/pedagogy/" style="--dot:#C6F24E">
-        <img src="pedagogy/img/hero.webp" alt="עמדת עבודה עם אלקטרוניקה ומחברת" data-en-alt="A workbench with electronics and a notebook" loading="lazy" decoding="async" width="640" height="400">
-        <h3 data-en="The Yitzhak Ohayon Pedagogy Department">המחלקה הפדגוגית ע"ש יצחק אוחיון</h3>
-        <p data-en="Hackathons, deep workshops and school programmes. Children build technology with their hands.">האקתונים, סדנאות עומק ותוכניות לבתי ספר. ילדים בונים טכנולוגיה בידיים.</p>
+      <a class="dcard" href="/pedagogy/" style="--acc:#6E9B0E;--acc-d:#47650A">
+        <span class="dcard__shot">
+          <img src="pedagogy/img/hero.webp" alt="שולחן עבודה עם זרוע רובוטית, מעגל אלקטרוני ומחברת שרטוטים פתוחה" data-en-alt="A workbench with a robot arm, a breadboard circuit and an open drawing notebook" loading="lazy" decoding="async" width="1600" height="900">
+          <span class="dcard__chip" data-en="Pedagogy">פדגוגיה</span>
+        </span>
+        <span class="dcard__body">
+          <h3 data-en="The Yitzhak Ohayon Pedagogy Department">המחלקה הפדגוגית ע"ש יצחק אוחיון</h3>
+          <p data-en="Hackathons, deep workshops and school programmes. Children build technology with their hands.">האקתונים, סדנאות עומק ותוכניות לבתי ספר. ילדים בונים טכנולוגיה בידיים.</p>
+          <span class="dcard__go" data-en="Open the department site"><i aria-hidden="true">←</i> לאתר המחלקה</span>
+        </span>
       </a>
-      <a class="dcard" href="/ar/" style="--dot:#6E9B0E">
-        <img src="ar/img/store.webp" alt="סופרמרקט וירטואלי" data-en-alt="A virtual supermarket" loading="lazy" decoding="async" width="640" height="400">
-        <h3 data-en="AR and spatial">AR ומרחב<span class="tag" data-en="in build">בהקמה</span></h3>
-        <p data-en="A virtual supermarket you walk through, 13 departments and a real catalogue, and a live planogram for chains.">סופרמרקט וירטואלי שמסתובבים בתוכו, 13 מחלקות וקטלוג אמיתי, ופלנוגרמה חיה לרשתות.</p>
+      <a class="dcard" href="/ar/" style="--acc:#26D07C;--acc-d:#0B6B44">
+        <span class="dcard__shot">
+          <img src="ar/img/store.webp" alt="סופרמרקט וירטואלי" data-en-alt="A virtual supermarket" loading="lazy" decoding="async" width="1400" height="700">
+          <span class="dcard__chip" data-en="AR">AR</span>
+        </span>
+        <span class="dcard__body">
+          <h3 data-en="AR and spatial">AR ומרחב<span class="tag" data-en="in build">בהקמה</span></h3>
+          <p data-en="A virtual supermarket you walk through, 13 departments and a real catalogue, and a live planogram for chains.">סופרמרקט וירטואלי שמסתובבים בתוכו, 13 מחלקות וקטלוג אמיתי, ופלנוגרמה חיה לרשתות.</p>
+          <span class="dcard__go" data-en="Open the department site"><i aria-hidden="true">←</i> לאתר המחלקה</span>
+        </span>
       </a>
     </div>
   </section>
@@ -109,26 +163,51 @@
       <p data-en="We are asked to come and teach almost as often as we are asked to come and build. Same material, a room instead of a repository.">מזמינים אותנו ללמד כמעט באותה תדירות שמזמינים אותנו לבנות. אותו חומר, רק שבמקום מאגר קוד יש חדר.</p>
     </header>
 
-    <div class="lgrid">
-      <article class="lcard">
+    <div class="learn__grid">
+      <figure class="learn__shot">
+        <img src="works/lecture1.webp" alt="אריאל אוחיון מרצה מול אולם מלא" data-en-alt="Ariel Ohayon speaking to a full room" loading="lazy" decoding="async" width="1400" height="934">
+        <figcaption class="learn__badge" data-en="On stage, not on slides">על במה, לא על שקפים</figcaption>
+      </figure>
+
+      <div class="lgrid">
+      <article class="lcard" style="--acc:#6E9B0E">
         <h3 data-en="A talk inside your organisation">הרצאה בארגון</h3>
         <p data-en="An hour or two in front of a team, on what AI actually changes in their work rather than in the headlines. No slideware about the future.">שעה או שעתיים מול צוות, על מה שבינה מלאכותית באמת משנה בעבודה שלו ולא בכותרות. בלי מצגת על העתיד.</p>
       </article>
-      <article class="lcard">
+      <article class="lcard" style="--acc:#26D07C">
         <h3 data-en="A deep workshop">סדנת עומק</h3>
         <p data-en="A day where a team builds something of its own and leaves with it working. We stay on the tools, not on the theory.">יום שבו צוות בונה משהו משלו ויוצא איתו עובד. אנחנו נשארים על הכלים, לא על התיאוריה.</p>
       </article>
-      <article class="lcard">
+      <article class="lcard" style="--acc:#B4530A">
         <h3 data-en="A hackathon, a day or a week">האקתון, יום או שבוע</h3>
         <p data-en="A format we run for schools and for companies. At the end of it there is a working thing, and somebody who did not know they could build it.">פורמט שאנחנו מריצים לבתי ספר ולחברות. בסוף יש דבר שעובד, ומישהו שלא ידע שהוא מסוגל לבנות אותו.</p>
       </article>
-      <article class="lcard">
+      <article class="lcard" style="--acc:#6E9B0E">
         <h3 data-en="A year-long school programme">תוכנית שנתית לבית ספר</h3>
         <p data-en="Electronics, sensors and smart models, with platforms we wrote for the classroom. This is the department named for Yitzhak Ohayon.">אלקטרוניקה, חיישנים ומודלים חכמים, עם פלטפורמות שכתבנו לכיתה. זו המחלקה ע"ש יצחק אוחיון.</p>
       </article>
+      </div>
     </div>
 
     <p class="learn__proof" data-en="Ariel opened the Claude Israel community on the day Claude launched; it now has 25,000 members. We have run a full municipal programme around one of our computer vision products, and taught at Sapir College.">אריאל פתח את קהילת קלוד ישראל ביום שקלוד יצא, והיום יש בה 25 אלף איש. הרצנו פעילות עירונית שלמה סביב אחד ממוצרי הראייה הממוחשבת שלנו, ולימדנו במכללת ספיר.</p>
+  </section>
+
+  <!-- ── the three figures that are actually ours ──────────────────── -->
+  <section class="figs" aria-label="במספרים" data-en-aria-label="In numbers">
+    <div class="figs__grid">
+      <article class="fig" style="--acc:#6E9B0E">
+        <b dir="ltr">25,000</b>
+        <span data-en="members in the Claude Israel community, opened on the day Claude launched">חברים בקהילת קלוד ישראל, שנפתחה ביום שקלוד יצא</span>
+      </article>
+      <article class="fig" style="--acc:#B4530A">
+        <b>6</b>
+        <span data-en="departments, each with a site and a team of its own">מחלקות, לכל אחת אתר וצוות משלה</span>
+      </article>
+      <article class="fig" style="--acc:#26D07C">
+        <b>13</b>
+        <span data-en="departments in the virtual supermarket, with a real catalogue behind them">מחלקות בסופרמרקט הווירטואלי, עם קטלוג אמיתי מאחוריהן</span>
+      </article>
+    </div>
   </section>
 
   <!-- ── proof: the things we made ─────────────────────────────────── -->
@@ -174,7 +253,7 @@
         <img src="ariel.webp" alt="אריאל אוחיון" data-en-alt="Ariel Ohayon" loading="lazy" decoding="async" width="300" height="300">
         <div>
           <h3>אריאל אוחיון <span data-en="Founder and CTO">מייסד ו-CTO</span></h3>
-          <p data-en="Lead developer at Corewise, lecturer and workshop leader. Founded the Claude Israel community on the day Claude launched as a chatbot; it now has 25,000 members and was one of the first in the world.">אחראי הפיתוח הראשי בקורוויז, מרצה ומוביל סדנאות. פתח את את קהילת קלוד ישראל ביום שקלוד יצא כצ'אטבוט, היום 25 אלף איש, ומהראשונות בעולם.</p>
+          <p data-en="Lead developer at Corewise, lecturer and workshop leader. Founded the Claude Israel community on the day Claude launched as a chatbot; it now has 25,000 members and was one of the first in the world.">אחראי הפיתוח הראשי בקורוויז, מרצה ומוביל סדנאות. פתח את קהילת קלוד ישראל ביום שקלוד יצא כצ'אטבוט, היום 25 אלף איש, ומהראשונות בעולם.</p>
         </div>
       </article>
       <article class="person">
@@ -198,7 +277,7 @@
     <h2 id="cta-h" data-en="If you have a camera, a machine, a shelf or a plot of land, you have a number you are not measuring.">אם יש לכם מצלמה, מכונה, מדף או שטח, יש לכם נתון שאתם לא מודדים.</h2>
     <p data-en="Tell us what you are trying to do. If it is not for us, we will say so.">ספרו לנו מה אתם מנסים לעשות. אם זה לא בשבילנו, נגיד לכם.</p>
     <div class="cta__row">
-      <a class="btn btn--primary btn--lg" href="https://wa.me/972507594477" data-en="Message us on WhatsApp">לפניה בוואטסאפ</a>
+      <a class="btn btn--dark btn--lg" href="https://wa.me/972507594477" data-en="Message us on WhatsApp">לפניה בוואטסאפ</a>
       <a class="btn btn--ghost btn--lg" href="tel:+972507594477" dir="ltr">050-759-4477</a>
     </div>
   </section>

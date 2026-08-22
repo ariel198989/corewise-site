@@ -1,31 +1,52 @@
-/* DIRECTION: dark technical, brand-locked. The campus already fixed the palette
-   (near-black hall, lime signal, Rubik), so the front door inherits it rather
-   than rolling its own: a visitor who walks from this page into the campus must
-   not feel they changed company.
-   ONE MEMORABLE THING: the campus sits in the page as a still photograph and
-   only wakes into WebGL when asked, so the answer to "what do you do" arrives
-   before a single megabyte of panorama.
-   MOTION PERSONALITY: mathematical (expo-out, no bounce, out faster than in). */
+/* DIRECTION: warm paper, image-led, one dark room.
+ *
+ * The page was near-black end to end, which made six departments of genuinely
+ * colourful work read as one grey slab. The references that solve this problem
+ * — Anthropic, Clay, Retool — all do the same thing: a light warm ground for
+ * reading, and colour supplied by real photography rather than by UI chrome.
+ * Anthropic in particular earns its one dark block by having everything around
+ * it be paper. That is the move here: the campus is the dark room, and it
+ * lands because nothing else on the page competes with it.
+ *
+ * ONE MEMORABLE THING: every department arrives as a full-width photograph of
+ * the actual work — a LiDAR scan on a staircase, a wired workbench — so
+ * the answer to "what do you do" is seen before it is read.
+ *
+ * COLOUR: the hall's own three. Olive #6E9B0E, burnt orange #B4530A, green
+ * #26D07C, with lime #C6F24E as the signal. Nothing invented. On paper they
+ * are darkened per hue to clear 4.5:1 and used at full strength as fills.
+ *
+ * MOTION PERSONALITY: mathematical (expo-out, no bounce, out faster than in). */
 
 :root {
-  color-scheme: dark;
+  color-scheme: light;
 
-  /* neutral ladder, lifted off pure black so white text does not halate */
-  /* an ink with a little green in it rather than neutral charcoal, so the dark
-     reads as a considered colour instead of the default dark theme */
-  --bg:           #090C0D;
-  --ink-2:        #0E1416;
-  --surface:      #141A1C;
-  --surface-high: #1B2325;
-  --line:         rgba(255,255,255,.10);
-  --text:         #F2F0EB;
-  --text-muted:   #A8AFB5;   /* 7.1:1 on --bg */
-  --text-subtle:  #7C858C;   /* 4.6:1, labels only */
+  /* warm paper, not white: a flat white page under Hebrew at this size
+     glares, and the campus photography sits better on a warm ground */
+  --paper:     #F6F3EB;
+  --paper-2:   #FFFDF7;
+  --paper-3:   #EFEBE1;
+  --ink:       #14120E;
+  --ink-2:     #56524A;   /* 7.4:1 on --paper */
+  --ink-3:     #6E6960;   /* 5.2:1 on --paper, labels only */
+  --line:      rgba(20,18,14,.13);
+  --line-2:    rgba(20,18,14,.08);
 
-  /* one accent, and it is the hall's */
-  --accent:    #C6F24E;
-  --accent-on: #0A0C0E;
-  --wa:        #1EBE5D;
+  /* the hall's palette, and its darkened text-safe twins */
+  --lime:      #C6F24E;
+  --lime-ink:  #16200A;   /* on --lime: 13.9:1 */
+  --olive:     #6E9B0E;
+  --olive-d:   #47650A;   /* 5.6:1 on --paper */
+  --orange:    #B4530A;
+  --orange-d:  #8E4108;   /* 5.5:1 on --paper */
+  --green:     #26D07C;
+  --green-d:   #0B6B44;   /* 5.9:1 on --paper */
+
+  /* the one dark room */
+  --dark:      #0B0F10;
+  --dark-2:    #141A1C;
+  --on-dark:   #F4F2ED;
+  --on-dark-2: #A8AFB5;   /* 7.1:1 on --dark */
 
   --font: 'Rubik', 'Heebo', 'Assistant', 'Noto Sans Hebrew', sans-serif;
   --mono: 'IBM Plex Mono', ui-monospace, monospace;
@@ -41,29 +62,28 @@
   --space-2:.5rem; --space-3:.75rem; --space-4:1rem; --space-6:1.5rem;
   --space-8:2rem;  --space-12:3rem;  --space-16:4rem; --space-24:6rem;
 
-  --radius-md: 10px;
-  --radius-lg: 18px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
   --radius-pill: 999px;
 
-  --shadow-2: 0 2px 6px hsl(200 14% 3% / .4), 0 10px 30px hsl(200 14% 3% / .3);
-  --shadow-3: 0 10px 40px hsl(200 14% 3% / .5);
+  /* shadows warm with the paper rather than going grey */
+  --shadow-1: 0 1px 2px hsl(40 14% 20% / .05), 0 4px 14px hsl(40 14% 20% / .05);
+  --shadow-2: 0 2px 6px hsl(40 14% 20% / .07), 0 14px 40px hsl(40 14% 20% / .09);
 
   --ease-out: cubic-bezier(.16, 1, .3, 1);
   --dur-fast: 180ms; --dur-base: 260ms; --dur-slow: 420ms;
+
+  --wrap: 72rem;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
-
 html { scroll-behavior: smooth; }
 
 body {
   margin: 0;
-  background:
-    radial-gradient(1200px 680px at 78% -8%, rgba(38,208,124,.055), transparent 62%),
-    radial-gradient(980px 560px at 12% 4%, rgba(198,242,78,.05), transparent 60%),
-    linear-gradient(180deg, var(--ink-2) 0%, var(--bg) 46%);
-  background-attachment: fixed;
-  color: var(--text);
+  background: var(--paper);
+  color: var(--ink);
   /* Hebrew reads a touch larger than Latin, and never tracked */
   font: 400 var(--step-0)/1.75 var(--font);
   letter-spacing: 0;
@@ -72,240 +92,267 @@ body {
   overflow-x: hidden;
 }
 
-/* 3% grain: the page is almost entirely flat colour, and without it the large
-   dark fields band on cheap panels */
-.grain::after {
-  content: ""; position: fixed; inset: 0; z-index: 1;
-  pointer-events: none; opacity: .03; mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-
 img { display: block; max-width: 100%; height: auto; }
 a { color: inherit; }
 
-h1, h2, h3 { line-height: 1.22; margin: 0; font-weight: 700; }
+h1, h2, h3 { line-height: 1.2; margin: 0; font-weight: 700; }
 p { margin: 0; }
 
+.wrap { max-width: var(--wrap); margin-inline: auto; }
+
+/* anything the nav can jump to clears the sticky header */
+section[id], #main { scroll-margin-block-start: 5.5rem; }
+
 .eyebrow {
+  display: inline-block;
   font: 500 var(--step--1)/1.4 var(--mono);
-  color: var(--accent);
-  opacity: .85;
+  color: var(--olive-d);
 }
+
+/* the section header, used by every band */
+.sec-head { max-width: var(--wrap); margin: 0 auto var(--space-12); }
+.sec-head h2 { font-size: var(--step-3); font-weight: 800; letter-spacing: -.01em; max-width: 20ch; text-wrap: balance; }
+.sec-head p { margin-block-start: var(--space-4); max-width: 56ch; color: var(--ink-2); font-size: var(--step-0); }
 
 /* ---------- header ---------- */
 .top {
   position: sticky; top: 0; z-index: 40;
   display: flex; align-items: center; gap: var(--space-6);
   padding: var(--space-4) clamp(1rem, 4vw, 3rem);
-  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  background: color-mix(in srgb, var(--paper) 84%, transparent);
   -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
-  border-block-end: 1px solid var(--line);
+  border-block-end: 1px solid var(--line-2);
 }
 .top__brand { font: 700 1.05rem/1 var(--mono); letter-spacing: .02em; text-decoration: none; }
 .top__nav { display: flex; gap: var(--space-6); margin-inline-start: auto; }
-.top__nav a { font-size: var(--step--1); color: var(--text-muted); text-decoration: none; transition: color var(--dur-fast) var(--ease-out); }
-.top__nav a:hover { color: var(--text); }
+.top__nav a { font-size: var(--step--1); color: var(--ink-2); text-decoration: none; transition: color var(--dur-fast) var(--ease-out); }
+.top__nav a:hover { color: var(--ink); }
 .top__right { display: flex; align-items: center; gap: var(--space-3); margin-inline-start: var(--space-4); }
 .top__lang {
   min-height: 34px; padding: .3rem .7rem; cursor: pointer;
   border: 1px solid var(--line); border-radius: var(--radius-pill);
-  background: transparent; color: var(--text-muted); font: 500 .78rem var(--font);
+  background: transparent; color: var(--ink-2); font: 500 .78rem var(--font);
 }
-.top__lang:hover { color: var(--text); }
+.top__lang:hover { color: var(--ink); background: var(--paper-3); }
 .top__wa {
   padding: .55rem 1.05rem; border-radius: var(--radius-pill);
-  background: var(--accent); color: var(--accent-on);
+  background: var(--ink); color: var(--paper);
   font: 600 var(--step--1) var(--font); text-decoration: none;
   transition: transform var(--dur-fast) var(--ease-out);
 }
 .top__wa:hover { transform: translateY(-1px); }
-@media (max-width: 760px) { .top__nav { display: none; } .top__right { margin-inline-start: auto; } }
+@media (max-width: 860px) { .top__nav { display: none; } .top__right { margin-inline-start: auto; } }
 
 /* ---------- hero ---------- */
 .hero {
   position: relative;
-  padding: clamp(4rem, 11vw, 9rem) clamp(1rem, 4vw, 3rem) clamp(3rem, 7vw, 6rem);
-  overflow: hidden;
+  padding: clamp(3.5rem, 9vw, 7rem) clamp(1rem, 4vw, 3rem) clamp(2rem, 5vw, 3.5rem);
 }
-/* gradient as lighting, not decoration */
-.ambient {
-  position: absolute; inset-block-start: -30%; inset-inline-start: 50%;
-  translate: -50% 0; width: min(1000px, 110vw); aspect-ratio: 1;
-  border-radius: 50%; background: var(--accent);
-  opacity: .05; filter: blur(340px); pointer-events: none;
+/* two soft washes from the brand hues, so the paper is not inert */
+.hero::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(760px 420px at 88% -14%, rgba(198,242,78,.34), transparent 66%),
+    radial-gradient(680px 380px at 6% 0%, rgba(180,83,10,.10), transparent 62%);
 }
-.hero__in { position: relative; max-width: 68rem; margin-inline: auto; }
-.hero { min-height: 82vh; display: grid; align-items: center; }
+.hero__in { position: relative; max-width: var(--wrap); margin-inline: auto; }
 .hero h1 {
   margin: 0 0 var(--space-6);
-  /* the reference lesson: the headline owns the screen. Linear and NavVis both
-     give a single sentence the whole viewport and put nothing beside it. */
-  font-size: clamp(2.6rem, 6.4vw, 6rem); font-weight: 800; line-height: 1.04;
-  max-width: 20ch;
+  /* the reference lesson: the headline owns the screen */
+  font-size: clamp(2.5rem, 6vw, 5.4rem); font-weight: 800; line-height: 1.05;
+  letter-spacing: -.02em; max-width: 20ch;
   /* let the browser even out the lines instead of a hand-placed <br>, which
      broke badly the moment the text or the viewport changed */
   text-wrap: balance;
 }
-.hero__lede { font-size: var(--step-1); font-weight: 400; color: var(--text-muted); max-width: 40ch; }
-.hero__thesis {
-  margin-block-start: var(--space-6); max-width: 56ch;
-  color: var(--text-muted); font-size: var(--step-0);
-  padding-inline-start: var(--space-4);
-  border-inline-start: 2px solid var(--accent);
-}
+.hero__lede { font-size: var(--step-1); color: var(--ink-2); max-width: 42ch; }
 .hero__cta { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-block-start: var(--space-8); }
 
 .btn {
-  display: inline-flex; align-items: center; justify-content: center;
+  display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
   min-height: 46px; padding: .7rem 1.4rem; border-radius: var(--radius-pill);
   font: 600 var(--step--1) var(--font); text-decoration: none; cursor: pointer;
   border: 1px solid transparent;
   transition: transform var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out);
 }
 .btn--lg { min-height: 54px; padding: .9rem 1.9rem; font-size: var(--step-0); }
-.btn--primary { background: var(--accent); color: var(--accent-on); }
+/* lime as a fill with dark type on it, the way Clay uses its yellow: as a
+   light-page accent lime only works underneath text, never as text */
+.btn--primary { background: var(--lime); color: var(--lime-ink); }
 .btn--primary:hover { transform: translateY(-2px); }
-.btn--ghost { border-color: var(--line); color: var(--text); }
-.btn--ghost:hover { background: var(--surface); }
+.btn--ghost { border-color: var(--line); color: var(--ink); }
+.btn--ghost:hover { background: var(--paper-3); }
+.btn--dark { background: var(--ink); color: var(--paper); }
+.btn--dark:hover { transform: translateY(-2px); }
 
-/* ---------- the thesis, given its own air ---------- */
-.thesis {
-  padding: clamp(3.5rem, 9vw, 7rem) clamp(1rem, 4vw, 3rem);
-  border-block-start: 1px solid var(--line);
+/* ---------- the strip of real work, straight under the headline ----------
+   Colour arrives before any of the copy does, and it is colour from the work
+   itself rather than from decoration. Three frames, unequal heights, so the
+   row reads as a composition and not as a gallery widget. */
+.strip {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: clamp(.6rem, 1.4vw, 1rem);
+  max-width: var(--wrap); margin: 0 auto;
+  padding: 0 clamp(1rem, 4vw, 3rem) clamp(3rem, 7vw, 5rem);
 }
-.thesis p {
-  max-width: 42ch; margin-inline: auto; text-align: center;
-  font-size: var(--step-2); font-weight: 500; line-height: 1.4;
+.strip figure { margin: 0; position: relative; }
+.strip img {
+  width: 100%; height: 100%; object-fit: cover;
+  border-radius: var(--radius-lg); box-shadow: var(--shadow-1);
+}
+.strip figure:nth-child(1) { aspect-ratio: 3 / 4; }
+.strip figure:nth-child(2) { aspect-ratio: 3 / 4; margin-block-start: clamp(1rem, 3vw, 2.5rem); }
+.strip figure:nth-child(3) { aspect-ratio: 3 / 4; }
+/* the pill hugs its words: stretched edge to edge it read as a caption bar
+   bolted onto the photograph rather than a label sitting on it */
+.strip figcaption {
+  position: absolute; inset-block-end: var(--space-3); inset-inline-start: var(--space-3);
+  inline-size: fit-content; max-inline-size: calc(100% - var(--space-6));
+  padding: .4rem .8rem; border-radius: var(--radius-pill);
+  background: rgba(11,15,16,.78); color: var(--on-dark);
+  font: 500 .76rem var(--mono);
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+}
+@media (max-width: 700px) {
+  .strip { grid-template-columns: repeat(2, 1fr); }
+  .strip figure:nth-child(3) { display: none; }
 }
 
 /* ---------- the client wall on this page ---------- */
-.home-clients {
-  border-block: 1px solid var(--line);
-  --h: 30px;
+.home-clients { border-block: 1px solid var(--line-2); background: var(--paper-2); }
+/* The shared control dims itself with opacity, which multiplies against the
+   ground: on the old near-black it was fine and on this paper it landed at
+   4.09:1. Scoped to this page so the dark department sites keep their own. */
+.home-clients .cw-clients__pause { opacity: 1; color: var(--ink-2); border-color: var(--line); }
+.home-clients .cw-clients__pause:hover,
+.home-clients .cw-clients__pause:focus-visible { color: var(--ink); background: var(--paper-3); }
+
+/* ---------- the thesis, given its own air ---------- */
+.thesis { padding: clamp(4rem, 10vw, 8rem) clamp(1rem, 4vw, 3rem); }
+.thesis p {
+  max-width: 24ch; margin-inline: auto; text-align: center;
+  font-size: var(--step-3); font-weight: 700; line-height: 1.28;
+  letter-spacing: -.015em; text-wrap: balance;
 }
-/* the shared strip fades its own title to .62, which on this ground lands at
-   2.67:1. Opacity off, colour set explicitly. */
-.home-clients .cw-clients__title { color: var(--text-muted); opacity: 1; }
-
-/* ---------- sections ---------- */
-.sec-head { max-width: 68rem; margin-inline: auto; margin-block-end: var(--space-8); }
-.sec-head h2 { font-size: var(--step-3); font-weight: 800; max-width: 20ch; }
-.sec-head p { margin-block-start: var(--space-3); color: var(--text-muted); max-width: 52ch; }
-
-.dept, .built, .who, .cta { padding: clamp(3.5rem, 9vw, 7rem) clamp(1rem, 4vw, 3rem); }
-
-.dept__group {
-  max-width: 68rem; margin: var(--space-12) auto var(--space-4);
-  font: 500 var(--step--1) var(--mono); color: var(--text-subtle);
+/* the lime does the emphasis, as a marker stroke behind the words */
+.thesis mark {
+  background: linear-gradient(180deg, transparent 58%, var(--lime) 58%);
+  color: inherit; padding-inline: .12em;
 }
-.dept__group:first-of-type { margin-block-start: 0; }
 
-/* The department block sits on paper. Six dark cards stacked under a dark hero
-   gave the eye nowhere to rest, and this is the same paper the department sites
-   themselves use, so the jump into one of them is continuous. */
-.dept {
-  color: #14181C;
-  background:
-    radial-gradient(900px 520px at 88% 0%, rgba(38,208,124,.10), transparent 60%),
-    radial-gradient(700px 460px at 6% 100%, rgba(232,131,74,.08), transparent 60%),
-    #F2F0EB;
-}
-.dept .sec-head p { color: #4C5157; }
-
-/* One uniform grid, and the image sits ABOVE the words rather than behind them.
-   Text over photographs was the single biggest source of noise in the first
-   build: every card needed a scrim, and every card looked different because
-   every photograph is different. */
+/* ---------- the departments ----------
+   Each one is a photograph of the actual work with the copy under it. Six
+   small text tiles said nothing; six frames of a LiDAR scan, a classroom and
+   a supermarket aisle say it before a word is read. */
+.dept { padding: clamp(3rem, 8vw, 6rem) clamp(1rem, 4vw, 3rem) clamp(4rem, 10vw, 8rem); }
 .dgrid {
-  display: grid; gap: clamp(1.5rem, 3vw, 2.5rem);
-  grid-template-columns: repeat(3, 1fr);
-  max-width: 68rem; margin-inline: auto;
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: clamp(1.25rem, 3vw, 2.25rem);
+  max-width: var(--wrap); margin-inline: auto;
 }
-.dcard { display: block; text-decoration: none; color: inherit; }
-.dcard img {
-  width: 100%; aspect-ratio: 16 / 10; object-fit: cover;
-  border-radius: var(--radius-md); background: #E4E1DA;
-  transition: opacity var(--dur-base) var(--ease-out);
+.dcard {
+  display: flex; flex-direction: column;
+  background: var(--paper-2); border-radius: var(--radius-xl);
+  border: 1px solid var(--line-2); overflow: hidden;
+  text-decoration: none; color: inherit;
+  box-shadow: var(--shadow-1);
+  transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out);
 }
-.dcard:hover img { opacity: .88; }
-.dcard h3 {
-  display: flex; align-items: baseline; gap: .55rem;
-  margin-block-start: var(--space-4);
-  font-size: var(--step-1); font-weight: 700;
-}
-/* The dot is that department's OWN accent, taken from its own stylesheet:
-   lime for the software lines, green for measurement, orange for film, olive
-   for AR. Four real hues, no invented brand colours. */
-.dcard h3::before {
-  content: ""; flex: none; width: 9px; height: 9px; border-radius: 50%;
-  background: var(--dot, var(--accent));
-  transform: translateY(-2px);
-}
-.dcard img { box-shadow: 0 1px 2px rgba(20,24,28,.08), 0 12px 30px rgba(20,24,28,.10); }
-.dcard p {
-  margin-block-start: var(--space-2);
-  color: #4C5157; font-size: var(--step--1); line-height: 1.7;
-}
-.dept .tag {
-  background: #14181C; color: #F2F0EB;
-}
-@media (max-width: 900px) { .dgrid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 620px) { .dgrid { grid-template-columns: 1fr; } }
-
-/* the old overlay card, still used by the two exhibit tiles below */
-.cards {
-  display: grid; gap: var(--space-4);
-  grid-template-columns: 1.45fr 1fr;
-  max-width: 68rem; margin-inline: auto;
-}
-.cards--two { grid-template-columns: 1fr 1fr; }
-.cards:has(.card--wide:last-child) { grid-template-columns: 1fr 1.45fr; }
-
-.card {
-  position: relative; display: block; overflow: hidden;
-  border-radius: var(--radius-lg); background: var(--surface);
-  text-decoration: none; isolation: isolate;
-  transition: transform var(--dur-base) var(--ease-out);
-}
-.card:hover { transform: translateY(-3px); }
-.card img {
-  width: 100%; aspect-ratio: 16 / 10; object-fit: cover;
+.dcard:hover { transform: translateY(-4px); box-shadow: var(--shadow-2); }
+.dcard__shot { position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: var(--paper-3); }
+.dcard__shot img {
+  width: 100%; height: 100%; object-fit: cover;
   transition: scale var(--dur-slow) var(--ease-out);
 }
-.card:hover img { scale: 1.03; }
-/* the scrim is what makes the text legible over a photograph, and it is the
-   only "border" this design gets */
-.card::after {
-  content: ""; position: absolute; inset: 0; z-index: -1;
-  background: linear-gradient(180deg, transparent 30%, hsl(200 14% 4% / .55) 62%, hsl(200 14% 4% / .96) 100%);
+.dcard:hover .dcard__shot img { scale: 1.04; }
+/* the accent is a chip on the photograph, where it has a dark ground behind
+   it and can run at full strength */
+/* the chip runs on the darkened twin, not the display hue: white on #26D07C
+   is 1.98:1, and the same green at #0B6B44 is 6.4:1 with no hue shift */
+.dcard__chip {
+  position: absolute; inset-block-start: var(--space-4); inset-inline-start: var(--space-4);
+  padding: .34rem .8rem; border-radius: var(--radius-pill);
+  background: var(--acc-d); color: #FFFDF7;
+  font: 600 .76rem var(--mono); letter-spacing: .01em;
 }
-.card__t { position: absolute; inset-block-end: 0; inset-inline: 0; padding: var(--space-6); }
-.card__t h3 { font-size: var(--step-1); }
-.card__t p {
-  margin-block-start: var(--space-2); color: var(--text-muted);
-  font-size: var(--step--1); line-height: 1.65; max-width: 46ch;
+.dcard__body { display: grid; gap: var(--space-3); padding: var(--space-6) clamp(1.1rem, 2.4vw, 1.75rem) var(--space-8); }
+.dcard h3 { font-size: var(--step-1); font-weight: 700; letter-spacing: -.01em; }
+.dcard h3 .tag {
+  margin-inline-start: .5rem; padding: .16rem .55rem; border-radius: var(--radius-pill);
+  background: var(--paper-3); color: var(--ink-2);
+  font: 500 .7rem var(--mono); vertical-align: .18em;
 }
-.tag {
-  display: inline-block; margin-inline-start: .4rem; vertical-align: middle;
-  padding: .18rem .5rem; border-radius: var(--radius-pill);
-  background: var(--accent); color: var(--accent-on);
-  font: 600 .62rem/1.4 var(--mono);
+.dcard p { color: var(--ink-2); font-size: var(--step--1); line-height: 1.72; }
+.dcard__go {
+  margin-block-start: var(--space-2); color: var(--acc-d);
+  font: 600 var(--step--1) var(--font);
 }
+.dcard__go i { font-style: normal; display: inline-block; transition: translate var(--dur-fast) var(--ease-out); }
+.dcard:hover .dcard__go i { translate: -4px 0; }
+@media (max-width: 820px) { .dgrid { grid-template-columns: 1fr; } }
 
-@media (max-width: 860px) {
-  .cards, .cards--two, .cards:has(.card--wide:last-child) { grid-template-columns: 1fr; }
-  .card img { aspect-ratio: 16 / 11; }
-  .card__t { padding: var(--space-4); }
+/* ---------- workshops and talks ----------
+   One of the three things Corewise actually sells. The photograph is Ariel on
+   a stage in front of a full room, which is the only proof this section needs;
+   the formats sit beside it as plain rules rather than as four more cards. */
+.learn { padding: clamp(3.5rem, 9vw, 7rem) clamp(1rem, 4vw, 3rem); background: var(--paper-2); border-block: 1px solid var(--line-2); }
+.learn__grid {
+  display: grid; grid-template-columns: 1.05fr 1fr;
+  gap: clamp(1.5rem, 4vw, 3.5rem); align-items: start;
+  max-width: var(--wrap); margin-inline: auto;
 }
+.learn__shot { position: relative; border-radius: var(--radius-xl); overflow: hidden; box-shadow: var(--shadow-2); }
+.learn__shot img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+.learn__badge {
+  position: absolute; inset-block-end: var(--space-4); inset-inline-start: var(--space-4);
+  padding: .5rem .9rem; border-radius: var(--radius-pill);
+  background: var(--lime); color: var(--lime-ink);
+  font: 600 var(--step--1) var(--font);
+}
+.lgrid { display: grid; gap: 0; }
+.lcard { padding: var(--space-6) 0; border-block-start: 1px solid var(--line); }
+.lcard:first-child { border-block-start: 0; padding-block-start: 0; }
+.lcard h3 { font-size: var(--step-1); font-weight: 700; }
+.lcard h3::before {
+  content: ""; display: inline-block; inline-size: 9px; block-size: 9px;
+  border-radius: 50%; background: var(--acc); margin-inline-end: .6rem; vertical-align: .12em;
+}
+.lcard p { margin-block-start: var(--space-2); color: var(--ink-2); font-size: var(--step--1); line-height: 1.72; }
+.learn__proof {
+  max-width: var(--wrap); margin: clamp(2rem, 5vw, 3.5rem) auto 0;
+  padding: var(--space-6) clamp(1.1rem, 2.4vw, 1.75rem);
+  border-radius: var(--radius-lg); background: var(--paper-3);
+  color: var(--ink-2); font-size: var(--step--1); line-height: 1.8;
+}
+@media (max-width: 860px) { .learn__grid { grid-template-columns: 1fr; } }
 
-/* ---------- the door to the campus ----------
-   Full bleed, one line of promise, one word of instruction. It is a link and
-   it goes somewhere, because a half-opened experience inside a page is worse
-   than a clean address you can also send to somebody on its own. */
+/* ---------- the numbers ---------- */
+.figs { padding: clamp(3rem, 8vw, 6rem) clamp(1rem, 4vw, 3rem); }
+.figs__grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(1rem, 3vw, 2.5rem);
+  max-width: var(--wrap); margin-inline: auto;
+}
+.fig { padding-inline-start: var(--space-4); border-inline-start: 3px solid var(--acc); }
+.fig b { display: block; font-size: var(--step-3); font-weight: 800; letter-spacing: -.02em; line-height: 1.1; }
+.fig span { display: block; margin-block-start: var(--space-2); color: var(--ink-2); font-size: var(--step--1); }
+@media (max-width: 700px) { .figs__grid { grid-template-columns: 1fr; } }
+
+/* ---------- the dark room ----------
+   The only dark band on the page, which is precisely why it registers. It is
+   full bleed so the campus reads as a different place rather than as another
+   card on the same shelf. */
+.built {
+  background: var(--dark); color: var(--on-dark);
+  padding: clamp(4rem, 10vw, 8rem) clamp(1rem, 4vw, 3rem);
+}
+.built .sec-head h2 { color: var(--on-dark); }
+.built .sec-head p { color: var(--on-dark-2); }
+
+/* ---------- the door to the campus ---------- */
 .door {
   position: relative; overflow: hidden; isolation: isolate;
-  max-width: 68rem; margin: 0 auto var(--space-6);
-  border-radius: var(--radius-lg); aspect-ratio: 16 / 9;
+  max-width: var(--wrap); margin: 0 auto;
+  border-radius: var(--radius-xl); aspect-ratio: 16 / 9;
   background: #0b0f10;
 }
 /* 16/9 matches the clip, so nothing worth seeing gets cropped away. */
@@ -324,31 +371,24 @@ p { margin: 0; }
                     rgba(9,12,13,.80) 78%, rgba(9,12,13,.95));
 }
 .door:hover .door__bg { scale: 1.03; }
-.door__hit {
-  position: absolute; inset: 0; display: block;
-  text-decoration: none; color: var(--text);
-}
+.door__hit { position: absolute; inset: 0; display: block; text-decoration: none; color: var(--on-dark); }
 .door__in {
   position: absolute; inset-block-end: 0; inset-inline: 0;
   display: grid; gap: var(--space-2); justify-items: start;
   padding: var(--space-8) clamp(1.25rem, 4vw, 2.75rem) clamp(1.5rem, 3.5vw, 2.5rem);
   text-align: start;
 }
-.door__kick { font: 500 var(--step--1) var(--mono); color: var(--accent); }
+.door__kick { font: 500 var(--step--1) var(--mono); color: var(--lime); }
 .door__t { font-size: var(--step-1); font-weight: 800; line-height: 1.2; }
-.door__sub {
-  max-width: 32rem; color: var(--text-muted);
-  font-size: var(--step--1); line-height: 1.6;
-}
+.door__sub { max-width: 32rem; color: var(--on-dark-2); font-size: var(--step--1); line-height: 1.6; }
 .door__go {
   display: inline-flex; align-items: center; gap: .5rem;
   margin-block-start: var(--space-3); padding: .7rem 1.5rem;
-  border-radius: var(--radius-pill); background: var(--accent); color: var(--accent-on);
+  border-radius: var(--radius-pill); background: var(--lime); color: var(--lime-ink);
   font: 600 var(--step--1) var(--font);
   transition: transform var(--dur-fast) var(--ease-out);
 }
-.door__hit:hover .door__go,
-.door__hit:focus-visible .door__go { transform: translateY(-2px); }
+.door__hit:hover .door__go, .door__hit:focus-visible .door__go { transform: translateY(-2px); }
 .door__go i { font-style: normal; }
 
 /* The pause control sits above the link, never inside it: a button nested in
@@ -359,21 +399,20 @@ p { margin: 0; }
   inset-block-start: var(--space-4); inset-inline-end: var(--space-4);
   inline-size: 40px; block-size: 40px; padding: 0;
   display: grid; place-items: center;
-  border: 1px solid rgba(242,240,235,.28); border-radius: 50%;
-  background: rgba(9,12,13,.62); color: #F2F0EB;
+  border: 1px solid rgba(244,242,237,.30); border-radius: 50%;
+  background: rgba(9,12,13,.62); color: var(--on-dark);
   font-size: 13px; line-height: 1; cursor: pointer;
-  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
   transition: background var(--dur-fast) var(--ease-out);
 }
-.door__pause:hover { background: rgba(9,12,13,.85); }
-.door__pause:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.door__pause:hover { background: rgba(9,12,13,.88); }
+.door__pause:focus-visible { outline: 2px solid var(--lime); outline-offset: 2px; }
 
 /* Narrow screens stack instead of overlaying. There is no room beside a
    centred department card for a headline, and cropping to a taller frame only
-   pushes the card further into the words — on a phone the copy sits under the
-   clip, on its own ground, where it is simply readable. */
+   pushes the card further into the words. */
 @media (max-width: 820px) {
-  .door { aspect-ratio: auto; display: grid; background: var(--surface); }
+  .door { aspect-ratio: auto; display: grid; background: var(--dark-2); }
   .door__bg { position: relative; z-index: 0; block-size: auto; aspect-ratio: 16 / 9; }
   .door::after { display: none; }
   .door__hit { position: static; }
@@ -384,156 +423,82 @@ p { margin: 0; }
   .door__pause { inset-block-start: var(--space-3); inset-inline-end: var(--space-3); }
 }
 
-/* ---------- the campus, as an exhibit ---------- */
-.campus { margin: 0 auto var(--space-6); max-width: 68rem; }
-.campus__stage {
-  position: relative; overflow: hidden;
-  border-radius: var(--radius-lg); background: var(--surface);
-  aspect-ratio: 16 / 9;
-}
-.campus__still { width: 100%; height: 100%; object-fit: cover; }
-.campus__stage iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-.campus__go {
-  position: absolute; inset: 0; z-index: 2;
-  display: grid; place-content: center; gap: var(--space-3);
-  justify-items: center;
-  border: 0; cursor: pointer; color: var(--text);
-  background: linear-gradient(180deg, hsl(200 14% 4% / .28), hsl(200 14% 4% / .62));
-  font: 600 var(--step-0) var(--font);
-  transition: background var(--dur-base) var(--ease-out);
-}
-.campus__go:hover { background: linear-gradient(180deg, hsl(200 14% 4% / .18), hsl(200 14% 4% / .5)); }
-.campus__ico {
-  display: grid; place-items: center; width: 66px; height: 66px;
-  border-radius: 50%; background: var(--accent); color: var(--accent-on);
-  font-size: 1.5rem; padding-inline-start: 4px;
-  transition: transform var(--dur-base) var(--ease-out);
-}
-.campus__go:hover .campus__ico { transform: scale(1.06); }
-.campus__close {
-  position: absolute; z-index: 3;
-  inset-block-start: var(--space-3); inset-inline-end: var(--space-3);
-  width: 40px; height: 40px; border-radius: 50%; cursor: pointer;
-  border: 1px solid var(--line); background: hsl(200 14% 4% / .7); color: var(--text);
-  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
-}
-.campus__close[hidden] { display: none; }
-.campus figcaption {
-  display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-4);
-  margin-block-start: var(--space-4); color: var(--text-muted); font-size: var(--step--1);
-}
-.campus figcaption strong { color: var(--text); }
-
 /* ---------- who ---------- */
-.people {
-  display: grid; gap: var(--space-6);
-  grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
-  max-width: 68rem; margin-inline: auto;
+.who { padding: clamp(4rem, 10vw, 8rem) clamp(1rem, 4vw, 3rem); }
+.people { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(1.25rem, 3vw, 2rem); max-width: var(--wrap); margin-inline: auto; }
+.person {
+  display: grid; gap: var(--space-4);
+  padding: var(--space-6); border-radius: var(--radius-xl);
+  background: var(--paper-2); border: 1px solid var(--line-2); box-shadow: var(--shadow-1);
 }
-.person { display: flex; gap: var(--space-4); align-items: flex-start; }
-.person img {
-  width: 84px; height: 84px; flex: none;
-  border-radius: 50%; object-fit: cover; object-position: 50% 22%;
-}
-.person h3 { font-size: var(--step-1); }
-.person h3 span {
-  display: block; margin-block-start: .2rem;
-  font: 500 var(--step--1) var(--mono); color: var(--accent); opacity: .8;
-}
-.person p { margin-block-start: var(--space-3); color: var(--text-muted); font-size: var(--step--1); line-height: 1.7; }
-.person--soon { opacity: .72; }
+.person img { inline-size: 84px; block-size: 84px; border-radius: 50%; object-fit: cover; object-position: 50% 16%; }
+.person h3 { font-size: var(--step-1); font-weight: 700; }
+.person h3 span { display: block; margin-block-start: .2rem; color: var(--olive-d); font: 500 var(--step--1) var(--mono); }
+.person p { color: var(--ink-2); font-size: var(--step--1); line-height: 1.72; }
+.person--soon { background: transparent; border-style: dashed; border-color: var(--line); box-shadow: none; }
+@media (max-width: 860px) { .people { grid-template-columns: 1fr; } }
 
-/* ---------- closing ---------- */
-.cta { text-align: center; }
-.cta h2 { font-size: var(--step-2); font-weight: 800; max-width: 24ch; margin-inline: auto; }
-.cta p { margin: var(--space-4) auto 0; color: var(--text-muted); max-width: 42ch; }
+/* ---------- contact ----------
+   The page ends on the lime rather than fading out on paper: it is the one
+   colour the company owns, and a full block of it is the loudest the brand is
+   allowed to be. */
+.cta {
+  margin: 0 clamp(1rem, 4vw, 3rem) clamp(3rem, 7vw, 5rem);
+  padding: clamp(3rem, 8vw, 6rem) clamp(1.5rem, 5vw, 4rem);
+  border-radius: var(--radius-xl); background: var(--lime); color: var(--lime-ink);
+  text-align: center;
+}
+.cta h2 { max-width: 22ch; margin-inline: auto; font-size: var(--step-3); font-weight: 800; letter-spacing: -.015em; text-wrap: balance; }
+.cta p { max-width: 46ch; margin: var(--space-4) auto 0; font-size: var(--step-0); opacity: .82; }
 .cta__row { display: flex; flex-wrap: wrap; gap: var(--space-3); justify-content: center; margin-block-start: var(--space-8); }
+.cta .btn--dark { background: var(--lime-ink); color: var(--lime); }
+.cta .btn--ghost { border-color: rgba(22,32,10,.35); color: var(--lime-ink); }
+.cta .btn--ghost:hover { background: rgba(22,32,10,.08); }
 
 /* ---------- footer ---------- */
-.foot { border-block-start: 1px solid var(--line); padding: var(--space-12) clamp(1rem, 4vw, 3rem); }
-.foot__in { max-width: 68rem; margin-inline: auto; display: grid; gap: var(--space-6); }
-.foot__brand { font: 700 1.05rem var(--mono); }
-.foot__nav { display: flex; flex-wrap: wrap; gap: var(--space-3) var(--space-6); }
-.foot__nav a { color: var(--text-muted); font-size: var(--step--1); text-decoration: none; }
-.foot__nav a:hover { color: var(--text); }
-.foot__fine { color: var(--text-subtle); font: 400 .8rem var(--mono); }
+.foot { background: var(--dark); color: var(--on-dark); padding: clamp(2.5rem, 6vw, 4rem) clamp(1rem, 4vw, 3rem); }
+.foot__in { max-width: var(--wrap); margin-inline: auto; display: grid; gap: var(--space-6); }
+.foot__brand { font: 700 1.05rem/1 var(--mono); }
+.foot__nav { display: flex; flex-wrap: wrap; gap: var(--space-4) var(--space-6); }
+.foot__nav a { color: var(--on-dark-2); font-size: var(--step--1); text-decoration: none; }
+.foot__nav a:hover { color: var(--on-dark); text-decoration: underline; }
+.foot__fine { color: var(--on-dark-2); font-size: var(--step--1); }
 
-/* ---------- one orchestrated load, then nothing ---------- */
-.stagger > * {
-  opacity: 0; transform: translateY(10px);
-  animation: rise var(--dur-slow) var(--ease-out) forwards;
-  animation-delay: calc(var(--i) * 70ms);
+/* ---------- focus, once, for everything ---------- */
+a:focus-visible, button:focus-visible {
+  outline: 2px solid var(--olive-d); outline-offset: 3px; border-radius: 4px;
 }
-@keyframes rise { to { opacity: 1; transform: none; } }
+.built a:focus-visible, .foot a:focus-visible { outline-color: var(--lime); }
 
-/* Reveal on scroll, but content is visible by DEFAULT and only hidden once
-   JavaScript has confirmed it can un-hide it. The first build used
-   animation-timeline: view(), which never advanced here and left two thirds of
-   the page at opacity 0. A reveal that can strand content is not a reveal, it
-   is an outage. */
+/* ---------- reveal ---------- */
 .js-reveal .dcard,
 .js-reveal .lcard,
+.js-reveal .fig,
 .js-reveal .door,
-.js-reveal .card,
 .js-reveal .person,
-.js-reveal .campus {
+.js-reveal .strip figure {
   opacity: 0; transform: translateY(14px);
   transition: opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out);
 }
-/* specificity raised deliberately: the hidden rule and a bare .is-in tie at
-   (0,2,0), and a tie decided by source order is a fragile way to keep content
-   on screen. */
 .js-reveal .dcard.is-in,
 .js-reveal .lcard.is-in,
+.js-reveal .fig.is-in,
 .js-reveal .door.is-in,
-.js-reveal .card.is-in,
 .js-reveal .person.is-in,
-.js-reveal .campus.is-in { opacity: 1; transform: none; }
+.js-reveal .strip figure.is-in { opacity: 1; transform: none; }
+
+.stagger > * { animation: rise var(--dur-slow) var(--ease-out) both; animation-delay: calc(var(--i, 0) * 90ms); }
+@keyframes rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .stagger > * { opacity: 1; transform: none; animation: none; }
-  .js-reveal .card, .js-reveal .person, .js-reveal .campus { opacity: 1; transform: none; transition: none; }
-  .card:hover { transform: none; }
-  .card:hover img { scale: 1; }
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+  .stagger > * { opacity: 1; transform: none; }
 }
 html.a11y-reduce-motion .stagger > * { opacity: 1; transform: none; animation: none; }
-html.a11y-reduce-motion .js-reveal .card,
+html.a11y-reduce-motion .js-reveal .dcard,
+html.a11y-reduce-motion .js-reveal .lcard,
+html.a11y-reduce-motion .js-reveal .fig,
 html.a11y-reduce-motion .js-reveal .person,
-html.a11y-reduce-motion .js-reveal .campus { opacity: 1; transform: none; transition: none; }
-
-/* ---------- workshops and talks ----------
-   One of the three things Corewise actually sells, and it had no place on the
-   page at all. Text-led on purpose: a workshop has no product shot worth
-   showing, and four stock photographs of people at laptops would say less than
-   four honest sentences. The colour comes from the rules, not from imagery. */
-.learn {
-  padding: clamp(3.5rem, 9vw, 7rem) clamp(1rem, 4vw, 3rem);
-  border-block-start: 1px solid var(--line);
-}
-.lgrid {
-  display: grid; gap: var(--space-4);
-  grid-template-columns: repeat(2, 1fr);
-  max-width: 68rem; margin-inline: auto;
-}
-.lcard {
-  padding: var(--space-6);
-  border-radius: var(--radius-lg);
-  background: linear-gradient(180deg, var(--surface), var(--ink-2));
-  border-inline-start: 3px solid var(--accent);
-}
-.lcard:nth-child(2) { border-inline-start-color: #26D07C; }
-.lcard:nth-child(3) { border-inline-start-color: #E8834A; }
-.lcard:nth-child(4) { border-inline-start-color: #6E9B0E; }
-.lcard h3 { font-size: var(--step-1); font-weight: 700; }
-.lcard p {
-  margin-block-start: var(--space-3);
-  color: var(--text-muted); font-size: var(--step--1); line-height: 1.75;
-}
-.learn__proof {
-  max-width: 52rem; margin: var(--space-8) auto 0;
-  padding-inline-start: var(--space-4);
-  border-inline-start: 2px solid var(--accent);
-  color: var(--text-muted); font-size: var(--step--1); line-height: 1.8;
-}
-@media (max-width: 760px) { .lgrid { grid-template-columns: 1fr; } }
+html.a11y-reduce-motion .js-reveal .strip figure,
+html.a11y-reduce-motion .js-reveal .door { opacity: 1; transform: none; transition: none; }
