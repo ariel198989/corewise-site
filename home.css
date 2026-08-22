@@ -128,12 +128,18 @@ p { margin: 0; }
   opacity: .05; filter: blur(340px); pointer-events: none;
 }
 .hero__in { position: relative; max-width: 68rem; margin-inline: auto; }
+.hero { min-height: 82vh; display: grid; align-items: center; }
 .hero h1 {
-  margin: var(--space-4) 0 var(--space-6);
-  font-size: var(--step-4); font-weight: 800; line-height: 1.06;
-  max-width: 22ch;
+  margin: 0 0 var(--space-6);
+  /* the reference lesson: the headline owns the screen. Linear and NavVis both
+     give a single sentence the whole viewport and put nothing beside it. */
+  font-size: clamp(2.6rem, 6.4vw, 6rem); font-weight: 800; line-height: 1.04;
+  max-width: 20ch;
+  /* let the browser even out the lines instead of a hand-placed <br>, which
+     broke badly the moment the text or the viewport changed */
+  text-wrap: balance;
 }
-.hero__lede { font-size: var(--step-1); font-weight: 500; max-width: 40ch; }
+.hero__lede { font-size: var(--step-1); font-weight: 400; color: var(--text-muted); max-width: 40ch; }
 .hero__thesis {
   margin-block-start: var(--space-6); max-width: 56ch;
   color: var(--text-muted); font-size: var(--step-0);
@@ -154,6 +160,16 @@ p { margin: 0; }
 .btn--primary:hover { transform: translateY(-2px); }
 .btn--ghost { border-color: var(--line); color: var(--text); }
 .btn--ghost:hover { background: var(--surface); }
+
+/* ---------- the thesis, given its own air ---------- */
+.thesis {
+  padding: clamp(3.5rem, 9vw, 7rem) clamp(1rem, 4vw, 3rem);
+  border-block-start: 1px solid var(--line);
+}
+.thesis p {
+  max-width: 42ch; margin-inline: auto; text-align: center;
+  font-size: var(--step-2); font-weight: 500; line-height: 1.4;
+}
 
 /* ---------- the client wall on this page ---------- */
 .home-clients {
@@ -177,8 +193,45 @@ p { margin: 0; }
 }
 .dept__group:first-of-type { margin-block-start: 0; }
 
-/* ONE layout primitive, repeated: a two-up row where one cell is wider.
-   The imbalance is the hierarchy; equal cards would be a wall. */
+/* The department block sits on paper. Six dark cards stacked under a dark hero
+   gave the eye nowhere to rest, and this is the same paper the department sites
+   themselves use, so the jump into one of them is continuous. */
+.dept {
+  background: #F2F0EB; color: #14181C;
+}
+.dept .sec-head p { color: #4C5157; }
+
+/* One uniform grid, and the image sits ABOVE the words rather than behind them.
+   Text over photographs was the single biggest source of noise in the first
+   build: every card needed a scrim, and every card looked different because
+   every photograph is different. */
+.dgrid {
+  display: grid; gap: clamp(1.5rem, 3vw, 2.5rem);
+  grid-template-columns: repeat(3, 1fr);
+  max-width: 68rem; margin-inline: auto;
+}
+.dcard { display: block; text-decoration: none; color: inherit; }
+.dcard img {
+  width: 100%; aspect-ratio: 16 / 10; object-fit: cover;
+  border-radius: var(--radius-md); background: #E4E1DA;
+  transition: opacity var(--dur-base) var(--ease-out);
+}
+.dcard:hover img { opacity: .88; }
+.dcard h3 {
+  margin-block-start: var(--space-4);
+  font-size: var(--step-1); font-weight: 700;
+}
+.dcard p {
+  margin-block-start: var(--space-2);
+  color: #4C5157; font-size: var(--step--1); line-height: 1.7;
+}
+.dept .tag {
+  background: #14181C; color: #F2F0EB;
+}
+@media (max-width: 900px) { .dgrid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 620px) { .dgrid { grid-template-columns: 1fr; } }
+
+/* the old overlay card, still used by the two exhibit tiles below */
 .cards {
   display: grid; gap: var(--space-4);
   grid-template-columns: 1.45fr 1fr;
@@ -311,6 +364,7 @@ p { margin: 0; }
    animation-timeline: view(), which never advanced here and left two thirds of
    the page at opacity 0. A reveal that can strand content is not a reveal, it
    is an outage. */
+.js-reveal .dcard,
 .js-reveal .card,
 .js-reveal .person,
 .js-reveal .campus {
@@ -320,6 +374,7 @@ p { margin: 0; }
 /* specificity raised deliberately: the hidden rule and a bare .is-in tie at
    (0,2,0), and a tie decided by source order is a fragile way to keep content
    on screen. */
+.js-reveal .dcard.is-in,
 .js-reveal .card.is-in,
 .js-reveal .person.is-in,
 .js-reveal .campus.is-in { opacity: 1; transform: none; }

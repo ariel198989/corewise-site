@@ -63,7 +63,7 @@
  * JavaScript, or if this file fails to load, every card is simply visible. */
 (() => {
   if (!('IntersectionObserver' in window)) return;
-  const els = document.querySelectorAll('.card, .person, .campus');
+  const els = document.querySelectorAll('.dcard, .card, .person, .campus');
   if (!els.length) return;
   document.documentElement.classList.add('js-reveal');
   const io = new IntersectionObserver((entries, ob) => {
