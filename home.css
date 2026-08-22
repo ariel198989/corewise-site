@@ -326,16 +326,6 @@ section[id], #main { scroll-margin-block-start: 5.5rem; }
 }
 @media (max-width: 860px) { .learn__grid { grid-template-columns: 1fr; } }
 
-/* ---------- the numbers ---------- */
-.figs { padding: clamp(3rem, 8vw, 6rem) clamp(1rem, 4vw, 3rem); }
-.figs__grid {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(1rem, 3vw, 2.5rem);
-  max-width: var(--wrap); margin-inline: auto;
-}
-.fig { padding-inline-start: var(--space-4); border-inline-start: 3px solid var(--acc); }
-.fig b { display: block; font-size: var(--step-3); font-weight: 800; letter-spacing: -.02em; line-height: 1.1; }
-.fig span { display: block; margin-block-start: var(--space-2); color: var(--ink-2); font-size: var(--step--1); }
-@media (max-width: 700px) { .figs__grid { grid-template-columns: 1fr; } }
 
 /* ---------- the dark room ----------
    The only dark band on the page, which is precisely why it registers. It is
@@ -473,7 +463,6 @@ a:focus-visible, button:focus-visible {
 /* ---------- reveal ---------- */
 .js-reveal .dcard,
 .js-reveal .lcard,
-.js-reveal .fig,
 .js-reveal .door,
 .js-reveal .person,
 .js-reveal .strip figure {
@@ -482,7 +471,6 @@ a:focus-visible, button:focus-visible {
 }
 .js-reveal .dcard.is-in,
 .js-reveal .lcard.is-in,
-.js-reveal .fig.is-in,
 .js-reveal .door.is-in,
 .js-reveal .person.is-in,
 .js-reveal .strip figure.is-in { opacity: 1; transform: none; }
@@ -498,7 +486,6 @@ a:focus-visible, button:focus-visible {
 html.a11y-reduce-motion .stagger > * { opacity: 1; transform: none; animation: none; }
 html.a11y-reduce-motion .js-reveal .dcard,
 html.a11y-reduce-motion .js-reveal .lcard,
-html.a11y-reduce-motion .js-reveal .fig,
-html.a11y-reduce-motion .js-reveal .person,
+html.a11y-reduce-motion html.a11y-reduce-motion .js-reveal .person,
 html.a11y-reduce-motion .js-reveal .strip figure,
 html.a11y-reduce-motion .js-reveal .door { opacity: 1; transform: none; transition: none; }

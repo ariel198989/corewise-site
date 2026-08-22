@@ -9,7 +9,7 @@
  * JavaScript, or if this file fails to load, every card is simply visible. */
 (() => {
   if (!('IntersectionObserver' in window)) return;
-  const els = document.querySelectorAll('.dcard, .lcard, .fig, .person, .door, .strip figure');
+  const els = document.querySelectorAll('.dcard, .lcard, .person, .door, .strip figure');
   if (!els.length) return;
   document.documentElement.classList.add('js-reveal');
   const io = new IntersectionObserver((entries, ob) => {
