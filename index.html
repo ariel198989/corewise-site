@@ -16,11 +16,11 @@
 <link rel="preload" as="image" href="home/campus-still.webp">
 <link rel="stylesheet" href="a11y.css?v=1787100000">
 <link rel="stylesheet" href="clients.css?v=1787500000">
-<link rel="stylesheet" href="home.css?v=1788700000">
+<link rel="stylesheet" href="home.css?v=1788800000">
 <script src="a11y.js?v=1787100000"></script>
 <script src="i18n.js?v=1787100000" defer></script>
 <script src="clients.js?v=1787500000" defer></script>
-<script src="home.js?v=1788700000" defer></script>
+<script src="home.js?v=1788800000" defer></script>
 <script src="pixel.js?v=1787900000" defer></script>
 </head>
 <body>
@@ -167,19 +167,26 @@ src="https://www.facebook.com/tr?id=1063707116175844&ev=PageView&noscript=1"/></
       <p data-en="We are asked to come and teach almost as often as we are asked to come and build. Same material, a room instead of a repository.">מזמינים אותנו ללמד כמעט באותה תדירות שמזמינים אותנו לבנות. אותו חומר, רק שבמקום מאגר קוד יש חדר.</p>
     </header>
 
-    <div class="learn__grid">
-      <div class="learn__shots">
-        <figure class="learn__shot">
-          <img src="works/lecture1.webp" alt="אריאל אוחיון מרצה מול אולם מלא" data-en-alt="Ariel Ohayon speaking to a full room" loading="lazy" decoding="async" width="1400" height="934">
-          <figcaption class="learn__badge" data-en="Ariel, on stage">אריאל, על הבמה</figcaption>
-        </figure>
-        <figure class="learn__shot learn__shot--b">
-          <img src="home/lidor-talk.webp" alt="לידור דהן מדבר מול קבוצת נערים בכיתה, על המסך הרצאה על מסע יזמות" data-en-alt="Lidor Dahan speaking to a group of teens in a classroom, a founder's-journey talk on the screen" loading="lazy" decoding="async" width="1100" height="1466">
-          <figcaption class="learn__badge" data-en="Lidor, in the classroom">לידור, בכיתה</figcaption>
-        </figure>
+    <!-- A running strip of the real thing, no captions: the photographs say
+         "us, in rooms, teaching" on their own, and labelling each one by name
+         made it read as a staff list. The second track is a seamless-loop
+         duplicate, hidden from assistive tech so nothing is announced twice. -->
+    <div class="reel" data-reel>
+      <div class="reel__track">
+        <img src="home/reel-lecture1.webp" alt="אריאל אוחיון מרצה מול אולם מלא" data-en-alt="Ariel Ohayon speaking to a full room" loading="lazy" decoding="async" width="900" height="600">
+        <img src="home/reel-lidor-talk.webp" alt="לידור דהן מדבר מול קבוצת נערים בכיתה" data-en-alt="Lidor Dahan speaking to a group of teens in a classroom" loading="lazy" decoding="async" width="900" height="600">
+        <img src="home/reel-lecture2.webp" alt="הרצאה על במה מול קהל, על המסך תרשים זרימה" data-en-alt="A talk on stage in front of an audience, a flow diagram on the screen" loading="lazy" decoding="async" width="900" height="600">
+        <img src="home/reel-lidor-workshop.webp" alt="לידור מסביר על רכיב אלקטרוני סביב שולחן סדנה" data-en-alt="Lidor explaining an electronic component around a workshop table" loading="lazy" decoding="async" width="900" height="600">
       </div>
+      <div class="reel__track" aria-hidden="true">
+        <img src="home/reel-lecture1.webp" alt="" loading="lazy" decoding="async" width="900" height="600" aria-hidden="true">
+        <img src="home/reel-lidor-talk.webp" alt="" loading="lazy" decoding="async" width="900" height="600" aria-hidden="true">
+        <img src="home/reel-lecture2.webp" alt="" loading="lazy" decoding="async" width="900" height="600" aria-hidden="true">
+        <img src="home/reel-lidor-workshop.webp" alt="" loading="lazy" decoding="async" width="900" height="600" aria-hidden="true">
+      </div>
+    </div>
 
-      <div class="lgrid">
+    <div class="lgrid">
       <article class="lcard" style="--acc:#6E9B0E">
         <h3 data-en="A talk inside your organisation">הרצאה בארגון</h3>
         <p data-en="An hour or two in front of a team, on what AI actually changes in their work rather than in the headlines. No slideware about the future.">שעה או שעתיים מול צוות, על מה שבינה מלאכותית באמת משנה בעבודה שלו ולא בכותרות. בלי מצגת על העתיד.</p>
@@ -196,7 +203,6 @@ src="https://www.facebook.com/tr?id=1063707116175844&ev=PageView&noscript=1"/></
         <h3 data-en="A year-long school programme">תוכנית שנתית לבית ספר</h3>
         <p data-en="Electronics, sensors and smart models, with platforms we wrote for the classroom. This is the department named for Yitzhak Ohayon.">אלקטרוניקה, חיישנים ומודלים חכמים, עם פלטפורמות שכתבנו לכיתה. זו המחלקה ע"ש יצחק אוחיון.</p>
       </article>
-      </div>
     </div>
   </section>
 

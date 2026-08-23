@@ -32,6 +32,40 @@
   document.addEventListener('visibilitychange', () => { if (document.hidden) release(); });
 })();
 
+/* The photo reel in the workshops section.
+ *
+ * WCAG 2.2.2: it starts on its own and runs well past five seconds, so it
+ * needs a control. Built here rather than in the markup for the same reason
+ * as the door's: a pause button that a failed script left inert is worse than
+ * motion with no button at all. Hover and focus already pause it in CSS; this
+ * is the explicit, persistent stop. */
+(() => {
+  const reel = document.querySelector('[data-reel]');
+  if (!reel) return;
+
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'reel__pause';
+  reel.appendChild(btn);
+
+  const EN = () => document.documentElement.lang === 'en';
+  let paused = false;
+  function paint() {
+    btn.textContent = paused ? (EN() ? '▶ Play' : '▶ הפעלה') : (EN() ? '❚❚ Pause' : '❚❚ השהיה');
+    btn.setAttribute('aria-label', paused
+      ? (EN() ? 'Play the photo reel' : 'הפעלת רצועת התמונות')
+      : (EN() ? 'Pause the photo reel' : 'השהיית רצועת התמונות'));
+  }
+  btn.addEventListener('click', () => {
+    paused = !paused;
+    reel.classList.toggle('is-paused', paused);
+    paint();
+  });
+  new MutationObserver(paint).observe(document.documentElement,
+    { attributes: true, attributeFilter: ['lang'] });
+  paint();
+})();
+
 /* The campus door plays the hall itself.
  *
  * The clip is a megabyte, so it is not fetched until the door is near the

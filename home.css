@@ -296,24 +296,6 @@ section[id], #main { scroll-margin-block-start: 5.5rem; }
    a stage in front of a full room, which is the only proof this section needs;
    the formats sit beside it as plain rules rather than as four more cards. */
 .learn { padding: clamp(3.5rem, 9vw, 7rem) clamp(1rem, 4vw, 3rem); background: var(--paper-2); border-block: 1px solid var(--line-2); }
-.learn__grid {
-  display: grid; grid-template-columns: 1.05fr 1fr;
-  gap: clamp(1.5rem, 4vw, 3.5rem); align-items: start;
-  max-width: var(--wrap); margin-inline: auto;
-}
-/* Two frames, offset: Ariel in front of a full room and Lidor in front of a
-   class — the two halves of the same offer. The overlap is what makes them a
-   composition rather than a grid cell each. */
-.learn__shots { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); align-items: start; }
-.learn__shot { position: relative; border-radius: var(--radius-xl); overflow: hidden; box-shadow: var(--shadow-2); }
-.learn__shot img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block; }
-.learn__shot--b { margin-block-start: clamp(1.25rem, 3vw, 2.5rem); }
-.learn__badge {
-  position: absolute; inset-block-end: var(--space-4); inset-inline-start: var(--space-4);
-  padding: .5rem .9rem; border-radius: var(--radius-pill);
-  background: var(--lime); color: var(--lime-ink);
-  font: 600 var(--step--1) var(--font);
-}
 .lgrid { display: grid; gap: 0; }
 .lcard { padding: var(--space-6) 0; border-block-start: 1px solid var(--line); }
 .lcard:first-child { border-block-start: 0; padding-block-start: 0; }
@@ -323,7 +305,6 @@ section[id], #main { scroll-margin-block-start: 5.5rem; }
   border-radius: 50%; background: var(--acc); margin-inline-end: .6rem; vertical-align: .12em;
 }
 .lcard p { margin-block-start: var(--space-2); color: var(--ink-2); font-size: var(--step--1); line-height: 1.72; }
-@media (max-width: 860px) { .learn__grid { grid-template-columns: 1fr; } }
 
 
 /* ---------- the dark room ----------
@@ -488,3 +469,55 @@ html.a11y-reduce-motion .js-reveal .lcard,
 html.a11y-reduce-motion html.a11y-reduce-motion .js-reveal .person,
 html.a11y-reduce-motion .js-reveal .strip figure,
 html.a11y-reduce-motion .js-reveal .door { opacity: 1; transform: none; transition: none; }
+
+/* ---------- the reel ----------
+   Photographs of us in rooms, running. No captions: naming each frame turned
+   a proof into a staff list. Two identical tracks scroll as one so the loop
+   has no gap, and the duplicate is hidden from assistive tech.
+
+   WCAG 2.2.2: it starts on its own and runs past five seconds, so home.js
+   attaches a pause control. Hovering or focusing inside also stops it. */
+.reel {
+  position: relative; display: flex; gap: var(--space-4);
+  max-width: var(--wrap); margin: 0 auto var(--space-12);
+  overflow: hidden; mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+.reel__track {
+  display: flex; gap: var(--space-4); flex: none;
+  animation: reel 38s linear infinite;
+}
+.reel:hover .reel__track,
+.reel:focus-within .reel__track,
+.reel.is-paused .reel__track { animation-play-state: paused; }
+.reel img {
+  block-size: clamp(210px, 26vw, 320px); inline-size: auto;
+  object-fit: cover; border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-1);
+}
+/* RTL: the tracks sit right-to-left, so the loop travels the same way */
+@keyframes reel { from { transform: translateX(0); } to { transform: translateX(calc(-100% - var(--space-4))); } }
+:root[dir="rtl"] .reel__track,
+[dir="rtl"] .reel__track { animation-name: reel-rtl; }
+@keyframes reel-rtl { from { transform: translateX(0); } to { transform: translateX(calc(100% + var(--space-4))); } }
+
+.reel__pause {
+  position: absolute; z-index: 2;
+  inset-block-end: var(--space-3); inset-inline-end: var(--space-3);
+  min-block-size: 32px; padding: .3rem .7rem;
+  border: 1px solid var(--line); border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--paper-2) 88%, transparent);
+  color: var(--ink-2); font: 500 .72rem var(--font); cursor: pointer;
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+}
+.reel__pause:hover { color: var(--ink); }
+.reel__pause:focus-visible { outline: 2px solid var(--olive-d); outline-offset: 2px; }
+
+.lgrid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0 var(--space-12); max-width: var(--wrap); margin-inline: auto; }
+.lcard { padding: var(--space-6) 0; border-block-start: 1px solid var(--line); }
+.lcard:nth-child(-n+2) { border-block-start: 0; padding-block-start: 0; }
+@media (max-width: 760px) {
+  .lgrid { grid-template-columns: 1fr; }
+  .lcard:nth-child(2) { border-block-start: 1px solid var(--line); padding-block-start: var(--space-6); }
+}
+@media (prefers-reduced-motion: reduce) { .reel__track { animation: none; } }
+html.a11y-reduce-motion .reel__track { animation: none; }
