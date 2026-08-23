@@ -370,3 +370,25 @@ html:not(.no-js) .reveal.is-in { opacity: 1; transform: none; }
   font-size: .78rem; color: var(--ink-2);
 }
 @media (max-width: 700px) { .field__grid { grid-template-columns: 1fr; } }
+
+/* ---------- what we bring ----------
+   The section used to lead with the method and its metamorphosis frame; the
+   formats people actually book were nowhere on the page. Now the offer is the
+   grid and the method is a strip under it. */
+.offers {
+  list-style: none; margin: 0 0 var(--space-16); padding: 0;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4);
+}
+.offer {
+  padding: var(--space-6); background: var(--surface);
+  border-radius: var(--radius-md); display: grid; gap: var(--space-2);
+  align-content: start;
+}
+.offer__title { margin: 0; font-size: var(--step-0); font-weight: 600; }
+.offer__desc { margin: 0; color: var(--ink-2); font-size: var(--step--1); line-height: 1.7; }
+.method__title {
+  margin: 0 0 var(--space-8); font-size: var(--step-0); font-weight: 600;
+  color: var(--ink-2);
+}
+@media (max-width: 900px) { .offers { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .offers { grid-template-columns: 1fr; } }
