@@ -461,3 +461,21 @@ figcaption .mono { color: var(--ink-2); }
   .convo { grid-template-columns: 1fr; }
   .frames { grid-template-columns: 1fr; }
 }
+
+/* ---------- the same principle, other trades ----------
+   Concept renders, and the captions say so on every frame: the supermarket
+   above is real screenshots, and keeping that line sharp is part of the
+   credibility the section trades on. */
+.domain { margin-block-start: var(--space-16); padding-block-start: var(--space-12); border-block-start: 1px solid var(--line); }
+.domain-h { margin: 0; font-size: var(--step-1); font-weight: 700; }
+.domain-lede { margin: var(--space-3) 0 var(--space-8); max-width: 46rem; color: var(--ink-2); line-height: 1.75; }
+.domain-frames {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-6);
+}
+.domain-frames img {
+  inline-size: 100%; block-size: auto; display: block;
+  border: 1px solid var(--line); border-radius: var(--radius-md);
+  background: var(--surface);
+}
+@media (max-width: 860px) { .domain-frames { grid-template-columns: 1fr; } }
