@@ -414,7 +414,8 @@ section[id], #main { scroll-margin-block-start: 5.5rem; }
 
 /* ---------- who ---------- */
 .who { padding: clamp(4rem, 10vw, 8rem) clamp(1rem, 4vw, 3rem); }
-.people { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(1.25rem, 3vw, 2rem); max-width: var(--wrap); margin-inline: auto; }
+/* two founders, two columns; three stretched cards would just pad the row */
+.people { display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(1.25rem, 3vw, 2rem); max-width: 58rem; margin-inline: auto; }
 .person {
   display: grid; gap: var(--space-4);
   padding: var(--space-6); border-radius: var(--radius-xl);
@@ -424,7 +425,6 @@ section[id], #main { scroll-margin-block-start: 5.5rem; }
 .person h3 { font-size: var(--step-1); font-weight: 700; }
 .person h3 span { display: block; margin-block-start: .2rem; color: var(--olive-d); font: 500 var(--step--1) var(--mono); }
 .person p { color: var(--ink-2); font-size: var(--step--1); line-height: 1.72; }
-.person--soon { background: transparent; border-style: dashed; border-color: var(--line); box-shadow: none; }
 @media (max-width: 860px) { .people { grid-template-columns: 1fr; } }
 
 /* ---------- contact ----------
