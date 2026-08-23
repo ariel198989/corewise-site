@@ -401,3 +401,63 @@ figcaption .mono { color: var(--ink-2); }
   }
   .dot::after { display: none; }
 }
+
+/* ---------- yours: the pitch to the business owner ----------
+   The page showed the supermarket as our product; this section turns it
+   around and sells the mechanism. The exchange comes before the screenshots
+   because the sentence-to-basket move is the part a shop owner cannot get
+   from looking at shelves. */
+.yours { padding-block: var(--section); background: var(--bg-deep); }
+.yours-head { max-width: 46rem; margin-block-end: var(--space-12); }
+.yours-head h2 { font-size: var(--step-2); font-weight: 700; line-height: 1.25; margin: var(--space-3) 0 0; letter-spacing: -.01em; text-wrap: balance; }
+.yours-lede { margin: var(--space-4) 0 0; color: var(--ink-2); line-height: 1.75; }
+
+.convo {
+  display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-6);
+  align-items: stretch; margin-block-end: var(--space-12);
+}
+.convo-q { margin: 0; display: grid; align-content: center; gap: var(--space-3); }
+.convo-q blockquote {
+  margin: 0; padding-inline-start: var(--space-4);
+  border-inline-start: 3px solid var(--marker);
+  font-size: var(--step-1); font-weight: 600; line-height: 1.5;
+}
+.convo-q figcaption { color: var(--ink-3); font-size: .78rem; }
+.convo-a {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius-md); padding: var(--space-6);
+}
+.convo-a__k { margin: 0 0 var(--space-4); color: #476509; font-size: .78rem; }
+.basket { list-style: none; margin: 0; padding: 0; display: grid; }
+.basket li {
+  display: flex; justify-content: space-between; gap: var(--space-4);
+  padding-block: var(--space-2);
+  border-block-end: 1px solid var(--grid);
+  font-size: var(--step--1);
+}
+.basket li:last-child { border-block-end: 0; }
+.basket-n { color: var(--ink-3); }
+.basket-foot { margin: var(--space-4) 0 0; color: var(--ink-3); font-size: .82rem; line-height: 1.6; }
+
+.frames {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-6);
+}
+.frame img {
+  inline-size: 100%; block-size: auto; display: block;
+  border: 1px solid var(--line); border-radius: var(--radius-md);
+  background: var(--surface);
+}
+.frame--wide { grid-column: 1 / -1; }
+.frame-cap { margin: var(--space-3) 0 0; color: var(--ink-2); font-size: var(--step--1); display: flex; gap: var(--space-2); align-items: baseline; }
+.frame-cap .mono { color: #476509; }   /* 5.1:1 on --bg-deep; --olive-deep is 4.14 there */
+
+.yours-close {
+  margin: var(--space-12) 0 0; max-width: 40rem;
+  font-size: var(--step-1); font-weight: 600; line-height: 1.5; text-wrap: balance;
+}
+
+@media (max-width: 860px) {
+  .convo { grid-template-columns: 1fr; }
+  .frames { grid-template-columns: 1fr; }
+}

@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="style.css?v=1786962400">
+<link rel="stylesheet" href="style.css?v=1788410000">
 <script src="i18n.js?v=1786962400" defer></script>
 <link rel="stylesheet" href="a11y.css?v=1786961200">
 <script src="a11y.js?v=1786961200"></script>
@@ -114,6 +114,62 @@ src="https://www.facebook.com/tr?id=1063707116175844&ev=PageView&noscript=1"/></
         </div>
 
       </article>
+    </div>
+  </section>
+
+
+  <!-- ============ YOURS: the pitch to the business owner ============ -->
+  <section class="yours" id="yours" aria-labelledby="yours-h">
+    <div class="wrap">
+      <header class="yours-head">
+        <p class="kicker"><span class="mono" data-en="For business owners">לבעלי עסקים</span></p>
+        <h2 id="yours-h" data-en="This store is open. Yours can work the same way.">החנות הזאת פעילה. גם העסק שלכם יכול לעבוד ככה.</h2>
+        <p class="yours-lede" data-en="Everything below is a screenshot from the live shop, not a render. Swap the products for yours and this is your business: customers walk the aisles from home, and a smart agent builds their basket from one sentence.">כל מה שלמטה הוא צילום מסך מהחנות החיה, לא הדמיה. תחליפו את המוצרים בשלכם וזה העסק שלכם: לקוחות מסתובבים במעברים מהבית, וסוכן חכם מרכיב להם סל ממשפט אחד.</p>
+      </header>
+
+      <!-- the exchange: one sentence in, a ready basket out -->
+      <div class="convo" role="group" aria-label="דוגמה: משפט של לקוח והסל שהסוכן מרכיב" data-en-aria-label="Example: a customer's sentence and the basket the agent builds">
+        <figure class="convo-q">
+          <blockquote data-en="&quot;I'm hosting a barbecue for 15 people this evening. A good mix, and salads on the side.&quot;">"אני עושה הערב ארוחה ל־15 אנשים. על האש מגוון, עם סלטים ליד."</blockquote>
+          <figcaption class="mono" data-en="The customer, one sentence">הלקוח, משפט אחד</figcaption>
+        </figure>
+        <div class="convo-a">
+          <p class="mono convo-a__k" data-en="The agent, a ready basket">הסוכן, סל מוכן</p>
+          <ul class="basket" aria-label="הסל שהורכב" data-en-aria-label="The basket that was built">
+            <li><span data-en="Chicken shawarma, 500 g">שווארמה פרגיות 500 ג׳</span><span class="mono basket-n" dir="ltr">×7</span></li>
+            <li><span data-en="Eastern kebab, 500 g">קבב מזרחי 500 גרם</span><span class="mono basket-n" dir="ltr">×2</span></li>
+            <li><span data-en="Lamb kebab, 500 g">קבב כבש 500 גרם</span><span class="mono basket-n" dir="ltr">×2</span></li>
+            <li><span data-en="Salads, pitas, charcoal and sides">סלטים, פיתות, פחמים ותוספות</span><span class="mono basket-n" dir="ltr">···</span></li>
+          </ul>
+          <p class="basket-foot" data-en="65 items, priced from the real catalogue, with today's deals already counted.">65 פריטים, מתומחרים מהקטלוג האמיתי, כשהמבצעים של היום כבר בפנים.</p>
+        </div>
+      </div>
+
+      <!-- the proof, in the order it happens -->
+      <ol class="frames">
+        <li class="frame">
+          <img src="img/event-prompt.webp" width="1200" height="520" loading="lazy" decoding="async"
+               alt="חלון בחנות הווירטואלית: תארו את האירוע ונרכיב לכם סל מדויק, עם המשפט של הלקוח בשדה הקלט וכפתור בנו לי סל" data-en-alt="A dialog in the virtual shop: describe the event and we'll build you an exact basket, with the customer's sentence in the input and a build-my-basket button">
+          <p class="frame-cap"><span class="mono">01</span> <span data-en="The customer describes the event, in typing or by voice">הלקוח מתאר את האירוע, בהקלדה או בקול</span></p>
+        </li>
+        <li class="frame">
+          <img src="img/event-cart.webp" width="1000" height="660" loading="lazy" decoding="async"
+               alt="העגלה שהורכבה: שווארמה פרגיות, קבב מזרחי, קבב כבש וקבב דווסה עם כמויות ומחירים, ושורת חיסכון של 8.35 שקלים במבצעים" data-en-alt="The assembled cart: chicken shawarma and three kinds of kebab with quantities and prices, and a savings line of 8.35 shekels from deals">
+          <p class="frame-cap"><span class="mono">02</span> <span data-en="The basket comes back priced, deals included">הסל חוזר מתומחר, כולל המבצעים</span></p>
+        </li>
+        <li class="frame">
+          <img src="img/cart-follow.webp" width="1100" height="530" loading="lazy" decoding="async"
+               alt="עגלת קניות תלת־ממדית נוסעת במעבר, מעליה קרטון חלב שמרחף בדרכו פנימה עם תווית מחיר" data-en-alt="A 3D shopping cart travelling down the aisle, a milk carton floating into it with a price tag">
+          <p class="frame-cap"><span class="mono">03</span> <span data-en="Or shop by hand: the cart travels with you">או קונים ביד: העגלה נוסעת איתכם</span></p>
+        </li>
+        <li class="frame frame--wide">
+          <img src="img/aisle-nav.webp" width="1500" height="617" loading="lazy" decoding="async"
+               alt="מבט על מעבר שלם בחנות עם ניווט המחלקות למעלה: קפואים, משקאות, חלב וביצים ועוד, ושלטי מחלקות תלויים מהתקרה" data-en-alt="A full aisle with the department navigation on top: frozen, drinks, dairy and more, with department signs hanging from the ceiling">
+          <p class="frame-cap"><span class="mono">04</span> <span data-en="Thirteen departments, each one a real aisle">שלוש־עשרה מחלקות, כל אחת מעבר אמיתי</span></p>
+        </li>
+      </ol>
+
+      <p class="yours-close" data-en="A boutique, a pharmacy, a plant nursery, a hardware store. If it sits on shelves, it can work like this.">בוטיק, בית מרקחת, משתלה, חנות כלי עבודה. אם זה יושב על מדפים, זה יכול לעבוד ככה.</p>
     </div>
   </section>
 
