@@ -361,6 +361,7 @@ html:not(.no-js) .reveal.is-in { opacity: 1; transform: none; }
   gap: var(--space-6); align-items: start;
 }
 .field__fig { margin: 0; }
+.field__fig--wide { grid-column: 1 / -1; }
 .field__fig img {
   inline-size: 100%; block-size: auto;
   border-radius: var(--radius-md); display: block;
