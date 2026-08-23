@@ -1,7 +1,7 @@
 /* DIRECTION: technical drawing on paper (Swiss precision row, RTL). SEED: "measuresolve" = 12 → 12 % 8 = 4→ swapped to 1 (dark-technical was the previous project).
    REFERENCE: named precedent. Engineering dimension sheets (DIN 406 dimension lines) + Teenage Engineering spec pages.
    TYPE: Rubik 700/400 (Hebrew) + IBM Plex Mono for units, indices, dims.   SCALE: perfect fourth.
-   BASE: off-white #f4f2ec / charcoal #14181c.   ACCENT: LiDAR teal #26d07c on dark (8.5:1), #117a48 as ink on paper (4.8:1).
+   BASE: off-white #f4f2ec / charcoal #14181c.   ACCENT: LiDAR teal #26d07c on dark (8.5:1), #0f6b3f as ink on paper (5.4:1 on the surface tint too).
    LAYOUT PRIMITIVE: a "measurement sheet" row, oversized unit figure + dimension line + image with caption, repeated 5x.
    MOTION PERSONALITY: mathematical (expo-out, no bounce).
    ONE MEMORABLE THING: every feature is introduced by its output unit (מ״מ, מ³, %·°, STL) set at poster size, sitting on a real dimension line. */
@@ -12,11 +12,11 @@
   --paper-2: #ebe8df;
   --ink: #14181c;
   --ink-2: #3a4148;
-  --ink-3: #6b7178;
+  --ink-3: #5d636a;   /* 5.4:1 on paper; the old value sat at 4.4 */
   --line: #14181c;
   --hair: rgba(20, 24, 28, .16);
   --accent: #26d07c;
-  --accent-ink: #117a48;
+  --accent-ink: #0f6b3f;   /* 5.4:1 on the surface tint; 4.8 held on paper but not on #ebe8df */
   --on-dark: #f4f2ec;
   --on-dark-muted: #b9bec2;
   --wa: #26d07c;
@@ -326,3 +326,18 @@ figcaption { font-size: var(--step--1); color: var(--on-dark-muted); line-height
   .hero-grid { grid-template-columns: 6fr 7fr; gap: var(--space-16); }
   .feat { grid-template-columns: 4fr 8fr; }
 }
+
+/* the credentials line, now with the person in it: the URSI photograph says
+   "radio science" better than the sentence does */
+.team-card {
+  margin-block-start: var(--space-12);
+  display: grid; grid-template-columns: minmax(9rem, 13rem) 1fr;
+  gap: var(--space-6); align-items: center; max-width: 44rem;
+}
+.team-card .team { margin-block-start: 0; display: block; }
+.team-card__img { inline-size: 100%; block-size: auto; border-radius: 8px; display: block; }
+@media (max-width: 560px) { .team-card { grid-template-columns: 1fr; } .team-card__img { max-inline-size: 16rem; } }
+
+/* the shared clients pause control dims itself with opacity, which lands at
+   3.84:1 on this paper; solid colour keeps the look and the contrast */
+.cw-clients__pause { opacity: 1 !important; color: var(--ink-2); }

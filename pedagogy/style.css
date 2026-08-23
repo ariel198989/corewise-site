@@ -13,7 +13,7 @@
   --surface-high: #e2dfd4;
   --ink: #14181c;
   --ink-2: #3a3f44;
-  --ink-3: #6b7076;
+  --ink-3: #5c6167;   /* 5.1:1 on the surface tint; the old value sat at 4.07 */
   --rule: #d3cfc3;
   --grid: rgba(20, 24, 28, .045);
   --accent: #C6F24E;
@@ -350,3 +350,23 @@ html:not(.no-js) .reveal.is-in { opacity: 1; transform: none; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-delay: 0ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
   html:not(.no-js) .reveal { opacity: 1; transform: none; }
 }
+
+/* ---------- from the field ----------
+   Real photographs of teaching in progress. Two portraits side by side,
+   captions in the page's mono voice; no cropping games — the photos carry
+   their own composition. */
+.field { padding-block: var(--section); }
+.field__grid {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-6); align-items: start;
+}
+.field__fig { margin: 0; }
+.field__fig img {
+  inline-size: 100%; block-size: auto;
+  border-radius: var(--radius-md); display: block;
+}
+.field__fig figcaption {
+  margin-block-start: var(--space-3);
+  font-size: .78rem; color: var(--ink-2);
+}
+@media (max-width: 700px) { .field__grid { grid-template-columns: 1fr; } }

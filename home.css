@@ -301,8 +301,13 @@ section[id], #main { scroll-margin-block-start: 5.5rem; }
   gap: clamp(1.5rem, 4vw, 3.5rem); align-items: start;
   max-width: var(--wrap); margin-inline: auto;
 }
+/* Two frames, offset: Ariel in front of a full room and Lidor in front of a
+   class — the two halves of the same offer. The overlap is what makes them a
+   composition rather than a grid cell each. */
+.learn__shots { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); align-items: start; }
 .learn__shot { position: relative; border-radius: var(--radius-xl); overflow: hidden; box-shadow: var(--shadow-2); }
-.learn__shot img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+.learn__shot img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block; }
+.learn__shot--b { margin-block-start: clamp(1.25rem, 3vw, 2.5rem); }
 .learn__badge {
   position: absolute; inset-block-end: var(--space-4); inset-inline-start: var(--space-4);
   padding: .5rem .9rem; border-radius: var(--radius-pill);
