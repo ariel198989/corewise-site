@@ -275,9 +275,21 @@
           "pitch": 20,
           "title": "Who we are",
           "sub": "Two founders who do the work themselves",
-          "abstract": "Ariel and Lidor. One builds, one leads, both are inside every project. No outsourcing, no layers. Everything you see on this site, including the site itself, was built by their hands.",
+          "abstract": "Lidor and Ariel. One leads, one builds, both are inside every project. No outsourcing, no layers. Everything you see on this site, including the site itself, was built by their hands.",
           "room": "team",
           "people": [
+            {
+              "name": "Lidor Dahan",
+              "role": "CEO and founder",
+              "img": "works/lidor.webp",
+              "text": "PhD in electrical and computer engineering. About six years developing AI for autonomous vehicles, and founded ventures in computer vision and smart cities. From the problem, to a prototype, to a product that runs.",
+              "tags": [
+                "PhD",
+                "Computer vision",
+                "LiDAR"
+              ],
+              "wa": "Hi Lidor, I saw you on the site. I would like to talk."
+            },
             {
               "name": "Ariel Ohayon",
               "role": "CTO and founder · lead developer",
@@ -291,18 +303,6 @@
                 "Computer vision",
                 "LiDAR"
               ]
-            },
-            {
-              "name": "Lidor Dahan",
-              "role": "CEO and founder",
-              "img": "works/lidor.webp",
-              "text": "PhD in electrical and computer engineering. About six years developing AI for autonomous vehicles, and founded ventures in computer vision and smart cities. From the problem, to a prototype, to a product that runs.",
-              "tags": [
-                "PhD",
-                "Computer vision",
-                "LiDAR"
-              ],
-              "wa": "Hi Lidor, I saw you on the site. I would like to talk."
             }
           ]
         },
@@ -1151,18 +1151,18 @@
       "id": "team",
       "eyebrow": "End of the tour",
       "title": "Let's talk",
-      "sub": "Ariel Ohayon · Lidor Dahan",
-      "body": "Ariel, founder and head of development, owner of the Claude Israel community. Lidor, CEO and founder, Ph.D. in electrical and computer engineering.",
+      "sub": "Lidor Dahan · Ariel Ohayon",
+      "body": "Lidor, CEO and founder, Ph.D. in electrical and computer engineering. Ariel, founder and head of development, owner of the Claude Israel community.",
       "works": [
-        {
-          "title": "Ariel Ohayon",
-          "desc": "CTO and founder · Lead developer · Speaker · Claude Israel community (25K+)",
-          "img": "ariel.webp"
-        },
         {
           "title": "Lidor Dahan",
           "desc": "CEO · Founder · Ph.D Electrical and Computer Engineering",
           "img": "lidor.jpeg"
+        },
+        {
+          "title": "Ariel Ohayon",
+          "desc": "CTO and founder · Lead developer · Speaker · Claude Israel community (25K+)",
+          "img": "ariel.webp"
         }
       ],
       "cta": {
@@ -1171,24 +1171,6 @@
         "phone": "+972507594477"
       },
       "hotspots": [
-        {
-          "yaw": -45,
-          "pitch": 0,
-          "title": "Ariel Ohayon",
-          "text": "Founder and CTO of Corewise, and the person responsible for all of its development. Speaks on AI at conferences, runs workshops inside companies and embeds AI in organisations. Founded the \"Claude Israel\" community, now 25,000 members. Holds a BA in economics and business administration and a financial planning licence. His knowledge spans everything Corewise does: video production, complex systems, AR, computer vision and LiDAR. What works in the field, he brings to your project.",
-          "img": "ariel.webp",
-          "kind": "story",
-          "metrics": [
-            [
-              "25K+",
-              "Community"
-            ],
-            [
-              "B.A",
-              "Economics and business"
-            ]
-          ]
-        },
         {
           "yaw": 45,
           "pitch": 0,
@@ -1204,6 +1186,24 @@
             [
               "6",
               "Years of AI in autonomous vehicles"
+            ]
+          ]
+        },
+        {
+          "yaw": -45,
+          "pitch": 0,
+          "title": "Ariel Ohayon",
+          "text": "Founder and CTO of Corewise, and the person responsible for all of its development. Speaks on AI at conferences, runs workshops inside companies and embeds AI in organisations. Founded the \"Claude Israel\" community, now 25,000 members. Holds a BA in economics and business administration and a financial planning licence. His knowledge spans everything Corewise does: video production, complex systems, AR, computer vision and LiDAR. What works in the field, he brings to your project.",
+          "img": "ariel.webp",
+          "kind": "story",
+          "metrics": [
+            [
+              "25K+",
+              "Community"
+            ],
+            [
+              "B.A",
+              "Economics and business"
             ]
           ]
         },
