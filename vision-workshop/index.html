@@ -328,6 +328,24 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
   .viewer .frame{padding:18px 12px}
   .class-grid{grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:10px}
 }
+
+/* photos */
+.photo{position:relative;margin:0;border-radius:var(--radius);overflow:hidden;isolation:isolate;background:var(--surface);
+  box-shadow:0 1px 0 var(--line),0 18px 40px -22px rgba(20,18,14,.35)}
+.photo img{display:block;width:100%;height:100%;object-fit:cover}
+.photo::after{content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;
+  box-shadow:inset 0 0 0 1px rgba(20,18,14,.08);
+  background:linear-gradient(to top,color-mix(in srgb,var(--paper) 55%,transparent) 0%,transparent 38%)}
+.photo figcaption{position:absolute;z-index:1;bottom:14px;inset-inline-start:14px;background:var(--hl);color:var(--on-hl);
+  font:500 12px/1 var(--f-mono);padding:6px 9px 5px;border-radius:4px}
+.photo.hero-photo{margin-top:40px;aspect-ratio:21/9}
+.photo.hero-photo img{object-position:50% 40%}
+.photo.wide{aspect-ratio:16/7;margin-bottom:40px}
+.closing .frame{grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);align-items:center}
+.closing .photo{grid-column:2;grid-row:1 / span 2;aspect-ratio:4/3;align-self:stretch}
+.closing .photo img{transform:scale(1.15)}
+@media (max-width:900px){.closing .frame{grid-template-columns:minmax(0,1fr)}.closing .photo{grid-column:auto;grid-row:auto;aspect-ratio:16/9}}
+@media (max-width:640px){.photo.hero-photo{aspect-ratio:4/3;margin-top:28px}.photo.wide{aspect-ratio:4/3;margin-bottom:28px}}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
 }
@@ -388,6 +406,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
             <li><span>בסוף</span><span class="mono"><span class="en">Demo Day</span> + תעודת <span class="en">Corewise</span></span></li>
           </ul>
         </div>
+        <figure class="photo hero-photo"><img src="img/hero.webp" fetchpriority="high" decoding="async" alt="תלמידי חטיבת ביניים סביב שולחן בכיתה, מזהים חפצים בעזרת מצלמת טאבלט ומודל ראייה ממוחשבת" width="1600" height="1195"><figcaption>זיהוי · כיתה ז׳ · 0.97</figcaption></figure>
       </div>
     </div>
   </section>
@@ -441,6 +460,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
         <h2>סדנה אחת, כיתה אחת</h2>
         <p>כל סדנה נפתחת לכיתה אחת בשכבות ז׳–ט׳. הכיתה מתחלקת לקבוצות של 4, ובעיית-העל של הלקוח מתפרקת לתת-בעיה לכל קבוצה. כיתה של 40 תלמידים היא 10 קבוצות ו-10 תתי-בעיות.</p>
       </div>
+      <figure class="photo wide"><img src="img/group.webp" loading="lazy" decoding="async" alt="קבוצה של ארבעה תלמידים עובדת יחד על מחשב נייד ומתייגת דאטה" width="1600" height="1073"><figcaption>קבוצה · 4 תלמידים</figcaption></figure>
 
       <ol class="flow">
         <li><span class="mono">כיתה</span><b id="f-students">40 תלמידים</b><span>סדנה אחת של שישה מפגשים</span></li>
@@ -529,6 +549,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
         <h2>שישה מפגשים, מהיכרות ועד <span class="en">Demo Day</span></h2>
         <p>ראייה ממוחשבת נמצאת בכל אחד מששת המפגשים, מהמפגש הראשון ועד ה-<span class="en">Demo Day</span>. ארבעת המפגשים הראשונים הם הבסיס: לימוד עיוני ועבודה עם חומרה. שני האחרונים מעשיים, ובהם הקבוצות מאמנות את המודל ומציגות.</p>
       </div>
+      <figure class="photo wide"><img src="img/demoday.webp" loading="lazy" decoding="async" alt="Demo Day: קבוצת תלמידים מציגה מול הכיתה את המודל שאימנה על מסך גדול" width="1600" height="893"><figcaption>Demo Day · מפגש 6</figcaption></figure>
 
       <div class="track" role="img" aria-label="ראייה ממוחשבת לאורך כל ששת המפגשים; יזמות במפגשים 1 ו-2; הצגה במפגשים 5 ו-6">
         <span></span>
@@ -676,6 +697,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
   <section class="closing">
     <div class="wrap">
       <div class="frame">
+        <figure class="photo "><img src="img/cta.webp" loading="lazy" decoding="async" alt="טאבלט עם זיהוי חפץ לצד תעודת הערכה ופתקים צבעוניים" width="1600" height="1195"></figure>
         <div>
           <h2>כל כיתה מקבלת סדנה משלה</h2>
           <p class="mono" style="color:var(--box);margin-top:10px">כיתות ז׳–ט׳</p>
@@ -693,7 +715,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
 
 <footer>
   <div class="wrap mono">
-    <span><span class="wordmark" style="font-size:14px">corewise</span> · סדנת ראייה ממוחשבת · פרויקט שיתופי כיתתי</span>
+    <span><span class="wordmark" style="font-size:14px">corewise</span> · סדנת ראייה ממוחשבת · פרויקט שיתופי כיתתי · התמונות בדף הן הדמיה</span>
     <span><a href="/negishut/">הצהרת נגישות</a> · <a href="/privacy/">מדיניות פרטיות</a> · <a href="/">האתר הראשי</a></span>
   </div>
 </footer>
