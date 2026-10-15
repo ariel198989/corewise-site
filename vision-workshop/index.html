@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>קורוויז · סדנת ראייה ממוחשבת לכיתות</title>
-<meta name="description" content="סדנה של שישה מפגשים לכל כיתה: בעיית-על מלקוח אמיתי, קבוצות של 4, איסוף ותיוג דאטה, אימון מודל ו-Demo Day. ראייה ממוחשבת בכל מפגש ותעודת סיום מקורוויז.">
-<meta property="og:title" content="קורוויז · סדנת ראייה ממוחשבת לכיתות">
-<meta property="og:description" content="סדנה של שישה מפגשים לכל כיתה: בעיית-על מלקוח אמיתי, קבוצות של 4, איסוף ותיוג דאטה, אימון מודל ו-Demo Day. ראייה ממוחשבת בכל מפגש ותעודת סיום מקורוויז.">
+<title>קורוויז · סדנת ראייה ממוחשבת לכיתות ז׳–ט׳</title>
+<meta name="description" content="סדנה של שישה מפגשים לכיתות ז׳–ט׳: בעיית-על מלקוח אמיתי, קבוצות של 4, איסוף ותיוג דאטה, אימון מודל ו-Demo Day. ראייה ממוחשבת בכל מפגש ותעודת סיום מקורוויז.">
+<meta property="og:title" content="קורוויז · סדנת ראייה ממוחשבת לכיתות ז׳–ט׳">
+<meta property="og:description" content="סדנה של שישה מפגשים לכיתות ז׳–ט׳: בעיית-על מלקוח אמיתי, קבוצות של 4, איסוף ותיוג דאטה, אימון מודל ו-Demo Day. ראייה ממוחשבת בכל מפגש ותעודת סיום מקורוויז.">
 <meta name="theme-color" content="#F6F3EB">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -265,6 +265,17 @@ input[type=range]{width:100%;accent-color:var(--box);margin:0}
 .check input{width:18px;height:18px;margin:2px 0 0;accent-color:var(--box);flex:none}
 .check small{display:block;color:var(--muted);font:400 12px/1.3 var(--f-mono);margin-top:2px}
 
+/* team */
+.team{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.person{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:26px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:22px;align-items:start;min-width:0}
+.shot{position:relative;width:128px;height:128px;margin-top:14px}
+.shot img{width:100%;height:100%;object-fit:cover;object-position:50% 16%;display:block;border-radius:6px}
+.shot::before{content:"";position:absolute;inset:-6px;border:2.5px solid var(--stroke);pointer-events:none}
+.shot .tag{position:absolute;bottom:calc(100% + 6px);inset-inline-start:-6px;background:var(--hl);color:var(--on-hl);font:500 11px/1 var(--f-mono);padding:5px 7px 4px;white-space:nowrap}
+.person h3{font:700 24px/1.2 var(--f-display)}
+.person .role{display:block;font:500 13px/1.3 var(--f-mono);color:var(--box);margin-top:4px}
+.person p{color:var(--muted);font-size:16px;margin-top:12px}
+
 /* closing */
 .closing{padding-block:72px 40px}
 .closing .frame{padding:48px 40px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:28px;align-items:end}
@@ -287,6 +298,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
   .hero-body,.planner{grid-template-columns:minmax(0,1fr)}
   .gains{grid-template-columns:repeat(2,minmax(0,1fr))}
   .fit{grid-template-columns:minmax(0,1fr)}
+  .team{grid-template-columns:minmax(0,1fr)}
   .closing .frame{grid-template-columns:minmax(0,1fr)}
 }
 @media (max-width:640px){
@@ -300,6 +312,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
   .gain{padding:22px 18px 24px}
   .fit{padding:28px 16px}
   .fit ol{grid-template-columns:minmax(0,1fr)}
+  .person{grid-template-columns:minmax(0,1fr);padding:24px 18px}
   .track{grid-template-columns:72px repeat(6,minmax(0,1fr));gap:8px 4px}
   .track .lab{font-size:13px}
   .track .lab small{display:none}
@@ -335,6 +348,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
       <a href="#class">החלוקה בכיתה</a>
       <a href="#meetings">המפגשים</a>
       <a href="#options">אפשרויות</a>
+      <a href="#team">מי מוביל</a>
       <a class="btn small wa" href="https://wa.me/972507594477?text=%D7%94%D7%99%D7%99%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%9E%D7%93%D7%A3%20%D7%A1%D7%93%D7%A0%D7%AA%20%D7%94%D7%A8%D7%90%D7%99%D7%99%D7%94%20%D7%94%D7%9E%D7%9E%D7%95%D7%97%D7%A9%D7%91%D7%AA%20%D7%9C%D7%9B%D7%99%D7%AA%D7%95%D7%AA.%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A9%D7%9E%D7%95%D7%A2%20%D7%A4%D7%A8%D7%98%D7%99%D7%9D." target="_blank" rel="noopener"><svg class="wa-ic" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.1 5.1 0 0 0 1.1 2.7 11.6 11.6 0 0 0 4.4 3.9c1.6.7 2.3.8 3.1.6a2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.2-.2-.4-.3Z"/></svg>דברו איתנו בוואטסאפ</a>
     </nav>
   </div>
@@ -357,13 +371,14 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
         </h1>
         <div class="hero-body">
           <div>
-            <p class="lede">סדנה של שישה מפגשים לכל כיתה. התלמידים מקבלים דרישה מלקוח אמיתי, מתחלקים לקבוצות של 4, מפרקים את הבעיה לתתי-בעיות, אוספים ומתייגים דאטה, מאמנים מודל ומציגים אותו ב-<span class="en">Demo Day</span> מול כולם. ראייה ממוחשבת נמצאת בכל אחד מששת המפגשים.</p>
+            <p class="lede">סדנה של שישה מפגשים לכיתות ז׳–ט׳, כיתה אחת בכל פעם. התלמידים מקבלים דרישה מלקוח אמיתי, מתחלקים לקבוצות של 4, מפרקים את הבעיה לתתי-בעיות, אוספים ומתייגים דאטה, מאמנים מודל ומציגים אותו ב-<span class="en">Demo Day</span> מול כולם. ראייה ממוחשבת נמצאת בכל אחד מששת המפגשים.</p>
             <div class="actions">
               <a class="btn" href="#meetings">לתוכנית המפגשים</a>
               <a class="btn ghost" href="https://wa.me/972507594477?text=%D7%94%D7%99%D7%99%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%9E%D7%93%D7%A3%20%D7%A1%D7%93%D7%A0%D7%AA%20%D7%94%D7%A8%D7%90%D7%99%D7%99%D7%94%20%D7%94%D7%9E%D7%9E%D7%95%D7%97%D7%A9%D7%91%D7%AA%20%D7%9C%D7%9B%D7%99%D7%AA%D7%95%D7%AA.%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A9%D7%9E%D7%95%D7%A2%20%D7%A4%D7%A8%D7%98%D7%99%D7%9D." target="_blank" rel="noopener"><svg class="wa-ic" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.1 5.1 0 0 0 1.1 2.7 11.6 11.6 0 0 0 4.4 3.9c1.6.7 2.3.8 3.1.6a2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.2-.2-.4-.3Z"/></svg>דברו איתנו בוואטסאפ</a>
             </div>
           </div>
           <ul class="specs">
+            <li><span>שכבות</span><span class="mono">כיתות ז׳–ט׳</span></li>
             <li><span>פורמט</span><span class="mono">6 מפגשים לכיתה או יום האקתון</span></li>
             <li><span>ראייה ממוחשבת</span><span class="mono">בכל 6 המפגשים</span></li>
             <li><span>התאמה</span><span class="mono">לרמת הכיתה ולכל מגזר</span></li>
@@ -424,7 +439,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
       <div class="head">
         <span class="eyebrow">המודל הכיתתי</span>
         <h2>סדנה אחת, כיתה אחת</h2>
-        <p>כל סדנה נפתחת לכיתה אחת. הכיתה מתחלקת לקבוצות של 4, ובעיית-העל של הלקוח מתפרקת לתת-בעיה לכל קבוצה. כיתה של 40 תלמידים היא 10 קבוצות ו-10 תתי-בעיות.</p>
+        <p>כל סדנה נפתחת לכיתה אחת בשכבות ז׳–ט׳. הכיתה מתחלקת לקבוצות של 4, ובעיית-העל של הלקוח מתפרקת לתת-בעיה לכל קבוצה. כיתה של 40 תלמידים היא 10 קבוצות ו-10 תתי-בעיות.</p>
       </div>
 
       <ol class="flow">
@@ -437,7 +452,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
         <div class="intro">
           <span class="tagline">בעיית-על בהתאמה אישית</span>
           <h3>הבעיה נבנית לפי הכיתה</h3>
-          <p>מורכבות בעיית-העל תלויה ברמת הכיתה, והסדנה מותאמת לכל מגזר. השיטה נשארת קבועה, והתוכן מתאים את עצמו לתלמידים.</p>
+          <p>מורכבות בעיית-העל תלויה ברמת הכיתה, מכיתה ז׳ ועד ט׳, והסדנה מותאמת לכל מגזר. השיטה נשארת קבועה, והתוכן מתאים את עצמו לתלמידים.</p>
         </div>
         <ol>
           <li><b>תיאום מראש</b><span>לפני תחילת הסדנה מתאמים את בעיית-העל מול הגורמים הרלוונטיים.</span></li>
@@ -630,11 +645,40 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
     </div>
   </section>
 
+  <section class="block" id="team">
+    <div class="wrap">
+      <div class="head">
+        <span class="eyebrow">מי עומד בראש הסדנה</span>
+        <h2>לידור ואריאל, מייסדי קורוויז</h2>
+        <p>שני המייסדים של קורוויז מובילים את הסדנה יחד.</p>
+      </div>
+      <div class="team">
+        <article class="person">
+          <div class="shot"><span class="tag">CEO · 0.99</span><img src="../lidor.jpeg" loading="lazy" decoding="async" alt="לידור דהן" width="128" height="128"></div>
+          <div>
+            <h3>לידור דהן</h3>
+            <span class="role">מייסד ו-CEO</span>
+            <p>דוקטור להנדסת חשמל ומחשבים, עם כשש שנים בפיתוח AI לרכב אוטונומי. מוביל את המחלקה הפדגוגית בקורוויז, ומביא לסדנה את הניסיון של מי שבנה מערכות ראייה וחישה אמיתיות.</p>
+          </div>
+        </article>
+        <article class="person">
+          <div class="shot"><span class="tag">CTO · 0.99</span><img src="../ariel.webp" loading="lazy" decoding="async" alt="אריאל אוחיון" width="128" height="128"></div>
+          <div>
+            <h3>אריאל אוחיון</h3>
+            <span class="role">מייסד ו-CTO</span>
+            <p>מוביל את הפיתוח בקורוויז, כולל מערכות הראייה הממוחשבת. מרצה ומעביר סדנאות לארגונים, ומנהל את קהילת קלוד ישראל מאז היום שקלוד יצא.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
   <section class="closing">
     <div class="wrap">
       <div class="frame">
         <div>
           <h2>כל כיתה מקבלת סדנה משלה</h2>
+          <p class="mono" style="color:var(--box);margin-top:10px">כיתות ז׳–ט׳</p>
           <p>שישה מפגשים של ראייה ממוחשבת, בעיית-על אחת מלקוח אמיתי, וקבוצות של 4 שכל אחת פותרת חלק ממנה. בסוף, <span class="en">Demo Day</span> ותעודת סיום מ-<span class="en">Corewise</span> לכל תלמיד ותלמידה.</p>
         </div>
         <div class="actions" style="margin-top:0">
@@ -714,7 +758,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
       ? 'פורמט: יום האקתון אחד שמאחד את שלבי הסדנה, עם עבודה בראייה ממוחשבת, Demo Day ותעודת סיום מ-Corewise לכל תלמיד ותלמידה.'
       : '6 מפגשים, ובכל אחד מהם עבודה עם ראייה ממוחשבת: 4 מפגשי בסיס של שעתיים (עיוני + חומרה) ו-2 מפגשים מעשיים, עם Demo Day ותעודת סיום מ-Corewise לכל תלמיד ותלמידה.';
 
-    $('summary').textContent = (hack ? 'יום האקתון לכיתה אחת: ' : 'סדנה לכיתה אחת: ') + students + ' תלמידים, ' + groupsDesc +
+    $('summary').textContent = (hack ? 'יום האקתון לכיתה אחת (שכבות ז׳–ט׳): ' : 'סדנה לכיתה אחת (שכבות ז׳–ט׳): ') + students + ' תלמידים, ' + groupsDesc +
       '. בעיית-העל של הלקוח מותאמת לרמת הכיתה ולמגזר, מתואמת מראש ומתפרקת ל-' + g + ' תתי-בעיות, אחת לכל קבוצה. ' + formatLine +
       ($('tablets').checked ? ' כולל טאבלטים ייעודיים (בתוספת תשלום).' : '');
     $('wa-summary').href = 'https://wa.me/972507594477?text=' + encodeURIComponent('היי, הגעתי מדף סדנת הראייה הממוחשבת. ' + $('summary').textContent);
