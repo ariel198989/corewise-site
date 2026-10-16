@@ -338,6 +338,9 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
   background:linear-gradient(to top,color-mix(in srgb,var(--paper) 55%,transparent) 0%,transparent 38%)}
 .photo figcaption{position:absolute;z-index:1;bottom:14px;inset-inline-start:14px;background:var(--hl);color:var(--on-hl);
   font:500 12px/1 var(--f-mono);padding:6px 9px 5px;border-radius:4px}
+.photo.hero-video{margin-top:40px;aspect-ratio:16/9;background:var(--ink)}
+.photo.hero-video video{display:block;width:100%;height:100%;object-fit:cover}
+.photo.hero-video::after{display:none}
 .photo.hero-photo{margin-top:40px;aspect-ratio:21/9}
 .photo.hero-photo img{object-position:50% 40%}
 .photo.wide{aspect-ratio:16/7;margin-bottom:40px}
@@ -345,7 +348,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
 .closing .photo{grid-column:2;grid-row:1 / span 2;aspect-ratio:4/3;align-self:stretch}
 .closing .photo img{transform:scale(1.15)}
 @media (max-width:900px){.closing .frame{grid-template-columns:minmax(0,1fr)}.closing .photo{grid-column:auto;grid-row:auto;aspect-ratio:16/9}}
-@media (max-width:640px){.photo.hero-photo{aspect-ratio:4/3;margin-top:28px}.photo.wide{aspect-ratio:4/3;margin-bottom:28px}}
+@media (max-width:640px){.photo.hero-video{margin-top:28px}.photo.hero-photo{aspect-ratio:4/3;margin-top:28px}.photo.wide{aspect-ratio:4/3;margin-bottom:28px}}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
 }
@@ -406,7 +409,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
             <li><span>בסוף</span><span class="mono"><span class="en">Demo Day</span> + תעודת <span class="en">Corewise</span></span></li>
           </ul>
         </div>
-        <figure class="photo hero-photo"><img src="img/hero.webp" fetchpriority="high" decoding="async" alt="תלמידי חטיבת ביניים סביב שולחן בכיתה, מזהים חפצים בעזרת מצלמת טאבלט ומודל ראייה ממוחשבת" width="1600" height="1195"><figcaption>זיהוי · כיתה ז׳ · 0.97</figcaption></figure>
+        <figure class="photo hero-video"><video id="hero-video" src="video/workshop.mp4" poster="img/video-poster.webp" autoplay muted loop playsinline controls preload="metadata" width="1920" height="1080" aria-label="סרטון על סדנת הראייה הממוחשבת: מפגשים, קבוצות, Demo Day ותעודת סיום"></video></figure>
       </div>
     </div>
   </section>
@@ -803,6 +806,13 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
   });
 
   render();
+
+  var hv = $('hero-video');
+  try {
+    if (hv && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      hv.removeAttribute('autoplay'); hv.pause();
+    }
+  } catch (e) {}
 })();
 </script>
 </body>
